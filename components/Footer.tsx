@@ -3,7 +3,7 @@ import { Instagram, MessageCircle, Heart } from 'lucide-react';
 const Footer = () => {
   const quickLinks = [
     { label: 'How to Play', href: '/how-to-play' },
-    { label: 'Rules', href: '#rules' },
+    { label: 'Rules', href: '/rules' },
     { label: 'FAQ', href: '/faq' },
     { label: 'Contact', href: '#contact' },
     { label: 'Privacy Policy', href: '/privacy' },

@@ -1,5 +1,19 @@
 'use client';
 
+// Add this utility function to sanitize HTML content
+const sanitizeHTML = (html: string) => {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+  return tempDiv.textContent || tempDiv.innerText || '';
+};
+
+// Example usage in the component where feed content is rendered
+const feedContent = "<p>Your HTML content here</p>"; // Replace with actual feed content
+const sanitizedContent = sanitizeHTML(feedContent);
+
+// Render the sanitized content
+<p>{sanitizedContent}</p>
+
 import { useState } from 'react';
 import { 
   Trophy, 

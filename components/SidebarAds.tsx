@@ -1,5 +1,12 @@
 'use client';
 
+// Function to sanitize HTML content
+const sanitizeHTML = (html: string) => {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+  return tempDiv.textContent || tempDiv.innerText || '';
+};
+
 import { Clock, TrendingUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import RssParser from 'rss-parser';
@@ -163,9 +170,9 @@ const SidebarAds = () => {
                   </h4>
                   
                   <p className="text-xs text-[#708090] leading-relaxed">
-                    {item.description.length > 100
-                      ? `${item.description.substring(0, 100)}...`
-                      : item.description}
+                    {sanitizeHTML(item.description).length > 100
+                      ? `${sanitizeHTML(item.description).substring(0, 100)}...`
+                      : sanitizeHTML(item.description)}
                   </p>
                   
                   <a
@@ -231,7 +238,7 @@ const SidebarAds = () => {
             <h3 className="text-lg font-bold text-[#002244] mb-6 text-center">
               More News Streams
             </h3>
-            {[1, 2, 3, 4, 5].map((num) => (
+            {[1, 2, 3].map((num) => (
               <div
                 key={`news-stream-${num}`}
                 className="border-2 border-dashed border-[#708090] rounded-lg p-6 text-center bg-[#faf9f5] hover:bg-gray-50 transition-colors duration-200"
@@ -299,9 +306,9 @@ const SidebarAds = () => {
                               </a>
                             </h5>
                             <p className="text-xs text-[#708090] leading-relaxed">
-                              {item.description.length > 80
-                                ? `${item.description.substring(0, 80)}...`
-                                : item.description}
+                              {sanitizeHTML(item.description).length > 80
+                                ? `${sanitizeHTML(item.description).substring(0, 80)}...`
+                                : sanitizeHTML(item.description)}
                             </p>
                           </article>
                         ))
