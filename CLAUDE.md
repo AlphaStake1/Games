@@ -78,7 +78,24 @@ hooks/
 ## Development Notes
 
 - ESLint is configured to ignore build errors (ignoreDuringBuilds: true)
-- Images are unoptimized for static export compatibility  
+- Images are unoptimized for static export compatibility
 - Uses conventional commit format for Git workflow
 - TypeScript strict mode enabled
 - Follows feature-branch workflow targeting main branch
+
+## Recent Solutions
+
+### Logo Display Issue (Jan 2025)
+**Problem**: The header logo was showing as hardcoded text "Logo" instead of the intended image file.
+
+**Root Cause**: The text "Logo" was hardcoded in `components/Header.tsx` at line 30, likely due to code reverting to a previous state.
+
+**Solution**:
+1. Added `Image` import from `next/image` to `components/Header.tsx`
+2. Replaced the hardcoded "Logo" text with an optimized Image component
+3. Used the logo file: `/Assets/Football Squares logo_nobg_ (4).png` (transparent background)
+4. Applied responsive styling with hover effects
+
+**Code Change**: Replaced text-based Link with Image-based Link component for better optimization and user experience.
+
+**File Modified**: `components/Header.tsx`

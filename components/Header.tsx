@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ui/theme-toggle';
 
@@ -26,8 +27,14 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-bold text-[#002244] dark:text-white hover:text-[#ed5925] dark:hover:text-[#ed5925] transition-colors duration-200">
-              Logo
+            <Link href="/" className="hover:opacity-80 transition-opacity duration-200">
+              <Image
+                src="/Assets/Football Squares logo_nobg_ (4).png"
+                alt="Football Squares Logo"
+                width={120}
+                height={40}
+                className="h-10 w-auto"
+              />
             </Link>
           </div>
 
