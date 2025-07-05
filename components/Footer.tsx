@@ -6,7 +6,7 @@ const Footer = () => {
     { label: 'Rules', href: '#rules' },
     { label: 'FAQ', href: '/faq' },
     { label: 'Contact', href: '#contact' },
-    { label: 'Privacy Policy', href: '#privacy' },
+    { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '#terms' },
   ];
 
