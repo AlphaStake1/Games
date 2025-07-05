@@ -1,20 +1,7 @@
 'use client';
 
-// Add this utility function to sanitize HTML content
-const sanitizeHTML = (html: string) => {
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = html;
-  return tempDiv.textContent || tempDiv.innerText || '';
-};
-
-// Example usage in the component where feed content is rendered
-const feedContent = "<p>Your HTML content here</p>"; // Replace with actual feed content
-const sanitizedContent = sanitizeHTML(feedContent);
-
-// Render the sanitized content
-<p>{sanitizedContent}</p>
-
 import { useState } from 'react';
+import FantasyLinksGrid from './FantasyLinksGrid';
 import { 
   Trophy, 
   Users, 
@@ -44,7 +31,6 @@ import {
 
 const FantasyFootballContent = () => {
   const [activeTab, setActiveTab] = useState('basics');
-  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
 
   const tabs = [
     { id: 'basics', label: 'The Basics', icon: Trophy },
@@ -435,12 +421,7 @@ const FantasyFootballContent = () => {
                 {platforms.map((platform) => (
                   <div
                     key={platform.id}
-                    className={`bg-white dark:bg-[#002244] border-2 rounded-xl p-6 cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 ${
-                      selectedPlatform === platform.id 
-                        ? 'border-[#ed5925] shadow-lg' 
-                        : 'border-gray-200 dark:border-[#004953] hover:border-[#ed5925]'
-                    }`}
-                    onClick={() => setSelectedPlatform(selectedPlatform === platform.id ? null : platform.id)}
+                    className={`bg-white dark:bg-[#002244] border-2 rounded-xl p-6 cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 border-gray-200 dark:border-[#004953] hover:border-[#ed5925]`}
                   >
                     <div className="text-center mb-4">
                       <div className={`bg-gradient-to-r ${platform.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3`}>
@@ -466,22 +447,6 @@ const FantasyFootballContent = () => {
                         </p>
                       </div>
 
-                      {selectedPlatform === platform.id && (
-                        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-[#004953] animate-fade-in">
-                          <h4 className="font-semibold text-[#ed5925] text-sm mb-2">Unique Features:</h4>
-                          <p className="text-[#708090] dark:text-[#96abdc] text-sm mb-3 transition-colors duration-300">
-                            {platform.unique}
-                          </p>
-                          <ul className="space-y-1">
-                            {platform.features.map((feature, index) => (
-                              <li key={index} className="flex items-start gap-2 text-sm">
-                                <CheckCircle className="w-4 h-4 text-[#ed5925] mt-0.5 flex-shrink-0" />
-                                <span className="text-[#708090] dark:text-[#96abdc] transition-colors duration-300">{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
                     </div>
                   </div>
                 ))}
@@ -729,28 +694,7 @@ const FantasyFootballContent = () => {
           )}
         </div>
 
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] rounded-2xl p-8 lg:p-12 text-white">
-            <h2 className="text-3xl font-bold mb-4">
-              Ready to Dominate Your Fantasy League?
-            </h2>
-            <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-              Armed with these fundamentals and platform insights, you're ready to draft confidently, 
-              navigate waivers like a pro, and enjoy the ride to championship glory!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-[#ed5925] px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2">
-                <Trophy className="w-6 h-6" />
-                Start Your League
-              </button>
-              <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-[#ed5925] transition-all duration-200 inline-flex items-center gap-2">
-                <Users className="w-6 h-6" />
-                Join Community
-              </button>
-            </div>
-          </div>
-        </div>
+        <FantasyLinksGrid />
       </div>
     </main>
   );
