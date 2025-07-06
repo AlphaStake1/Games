@@ -66,6 +66,7 @@ const Header = () => {
             className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-[#708090] dark:text-[#96abdc] hover:text-[#002244] dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#004953] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#002244] dark:focus:ring-[#ed5925] transition-colors duration-200"
             aria-expanded={isMenuOpen}
             aria-label="Toggle navigation menu"
+            aria-controls="mobile-menu"
           >
             {isMenuOpen ? (
               <X className="block h-6 w-6" />
@@ -78,7 +79,7 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-[#002244] border-t border-gray-200 dark:border-[#004953] transition-colors duration-300">
+        <div id="mobile-menu" className="md:hidden bg-white dark:bg-[#002244] border-t border-gray-200 dark:border-[#004953] transition-colors duration-300">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {menuItems.map((item) => (
               <Link

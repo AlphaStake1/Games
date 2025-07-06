@@ -1,7 +1,12 @@
 import { Target, Square, Trophy } from 'lucide-react';
 
 const HowItWorks = () => {
-  const steps = [
+  const steps: {
+    icon: React.ElementType;
+    title: string;
+    description: string;
+    color: string;
+  }[] = [
     {
       icon: Target,
       title: 'Pick a Board',
