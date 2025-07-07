@@ -1,83 +1,96 @@
-# Games
-Samples of websites for fantasy football
-# Football Squares
+# Crypto Squares — Football Board
+> A modern, crypto-native spin on [Football Squares](https://en.wikipedia.org/wiki/Super_Bowl_squares).
 
-> Free-to-play NFL‑agnostic squares plus fantasy‑football resource hub.
-
-![Status Badge](https://img.shields.io/badge/status-pre--MVP-yellow)
+An open-source platform where players claim grid squares (free or paid), track live scores, and receive automated on-chain payouts—fully auditable, fully transparent.
 
 ---
 
-## Quick Links
+## ✨ Key Features
 
-| Asset | URL |
-|-------|-----|
-| **Figma Design File** | _TBD_ |
-| **FigJam User Flow** | _TBD_ |
-| **Loveable.dev Prototype** | _TBD_ |
+| ⭐ = already live | Module | What it Delivers |
+|------------------|--------|------------------|
+| ⭐ | **Multi-Board Engine** | Run parallel grids (Sunday Night, Monday Night, Thursday Night) and season-long leaderboards. |
+| ⭐ | **Free vs Paid Segregation** | Separate sweepstakes (free/NFT prizes) from cash boards (escrow + auto-refund if unsold). |
+| ⭐ | **Forward / Backward / +5 Rules**¹ | Flexible rule sets with a 60 / 40 split, bonus squares, and OT variants. |
+| ⭐ | **On-Chain Randomizer** | Seeded RNG commits to the blockchain for provably fair digit assignment. |
+| ⭐ | **Non-custodial Wallet Connect** | Users connect or generate Bitcoin, Solana, or EVM wallets *client-side only*. |
+|   | **NFT Mint & Showcase** | Collectible overlays and trophy cabinet for winners. |
+| ⭐ | **Admin Panel** | Create boards, set cut-off, trigger **All Bets Off** refunds, manage payouts, export logs. |
 
----
-
-## Overview
-
-Football Squares is a web app that lets fans claim squares, follow live NFL scores, and win prizes, while discovering top fantasy‑football platforms.
-
----
-
-## Tech Stack (Planned)
-
-- **Frontend:** HTML/CSS, Vanilla JS → Future: Next.js or Astro
-- **Design System:** Tailwind CSS tokens exported from Figma
-- **Smart Contracts:** ERC‑721 mint endpoint (Hardhat / Foundry)
-- **Wallet Integration:** WalletConnect v3
-- **Backend/API:** Supabase (scores & user data)
-- **CI/CD:** GitHub Actions + Vercel
+<sub>¹ Forward = read **home→away** digits. Backward = **away→home**. “+5” = each digit + 5 (mod 10) bonus square.</sub>
 
 ---
 
-## Local Development Setup
+## 🏗 Tech Stack
 
-```bash
-git clone https://github.com/your-org/football-squares.git
-cd football-squares
-# Install dependencies once framework is selected
-# npm install
-# npm run dev
-```
-
----
-
-## Roadmap
-
-- [ ] MVP Homepage (hero, fantasy tiles, nav)
-- [ ] Squares board purchase flow
-- [ ] NFT mint + ledger sidebar
-- [ ] Real‑time score webhook
-- [ ] Email capture & weekly tips newsletter
+| Layer | Stack |
+|-------|-------|
+| **Front-end** | Next.js 13.5 + React 18, Tailwind CSS, WalletConnect v2, Solana Wallet Adapter, Socket.io |
+| **Back-end** | Node.js 20 + NestJS API, TypeScript, PostgreSQL (Prisma ORM), **Redis** *(pub/sub for live-score pushes)* |
+| **Blockchain** | EVM (Polygon) via ethers.js, Solana via `@solana/web3.js`, Bitcoin Taproot via bitcoinjs-lib |
+| **NFT** | Metaplex (Solana) + ERC-721 (EVM) collectibles |
+| **DevOps** | Docker Compose, GitHub Actions CI/CD, AWS Fargate |
 
 ---
 
-## Contributing
+## ⚙️ Local Dev Quick-Start
 
-We follow [Conventional Commits](https://www.conventionalcommits.org/) and feature‑branch workflow.
 
-```bash
-git checkout -b feature/your-feature
-git commit -m "feat(board): add grid component"
-git push origin feature/your-feature
-```
+# 1. Clone
+git clone https://github.com/AlphaStake1/football_board.git
+cd football_board
 
-Open a pull request to `main` when ready.
+# 2. Environment
+cp .env.example .env   # fill `DB_URL`, `CHAIN_IDS`, etc.
 
----
+# 3. Install deps  (ensure pnpm ≥ 8 is installed)
+pnpm i
 
-## License
+# 4. Docker up
+docker compose up --build
 
-MIT © 2025 Alpha Stake LLC  
-*Not affiliated with the NFL or any professional team.*
+# 5. Seed DB (optional demo data)
+pnpm prisma db seed
 
----
+# 6. Run unit tests
+pnpm test
 
-### Disclaimer
 
-This repository is in active development; functionality and architecture may change without notice.
+App: http://localhost:3000
+
+GraphQL: http://localhost:4000/graphql
+
+🖼 Live Demo / Screenshots
+Claiming a Square	Admin Panel (board controls)
+
+Try the hosted demo here → LIVE_URL
+
+pnpm test          # jest + ts-jest unit + integration
+pnpm e2e           # Playwright E2E
+
+🚧 Roadmap
+Mobile PWA mode
+
+Lightning-network payouts
+
+Multi-chain NFT gallery
+
+MPC / social-recovery wallet option
+
+See /docs/ROADMAP.md for milestone tracking.
+
+🤝 Contributing
+We welcome issues, PRs, and ideas!
+
+Fork → feature branch (git checkout -b feat/my-feature)
+
+pnpm lint && pnpm test
+
+Open a PR following our template.
+
+See CONTRIBUTING.md or join the discussion tab.
+
+📝 License
+Apache-2.0 — see LICENSE.
+
+© 2025 Alpha Stake LLC • Open-sourcing Football Squares for the crypto age.

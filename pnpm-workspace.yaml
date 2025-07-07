@@ -1,5 +1,2 @@
 packages:
-  - 'app'
-  - 'components'
-  - 'hooks'
-  - 'lib'
+  # Add packages here
