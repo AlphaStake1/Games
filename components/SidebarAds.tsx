@@ -19,7 +19,7 @@ interface RSSItem {
   guid: string;
 }
 
-const SidebarAds = () => {
+const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
   const [rssItems, setRssItems] = useState<RSSItem[]>([]);
   const [razzballRssItems, setRazzballRssItems] = useState<RSSItem[]>([]);
   const [fftodayRssItems, setFftodayRssItems] = useState<RSSItem[]>([]);
@@ -95,7 +95,10 @@ const SidebarAds = () => {
     };
 
     fetchAllFeeds();
-  }, []);
+    const intervalId = setInterval(fetchAllFeeds, 24 * 60 * 60 * 1000); // Refresh every 24 hours
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
+  }, [refreshTrigger]);
 
   const formatTimeAgo = (dateString: string) => {
     try {
