@@ -30,7 +30,8 @@ An open-source platform where players claim grid squares (free or paid), track l
 | **Blockchain** | EVM (Polygon) via ethers.js, Solana via `@solana/web3.js`, Bitcoin Taproot via bitcoinjs-lib |
 | **NFT** | Metaplex (Solana) + ERC-721 (EVM) collectibles |
 | **DevOps** | Docker Compose, GitHub Actions CI/CD, AWS Fargate |
-
+--
+Copy .env.example to .env and fill the blanks.
 ---
 
 ## ⚙️ Local Dev Quick-Start

@@ -1,101 +1,216 @@
-# CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+# CLAUDE.md  
+> Guidance & ground-rules for Claude Code (and other LLMs) when working in this repo.
 
-## Project Overview
+---
 
-This is a Next.js 13.5.1 fantasy football web application called "Football Squares" - a pre-MVP stage project that combines NFL squares gameplay with fantasy football resource discovery. The app is configured for static export deployment.
+## 🔄 Project Awareness & Context
 
-## Common Commands
+1. **Always open `PLANNING.md` first** – architecture, style, naming, design-system tokens.  
+2. **Check `TASK.md`** – if your task isn’t listed, add it with a date & one-line description.  
+3. **Consult `/research/*`** – scrape pages live only if documentation is missing there.  
+4. **Sacred truths**  
+   - Primary orchestrator model: `claude-sonnet-4-20250514`.  
+   - Supporting OpenAI model: `gpt-4.1`. **Never rename or swap models.**  
+   - CRON / scheduler = **Clockwork**.  
+   - Email = **Proton Mail + Proton VPN/Bridge**.
+
+---
+
+## 🛠️ Local Dev Commands (Quick-ref)
 
 ```bash
-# Development
-npm run dev          # Start development server
-npm run build        # Build for production (static export)
-npm run start        # Start production server
-npm run lint         # Run ESLint
+# Front-end (Next.js static-export)
+npm run dev            # hot reload
+npm run build          # next build && next export
+npm run start          # serve ./out locally
 
-# Git workflow (uses conventional commits)
-git checkout -b feature/your-feature
-git commit -m "feat(component): description"
-git push origin feature/your-feature
+# Rust / Anchor
+anchor test            # unit + integration tests
+anchor deploy          # deploy to localnet/devnet
+solana-test-validator  # local validator
+
+# TypeScript agents / CLI
+pnpm ts-node scripts/init_board.ts --game 123
+pnpm lint && tsc --noEmit           # ESLint + TS type-check
+````
+---
+### Project-Specific Commands
+
+| Command                                  | What it does                                   |
+|------------------------------------------|------------------------------------------------|
+| `pnpm squares:init <gameId>`             | One-shot script → creates board + sets Clockwork thread |
+| `pnpm squares:randomize <boardPDA>`      | Manually trigger VRF randomization (dev only)  |
+| `pnpm db:seed`                           | Seeds Ceramic dev profile for demo accounts    |
+| `cargo run --bin vrf-callback-debug`     | Runs local VRF callback simulator              |
+    *Make sure each script exists in /scripts or explain where it lives
+
+---
+
+## 🚦 Core Rules for LLM-Driven Code
+
+| # | Rule |
+|---|-----------------------------------------------------------------------------------------------------------------------------------|
+
+\| 1 | **Never hallucinate** libraries, CLI flags, file paths. Confirm existence first. |
+\| 2 | **Files > 500 LOC** → refactor into modules (`lib/`, `utils/`, etc.). |
+\| 3 | Use **JSON-only interfaces** between agents (`/schemas/*.ts`). |
+\| 4 | All new Rust code must pass `cargo clippy -- -D warnings`. |
+\| 5 | All new TS code must pass `pnpm lint` & `tsc --noEmit`. |
+\| 6 | Unit tests live in `/tests` (TS) or `programs/squares/tests` (Mocha). Provide: happy-path, edge, failure. |
+\| 7 | If uncertain → ask a clarifying question instead of guessing. |
+
+---
+
+## 🏗️ Project Architecture Snapshot
+
+```
+app/ (Next.js 13 static export)
+  ├─ components/           # shadcn/ui + custom
+  ├─ providers.tsx         # wallet adapter, theme
+  └─ ...
+
+programs/squares/          # Anchor smart-contract
+  ├─ src/lib.rs
+  └─ tests/
+
+agents/                    # Claude / GPT workers
+  ├─ OrchestratorAgent/
+  ├─ BoardAgent/
+  ├─ RandomizerAgent/
+  └─ ...
+
+schemas/                   # JSON Schemas for agent I/O
+scripts/                   # CLI helpers (ts-node)
+
+docs/                      # markdown specs
+research/                  # Jina scrapes / official docs
 ```
 
-## Architecture
+*Stick to this layout unless PLANNING.md says otherwise.*
 
-### Framework & Tools
-- **Next.js 13.5.1** with App Router and TypeScript
-- **Static export** configuration (output: 'export')
-- **shadcn/ui** design system with Radix UI primitives
-- **Tailwind CSS** for styling with CSS variables and dark mode support
-- **React Hook Form** with Zod validation
+---
 
-### Project Structure
-```
-app/                    # Next.js App Router pages
-├── layout.tsx         # Root layout with Inter font and providers
-├── page.tsx           # Homepage with main component layout
-├── providers.tsx      # App-wide providers
-└── globals.css        # Global styles and CSS variables
+## 📐 Code Style
 
-components/            # React components
-├── ui/               # shadcn/ui components (auto-generated)
-├── Header.tsx        # Navigation with mobile menu
-├── Hero.tsx          # Landing section
-├── FantasyLinksGrid.tsx  # Fantasy platform links
-├── HowItWorks.tsx    # Feature explanation
-├── EmailCapture.tsx  # Newsletter signup
-└── Footer.tsx        # Site footer
+* **TypeScript / JavaScript** → Airbnb + Prettier (see `.eslintrc`).
+* **Rust** → `rustfmt + clippy`.
+* **React** → Functional components, hooks, shadcn/ui tokens.
+* **Docstrings** → Google style in TS & Rust (`///` on top of fns).
+* **Commit messages** → Conventional Commits (`feat:`, `fix:`, etc.).
 
-lib/
-└── utils.ts          # Utility functions (cn helper)
+---
 
-hooks/
-└── use-toast.ts      # Toast notification hook
-```
+## 🔬 Testing & Validation Loop
 
-### Component Patterns
-- All custom components use default exports
-- UI components from shadcn/ui use named exports
-- Client components marked with 'use client' directive
-- Responsive design with mobile-first approach
-- Accessibility features (ARIA labels, focus management)
+1. **Lint / Type-check**
 
-### Styling System
-- Uses shadcn/ui default theme with neutral base color
-- CSS variables for theming (supports dark mode)
-- Tailwind utility classes with custom color palette
-- Primary brand color: `#1b5e20` (dark green)
+   ```bash
+   pnpm lint && tsc --noEmit
+   cargo clippy -- -D warnings
+   ```
 
-### Key Dependencies
-- **UI Framework**: Radix UI primitives (@radix-ui/react-*)
-- **Icons**: Lucide React
-- **Styling**: Tailwind CSS with tailwindcss-animate
-- **Forms**: React Hook Form + Zod
-- **Theme**: next-themes for dark mode
-- **Notifications**: Sonner for toasts
+2. **Unit tests**
 
-## Development Notes
+   ```bash
+   anchor test
+   pnpm vitest
+   ```
 
-- ESLint is configured to ignore build errors (ignoreDuringBuilds: true)
-- Images are unoptimized for static export compatibility
-- Uses conventional commit format for Git workflow
-- TypeScript strict mode enabled
-- Follows feature-branch workflow targeting main branch
+3. **Localnet integration**
 
-## Recent Solutions
+   ```bash
+   solana-test-validator -r &
+   anchor deploy && pnpm ts-node scripts/e2e_demo.ts
+   ```
 
-### Logo Display Issue (Jan 2025)
-**Problem**: The header logo was showing as hardcoded text "Logo" instead of the intended image file.
+*All steps must be green before marking a TASK complete.*
 
-**Root Cause**: The text "Logo" was hardcoded in `components/Header.tsx` at line 30, likely due to code reverting to a previous state.
+---
+| Item               | Action                                                                                                   |
+| ------------------ | -------------------------------------------------------------------------------------------------------- |
+| **Vitest vs Jest** | Confirm actual test runner; update `pnpm test` alias.                                                    |
+| **Design tokens**  | Link the exact file: `app/styles/tokens.css` (or similar).                                               |
+| **`/schemas`**     | Verify every agent imports the right JSON schema from that folder; otherwise add a “TODO: build schema”. |
 
-**Solution**:
-1. Added `Image` import from `next/image` to `components/Header.tsx`
-2. Replaced the hardcoded "Logo" text with an optimized Image component
-3. Used the logo file: `/Assets/Football Squares logo_nobg_ (4).png` (transparent background)
-4. Applied responsive styling with hover effects
+---
 
-**Code Change**: Replaced text-based Link with Image-based Link component for better optimization and user experience.
+## 🔑 Secrets & Environment
 
-**File Modified**: `components/Header.tsx`
+* Use `.env.local` – never commit real keys.
+* Required vars (see `.env.example`):
+
+  ```env
+  OPENAI_API_KEY=...
+  ANTHROPIC_API_KEY=...
+  RPC_ENDPOINT=...
+  PROTON_BRIDGE_USER=...
+  PROTON_BRIDGE_PASS=...
+  ```
+
+---
+
+## 🎨 Design System
+
+Follow `designsystem.md`:
+
+* Brand colors:
+
+  * Primary Blue `#255c7e`
+  * Accent Orange `#ed5925`
+* Use shadcn/ui primitives; never invent custom CSS unless tokenized.
+
+---
+
+## 🧠 Agent-Specific Guidelines
+
+* **OrchestratorAgent** can call sub-agents only via tool pattern, never directly hit Solana RPC.
+* **RandomizerAgent** must verify Switchboard VRF proof before writing to chain (no trustless skip).
+* **EmailAgent** uses Proton Bridge SMTP @ `127.0.0.1:1025`.
+* Always include `ctx.usage` for token accounting.
+
+---
+
+## 📎 Documentation Duties
+
+* Update `/docs/*.md` when APIs, env vars, or contract accounts change.
+* If new third-party lib used → scrape 10–15 official-doc pages into `/research/<lib>/`.
+
+Documentation & References
+- file: docs/PLANNING.md
+  why: High-level architecture and naming conventions
+
+- file: TASK.md
+  why: Source-of-truth for open tasks; update after each PR
+
+- file: designsystem.md
+  why: Color tokens and component rules
+
+- file: research/clockwork/overview.md
+  why: Scheduler account-layout and thread-creation examples
+
+For monorepo with multiple packages, prepend the subdir:
+- file: programs/squares/src/lib.rs
+  why: Anchor program entry point – read before adding new ix
+
+---
+Standardise package-manager commands (pnpm)
+- pnpm install               # bootstrap repo
+- pnpm dev                   # next dev + nodemon agents
+- pnpm lint && pnpm test     # full QA suite
+- pnpm ts-node scripts/init_board.ts --game 123
+* If you keep npm, swap every pnpm reference in docs and CI to npm run
+
+---
+
+## ❌ Anti-Patterns
+
+* No off-chain RNG.
+* No direct Gmail / SES (use Proton).
+* No hard-coded PDAs; derive via seeds.
+* No `console.log` commits in production code.
+* No giant pull requests (>500 LOC diff) without prior task breakdown.
+
+---
+
+*Claude, follow these instructions exactly; ask if anything is unclear or missing.*
