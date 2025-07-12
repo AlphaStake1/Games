@@ -1,0 +1,418 @@
+// scripts/create_thread.ts
+import { ClockworkProvider } from '@clockwork-xyz/sdk';
+import { Connection, PublicKey, Keypair } from '@solana/web3.js';
+import { AnchorProvider, Program, Wallet, BN } from '@coral-xyz/anchor';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+// Load the squares program IDL
+const IDL_PATH = path.join(__dirname, '../target/idl/squares.json');
+const PROGRAM_ID = new PublicKey('Fg6PaFprPjfrgxLbfXyAyzsK1m1S82mC2f43s5D2qQq');
+
+interface ThreadConfig {
+  name: string;
+  schedule: string;
+  instruction: string;
+  accounts: Array<{
+    pubkey: PublicKey;
+    isSigner: boolean;
+    isWritable: boolean;
+  }>;
+}
+
+class ClockworkThreadManager {
+  private connection: Connection;
+  private provider: AnchorProvider;
+  private clockworkProvider: ClockworkProvider;
+  private program: Program;
+
+  constructor() {
+    this.connection = new Connection(
+      process.env.RPC_ENDPOINT || 'https://api.devnet.solana.com'
+    );
+
+    // Load wallet
+    const walletKeypair = this.loadWallet();
+    const wallet = new Wallet(walletKeypair);
+
+    this.provider = new AnchorProvider(this.connection, wallet, {
+      commitment: 'confirmed',
+    });
+
+    this.clockworkProvider = ClockworkProvider.fromAnchorProvider(this.provider);
+
+    // Load program
+    const idl = JSON.parse(fs.readFileSync(IDL_PATH, 'utf8'));
+    this.program = new Program(idl, PROGRAM_ID, this.provider);
+
+    console.log('ClockworkThreadManager initialized');
+  }
+
+  private loadWallet(): Keypair {
+    const walletPath = process.env.KEYPAIR_PATH || path.join(process.env.HOME!, '.config/solana/id.json');
+    
+    if (!fs.existsSync(walletPath)) {
+      throw new Error(`Wallet not found at ${walletPath}`);
+    }
+
+    const walletData = JSON.parse(fs.readFileSync(walletPath, 'utf8'));
+    return Keypair.fromSecretKey(new Uint8Array(walletData));
+  }
+
+  async createGameMonitoringThread(gameId: number): Promise<string> {
+    const [boardPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
+      PROGRAM_ID
+    );
+
+    const threadConfig: ThreadConfig = {
+      name: `game-monitor-${gameId}`,
+      schedule: '*/5 * * * *', // Every 5 minutes
+      instruction: 'record_score',
+      accounts: [
+        {
+          pubkey: boardPda,
+          isSigner: false,
+          isWritable: true,
+        },
+        {
+          pubkey: this.provider.wallet.publicKey,
+          isSigner: true,
+          isWritable: false,
+        },
+      ],
+    };
+
+    console.log(`Creating monitoring thread for game ${gameId}...`);
+
+    try {
+      const threadId = await this.clockworkProvider.threadCreate({
+        id: threadConfig.name,
+        authority: this.provider.wallet.publicKey,
+        instructions: [
+          {
+            programId: PROGRAM_ID,
+            accounts: threadConfig.accounts.map(acc => ({
+              pubkey: acc.pubkey,
+              isSigner: acc.isSigner,
+              isWritable: acc.isWritable,
+            })),
+            data: this.encodeInstructionData(threadConfig.instruction, {
+              homeScore: 0,
+              awayScore: 0,
+              quarter: 1,
+            }),
+          },
+        ],
+        trigger: {
+          cron: {
+            schedule: threadConfig.schedule,
+            skippable: true,
+          },
+        },
+      });
+
+      console.log(`Thread created with ID: ${threadId}`);
+      return threadId;
+    } catch (error) {
+      console.error('Error creating thread:', error);
+      throw error;
+    }
+  }
+
+  async createRandomizationThread(gameId: number, startTime: Date): Promise<string> {
+    const [boardPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
+      PROGRAM_ID
+    );
+
+    // Create VRF account (placeholder)
+    const vrfAccount = new PublicKey('11111111111111111111111111111111');
+
+    const threadConfig: ThreadConfig = {
+      name: `randomization-${gameId}`,
+      schedule: this.createOneTimeSchedule(startTime),
+      instruction: 'request_randomization',
+      accounts: [
+        {
+          pubkey: boardPda,
+          isSigner: false,
+          isWritable: true,
+        },
+        {
+          pubkey: vrfAccount,
+          isSigner: false,
+          isWritable: false,
+        },
+        {
+          pubkey: this.provider.wallet.publicKey,
+          isSigner: true,
+          isWritable: false,
+        },
+      ],
+    };
+
+    console.log(`Creating randomization thread for game ${gameId} at ${startTime}...`);
+
+    try {
+      const threadId = await this.clockworkProvider.threadCreate({
+        id: threadConfig.name,
+        authority: this.provider.wallet.publicKey,
+        instructions: [
+          {
+            programId: PROGRAM_ID,
+            accounts: threadConfig.accounts.map(acc => ({
+              pubkey: acc.pubkey,
+              isSigner: acc.isSigner,
+              isWritable: acc.isWritable,
+            })),
+            data: this.encodeInstructionData(threadConfig.instruction, {}),
+          },
+        ],
+        trigger: {
+          cron: {
+            schedule: threadConfig.schedule,
+            skippable: false,
+          },
+        },
+      });
+
+      console.log(`Randomization thread created with ID: ${threadId}`);
+      return threadId;
+    } catch (error) {
+      console.error('Error creating randomization thread:', error);
+      throw error;
+    }
+  }
+
+  async createWinnerSettlementThread(gameId: number, gameEndTime: Date): Promise<string> {
+    const [boardPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
+      PROGRAM_ID
+    );
+
+    // Schedule for 5 minutes after game end
+    const settlementTime = new Date(gameEndTime.getTime() + 5 * 60 * 1000);
+
+    const threadConfig: ThreadConfig = {
+      name: `settle-winner-${gameId}`,
+      schedule: this.createOneTimeSchedule(settlementTime),
+      instruction: 'settle_winner',
+      accounts: [
+        {
+          pubkey: boardPda,
+          isSigner: false,
+          isWritable: true,
+        },
+        {
+          pubkey: this.provider.wallet.publicKey,
+          isSigner: true,
+          isWritable: false,
+        },
+      ],
+    };
+
+    console.log(`Creating winner settlement thread for game ${gameId} at ${settlementTime}...`);
+
+    try {
+      const threadId = await this.clockworkProvider.threadCreate({
+        id: threadConfig.name,
+        authority: this.provider.wallet.publicKey,
+        instructions: [
+          {
+            programId: PROGRAM_ID,
+            accounts: threadConfig.accounts.map(acc => ({
+              pubkey: acc.pubkey,
+              isSigner: acc.isSigner,
+              isWritable: acc.isWritable,
+            })),
+            data: this.encodeInstructionData(threadConfig.instruction, {}),
+          },
+        ],
+        trigger: {
+          cron: {
+            schedule: threadConfig.schedule,
+            skippable: false,
+          },
+        },
+      });
+
+      console.log(`Winner settlement thread created with ID: ${threadId}`);
+      return threadId;
+    } catch (error) {
+      console.error('Error creating winner settlement thread:', error);
+      throw error;
+    }
+  }
+
+  async listThreads(): Promise<any[]> {
+    try {
+      const threads = await this.clockworkProvider.threadList(this.provider.wallet.publicKey);
+      return threads;
+    } catch (error) {
+      console.error('Error listing threads:', error);
+      return [];
+    }
+  }
+
+  async pauseThread(threadId: string): Promise<void> {
+    try {
+      await this.clockworkProvider.threadPause(threadId);
+      console.log(`Thread ${threadId} paused`);
+    } catch (error) {
+      console.error('Error pausing thread:', error);
+      throw error;
+    }
+  }
+
+  async resumeThread(threadId: string): Promise<void> {
+    try {
+      await this.clockworkProvider.threadResume(threadId);
+      console.log(`Thread ${threadId} resumed`);
+    } catch (error) {
+      console.error('Error resuming thread:', error);
+      throw error;
+    }
+  }
+
+  async deleteThread(threadId: string): Promise<void> {
+    try {
+      await this.clockworkProvider.threadDelete(threadId);
+      console.log(`Thread ${threadId} deleted`);
+    } catch (error) {
+      console.error('Error deleting thread:', error);
+      throw error;
+    }
+  }
+
+  async getThreadInfo(threadId: string): Promise<any> {
+    try {
+      const threadInfo = await this.clockworkProvider.threadGet(threadId);
+      return threadInfo;
+    } catch (error) {
+      console.error('Error getting thread info:', error);
+      return null;
+    }
+  }
+
+  private encodeInstructionData(instruction: string, args: any): Buffer {
+    // In real implementation, this would properly encode instruction data
+    // For now, return a placeholder
+    return Buffer.from([]);
+  }
+
+  private createOneTimeSchedule(date: Date): string {
+    // Convert date to cron format (one-time execution)
+    const minute = date.getMinutes();
+    const hour = date.getHours();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    return `${minute} ${hour} ${day} ${month} * ${year}`;
+  }
+}
+
+// CLI interface
+async function main() {
+  const args = process.argv.slice(2);
+  const command = args[0];
+
+  const manager = new ClockworkThreadManager();
+
+  switch (command) {
+    case 'create-monitor':
+      if (args.length < 2) {
+        console.error('Usage: npm run create-thread create-monitor <gameId>');
+        process.exit(1);
+      }
+      const gameId = parseInt(args[1]);
+      const threadId = await manager.createGameMonitoringThread(gameId);
+      console.log(`Monitoring thread created: ${threadId}`);
+      break;
+
+    case 'create-randomization':
+      if (args.length < 3) {
+        console.error('Usage: npm run create-thread create-randomization <gameId> <startTime>');
+        process.exit(1);
+      }
+      const randGameId = parseInt(args[1]);
+      const startTime = new Date(args[2]);
+      const randThreadId = await manager.createRandomizationThread(randGameId, startTime);
+      console.log(`Randomization thread created: ${randThreadId}`);
+      break;
+
+    case 'create-settlement':
+      if (args.length < 3) {
+        console.error('Usage: npm run create-thread create-settlement <gameId> <endTime>');
+        process.exit(1);
+      }
+      const settleGameId = parseInt(args[1]);
+      const endTime = new Date(args[2]);
+      const settleThreadId = await manager.createWinnerSettlementThread(settleGameId, endTime);
+      console.log(`Settlement thread created: ${settleThreadId}`);
+      break;
+
+    case 'list':
+      const threads = await manager.listThreads();
+      console.log('Active threads:');
+      threads.forEach((thread, index) => {
+        console.log(`${index + 1}. ${thread.id} - ${thread.status}`);
+      });
+      break;
+
+    case 'pause':
+      if (args.length < 2) {
+        console.error('Usage: npm run create-thread pause <threadId>');
+        process.exit(1);
+      }
+      await manager.pauseThread(args[1]);
+      break;
+
+    case 'resume':
+      if (args.length < 2) {
+        console.error('Usage: npm run create-thread resume <threadId>');
+        process.exit(1);
+      }
+      await manager.resumeThread(args[1]);
+      break;
+
+    case 'delete':
+      if (args.length < 2) {
+        console.error('Usage: npm run create-thread delete <threadId>');
+        process.exit(1);
+      }
+      await manager.deleteThread(args[1]);
+      break;
+
+    case 'info':
+      if (args.length < 2) {
+        console.error('Usage: npm run create-thread info <threadId>');
+        process.exit(1);
+      }
+      const info = await manager.getThreadInfo(args[1]);
+      console.log('Thread info:', JSON.stringify(info, null, 2));
+      break;
+
+    default:
+      console.log('Available commands:');
+      console.log('  create-monitor <gameId>');
+      console.log('  create-randomization <gameId> <startTime>');
+      console.log('  create-settlement <gameId> <endTime>');
+      console.log('  list');
+      console.log('  pause <threadId>');
+      console.log('  resume <threadId>');
+      console.log('  delete <threadId>');
+      console.log('  info <threadId>');
+      break;
+  }
+}
+
+if (require.main === module) {
+  main().catch(console.error);
+}
+
+export { ClockworkThreadManager };

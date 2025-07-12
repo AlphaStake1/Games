@@ -1,0 +1,170 @@
+# docker/deploy.yaml - Akash Network Deployment Configuration
+version: "2.0"
+
+services:
+  app:
+    image: footballsquares/app:latest
+    env:
+      - NODE_ENV=production
+      - RPC_ENDPOINT=https://api.devnet.solana.com
+      - WS_PORT=8080
+      - WS_HOST=0.0.0.0
+      - SMTP_HOST=proton-bridge
+      - SMTP_PORT=1025
+      - FROM_EMAIL=no-reply@footballsquares.app
+    expose:
+      - port: 3000
+        as: 80
+        to:
+          - global: true
+      - port: 8080
+        as: 8080
+        to:
+          - global: true
+    params:
+      storage:
+        data:
+          mount: /app/data
+          readOnly: false
+    depends_on:
+      - proton-bridge
+      - redis
+
+  proton-bridge:
+    image: footballsquares/proton-bridge:latest
+    env:
+      - PROTON_USERNAME
+      - PROTON_PASSWORD
+    expose:
+      - port: 1025
+        to:
+          - service: app
+      - port: 1143
+        to:
+          - service: app
+    params:
+      storage:
+        bridge-data:
+          mount: /home/bridge/.config/protonmail
+          readOnly: false
+
+  redis:
+    image: redis:7-alpine
+    expose:
+      - port: 6379
+        to:
+          - service: app
+    params:
+      storage:
+        redis-data:
+          mount: /data
+          readOnly: false
+
+  ceramic:
+    image: ceramicnetwork/js-ceramic:latest
+    env:
+      - CERAMIC_NETWORK=testnet-clay
+      - NODE_ENV=production
+    expose:
+      - port: 7007
+        to:
+          - service: app
+    params:
+      storage:
+        ceramic-data:
+          mount: /app/ceramic-data
+          readOnly: false
+
+profiles:
+  compute:
+    app:
+      resources:
+        cpu:
+          units: 2.0
+        memory:
+          size: 4Gi
+        storage:
+          - size: 10Gi
+          - name: data
+            size: 5Gi
+            attributes:
+              persistent: true
+              class: beta3
+    proton-bridge:
+      resources:
+        cpu:
+          units: 0.5
+        memory:
+          size: 1Gi
+        storage:
+          - size: 2Gi
+          - name: bridge-data
+            size: 1Gi
+            attributes:
+              persistent: true
+              class: beta3
+    redis:
+      resources:
+        cpu:
+          units: 0.5
+        memory:
+          size: 512Mi
+        storage:
+          - size: 1Gi
+          - name: redis-data
+            size: 1Gi
+            attributes:
+              persistent: true
+              class: beta3
+    ceramic:
+      resources:
+        cpu:
+          units: 1.0
+        memory:
+          size: 2Gi
+        storage:
+          - size: 5Gi
+          - name: ceramic-data
+            size: 3Gi
+            attributes:
+              persistent: true
+              class: beta3
+
+  placement:
+    dcloud:
+      attributes:
+        host: akash
+      signedBy:
+        anyOf:
+          - "akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63"
+      pricing:
+        app:
+          denom: uakt
+          amount: 1000
+        proton-bridge:
+          denom: uakt
+          amount: 500
+        redis:
+          denom: uakt
+          amount: 300
+        ceramic:
+          denom: uakt
+          amount: 700
+
+deployment:
+  app:
+    dcloud:
+      profile: app
+      count: 1
+  proton-bridge:
+    dcloud:
+      profile: proton-bridge
+      count: 1
+  redis:
+    dcloud:
+      profile: redis
+      count: 1
+  ceramic:
+    dcloud:
+      profile: ceramic
+      count: 1
