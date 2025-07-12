@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function WalletGuideContent() {
   return (
@@ -6,5 +6,5 @@ export default function WalletGuideContent() {
       <h1>Wallet Guide</h1>
       <p>This is a placeholder for the wallet guide content.</p>
     </div>
-  )
+  );
 }

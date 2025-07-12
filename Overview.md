@@ -1,18 +1,18 @@
 # OpenAI API Usage Overview — Football Squares dApp
 
-**Doc URL**  <https://platform.openai.com/docs/>  
-**Last Reviewed**  2025-07-08
+**Doc URL** <https://platform.openai.com/docs/>  
+**Last Reviewed** 2025-07-08
 
 ---
 
 ## 1 . Why We Use OpenAI
 
-| Agent                           | Model                | Purpose                                   |
-|---------------------------------|----------------------|-------------------------------------------|
-| **RandomizerAgent**             | `gpt-4.1`            | Build/verbalize VRF requests & sanity-check randomness results. |
-| **OracleAgent**                 | `gpt-4.1`            | Parse Switchboard JSON, detect score anomalies. |
-| **BoardAgent / WinnerAgent**    | `gpt-4.1`            | Convert board state to natural-language summaries for email/UX. |
-| **OrchestratorAgent**           | **Anthropic** `claude-sonnet-4-20250514` *(not OpenAI)* | High-level planning / task routing. |
+| Agent                        | Model                                                   | Purpose                                                         |
+| ---------------------------- | ------------------------------------------------------- | --------------------------------------------------------------- |
+| **RandomizerAgent**          | `gpt-4.1`                                               | Build/verbalize VRF requests & sanity-check randomness results. |
+| **OracleAgent**              | `gpt-4.1`                                               | Parse Switchboard JSON, detect score anomalies.                 |
+| **BoardAgent / WinnerAgent** | `gpt-4.1`                                               | Convert board state to natural-language summaries for email/UX. |
+| **OrchestratorAgent**        | **Anthropic** `claude-sonnet-4-20250514` _(not OpenAI)_ | High-level planning / task routing.                             |
 
 > **Rule:** we only call OpenAI for **deterministic text-processing helpers**; all orchestration logic lives with Claude Sonnet 4.
 
@@ -20,11 +20,11 @@
 
 ## 2 . Available Models (OpenAI side)
 
-| Name        | Notes                       |
-|-------------|-----------------------------|
-| **`gpt-4.1`**      | Full-size, used when latency isn’t critical. |
-| **`o4-mini`**      | Cheaper fallback (e.g., bulk score logs).    |
-| **`o3`**           | Highest reasoning; reserve for audits.       |
+| Name          | Notes                                        |
+| ------------- | -------------------------------------------- |
+| **`gpt-4.1`** | Full-size, used when latency isn’t critical. |
+| **`o4-mini`** | Cheaper fallback (e.g., bulk score logs).    |
+| **`o3`**      | Highest reasoning; reserve for audits.       |
 
 ---
 
@@ -109,3 +109,4 @@ Remember: OpenAI is a supporting service. Core trust-minimized logic still happe
 
 
 ---
+```

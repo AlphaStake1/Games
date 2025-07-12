@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RandomizerAgent",
+  "description": "An agent for requesting random numbers from an on-chain VRF.",
+  "type": "object",
+  "properties": {
+    "requestNumbers": {
+      "type": "object",
+      "description": "Requests random numbers from the Switchboard VRF.",
+      "properties": {},
+      "required": []
+    }
+  },
+  "required": ["requestNumbers"]
+}

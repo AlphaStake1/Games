@@ -1,4 +1,4 @@
-import { Target, Square, Trophy } from 'lucide-react';
+import { Target, Square, Trophy } from "lucide-react";
 
 const HowItWorks = () => {
   const steps: {
@@ -9,21 +9,24 @@ const HowItWorks = () => {
   }[] = [
     {
       icon: Target,
-      title: 'Pick a Board',
-      description: 'Choose from available NFL game boards and find your perfect match.',
-      color: 'bg-[#002244]',
+      title: "Pick a Board",
+      description:
+        "Choose from available NFL game boards and find your perfect match.",
+      color: "bg-[#002244]",
     },
     {
       icon: Square,
-      title: 'Claim Your Square',
-      description: 'Select your lucky square on the 10x10 grid and make it yours.',
-      color: 'bg-[#8d594d]',
+      title: "Claim Your Square",
+      description:
+        "Select your lucky square on the 10x10 grid and make it yours.",
+      color: "bg-[#8d594d]",
     },
     {
       icon: Trophy,
-      title: 'Watch & Win',
-      description: 'Cheer for your numbers as the game unfolds and collect your prizes.',
-      color: 'bg-[#004953]',
+      title: "Watch & Win",
+      description:
+        "Cheer for your numbers as the game unfolds and collect your prizes.",
+      color: "bg-[#004953]",
     },
   ];
 
@@ -37,7 +40,6 @@ const HowItWorks = () => {
           <p className="text-xl text-[#708090] max-w-2xl mx-auto">
             Get started with Football Squares in three simple steps
           </p>
-        
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -49,7 +51,9 @@ const HowItWorks = () => {
               {/* Step Number */}
               <div className="flex items-center justify-center mb-6">
                 <div className="relative">
-                  <div className={`${step.color} w-20 h-20 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-300`}>
+                  <div
+                    className={`${step.color} w-20 h-20 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-300`}
+                  >
                     <step.icon className="w-10 h-10 text-white" />
                   </div>
                   <div className="absolute -top-2 -right-2 bg-[#ed5925] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { PlayCircle } from 'lucide-react';
+import { useState } from "react";
+import { PlayCircle } from "lucide-react";
 
 const Hero = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -13,7 +13,7 @@ const Hero = () => {
           {/* Text Content */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Game Day Just Got{' '}
+              Game Day Just Got{" "}
               <span className="text-[#ed5925]">More Rewarding</span>
             </h1>
             <p className="text-xl sm:text-2xl text-[#96abdc] mb-8 leading-relaxed">
@@ -32,7 +32,7 @@ const Hero = () => {
           <div className="flex justify-center lg:justify-end">
             <div
               className={`relative transition-transform duration-500 ${
-                isHovered ? 'scale-110 rotate-3' : 'scale-100 rotate-0'
+                isHovered ? "scale-110 rotate-3" : "scale-100 rotate-0"
               }`}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
@@ -59,8 +59,12 @@ const Hero = () => {
                 <div className="absolute bottom-8 right-8 text-4xl">🏈</div>
 
                 {/* Floating Elements */}
-                <div className="absolute top-4 right-4 text-2xl animate-pulse text-[#ed5925]">⭐</div>
-                <div className="absolute bottom-4 left-4 text-2xl animate-pulse delay-1000 text-[#96abdc]">🎯</div>
+                <div className="absolute top-4 right-4 text-2xl animate-pulse text-[#ed5925]">
+                  ⭐
+                </div>
+                <div className="absolute bottom-4 left-4 text-2xl animate-pulse delay-1000 text-[#96abdc]">
+                  🎯
+                </div>
               </div>
             </div>
           </div>

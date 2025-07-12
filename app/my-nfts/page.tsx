@@ -1,14 +1,15 @@
-import dynamic from 'next/dynamic';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import dynamic from "next/dynamic";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
-const MyNFTsContent = dynamic(() => import('@/components/MyNFTsContent'), {
+const MyNFTsContent = dynamic(() => import("@/components/MyNFTsContent"), {
   ssr: false,
 });
 
 export const metadata = {
-  title: 'My NFTs | Football Squares Collection',
-  description: 'View your Football Squares NFT collection and learn about creating unique digital assets for your game squares.',
+  title: "My NFTs | Football Squares Collection",
+  description:
+    "View your Football Squares NFT collection and learn about creating unique digital assets for your game squares.",
 };
 
 export default function MyNFTsPage() {

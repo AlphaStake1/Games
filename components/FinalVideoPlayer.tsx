@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 
 interface FinalVideoPlayerProps {
-  videoId: string
-  title: string
+  videoId: string;
+  title: string;
 }
 
 const FinalVideoPlayer: React.FC<FinalVideoPlayerProps> = ({
@@ -13,7 +13,7 @@ const FinalVideoPlayer: React.FC<FinalVideoPlayerProps> = ({
 }) => {
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   // Use youtu.be short link to prevent YouTube from rewriting the URL to /embed/
-  const videoUrl = `https://youtu.be/${videoId}`
+  const videoUrl = `https://youtu.be/${videoId}`;
 
   return (
     <div
@@ -25,8 +25,8 @@ const FinalVideoPlayer: React.FC<FinalVideoPlayerProps> = ({
         window.location.href = videoUrl;
       }}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          window.open(videoUrl, '_blank', 'noopener');
+        if (e.key === "Enter" || e.key === " ") {
+          window.open(videoUrl, "_blank", "noopener");
         }
       }}
       className="relative block aspect-video rounded-lg overflow-hidden group bg-slate-800 cursor-pointer"
@@ -54,10 +54,12 @@ const FinalVideoPlayer: React.FC<FinalVideoPlayerProps> = ({
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 p-4">
-        <h3 className="text-white font-bold text-lg truncate drop-shadow-md">{title}</h3>
+        <h3 className="text-white font-bold text-lg truncate drop-shadow-md">
+          {title}
+        </h3>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FinalVideoPlayer
+export default FinalVideoPlayer;

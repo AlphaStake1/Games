@@ -1,18 +1,18 @@
+# CLAUDE.md
 
-# CLAUDE.md  
 > Guidance & ground-rules for Claude Code (and other LLMs) when working in this repo.
 
 ---
 
 ## 🔄 Project Awareness & Context
 
-1. **Always open `PLANNING.md` first** – architecture, style, naming, design-system tokens.  
-2. **Check `TASK.md`** – if your task isn’t listed, add it with a date & one-line description.  
-3. **Consult `/research/*`** – scrape pages live only if documentation is missing there.  
-4. **Sacred truths**  
-   - Primary orchestrator model: `claude-sonnet-4-20250514`.  
-   - Supporting OpenAI model: `gpt-4.1`. **Never rename or swap models.**  
-   - CRON / scheduler = **Clockwork**.  
+1. **Always open `PLANNING.md` first** – architecture, style, naming, design-system tokens.
+2. **Check `TASK.md`** – if your task isn’t listed, add it with a date & one-line description.
+3. **Consult `/research/*`** – scrape pages live only if documentation is missing there.
+4. **Sacred truths**
+   - Primary orchestrator model: `claude-sonnet-4-20250514`.
+   - Supporting OpenAI model: `gpt-4.1`. **Never rename or swap models.**
+   - CRON / scheduler = **Clockwork**.
    - Email = **Proton Mail + Proton VPN/Bridge**.
 
 ---
@@ -33,24 +33,27 @@ solana-test-validator  # local validator
 # TypeScript agents / CLI
 pnpm ts-node scripts/init_board.ts --game 123
 pnpm lint && tsc --noEmit           # ESLint + TS type-check
-````
+```
+
 ---
+
 ### Project-Specific Commands
 
-| Command                                  | What it does                                   |
-|------------------------------------------|------------------------------------------------|
-| `pnpm squares:init <gameId>`             | One-shot script → creates board + sets Clockwork thread |
-| `pnpm squares:randomize <boardPDA>`      | Manually trigger VRF randomization (dev only)  |
-| `pnpm db:seed`                           | Seeds Ceramic dev profile for demo accounts    |
-| `cargo run --bin vrf-callback-debug`     | Runs local VRF callback simulator              |
+| Command                              | What it does                                            |
+| ------------------------------------ | ------------------------------------------------------- |
+| `pnpm squares:init <gameId>`         | One-shot script → creates board + sets Clockwork thread |
+| `pnpm squares:randomize <boardPDA>`  | Manually trigger VRF randomization (dev only)           |
+| `pnpm db:seed`                       | Seeds Ceramic dev profile for demo accounts             |
+| `cargo run --bin vrf-callback-debug` | Runs local VRF callback simulator                       |
+
     *Make sure each script exists in /scripts or explain where it lives
 
 ---
 
 ## 🚦 Core Rules for LLM-Driven Code
 
-| # | Rule |
-|---|-----------------------------------------------------------------------------------------------------------------------------------|
+| #   | Rule |
+| --- | ---- |
 
 \| 1 | **Never hallucinate** libraries, CLI flags, file paths. Confirm existence first. |
 \| 2 | **Files > 500 LOC** → refactor into modules (`lib/`, `utils/`, etc.). |
@@ -87,17 +90,17 @@ docs/                      # markdown specs
 research/                  # Jina scrapes / official docs
 ```
 
-*Stick to this layout unless PLANNING.md says otherwise.*
+_Stick to this layout unless PLANNING.md says otherwise._
 
 ---
 
 ## 📐 Code Style
 
-* **TypeScript / JavaScript** → Airbnb + Prettier (see `.eslintrc`).
-* **Rust** → `rustfmt + clippy`.
-* **React** → Functional components, hooks, shadcn/ui tokens.
-* **Docstrings** → Google style in TS & Rust (`///` on top of fns).
-* **Commit messages** → Conventional Commits (`feat:`, `fix:`, etc.).
+- **TypeScript / JavaScript** → Airbnb + Prettier (see `.eslintrc`).
+- **Rust** → `rustfmt + clippy`.
+- **React** → Functional components, hooks, shadcn/ui tokens.
+- **Docstrings** → Google style in TS & Rust (`///` on top of fns).
+- **Commit messages** → Conventional Commits (`feat:`, `fix:`, etc.).
 
 ---
 
@@ -124,9 +127,10 @@ research/                  # Jina scrapes / official docs
    anchor deploy && pnpm ts-node scripts/e2e_demo.ts
    ```
 
-*All steps must be green before marking a TASK complete.*
+_All steps must be green before marking a TASK complete._
 
 ---
+
 | Item               | Action                                                                                                   |
 | ------------------ | -------------------------------------------------------------------------------------------------------- |
 | **Vitest vs Jest** | Confirm actual test runner; update `pnpm test` alias.                                                    |
@@ -137,8 +141,8 @@ research/                  # Jina scrapes / official docs
 
 ## 🔑 Secrets & Environment
 
-* Use `.env.local` – never commit real keys.
-* Required vars (see `.env.example`):
+- Use `.env.local` – never commit real keys.
+- Required vars (see `.env.example`):
 
   ```env
   OPENAI_API_KEY=...
@@ -154,29 +158,30 @@ research/                  # Jina scrapes / official docs
 
 Follow `designsystem.md`:
 
-* Brand colors:
+- Brand colors:
+  - Primary Blue `#255c7e`
+  - Accent Orange `#ed5925`
 
-  * Primary Blue `#255c7e`
-  * Accent Orange `#ed5925`
-* Use shadcn/ui primitives; never invent custom CSS unless tokenized.
+- Use shadcn/ui primitives; never invent custom CSS unless tokenized.
 
 ---
 
 ## 🧠 Agent-Specific Guidelines
 
-* **OrchestratorAgent** can call sub-agents only via tool pattern, never directly hit Solana RPC.
-* **RandomizerAgent** must verify Switchboard VRF proof before writing to chain (no trustless skip).
-* **EmailAgent** uses Proton Bridge SMTP @ `127.0.0.1:1025`.
-* Always include `ctx.usage` for token accounting.
+- **OrchestratorAgent** can call sub-agents only via tool pattern, never directly hit Solana RPC.
+- **RandomizerAgent** must verify Switchboard VRF proof before writing to chain (no trustless skip).
+- **EmailAgent** uses Proton Bridge SMTP @ `127.0.0.1:1025`.
+- Always include `ctx.usage` for token accounting.
 
 ---
 
 ## 📎 Documentation Duties
 
-* Update `/docs/*.md` when APIs, env vars, or contract accounts change.
-* If new third-party lib used → scrape 10–15 official-doc pages into `/research/<lib>/`.
+- Update `/docs/*.md` when APIs, env vars, or contract accounts change.
+- If new third-party lib used → scrape 10–15 official-doc pages into `/research/<lib>/`.
 
 Documentation & References
+
 - file: docs/PLANNING.md
   why: High-level architecture and naming conventions
 
@@ -190,27 +195,31 @@ Documentation & References
   why: Scheduler account-layout and thread-creation examples
 
 For monorepo with multiple packages, prepend the subdir:
+
 - file: programs/squares/src/lib.rs
   why: Anchor program entry point – read before adding new ix
 
 ---
+
 Standardise package-manager commands (pnpm)
-- pnpm install               # bootstrap repo
-- pnpm dev                   # next dev + nodemon agents
-- pnpm lint && pnpm test     # full QA suite
+
+- pnpm install # bootstrap repo
+- pnpm dev # next dev + nodemon agents
+- pnpm lint && pnpm test # full QA suite
 - pnpm ts-node scripts/init_board.ts --game 123
+
 * If you keep npm, swap every pnpm reference in docs and CI to npm run
 
 ---
 
 ## ❌ Anti-Patterns
 
-* No off-chain RNG.
-* No direct Gmail / SES (use Proton).
-* No hard-coded PDAs; derive via seeds.
-* No `console.log` commits in production code.
-* No giant pull requests (>500 LOC diff) without prior task breakdown.
+- No off-chain RNG.
+- No direct Gmail / SES (use Proton).
+- No hard-coded PDAs; derive via seeds.
+- No `console.log` commits in production code.
+- No giant pull requests (>500 LOC diff) without prior task breakdown.
 
 ---
 
-*Claude, follow these instructions exactly; ask if anything is unclear or missing.*
+_Claude, follow these instructions exactly; ask if anything is unclear or missing._

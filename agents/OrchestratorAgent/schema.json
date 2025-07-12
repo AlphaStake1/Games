@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrchestratorAgent",
+  "description": "An agent responsible for planning and coordinating tasks among other agents.",
+  "type": "object",
+  "properties": {
+    "planTasks": {
+      "type": "object",
+      "description": "Plans a sequence of tasks for other agents to execute.",
+      "properties": {},
+      "required": []
+    }
+  },
+  "required": ["planTasks"]
+}

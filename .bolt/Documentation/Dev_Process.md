@@ -2,16 +2,16 @@ Below is a lean, battle-tested workflow that lets a **solo developer** iterate f
 
 At a glance you’ll:
 
-* work exclusively on short-lived feature branches,
-* let GitHub + Netlify build every branch into an isolated **Deploy Preview**,
-* use AI tools for scaffolding, refactors and docs—but never as the sole reviewer,
-* keep main perpetually deployable, versioned and tagged.
+- work exclusively on short-lived feature branches,
+- let GitHub + Netlify build every branch into an isolated **Deploy Preview**,
+- use AI tools for scaffolding, refactors and docs—but never as the sole reviewer,
+- keep main perpetually deployable, versioned and tagged.
 
 ---
 
-## 1  Local development loop
+## 1 Local development loop
 
-### 1.1  One-command dev server
+### 1.1 One-command dev server
 
 ```bash
 netlify dev          # wraps `next dev`, injects env-vars, mocks Functions
@@ -19,14 +19,14 @@ netlify dev          # wraps `next dev`, injects env-vars, mocks Functions
 
 `netlify dev` mirrors the exact build Netlify runs in CI and gives you a sharable tunnel if you add `--live`. ([docs.netlify.com][1], [docs.netlify.com][2])
 
-### 1.2  Fast Refresh & AI pair-coding
+### 1.2 Fast Refresh & AI pair-coding
 
-* Tailwind/Next.js hot-reload < 1 s; keep the browser + VS Code side-by-side.
-* Prompt Copilot/Gemini for **scaffolding, test stubs, regexes, doc-blocks**—then review line-by-line. GitHub stresses that *you* remain “editor-in-chief.” ([docs.github.com][3], [github.blog][4])
+- Tailwind/Next.js hot-reload < 1 s; keep the browser + VS Code side-by-side.
+- Prompt Copilot/Gemini for **scaffolding, test stubs, regexes, doc-blocks**—then review line-by-line. GitHub stresses that _you_ remain “editor-in-chief.” ([docs.github.com][3], [github.blog][4])
 
 ---
 
-## 2  Git discipline for a party-of-one
+## 2 Git discipline for a party-of-one
 
 | Step                 | Command                                    | Why                                                                                   |
 | -------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------- |
@@ -35,47 +35,47 @@ netlify dev          # wraps `next dev`, injects env-vars, mocks Functions
 | Push                 | `git push -u origin HEAD`                  | Triggers a Netlify Deploy Preview automatically. ([netlify.com][7], [netlify.com][8]) |
 | Merge                | PR → **Squash & merge**                    | Keeps history linear; Conventional-Commit message becomes the release note.           |
 
-> **Tip:** adopt *Conventional Commits + Semantic Versioning* so your tags (v1.2.3) and changelog are generated automatically. ([nimafarzin-pr.medium.com][9], [reddit.com][10])
+> **Tip:** adopt _Conventional Commits + Semantic Versioning_ so your tags (v1.2.3) and changelog are generated automatically. ([nimafarzin-pr.medium.com][9], [reddit.com][10])
 
 ---
 
-## 3  Netlify automation
+## 3 Netlify automation
 
-### 3.1  Deploy Previews
+### 3.1 Deploy Previews
 
 Every branch/PR gets its own URL (`https://<slug>--preview.netlify.app`); test responsive layouts, share with friends, or run Lighthouse before merging. ([docs.netlify.com][1])
 
-### 3.2  Production deploy
+### 3.2 Production deploy
 
 Merge → Netlify **build + test + deploy** → DNS instant-swap. Failed builds never reach users. ([netlify.com][7])
 
-### 3.3  Environment & secrets
+### 3.3 Environment & secrets
 
 `Site settings ▸ Build & deploy ▸ Environment` → add `NEXT_PUBLIC_API_URL`, keys, etc. The same vars are available in `netlify dev`. ([docs.netlify.com][2])
 
 ---
 
-## 4  Using AI effectively (solo edition)
+## 4 Using AI effectively (solo edition)
 
 | Use-case                | Good practice                                               | Why                                                                       |
 | ----------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------- |
 | Generate boilerplate    | “Create React component for ScoreBoard with props … ”       | Saves typing. Review diff before commit.                                  |
 | Explain unfamiliar code | `#copilot explain`/Gemini “Explain this hook”               | Builds understanding; catches dead code.                                  |
-| Refactor                | Highlight block → “Refactor into hook”                      | Faster but *run tests afterwards*.                                        |
+| Refactor                | Highlight block → “Refactor into hook”                      | Faster but _run tests afterwards_.                                        |
 | Docs & commit msgs      | “Write JSDoc for this fn” / “Summarise changes in 50 chars” | Clear history is your future self’s best friend.                          |
 | **Never**               | accept large AI patch unreviewed                            | NYU study: 40 % of Copilot security snippets had flaws. ([wired.com][11]) |
 
 ---
 
-## 5  Testing & quality gates
+## 5 Testing & quality gates
 
-* **unit / integration**: Vitest or Jest + React Testing Library.
-* **e2e**: Playwright → run in Netlify CI (`netlify build --context deploy-preview`).
-* **lint & typecheck**: `next lint` / `tsc --noEmit` fail the build early.
+- **unit / integration**: Vitest or Jest + React Testing Library.
+- **e2e**: Playwright → run in Netlify CI (`netlify build --context deploy-preview`).
+- **lint & typecheck**: `next lint` / `tsc --noEmit` fail the build early.
 
 ---
 
-## 6  Release & rollback
+## 6 Release & rollback
 
 1. Merge → Netlify deploys → tag automatically:
 
@@ -83,11 +83,12 @@ Merge → Netlify **build + test + deploy** → DNS instant-swap. Failed builds 
    npm version minor   # bumps 1.3.0, creates git tag
    git push --follow-tags
    ```
+
 2. Broken prod? In Netlify, **Deploys ▸ previous build ▸ Restore** (instant).
 
 ---
 
-## 7  Daily driver checklist
+## 7 Daily driver checklist
 
 | Morning                                    | Evening                           |
 | ------------------------------------------ | --------------------------------- |
@@ -100,10 +101,10 @@ Merge → Netlify **build + test + deploy** → DNS instant-swap. Failed builds 
 
 ### Key take-aways
 
-* **Feature branches + Deploy Previews** give you prod-level validation without risk.
-* Keep **main** always releasable; merge only when Netlify preview looks good.
-* Use AI for speed-ups, not blind merges—review everything, run tests.
-* Automate: `netlify dev`, one-click rollback, semantic tags = zero hand-holds.
+- **Feature branches + Deploy Previews** give you prod-level validation without risk.
+- Keep **main** always releasable; merge only when Netlify preview looks good.
+- Use AI for speed-ups, not blind merges—review everything, run tests.
+- Automate: `netlify dev`, one-click rollback, semantic tags = zero hand-holds.
 
 Adopt this solo-centric loop and you’ll iterate as quickly as the code and your AI copilots can keep up, while Netlify ensures only green builds ever reach your users.
 

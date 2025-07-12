@@ -1,12 +1,13 @@
-import PrivacyPolicyContent from '../../components/PrivacyPolicyContent'
-import { Metadata } from 'next'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
+import PrivacyPolicyContent from "../../components/PrivacyPolicyContent";
+import { Metadata } from "next";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - Football Squares',
-  description: 'Privacy policy for Football Squares, detailing how we collect, use, and protect your personal information.'
-}
+  title: "Privacy Policy - Football Squares",
+  description:
+    "Privacy policy for Football Squares, detailing how we collect, use, and protect your personal information.",
+};
 
 export default function PrivacyPage() {
   return (
@@ -17,5 +18,5 @@ export default function PrivacyPage() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }

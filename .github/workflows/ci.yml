@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run linter
+        run: pnpm lint
+
+      - name: Check types
+        run: pnpm tsc --noEmit
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+            toolchain: stable
+            components: clippy
+
+      - name: Set up Anchor
+        run: |
+          npm install -g @project-serum/anchor-cli
+          # The Anchor version might need to be adjusted based on the project's needs.
+          # For now, we assume the latest version is fine.
+
+      - name: Check Rust code with Clippy
+        run: cargo clippy -- -D warnings
+
+      - name: Build Anchor program
+        run: anchor build

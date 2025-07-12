@@ -1,7 +1,7 @@
-import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import TermsOfServiceContent from '@/components/TermsOfServiceContent';
+import React from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import TermsOfServiceContent from "@/components/TermsOfServiceContent";
 
 const TermsOfServicePage = () => {
   return (

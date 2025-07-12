@@ -30,7 +30,7 @@ The dashboard is wallet-gated: holders of an **admin NFT** (minted at deployment
 
 ## AGENTS (⚙️ Agentic Workflow)
 
-### OrchestratorAgent — *Claude Sonnet 4*
+### OrchestratorAgent — _Claude Sonnet 4_
 
 Wakes up via **Clockwork** schedule (cron-like slot triggers) and evaluates global game context:
 
@@ -46,7 +46,7 @@ Then spawns task-specific agents and enforces duplicate-prevention (e.g., no dou
 | **BoardAgent**      | GPT-4.1 mini | Build 10 × 10 grid accounts, initialize metadata                                 |
 | **RandomizerAgent** | GPT-4.1 mini | Request VRF from Switchboard, assign 0-9 headers                                 |
 | **OracleAgent**     | GPT-4.1 mini | Poll Switchboard score feed, cache to Ceramic                                    |
-| **WinnerAgent**     | GPT-4.1 mini | Compare live score ↔ board, mark winning square                                  |
+| **WinnerAgent**     | GPT-4.1 mini | Compare live score ↔ board, mark winning square                                 |
 | **PayoutAgent**     | GPT-4.1 mini | Submit Anchor `payout()` instruction, confirm SOL transfer                       |
 | **AnalyticsAgent**  | GPT-4.1 mini | Aggregate stats, surface insights to dashboard (stickiness metrics, pool fill %) |
 
@@ -68,7 +68,7 @@ Each file shows the **exact JSON** an agent should ingest or emit.
 
 ---
 
-## DOCUMENTATION *(scrape 10–15 pages per link)*
+## DOCUMENTATION _(scrape 10–15 pages per link)_
 
 | Domain                   | Why We Need It                                                                                       |
 | ------------------------ | ---------------------------------------------------------------------------------------------------- |
@@ -85,25 +85,23 @@ Each file shows the **exact JSON** an agent should ingest or emit.
 | **Anthropic API**        | [https://docs.anthropic.com/](https://docs.anthropic.com/)                                           |
 | **Jina Reader / Search** | [https://jina.ai/reader/](https://jina.ai/reader/)                                                   |
 
-
 ---
 
 ## OTHER CONSIDERATIONS
 
 1. **Designsystem.md** — continue to enforce global UI tokens (colors #255c7e / #ed5925 etc.).
 2. **Security**
+   - Validate all Cross-Program Invocations in Anchor.
+   - Rate-limit VRF requests to avoid griefing.
+   - Use SPL Token transfers with checked owner asserts for payouts.
 
-   * Validate all Cross-Program Invocations in Anchor.
-   * Rate-limit VRF requests to avoid griefing.
-   * Use SPL Token transfers with checked owner asserts for payouts.
 3. **Testing**
+   - On-chain unit tests in `programs/tests/` (e.g., board init, winner calc, payout).
+   - Front-end Cypress tests for wallet flow.
 
-   * On-chain unit tests in `programs/tests/` (e.g., board init, winner calc, payout).
-   * Front-end Cypress tests for wallet flow.
 4. **Extensibility**
-
-   * To add a new agent, create a spec in `agents/NEW_AGENT_NAME/`, implement schema, and reference it in OrchestratorAgent’s task matrix.
-   * OrchestratorAgent auto-loads any folder matching `agents/*Agent/` pattern.
+   - To add a new agent, create a spec in `agents/NEW_AGENT_NAME/`, implement schema, and reference it in OrchestratorAgent’s task matrix.
+   - OrchestratorAgent auto-loads any folder matching `agents/*Agent/` pattern.
 
 ---
 

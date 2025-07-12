@@ -2,53 +2,60 @@ name: "Multi-Agent System — Football Squares Orchestrator + Task Agents"
 description: |
 
 ## Purpose
+
 Demonstrate an **agent-as-tool** pattern for our Solana Football-Squares project:
 
-* **OrchestratorAgent** (Claude Sonnet 4) = high-level planner  
-* Child agents (*BoardAgent, RandomizerAgent, OracleAgent, WinnerAgent, PayoutAgent*) = tools it can invoke  
-* All agents interact with Solana (Anchor program), Switchboard (oracle + VRF) and Clockwork (cron scheduling).
+- **OrchestratorAgent** (Claude Sonnet 4) = high-level planner
+- Child agents (_BoardAgent, RandomizerAgent, OracleAgent, WinnerAgent, PayoutAgent_) = tools it can invoke
+- All agents interact with Solana (Anchor program), Switchboard (oracle + VRF) and Clockwork (cron scheduling).
 
 ## Core Principles
-1. **On-chain first** — critical state lives in Anchor accounts.  
-2. **JSON-only messages** — deterministic schemas in `/schemas`.  
-3. **Validation Loops** — lint, unit-test, localnet integration before PR merge.  
-4. **Progressive Success** — start on devnet/localnet, then mainnet-beta.  
+
+1. **On-chain first** — critical state lives in Anchor accounts.
+2. **JSON-only messages** — deterministic schemas in `/schemas`.
+3. **Validation Loops** — lint, unit-test, localnet integration before PR merge.
+4. **Progressive Success** — start on devnet/localnet, then mainnet-beta.
 
 ---
 
 ## Goal
+
 A CLI + agent bundle that lets an admin:
 
-1. Create a board for a given NFL game.  
-2. Randomize headers via Switchboard VRF.  
-3. Monitor live scores (Switchboard oracle).  
-4. Auto-detect winners and trigger payout ix.  
-5. Email the winner a receipt via Proton Mail Bridge.  
+1. Create a board for a given NFL game.
+2. Randomize headers via Switchboard VRF.
+3. Monitor live scores (Switchboard oracle).
+4. Auto-detect winners and trigger payout ix.
+5. Email the winner a receipt via Proton Mail Bridge.
 
 ## Why
-* Removes manual ops; ensures provable randomness and timely payouts.  
-* Showcases modular agent tooling for other dApp teams.  
-* Provides sticky user experience (real-time board + email receipts).
+
+- Removes manual ops; ensures provable randomness and timely payouts.
+- Showcases modular agent tooling for other dApp teams.
+- Provides sticky user experience (real-time board + email receipts).
 
 ## What (User-visible & Technical)
-* **Admin CLI**: `yarn squares init <gameId>` → board appears in UI.  
-* **BoardAgent** creates PDA, writes to Anchor.  
-* **RandomizerAgent** requests VRF, commits numbers.  
-* **OracleAgent** polls score every 5 min (Clockwork thread).  
-* **WinnerAgent** marks winning square; **PayoutAgent** sends SOL.  
-* **EmailAgent** (tool) sends Proton receipt.
+
+- **Admin CLI**: `yarn squares init <gameId>` → board appears in UI.
+- **BoardAgent** creates PDA, writes to Anchor.
+- **RandomizerAgent** requests VRF, commits numbers.
+- **OracleAgent** polls score every 5 min (Clockwork thread).
+- **WinnerAgent** marks winning square; **PayoutAgent** sends SOL.
+- **EmailAgent** (tool) sends Proton receipt.
 
 ### Success Criteria
-- [ ] Board headers match VRF entropy proof.  
-- [ ] Winner & payout recorded on-chain and displayed in UI.  
-- [ ] Proton email contains correct tx signature.  
-- [ ] All tests pass on CI (GitHub Actions + `solana-test-validator`).  
+
+- [ ] Board headers match VRF entropy proof.
+- [ ] Winner & payout recorded on-chain and displayed in UI.
+- [ ] Proton email contains correct tx signature.
+- [ ] All tests pass on CI (GitHub Actions + `solana-test-validator`).
 
 ---
 
 ## All Needed Context
 
 ### Docs & References
+
 ```yaml
 - url: https://docs.switchboard.xyz/developers/vrf
   why: Request & verify randomness
@@ -147,7 +154,6 @@ Task 5: CLI glue
 
 Task 6: Tests
   - Anchor mocha tests in programs/squares/tests/
-
 ```
 
 ---
@@ -181,21 +187,22 @@ All steps must pass before PR is merged.
 
 ## Final Checklist
 
-* [ ] Clippy / ESLint clean
-* [ ] `anchor test` green
-* [ ] Localnet manual run OK
-* [ ] Docs updated (`docs/randomizer.md`, `docs/agents.md`)
-* [ ] CHANGELOG entry
+- [ ] Clippy / ESLint clean
+- [ ] `anchor test` green
+- [ ] Localnet manual run OK
+- [ ] Docs updated (`docs/randomizer.md`, `docs/agents.md`)
+- [ ] CHANGELOG entry
 
 ---
 
 ## Anti-Patterns to Avoid
 
-* ❌ Off-chain RNG (must use Switchboard VRF)
-* ❌ Storing secrets in repo (use `.env.local`)
-* ❌ Skipping VRF proof verification
-* ❌ Hard-coding PDAs
+- ❌ Off-chain RNG (must use Switchboard VRF)
+- ❌ Storing secrets in repo (use `.env.local`)
+- ❌ Skipping VRF proof verification
+- ❌ Hard-coding PDAs
 
 ```
 
 Use this template for any multi-agent feature PRP moving forward. It mirrors our Solana stack, enforces validation loops, and provides clear task breakdowns for LLM-assisted implementation.
+```

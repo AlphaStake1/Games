@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
-import { Play } from 'lucide-react';
+import { Play } from "lucide-react";
 
 const AdBanner = () => {
-
   return (
     <section className="bg-[#002244] overflow-hidden">
       <div className="h-80">
@@ -17,11 +16,15 @@ const AdBanner = () => {
                     <Play className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">Football Squares Explained</h3>
-                    <p className="text-[#96abdc]">Watch how Football Squares works</p>
+                    <h3 className="text-xl font-bold">
+                      Football Squares Explained
+                    </h3>
+                    <p className="text-[#96abdc]">
+                      Watch how Football Squares works
+                    </p>
                   </div>
                 </div>
-                
+
                 <div className="bg-black bg-opacity-30 rounded-lg pt-1 pb-24">
                   <div className="flex justify-center">
                     <div className="w-80 h-80 bg-black rounded-lg overflow-hidden">

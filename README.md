@@ -1,97 +1,100 @@
-# Crypto Squares — Football Board
-> A modern, crypto-native spin on [Football Squares](https://en.wikipedia.org/wiki/Super_Bowl_squares).
+# Crypto Squares — A Solana-Based Football Squares dApp
 
-An open-source platform where players claim grid squares (free or paid), track live scores, and receive automated on-chain payouts—fully auditable, fully transparent.
+> A modern, crypto-native spin on [Football Squares](https://en.wikipedia.org/wiki/Super_Bowl_squares), rebuilt on the Solana blockchain.
+
+An open-source platform where players claim grid squares, track live scores, and receive automated on-chain payouts—fully auditable, fully transparent, and powered by a decentralized stack.
 
 ---
 
-## ✨ Key Features
+## ✨ Project Vision (Solana First)
 
-| ⭐ = already live | Module | What it Delivers |
-|------------------|--------|------------------|
-| ⭐ | **Multi-Board Engine** | Run parallel grids (Sunday Night, Monday Night, Thursday Night) and season-long leaderboards. |
-| ⭐ | **Free vs Paid Segregation** | Separate sweepstakes (free/NFT prizes) from cash boards (escrow + auto-refund if unsold). |
-| ⭐ | **Forward / Backward / +5 Rules**¹ | Flexible rule sets with a 60 / 40 split, bonus squares, and OT variants. |
-| ⭐ | **On-Chain Randomizer** | Seeded RNG commits to the blockchain for provably fair digit assignment. |
-| ⭐ | **Non-custodial Wallet Connect** | Users connect or generate Bitcoin, Solana, or EVM wallets *client-side only*. |
-|   | **NFT Mint & Showcase** | Collectible overlays and trophy cabinet for winners. |
-| ⭐ | **Admin Panel** | Create boards, set cut-off, trigger **All Bets Off** refunds, manage payouts, export logs. |
+This project is a trust-minimised **Football-Squares dApp** that:
 
-<sub>¹ Forward = read **home→away** digits. Backward = **away→home**. “+5” = each digit + 5 (mod 10) bonus square.</sub>
+*   stores board and payout logic in an **Anchor** program,
+*   automates game-day tasks via **Clockwork** + LLM agents,
+*   delivers a real-time UI in **Next.js (static export) + Tailwind**,
+*   emails winners through a **Proton Mail Bridge**,
+*   logs mutable history on **Ceramic**,
+*   and is deployed on **Akash** / IPFS.
 
 ---
 
 ## 🏗 Tech Stack
 
-| Layer | Stack |
-|-------|-------|
-| **Front-end** | Next.js 13.5 + React 18, Tailwind CSS, WalletConnect v2, Solana Wallet Adapter, Socket.io |
-| **Back-end** | Node.js 20 + NestJS API, TypeScript, PostgreSQL (Prisma ORM), **Redis** *(pub/sub for live-score pushes)* |
-| **Blockchain** | EVM (Polygon) via ethers.js, Solana via `@solana/web3.js`, Bitcoin Taproot via bitcoinjs-lib |
-| **NFT** | Metaplex (Solana) + ERC-721 (EVM) collectibles |
-| **DevOps** | Docker Compose, GitHub Actions CI/CD, AWS Fargate |
---
-Copy .env.example to .env and fill the blanks.
+| Layer          | Stack                                                            |
+| -------------- | ---------------------------------------------------------------- |
+| **Blockchain** | Solana, Anchor, Switchboard (VRF & Oracles), Clockwork           |
+| **Front-end**  | Next.js 13 (Static), TypeScript, Tailwind CSS, shadcn/ui         |
+| **AI/Agents**  | OpenAI API, Anthropic API, TypeScript-based agents               |
+| **Storage**    | Ceramic (Mutable Data), IPFS (Immutable Assets)                  |
+| **Deployment** | Akash, Docker                                                    |
+| **Notifications**| Proton Mail Bridge (SMTP)                                        |
+
 ---
 
-## ⚙️ Local Dev Quick-Start
+## ⚙️ Local Development Quick-Start
 
+### 1. Prerequisites
+- **Node.js** (v18 or higher)
+- **pnpm** (v8 or higher)
+- **Rust** & **Cargo**
+- **Anchor Framework** (`avm install latest` & `avm use latest`)
 
-# 1. Clone
-git clone https://github.com/AlphaStake1/football_board.git
-cd football_board
+### 2. Clone Repository
+```bash
+git clone https://github.com/your-username/football-squares.git
+cd football-squares
+```
 
-# 2. Environment
-cp .env.example .env   # fill `DB_URL`, `CHAIN_IDS`, etc.
+### 3. Install Dependencies
+```bash
+pnpm install
+```
 
-# 3. Install deps  (ensure pnpm ≥ 8 is installed)
-pnpm i
+### 4. Environment Setup
+Copy the example environment file and fill in your details.
+```bash
+cp .env.example .env
+```
 
-# 4. Docker up
-docker compose up --build
+### 5. Build & Test Anchor Program
+```bash
+anchor build
+anchor test
+```
 
-# 5. Seed DB (optional demo data)
-pnpm prisma db seed
+### 6. Run Next.js Frontend
+```bash
+pnpm dev
+```
+The application will be available at `http://localhost:3000`.
 
-# 6. Run unit tests
-pnpm test
+---
 
+## ✅ Phase 1 Deliverables
 
-App: http://localhost:3000
+The first phase of development focused on research, scaffolding, and setting up the core project structure.
 
-GraphQL: http://localhost:4000/graphql
+| # | Deliverable         | Acceptance Criteria                                                           |
+|---|---------------------|-------------------------------------------------------------------------------|
+| 1 | **Research corpus** | `research/` contains ≥ 100 pages total, organised by tech.                    |
+| 2 | **Anchor skeleton** | `anchor build` succeeds; unit test creates a board.                           |
+| 3 | **Next.js shell**   | `pnpm build && pnpm start` serves static site showing placeholder grid.         |
+| 4 | **Design system**   | `app/globals.css` contains monochrome ink/paper CSS variables.                |
+| 5 | **SVG assets**      | `public/assets/` contains `scribble-border.svg` and `paper-texture.svg`.    |
+| 6 | **Agent stubs**     | TypeScript classes compile; Orchestrator prints planned tasks.                |
+| 7 | **CLI stubs**       | `pnpm ts-node scripts/init_board.ts` prints "TODO".                           |
+| 8 | **CI bootstrap**    | GitHub Action: `pnpm lint`, `tsc --noEmit`, `cargo clippy`, `anchor build` pass. |
 
-🖼 Live Demo / Screenshots
-Claiming a Square	Admin Panel (board controls)
+---
 
-Try the hosted demo here → LIVE_URL
+## 🤝 Contributing
 
-pnpm test          # jest + ts-jest unit + integration
-pnpm e2e           # Playwright E2E
+We welcome issues, PRs, and ideas! Please see `CONTRIBUTING.md` for more details.
 
-🚧 Roadmap
-Mobile PWA mode
+## 📝 License
 
-Lightning-network payouts
+Apache-2.0 — see `LICENSE`.
 
-Multi-chain NFT gallery
-
-MPC / social-recovery wallet option
-
-See /docs/ROADMAP.md for milestone tracking.
-
-🤝 Contributing
-We welcome issues, PRs, and ideas!
-
-Fork → feature branch (git checkout -b feat/my-feature)
-
-pnpm lint && pnpm test
-
-Open a PR following our template.
-
-See CONTRIBUTING.md or join the discussion tab.
-
-📝 License
-Apache-2.0 — see LICENSE.
-
+---
 © 2025 Alpha Stake LLC • Open-sourcing Football Squares for the crypto age.

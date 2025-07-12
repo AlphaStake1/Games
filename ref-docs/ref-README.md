@@ -46,11 +46,13 @@ Context Engineering represents a paradigm shift from traditional prompt engineer
 ### Prompt Engineering vs Context Engineering
 
 **Prompt Engineering:**
+
 - Focuses on clever wording and specific phrasing
 - Limited to how you phrase a task
 - Like giving someone a sticky note
 
 **Context Engineering:**
+
 - A complete system for providing comprehensive context
 - Includes documentation, examples, rules, patterns, and validation
 - Like writing a full screenplay with all the details
@@ -104,15 +106,19 @@ Edit `INITIAL.md` to describe what you want to build:
 
 ```markdown
 ## FEATURE:
+
 [Describe what you want to build - be specific about functionality and requirements]
 
 ## EXAMPLES:
+
 [List any example files in the examples/ folder and explain how they should be used]
 
 ## DOCUMENTATION:
+
 [Include links to relevant documentation, APIs, or MCP server resources]
 
 ## OTHER CONSIDERATIONS:
+
 [Mention any gotchas, specific requirements, or things AI assistants commonly miss]
 ```
 
@@ -130,17 +136,20 @@ PRPs (Product Requirements Prompts) are comprehensive implementation blueprints 
 They are similar to PRDs (Product Requirements Documents) but are crafted more specifically to instruct an AI coding assistant.
 
 Run in Claude Code:
+
 ```bash
 /generate-prp INITIAL.md
 ```
 
 **Note:** The slash commands are custom commands defined in `.claude/commands/`. You can view their implementation:
+
 - `.claude/commands/generate-prp.md` - See how it researches and creates PRPs
 - `.claude/commands/execute-prp.md` - See how it implements features from PRPs
 
 The `$ARGUMENTS` variable in these commands receives whatever you pass after the command name (e.g., `INITIAL.md` or `PRPs/your-feature.md`).
 
 This command will:
+
 1. Read your feature request
 2. Research the codebase for patterns
 3. Search for relevant documentation
@@ -155,6 +164,7 @@ Once generated, execute the PRP to implement your feature:
 ```
 
 The AI coding assistant will:
+
 1. Read all context from the PRP
 2. Create a detailed implementation plan
 3. Execute each step with validation
@@ -166,21 +176,25 @@ The AI coding assistant will:
 ### Key Sections Explained
 
 **FEATURE**: Be specific and comprehensive
+
 - ❌ "Build a web scraper"
 - ✅ "Build an async web scraper using BeautifulSoup that extracts product data from e-commerce sites, handles rate limiting, and stores results in PostgreSQL"
 
 **EXAMPLES**: Leverage the examples/ folder
+
 - Place relevant code patterns in `examples/`
 - Reference specific files and patterns to follow
 - Explain what aspects should be mimicked
 
 **DOCUMENTATION**: Include all relevant resources
+
 - API documentation URLs
 - Library guides
 - MCP server documentation
 - Database schemas
 
 **OTHER CONSIDERATIONS**: Capture important details
+
 - Authentication requirements
 - Rate limits or quotas
 - Common pitfalls
@@ -266,26 +280,31 @@ examples/
 ## Best Practices
 
 ### 1. Be Explicit in INITIAL.md
+
 - Don't assume the AI knows your preferences
 - Include specific requirements and constraints
 - Reference examples liberally
 
 ### 2. Provide Comprehensive Examples
+
 - More examples = better implementations
 - Show both what to do AND what not to do
 - Include error handling patterns
 
 ### 3. Use Validation Gates
+
 - PRPs include test commands that must pass
 - AI will iterate until all validations succeed
 - This ensures working code on first try
 
 ### 4. Leverage Documentation
+
 - Include official API docs
 - Add MCP server resources
 - Reference specific documentation sections
 
 ### 5. Customize CLAUDE.md
+
 - Add your conventions
 - Include project-specific rules
 - Define coding standards
@@ -295,6 +314,7 @@ examples/
 This template demonstrates an advanced PRP creation method using multiple parallel research agents for comprehensive documentation gathering.
 
 ### See Advanced AI Automation Examples
+
 - **SEO Grove**: https://seogrove.ai/ - Example of advanced AI automation (built with different methods)
 - **YouTube Channel**: https://www.youtube.com/c/incomestreamsurfers - Learn more about AI automation methodologies
 - **AI Automation School**: https://www.skool.com/iss-ai-automation-school-6342/about - Join our community
@@ -302,6 +322,7 @@ This template demonstrates an advanced PRP creation method using multiple parall
 ### Advanced PRP Creation Process
 
 #### Prompt 1: Initialize Research Framework
+
 ```
 read my incredibly specific instructions about how to create a prp document then summarise them, also store how to do a jina scrapein order to create a llm.txt in your memory
 
@@ -317,6 +338,7 @@ curl
 ```
 
 #### Prompt 2: Generate PRP with Parallel Research
+
 ```
 /generate-prp initial.md
 ```
@@ -328,16 +350,18 @@ can you spin up multiple research agents and do this all at the same time
 ```
 
 This approach enables:
+
 - **Parallel Documentation Scraping**: 6+ agents simultaneously research different technologies
 - **Comprehensive Coverage**: 30-100+ pages of official documentation scraped and organized
 - **Technology-Specific Organization**: Each technology gets its own `/research/[tech]/` directory
 - **Production-Ready PRPs**: Complete implementation blueprints with real-world examples
 
 ### Research Directory Structure
+
 ```
 research/
 ├── pydantic-ai/      # 22+ documentation pages
-├── openai/           # 20+ API documentation pages  
+├── openai/           # 20+ API documentation pages
 ├── anthropic/        # 18+ Claude documentation pages
 ├── jina/             # 12+ scraping API pages
 ├── shopify/          # 18+ GraphQL/REST API pages

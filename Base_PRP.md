@@ -2,31 +2,37 @@ name: "Base PRP Template v2 – Context-Rich with Validation Loops (Football Squ
 description: |
 
 ## Purpose
+
 Template for AI agents (Claude, GPT) to implement **Solana Football-Squares** features with full context, repeatable tests, and self-validation.
 
 ## Core Principles
-1. **Context is King** – link every Solana/Anchor/Switchboard doc you’ll need.  
-2. **Validation Loops** – supply runnable scripts/tests the AI must pass.  
-3. **Consistency** – follow existing TypeScript + Rust patterns (no reinventing).  
-4. **Progressive Success** – build → lint → unit-test → localnet-test → enhance.  
+
+1. **Context is King** – link every Solana/Anchor/Switchboard doc you’ll need.
+2. **Validation Loops** – supply runnable scripts/tests the AI must pass.
+3. **Consistency** – follow existing TypeScript + Rust patterns (no reinventing).
+4. **Progressive Success** – build → lint → unit-test → localnet-test → enhance.
 5. **Global Rules** – obey everything in `CLAUDE.md` (naming, security, style).
 
 ---
 
 ## Goal
+
 [Clear end-state: e.g., “Add VRF-powered board randomization callable by Clockwork thread”.]
 
 ## Why
+
 - Keeps game trust-minimized (no server-side RNG).
 - Integrates with existing Anchor program & React UI.
 - Required for Week-1 launch incentives.
 
 ## What (User-visible + Technical)
+
 - Wallet-connected admin clicks “Randomize”; board headers update.
 - Anchor `randomize_board` ix verifies VRF proof.
 - Clockwork can invoke the same ix automatically when pre-game thread fires.
 
 ### Success Criteria
+
 - [ ] Headers change only once per game.
 - [ ] VRF proof stored on-chain and passes `vrf_verify` CPI.
 - [ ] Unit + integration tests green on CI.
@@ -36,6 +42,7 @@ Template for AI agents (Claude, GPT) to implement **Solana Football-Squares** fe
 ## All Needed Context
 
 ### Documentation & References
+
 ```yaml
 - url: https://docs.switchboard.xyz/developers/vrf
   why: VRF request/verify flow, required accounts
@@ -184,18 +191,18 @@ pnpm ts-node scripts/request_vrf.ts --board <PDA>
 
 ## Final Checklist
 
-* [ ] `cargo clippy` clean
-* [ ] `anchor test` green
-* [ ] `npm run test` green
-* [ ] Manual localnet run shows randomized headers
-* [ ] Updated docs (`docs/randomizer.md`)
-* [ ] CHANGELOG entry
+- [ ] `cargo clippy` clean
+- [ ] `anchor test` green
+- [ ] `npm run test` green
+- [ ] Manual localnet run shows randomized headers
+- [ ] Updated docs (`docs/randomizer.md`)
+- [ ] CHANGELOG entry
 
 ---
 
 ## Anti-Patterns to Avoid
 
-* ❌ Calling external RNG — must use Switchboard VRF
-* ❌ Hard-coding PDAs — derive with seeds + bumps
-* ❌ Ignoring 429 errors from OpenAI calls in agent code
-* ❌ Writing secrets to repo (use `.env.local`)
+- ❌ Calling external RNG — must use Switchboard VRF
+- ❌ Hard-coding PDAs — derive with seeds + bumps
+- ❌ Ignoring 429 errors from OpenAI calls in agent code
+- ❌ Writing secrets to repo (use `.env.local`)

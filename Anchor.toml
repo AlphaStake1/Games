@@ -1,0 +1,36 @@
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+squares = "Fg6PaFprPjfrgxLbfXyAyzsK1m1S82mC2f43s5D2qQq"
+
+[programs.devnet]
+squares = "Fg6PaFprPjfrgxLbfXyAyzsK1m1S82mC2f43s5D2qQq"
+
+[programs.mainnet]
+squares = "Fg6PaFprPjfrgxLbfXyAyzsK1m1S82mC2f43s5D2qQq"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "Localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+
+[workspace]
+members = [
+    "programs/*"
+]
+
+[test]
+startup_wait = 5000
+shutdown_wait = 2000
+upgradeable = false
+
+[[test.validator.account]]
+address = "SysvarC1ock11111111111111111111111111111111"
+filename = "tests/fixtures/clock-sysvar.json"

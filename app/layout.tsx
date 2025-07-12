@@ -1,29 +1,25 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { Providers } from './providers'
-import { Toaster } from '@/components/ui/sonner';
+import type { Metadata } from "next";
+import { Recursive } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] });
+const recursive = Recursive({
+  subsets: ["latin"],
+  variable: "--font-recursive",
+});
 
 export const metadata: Metadata = {
-  title: 'Football Squares',
-  description: 'A Next.js app for playing football squares',
+  title: "Crypto Squares",
+  description: "A Solana-Based Football Squares dApp",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <Providers>
-          {children}
-          <Toaster />
-        </Providers>
-      </body>
+    <html lang="en" className={`${recursive.variable} font-sans`}>
+      <body>{children}</body>
     </html>
   );
 }

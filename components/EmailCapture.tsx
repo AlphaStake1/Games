@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Mail, CheckCircle } from 'lucide-react';
+import { useState } from "react";
+import { Mail, CheckCircle } from "lucide-react";
 
 const EmailCapture = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,21 +15,21 @@ const EmailCapture = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!email) {
-      setError('Email is required');
+      setError("Email is required");
       return;
     }
 
     if (!validateEmail(email)) {
-      setError('Please enter a valid email address');
+      setError("Please enter a valid email address");
       return;
     }
 
     // Simulate submission
     setIsSubmitted(true);
-    setEmail('');
+    setEmail("");
   };
 
   if (isSubmitted) {
@@ -42,7 +42,8 @@ const EmailCapture = () => {
               You're All Set!
             </h2>
             <p className="text-[#708090] text-lg">
-              Thanks for subscribing! You'll receive our weekly NFL Squares & Fantasy tips in your inbox.
+              Thanks for subscribing! You'll receive our weekly NFL Squares &
+              Fantasy tips in your inbox.
             </p>
             <button
               onClick={() => setIsSubmitted(false)}
@@ -66,7 +67,8 @@ const EmailCapture = () => {
               Get Weekly NFL Squares & Fantasy Tips
             </h2>
             <p className="text-[#708090] text-lg max-w-2xl mx-auto">
-              Stay ahead of the game with insider tips, weekly picks, and exclusive strategies delivered to your inbox.
+              Stay ahead of the game with insider tips, weekly picks, and
+              exclusive strategies delivered to your inbox.
             </p>
           </div>
 
@@ -82,12 +84,18 @@ const EmailCapture = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
                 className={`w-full px-4 py-3 border-2 rounded-lg text-[#002244] placeholder-[#708090] focus:outline-none focus:ring-2 focus:ring-[#004953] transition-colors duration-200 ${
-                  error ? 'border-red-500' : 'border-gray-300 focus:border-[#004953]'
+                  error
+                    ? "border-red-500"
+                    : "border-gray-300 focus:border-[#004953]"
                 }`}
-                aria-describedby={error ? 'email-error' : undefined}
+                aria-describedby={error ? "email-error" : undefined}
               />
               {error && (
-                <p id="email-error" className="mt-2 text-red-600 text-sm" role="alert">
+                <p
+                  id="email-error"
+                  className="mt-2 text-red-600 text-sm"
+                  role="alert"
+                >
                   {error}
                 </p>
               )}

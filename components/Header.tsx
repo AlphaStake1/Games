@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { ThemeToggle } from './ui/theme-toggle';
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { ThemeToggle } from "./ui/theme-toggle";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,9 +16,9 @@ const Header = () => {
   };
 
   const menuItems = [
-    { label: 'Fantasy', href: '/fantasy' },
-    { label: 'How To Play', href: '/how-to-play' },
-    { label: 'My NFTs', href: '/my-nfts' },
+    { label: "Fantasy", href: "/fantasy" },
+    { label: "How To Play", href: "/how-to-play" },
+    { label: "My NFTs", href: "/my-nfts" },
   ];
 
   return (
@@ -27,7 +27,10 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="hover:opacity-80 transition-opacity duration-200">
+            <Link
+              href="/"
+              className="hover:opacity-80 transition-opacity duration-200"
+            >
               <Image
                 src="/Assets/Football Squares logo_nobg_ (4).png"
                 alt="Football Squares Logo"
@@ -79,7 +82,10 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div id="mobile-menu" className="md:hidden bg-white dark:bg-[#002244] border-t border-gray-200 dark:border-[#004953] transition-colors duration-300">
+        <div
+          id="mobile-menu"
+          className="md:hidden bg-white dark:bg-[#002244] border-t border-gray-200 dark:border-[#004953] transition-colors duration-300"
+        >
           <div className="px-2 pt-2 pb-3 space-y-1">
             {menuItems.map((item) => (
               <Link
@@ -91,13 +97,15 @@ const Header = () => {
                 {item.label}
               </Link>
             ))}
-            
+
             {/* Mobile Theme Toggle and Connect Wallet */}
             <div className="flex items-center justify-between px-3 py-2">
-              <span className="text-[#708090] dark:text-[#96abdc] text-sm font-medium">Theme</span>
+              <span className="text-[#708090] dark:text-[#96abdc] text-sm font-medium">
+                Theme
+              </span>
               <ThemeToggle />
             </div>
-            
+
             <button className="w-full mt-4 bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-6 py-3 rounded-full font-semibold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg">
               Connect Wallet
             </button>

@@ -1,23 +1,26 @@
-'use client';
+"use client";
 
-import { Wallet, Shield, Zap } from 'lucide-react';
+import { Wallet, Shield, Zap } from "lucide-react";
 
 const CryptoPayments = () => {
   const features = [
     {
       icon: Shield,
-      title: 'Secure & Transparent',
-      description: 'All transactions are recorded on the blockchain for complete transparency and security.',
+      title: "Secure & Transparent",
+      description:
+        "All transactions are recorded on the blockchain for complete transparency and security.",
     },
     {
       icon: Zap,
-      title: 'Instant Payouts',
-      description: 'Winners receive their crypto payouts instantly when the game concludes.',
+      title: "Instant Payouts",
+      description:
+        "Winners receive their crypto payouts instantly when the game concludes.",
     },
     {
       icon: Wallet,
-      title: 'Easy Setup',
-      description: 'Connect your wallet in seconds and start playing with your favorite cryptocurrency.',
+      title: "Easy Setup",
+      description:
+        "Connect your wallet in seconds and start playing with your favorite cryptocurrency.",
     },
   ];
 
@@ -29,12 +32,15 @@ const CryptoPayments = () => {
             100% Crypto Payins & Payouts
           </h2>
           <p className="text-xl text-[#96abdc] max-w-3xl mx-auto mb-8">
-            All games are powered by cryptocurrency for secure, instant, and transparent transactions. 
-            Experience the future of gaming with blockchain technology.
+            All games are powered by cryptocurrency for secure, instant, and
+            transparent transactions. Experience the future of gaming with
+            blockchain technology.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <span className="text-lg text-white font-medium">Need a wallet?</span>
+            <span className="text-lg text-white font-medium">
+              Need a wallet?
+            </span>
             <button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-3 rounded-full font-bold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2">
               <Wallet className="w-5 h-5" />
               Learn More
@@ -51,11 +57,11 @@ const CryptoPayments = () => {
               <div className="bg-[#ed5925] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
                 <feature.icon className="w-8 h-8 text-white" />
               </div>
-              
+
               <h3 className="text-xl font-bold text-white mb-4">
                 {feature.title}
               </h3>
-              
+
               <p className="text-[#96abdc] leading-relaxed">
                 {feature.description}
               </p>
@@ -65,18 +71,26 @@ const CryptoPayments = () => {
 
         {/* Supported Cryptocurrencies */}
         <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold text-white mb-8">Supported Cryptocurrencies</h3>
+          <h3 className="text-2xl font-bold text-white mb-8">
+            Supported Cryptocurrencies
+          </h3>
           <div className="flex flex-wrap justify-center items-center gap-8 opacity-80">
             <div className="flex items-center gap-2 text-white">
-              <div className="w-8 h-8 bg-[#f7931a] rounded-full flex items-center justify-center text-sm font-bold">₿</div>
+              <div className="w-8 h-8 bg-[#f7931a] rounded-full flex items-center justify-center text-sm font-bold">
+                ₿
+              </div>
               <span>Bitcoin</span>
             </div>
             <div className="flex items-center gap-2 text-white">
-              <div className="w-8 h-8 bg-[#627eea] rounded-full flex items-center justify-center text-sm font-bold">Ξ</div>
+              <div className="w-8 h-8 bg-[#627eea] rounded-full flex items-center justify-center text-sm font-bold">
+                Ξ
+              </div>
               <span>Ethereum & EVM-based stablecoins</span>
             </div>
             <div className="flex items-center gap-2 text-white">
-              <div className="w-8 h-8 bg-[#9945ff] rounded-full flex items-center justify-center text-sm font-bold">◎</div>
+              <div className="w-8 h-8 bg-[#9945ff] rounded-full flex items-center justify-center text-sm font-bold">
+                ◎
+              </div>
               <span>Solana & Solana-based stablecoins</span>
             </div>
           </div>

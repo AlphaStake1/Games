@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OracleAgent",
+  "description": "An agent for fetching real-world data from oracles.",
+  "type": "object",
+  "properties": {
+    "fetchScores": {
+      "type": "object",
+      "description": "Fetches the latest scores from a Switchboard data feed.",
+      "properties": {},
+      "required": []
+    }
+  },
+  "required": ["fetchScores"]
+}

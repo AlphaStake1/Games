@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
 // Function to sanitize HTML content
 const sanitizeHTML = (html: string) => {
-  const tempDiv = document.createElement('div');
+  const tempDiv = document.createElement("div");
   tempDiv.innerHTML = html;
-  return tempDiv.textContent || tempDiv.innerText || '';
+  return tempDiv.textContent || tempDiv.innerText || "";
 };
 
-import { Clock, TrendingUp } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import RssParser from 'rss-parser';
+import { Clock, TrendingUp } from "lucide-react";
+import { useState, useEffect } from "react";
+import RssParser from "rss-parser";
 
 interface RSSItem {
   title: string;
@@ -29,45 +29,54 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
   const [fftodayError, setFftodayError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRSSFeed = async (rssUrl: string, feedName: string, setErrorState: (error: string | null) => void): Promise<RSSItem[]> => {
+    const fetchRSSFeed = async (
+      rssUrl: string,
+      feedName: string,
+      setErrorState: (error: string | null) => void,
+    ): Promise<RSSItem[]> => {
       try {
         console.log(`Attempting to fetch ${feedName} RSS feed from: ${rssUrl}`);
-        
+
         // Use RSS2JSON service which is more reliable for RSS parsing
         const rss2jsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
-        
+
         console.log(`Fetching from RSS2JSON: ${rss2jsonUrl}`);
         const response = await fetch(rss2jsonUrl);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
-        
+
         const data = await response.json();
         console.log(`RSS2JSON response for ${feedName}:`, data);
-        
-        if (data.status !== 'ok') {
-          throw new Error(`RSS2JSON error: ${data.message || 'Unknown error'}`);
+
+        if (data.status !== "ok") {
+          throw new Error(`RSS2JSON error: ${data.message || "Unknown error"}`);
         }
-        
+
         if (!data.items || data.items.length === 0) {
-          throw new Error('No items found in RSS feed');
+          throw new Error("No items found in RSS feed");
         }
-        
-        const parsedItems: RSSItem[] = data.items.slice(0, 5).map((item: any, index: number) => ({
-          title: item.title || '',
-          description: item.description || item.content || '',
-          link: item.link || '',
-          pubDate: item.pubDate || '',
-          guid: item.guid || item.link || `item-${index}`,
-        }));
-        
-        console.log(`Successfully parsed ${parsedItems.length} items from ${feedName}`);
+
+        const parsedItems: RSSItem[] = data.items
+          .slice(0, 5)
+          .map((item: any, index: number) => ({
+            title: item.title || "",
+            description: item.description || item.content || "",
+            link: item.link || "",
+            pubDate: item.pubDate || "",
+            guid: item.guid || item.link || `item-${index}`,
+          }));
+
+        console.log(
+          `Successfully parsed ${parsedItems.length} items from ${feedName}`,
+        );
         return parsedItems;
-        
       } catch (error) {
         console.error(`Error fetching ${feedName} RSS feed:`, error);
-        setErrorState(`${feedName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        setErrorState(
+          `${feedName}: ${error instanceof Error ? error.message : "Unknown error"}`,
+        );
         return [];
       }
     };
@@ -78,15 +87,30 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
       setRazzballError(null);
       setFftodayError(null);
 
-      console.log('Starting to fetch all RSS feeds...');
+      console.log("Starting to fetch all RSS feeds...");
 
       const [pffFeed, razzballFeed, fftodayFeed] = await Promise.all([
-        fetchRSSFeed('https://www.pff.com/feed', 'PFF', setPffError),
-        fetchRSSFeed('https://football.razzball.com/feed', 'Razzball', setRazzballError),
-        fetchRSSFeed('https://www.fftoday.com/rss/news.xml', 'FFToday', setFftodayError),
+        fetchRSSFeed("https://www.pff.com/feed", "PFF", setPffError),
+        fetchRSSFeed(
+          "https://football.razzball.com/feed",
+          "Razzball",
+          setRazzballError,
+        ),
+        fetchRSSFeed(
+          "https://www.fftoday.com/rss/news.xml",
+          "FFToday",
+          setFftodayError,
+        ),
       ]);
 
-      console.log('All feeds fetched. PFF items:', pffFeed.length, 'Razzball items:', razzballFeed.length, 'FFToday items:', fftodayFeed.length);
+      console.log(
+        "All feeds fetched. PFF items:",
+        pffFeed.length,
+        "Razzball items:",
+        razzballFeed.length,
+        "FFToday items:",
+        fftodayFeed.length,
+      );
 
       setRssItems(pffFeed);
       setRazzballRssItems(razzballFeed);
@@ -104,33 +128,35 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
     try {
       const date = new Date(dateString);
       const now = new Date();
-      const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-      
-      if (diffInHours < 1) return 'Just now';
+      const diffInHours = Math.floor(
+        (now.getTime() - date.getTime()) / (1000 * 60 * 60),
+      );
+
+      if (diffInHours < 1) return "Just now";
       if (diffInHours < 24) return `${diffInHours} hours ago`;
-      
+
       const diffInDays = Math.floor(diffInHours / 24);
-      if (diffInDays === 1) return '1 day ago';
+      if (diffInDays === 1) return "1 day ago";
       if (diffInDays < 7) return `${diffInDays} days ago`;
-      
+
       return date.toLocaleDateString();
     } catch {
-      return 'Recently';
+      return "Recently";
     }
   };
 
   const adSlots = [
     {
-      id: 'ad-1',
-      title: 'Premium Ad Slot',
-      size: '300x250',
-      description: 'Banner Advertisement',
+      id: "ad-1",
+      title: "Premium Ad Slot",
+      size: "300x250",
+      description: "Banner Advertisement",
     },
     {
-      id: 'ad-2', 
-      title: 'Sponsored Content',
-      size: '300x600',
-      description: 'Skyscraper Advertisement',
+      id: "ad-2",
+      title: "Sponsored Content",
+      size: "300x600",
+      description: "Skyscraper Advertisement",
     },
   ];
 
@@ -143,7 +169,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
             <TrendingUp className="w-5 h-5 text-[#ed5925]" />
             Latest News
           </h3>
-          
+
           <div className="space-y-4">
             {rssItems.length > 0 ? (
               rssItems.slice(0, 2).map((item) => (
@@ -160,7 +186,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                       {formatTimeAgo(item.pubDate)}
                     </div>
                   </div>
-                  
+
                   <h4 className="font-semibold text-[#002244] mb-2 text-sm leading-tight">
                     <a
                       href={item.link}
@@ -171,13 +197,13 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                       {item.title}
                     </a>
                   </h4>
-                  
+
                   <p className="text-xs text-[#708090] leading-relaxed">
                     {sanitizeHTML(item.description).length > 100
                       ? `${sanitizeHTML(item.description).substring(0, 100)}...`
                       : sanitizeHTML(item.description)}
                   </p>
-                  
+
                   <a
                     href={item.link}
                     target="_blank"
@@ -199,7 +225,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
           <h3 className="text-lg font-bold text-[#002244] mb-6 text-center">
             Sponsored Content
           </h3>
-          
+
           <div className="space-y-6">
             {adSlots.map((ad, index) => (
               <div
@@ -222,12 +248,16 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                     {ad.size}
                   </span>
                 </div>
-                
+
                 <div className="mt-4 p-4 bg-white border border-gray-200 rounded">
-                  <div className="text-xs text-[#708090] mb-2">Advertisement Space</div>
-                  <div className={`w-full bg-gradient-to-br from-[#ed5925] to-[#96abdc] opacity-20 rounded flex items-center justify-center ${
-                    ad.size === '300x600' ? 'h-48' : 'h-24'
-                  }`}>
+                  <div className="text-xs text-[#708090] mb-2">
+                    Advertisement Space
+                  </div>
+                  <div
+                    className={`w-full bg-gradient-to-br from-[#ed5925] to-[#96abdc] opacity-20 rounded flex items-center justify-center ${
+                      ad.size === "300x600" ? "h-48" : "h-24"
+                    }`}
+                  >
                     <span className="text-[#002244] font-semibold text-sm">
                       Your Ad Here
                     </span>
@@ -248,43 +278,65 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
               >
                 <div className="text-[#708090] mb-3">
                   <div className="w-12 h-12 bg-[#ed5925] bg-opacity-20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                    <span className="text-[#ed5925] font-bold text-lg">{num}</span>
+                    <span className="text-[#ed5925] font-bold text-lg">
+                      {num}
+                    </span>
                   </div>
                   <h4 className="font-semibold text-[#002244] mb-2">
-                    {num === 1 && 'PFF News Feed'}
-                    {num === 2 && 'Razzball News Feed'}
-                    {num === 3 && 'FFToday News Feed'}
+                    {num === 1 && "PFF News Feed"}
+                    {num === 2 && "Razzball News Feed"}
+                    {num === 3 && "FFToday News Feed"}
                     {num > 3 && `News Stream ${num}`}
                   </h4>
                   <p className="text-sm text-[#708090] mb-2">
-                    {num <= 3 ? 'Latest fantasy football news' : 'Live news feed placeholder'}
+                    {num <= 3
+                      ? "Latest fantasy football news"
+                      : "Live news feed placeholder"}
                   </p>
                 </div>
                 <div className="mt-4 p-4 bg-white border border-gray-200 rounded">
                   <div className="text-xs text-[#708090] mb-2">
-                    {num === 1 && 'PFF RSS Feed'}
-                    {num === 2 && 'Razzball RSS Feed'}
-                    {num === 3 && 'FFToday RSS Feed'}
-                    {num > 3 && 'News Stream Content'}
+                    {num === 1 && "PFF RSS Feed"}
+                    {num === 2 && "Razzball RSS Feed"}
+                    {num === 3 && "FFToday RSS Feed"}
+                    {num > 3 && "News Stream Content"}
                   </div>
                   {num === 1 || num === 2 || num === 3 ? (
                     <div className="text-left space-y-3">
                       {loading ? (
                         <div className="flex items-center justify-center h-24">
                           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#ed5925]"></div>
-                          <span className="ml-2 text-sm text-[#708090]">Loading news...</span>
+                          <span className="ml-2 text-sm text-[#708090]">
+                            Loading news...
+                          </span>
                         </div>
-                      ) : ((num === 1 && pffError) || (num === 2 && razzballError) || (num === 3 && fftodayError)) ? (
+                      ) : (num === 1 && pffError) ||
+                        (num === 2 && razzballError) ||
+                        (num === 3 && fftodayError) ? (
                         <div className="text-center h-24 flex items-center justify-center">
                           <div className="text-red-500 text-sm">
                             <p>Failed to load news feed</p>
                             <p className="text-xs text-[#708090] mt-1">
-                              {num === 1 ? pffError : num === 2 ? razzballError : fftodayError}
+                              {num === 1
+                                ? pffError
+                                : num === 2
+                                  ? razzballError
+                                  : fftodayError}
                             </p>
                           </div>
                         </div>
-                      ) : (num === 1 ? rssItems : num === 2 ? razzballRssItems : fftodayRssItems).length > 0 ? (
-                        (num === 1 ? rssItems : num === 2 ? razzballRssItems : fftodayRssItems).map((item) => (
+                      ) : (num === 1
+                          ? rssItems
+                          : num === 2
+                            ? razzballRssItems
+                            : fftodayRssItems
+                        ).length > 0 ? (
+                        (num === 1
+                          ? rssItems
+                          : num === 2
+                            ? razzballRssItems
+                            : fftodayRssItems
+                        ).map((item) => (
                           <article
                             key={item.guid}
                             className="border-b border-gray-100 pb-2 mb-2 last:border-b-0"
@@ -317,13 +369,17 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                         ))
                       ) : (
                         <div className="text-center h-24 flex items-center justify-center">
-                          <span className="text-[#708090] text-sm">No news items found</span>
+                          <span className="text-[#708090] text-sm">
+                            No news items found
+                          </span>
                         </div>
                       )}
                     </div>
                   ) : (
                     <div className="w-full bg-gradient-to-br from-[#ed5925] to-[#96abdc] opacity-20 rounded h-24 flex items-center justify-center">
-                      <span className="text-[#002244] font-semibold text-sm">Your News Here</span>
+                      <span className="text-[#002244] font-semibold text-sm">
+                        Your News Here
+                      </span>
                     </div>
                   )}
                 </div>
