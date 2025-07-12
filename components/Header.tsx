@@ -16,28 +16,34 @@ const Header = () => {
   };
 
   const menuItems = [
-    { label: "Fantasy", href: "/fantasy" },
     { label: "How To Play", href: "/how-to-play" },
+    { label: "Rules", href: "/rules" },
+    { label: "Fantasy", href: "/fantasy" },
     { label: "My NFTs", href: "/my-nfts" },
+    { label: "What are NFTs?", href: "/what-are-nfts" },
+    { label: "FAQ", href: "/faq" },
   ];
 
   return (
-    <header className="bg-white dark:bg-[#002244] shadow-md sticky top-0 z-50 transition-colors duration-300">
+    <header className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link
               href="/"
-              className="hover:opacity-80 transition-opacity duration-200"
+              className="hover:opacity-80 transition-opacity duration-200 flex items-center gap-2"
             >
               <Image
                 src="/Assets/Football Squares logo_nobg_ (4).png"
                 alt="Football Squares Logo"
-                width={120}
+                width={40}
                 height={40}
-                className="h-10 w-auto"
+                className="object-contain"
               />
+              <span className="text-xl font-bold text-gray-900 dark:text-white">
+                Football Squares
+              </span>
             </Link>
           </div>
 
@@ -47,7 +53,7 @@ const Header = () => {
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-[#708090] dark:text-[#96abdc] hover:text-[#002244] dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200"
                 aria-label={item.label}
               >
                 {item.label}
@@ -58,7 +64,13 @@ const Header = () => {
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
-            <button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-6 py-2 rounded-full font-semibold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+            <Link
+              href="/wallet-guide"
+              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
+            >
+              Need a Wallet?
+            </Link>
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200">
               Connect Wallet
             </button>
           </div>
@@ -66,7 +78,7 @@ const Header = () => {
           {/* Mobile menu button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-[#708090] dark:text-[#96abdc] hover:text-[#002244] dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#004953] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#002244] dark:focus:ring-[#ed5925] transition-colors duration-200"
+            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-200"
             aria-expanded={isMenuOpen}
             aria-label="Toggle navigation menu"
             aria-controls="mobile-menu"
@@ -84,14 +96,14 @@ const Header = () => {
       {isMenuOpen && (
         <div
           id="mobile-menu"
-          className="md:hidden bg-white dark:bg-[#002244] border-t border-gray-200 dark:border-[#004953] transition-colors duration-300"
+          className="md:hidden bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800 transition-colors duration-300"
         >
           <div className="px-2 pt-2 pb-3 space-y-1">
             {menuItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-[#708090] dark:text-[#96abdc] hover:text-[#002244] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#004953] block px-3 py-2 text-base font-medium transition-colors duration-200"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 block px-3 py-2 text-base font-medium transition-colors duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.label}
@@ -100,13 +112,21 @@ const Header = () => {
 
             {/* Mobile Theme Toggle and Connect Wallet */}
             <div className="flex items-center justify-between px-3 py-2">
-              <span className="text-[#708090] dark:text-[#96abdc] text-sm font-medium">
+              <span className="text-gray-600 dark:text-gray-400 text-sm font-medium">
                 Theme
               </span>
               <ThemeToggle />
             </div>
 
-            <button className="w-full mt-4 bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-6 py-3 rounded-full font-semibold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg">
+            <Link
+              href="/wallet-guide"
+              className="w-full mt-4 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 text-center block"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Need a Wallet?
+            </Link>
+
+            <button className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200">
               Connect Wallet
             </button>
           </div>

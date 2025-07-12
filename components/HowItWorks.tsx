@@ -31,13 +31,13 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white dark:bg-black transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-[#002244] mb-4">
+          <h2 className="text-4xl font-bold text-[#002244] dark:text-white mb-4 transition-colors duration-300">
             How It Works
           </h2>
-          <p className="text-xl text-[#708090] max-w-2xl mx-auto">
+          <p className="text-xl text-[#708090] dark:text-[#96abdc] max-w-2xl mx-auto transition-colors duration-300">
             Get started with Football Squares in three simple steps
           </p>
         </div>
@@ -63,10 +63,10 @@ const HowItWorks = () => {
               </div>
 
               {/* Content */}
-              <h3 className="text-2xl font-bold text-[#002244] mb-4">
+              <h3 className="text-2xl font-bold text-[#002244] dark:text-white mb-4 transition-colors duration-300">
                 {step.title}
               </h3>
-              <p className="text-[#708090] leading-relaxed">
+              <p className="text-[#708090] dark:text-[#96abdc] leading-relaxed transition-colors duration-300">
                 {step.description}
               </p>
             </div>

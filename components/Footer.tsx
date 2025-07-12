@@ -9,6 +9,7 @@ const Footer = () => {
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
     { label: "Crypto Basics", href: "/crypto-basics" },
+    { label: "Board Leader", href: "/board-leader" },
   ];
 
   // Custom X.com icon component
@@ -42,20 +43,20 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#002244] text-white py-16">
+    <footer className="bg-black text-white py-16 border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
           {/* Brand & Description */}
           <div className="lg:col-span-1">
             <h3 className="text-2xl font-bold mb-4">Football Squares</h3>
-            <p className="text-[#96abdc] leading-relaxed mb-6">
+            <p className="text-gray-400 leading-relaxed mb-6">
               The ultimate destination for NFL squares games and fantasy
               football resources. Join thousands of fans making every game more
               exciting.
             </p>
-            <div className="flex items-center gap-2 text-sm text-[#708090]">
+            <div className="flex items-center gap-2 text-sm text-gray-500">
               <span>Made with</span>
-              <Heart className="w-4 h-4 text-[#ed5925] fill-current" />
+              <Heart className="w-4 h-4 text-blue-500 fill-current" />
               <span>for football fans</span>
             </div>
           </div>
@@ -68,7 +69,7 @@ const Footer = () => {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-[#96abdc] hover:text-[#ed5925] transition-colors duration-200 text-sm"
+                  className="text-gray-400 hover:text-blue-500 transition-colors duration-200 text-sm"
                 >
                   {link.label}
                 </a>
@@ -85,13 +86,13 @@ const Footer = () => {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="bg-[#004953] p-3 rounded-full hover:bg-[#ed5925] transition-all duration-200 hover:scale-110 transform"
+                  className="bg-gray-800 p-3 rounded-lg hover:bg-blue-600 transition-all duration-200 hover:scale-110 transform"
                 >
                   <social.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
-            <p className="text-[#96abdc] text-sm leading-relaxed">
+            <p className="text-gray-400 text-sm leading-relaxed">
               Stay updated with the latest games, tips, and community
               highlights.
             </p>
@@ -99,12 +100,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-[#004953] pt-8">
+        <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4 text-center lg:text-left">
-            <p className="text-[#708090] text-sm">
+            <p className="text-gray-500 text-sm">
               © 2024 Football Squares. All rights reserved.
             </p>
-            <p className="text-[#708090] text-sm">
+            <p className="text-gray-500 text-sm">
               This website is not affiliated with or endorsed by the National
               Football League.
             </p>

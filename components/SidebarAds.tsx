@@ -145,6 +145,44 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
     }
   };
 
+  // Filter function to only show NFL-related stories
+  const filterNFLStories = (items: RSSItem[]): RSSItem[] => {
+    const nflKeywords = [
+      'nfl', 'national football league', 'super bowl', 'playoff', 'wildcard',
+      'afc', 'nfc', 'afc east', 'afc west', 'afc north', 'afc south',
+      'nfc east', 'nfc west', 'nfc north', 'nfc south',
+      'chiefs', 'bills', 'bengals', 'browns', 'steelers', 'texans', 'colts', 'jaguars', 'titans',
+      'broncos', 'chargers', 'raiders', 'dolphins', 'patriots', 'jets', 'ravens',
+      'cowboys', 'giants', 'eagles', 'commanders', 'bears', 'lions', 'packers', 'vikings',
+      'falcons', 'panthers', 'saints', 'buccaneers', 'cardinals', 'rams', 'seahawks', '49ers',
+      'mahomes', 'allen', 'burrow', 'jackson', 'herbert', 'tua', 'wilson', 'rodgers',
+      'fantasy football', 'waiver wire', 'start sit', 'lineup', 'dfs', 'draft kings', 'fanduel'
+    ];
+
+    // Exclude college football and other non-NFL content
+    const excludeKeywords = [
+      'college', 'ncaa', 'big 12', 'big12', 'sec', 'acc', 'pac-12', 'pac12', 'big ten', 'big10',
+      'conference championship', 'bowl game', 'cfp', 'college football playoff',
+      'alabama', 'georgia', 'texas tech', 'oklahoma', 'clemson', 'michigan', 'ohio state',
+      'recruiting', 'transfer portal', 'high school', 'commits', 'recruiting class'
+    ];
+
+    return items.filter(item => {
+      const titleLower = item.title.toLowerCase();
+      const descriptionLower = sanitizeHTML(item.description).toLowerCase();
+      const combinedText = `${titleLower} ${descriptionLower}`;
+      
+      // First check if it contains excluded terms (college football)
+      const hasExcludedContent = excludeKeywords.some(keyword => combinedText.includes(keyword));
+      if (hasExcludedContent) {
+        return false;
+      }
+      
+      // Then check if it contains NFL content
+      return nflKeywords.some(keyword => combinedText.includes(keyword));
+    });
+  };
+
   const adSlots = [
     {
       id: "ad-1",
@@ -161,21 +199,21 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
   ];
 
   return (
-    <aside className="w-80 bg-white border-l border-gray-200 min-h-screen sticky top-16 overflow-y-auto sidebar-ads lg:block hidden">
+    <aside className="w-80 bg-white dark:bg-black border-l border-gray-200 dark:border-gray-800 min-h-screen sticky top-16 overflow-y-auto sidebar-ads lg:block hidden transition-colors duration-300">
       <div className="p-6">
         {/* News Section */}
         <div className="mb-8">
-          <h3 className="text-lg font-bold text-[#002244] mb-4 text-center flex items-center justify-center gap-2">
+          <h3 className="text-lg font-bold text-[#002244] dark:text-white mb-4 text-center flex items-center justify-center gap-2 transition-colors duration-300">
             <TrendingUp className="w-5 h-5 text-[#ed5925]" />
             Latest News
           </h3>
 
           <div className="space-y-4">
             {rssItems.length > 0 ? (
-              rssItems.slice(0, 2).map((item) => (
+              filterNFLStories(rssItems).slice(0, 2).map((item) => (
                 <article
                   key={item.guid}
-                  className="bg-[#faf9f5] rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200 cursor-pointer border border-gray-100"
+                  className="bg-[#faf9f5] dark:bg-[#1a1a2e] rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-[#2a2a3e] transition-colors duration-200 cursor-pointer border border-gray-100 dark:border-gray-800"
                 >
                   <div className="flex items-start justify-between mb-2">
                     <span className="text-xs bg-[#004953] text-white px-2 py-1 rounded-full">
@@ -187,7 +225,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                     </div>
                   </div>
 
-                  <h4 className="font-semibold text-[#002244] mb-2 text-sm leading-tight">
+                  <h4 className="font-semibold text-[#002244] dark:text-white mb-2 text-sm leading-tight transition-colors duration-300">
                     <a
                       href={item.link}
                       target="_blank"
@@ -198,7 +236,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                     </a>
                   </h4>
 
-                  <p className="text-xs text-[#708090] leading-relaxed">
+                  <p className="text-xs text-[#708090] dark:text-[#96abdc] leading-relaxed transition-colors duration-300">
                     {sanitizeHTML(item.description).length > 100
                       ? `${sanitizeHTML(item.description).substring(0, 100)}...`
                       : sanitizeHTML(item.description)}
@@ -221,8 +259,8 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
         </div>
 
         {/* Sponsored Content Section */}
-        <div className="border-t border-gray-200 pt-6">
-          <h3 className="text-lg font-bold text-[#002244] mb-6 text-center">
+        <div className="border-t border-gray-200 dark:border-gray-800 pt-6">
+          <h3 className="text-lg font-bold text-[#002244] dark:text-white mb-6 text-center transition-colors duration-300">
             Sponsored Content
           </h3>
 
@@ -230,7 +268,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
             {adSlots.map((ad, index) => (
               <div
                 key={ad.id}
-                className="border-2 border-dashed border-[#708090] rounded-lg p-6 text-center bg-[#faf9f5] hover:bg-gray-50 transition-colors duration-200"
+                className="border-2 border-dashed border-[#708090] dark:border-[#96abdc] rounded-lg p-6 text-center bg-[#faf9f5] dark:bg-[#1a1a2e] hover:bg-gray-50 dark:hover:bg-[#2a2a3e] transition-colors duration-200"
               >
                 <div className="text-[#708090] mb-3">
                   <div className="w-12 h-12 bg-[#ed5925] bg-opacity-20 rounded-lg flex items-center justify-center mx-auto mb-3">
@@ -238,10 +276,10 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                       {index + 1}
                     </span>
                   </div>
-                  <h4 className="font-semibold text-[#002244] mb-2">
+                  <h4 className="font-semibold text-[#002244] dark:text-white mb-2 transition-colors duration-300">
                     {ad.title}
                   </h4>
-                  <p className="text-sm text-[#708090] mb-2">
+                  <p className="text-sm text-[#708090] dark:text-[#96abdc] mb-2 transition-colors duration-300">
                     {ad.description}
                   </p>
                   <span className="text-xs bg-[#004953] text-white px-2 py-1 rounded">
@@ -249,8 +287,8 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                   </span>
                 </div>
 
-                <div className="mt-4 p-4 bg-white border border-gray-200 rounded">
-                  <div className="text-xs text-[#708090] mb-2">
+                <div className="mt-4 p-4 bg-white dark:bg-[#002244] border border-gray-200 dark:border-gray-800 rounded transition-colors duration-300">
+                  <div className="text-xs text-[#708090] dark:text-[#96abdc] mb-2 transition-colors duration-300">
                     Advertisement Space
                   </div>
                   <div
@@ -267,14 +305,14 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
             ))}
           </div>
           {/* Additional News Streams */}
-          <div className="border-t border-gray-200 pt-6 space-y-6">
-            <h3 className="text-lg font-bold text-[#002244] mb-6 text-center">
+          <div className="border-t border-gray-200 dark:border-gray-800 pt-6 space-y-6">
+            <h3 className="text-lg font-bold text-[#002244] dark:text-white mb-6 text-center transition-colors duration-300">
               More News Streams
             </h3>
             {[1, 2, 3].map((num) => (
               <div
                 key={`news-stream-${num}`}
-                className="border-2 border-dashed border-[#708090] rounded-lg p-6 text-center bg-[#faf9f5] hover:bg-gray-50 transition-colors duration-200"
+                className="border-2 border-dashed border-[#708090] dark:border-[#96abdc] rounded-lg p-6 text-center bg-[#faf9f5] dark:bg-[#1a1a2e] hover:bg-gray-50 dark:hover:bg-[#2a2a3e] transition-colors duration-200"
               >
                 <div className="text-[#708090] mb-3">
                   <div className="w-12 h-12 bg-[#ed5925] bg-opacity-20 rounded-lg flex items-center justify-center mx-auto mb-3">
@@ -282,20 +320,20 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                       {num}
                     </span>
                   </div>
-                  <h4 className="font-semibold text-[#002244] mb-2">
+                  <h4 className="font-semibold text-[#002244] dark:text-white mb-2 transition-colors duration-300">
                     {num === 1 && "PFF News Feed"}
                     {num === 2 && "Razzball News Feed"}
                     {num === 3 && "FFToday News Feed"}
                     {num > 3 && `News Stream ${num}`}
                   </h4>
-                  <p className="text-sm text-[#708090] mb-2">
+                  <p className="text-sm text-[#708090] dark:text-[#96abdc] mb-2 transition-colors duration-300">
                     {num <= 3
                       ? "Latest fantasy football news"
                       : "Live news feed placeholder"}
                   </p>
                 </div>
-                <div className="mt-4 p-4 bg-white border border-gray-200 rounded">
-                  <div className="text-xs text-[#708090] mb-2">
+                <div className="mt-4 p-4 bg-white dark:bg-[#002244] border border-gray-200 dark:border-gray-800 rounded transition-colors duration-300">
+                  <div className="text-xs text-[#708090] dark:text-[#96abdc] mb-2 transition-colors duration-300">
                     {num === 1 && "PFF RSS Feed"}
                     {num === 2 && "Razzball RSS Feed"}
                     {num === 3 && "FFToday RSS Feed"}
@@ -326,20 +364,20 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                           </div>
                         </div>
                       ) : (num === 1
-                          ? rssItems
+                          ? filterNFLStories(rssItems)
                           : num === 2
-                            ? razzballRssItems
-                            : fftodayRssItems
+                            ? filterNFLStories(razzballRssItems)
+                            : filterNFLStories(fftodayRssItems)
                         ).length > 0 ? (
                         (num === 1
-                          ? rssItems
+                          ? filterNFLStories(rssItems)
                           : num === 2
-                            ? razzballRssItems
-                            : fftodayRssItems
+                            ? filterNFLStories(razzballRssItems)
+                            : filterNFLStories(fftodayRssItems)
                         ).map((item) => (
                           <article
                             key={item.guid}
-                            className="border-b border-gray-100 pb-2 mb-2 last:border-b-0"
+                            className="border-b border-gray-100 dark:border-gray-800 pb-2 mb-2 last:border-b-0"
                           >
                             <div className="flex items-start justify-between mb-1">
                               <span className="text-xs bg-[#004953] text-white px-2 py-1 rounded-full">
@@ -350,7 +388,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                                 {formatTimeAgo(item.pubDate)}
                               </div>
                             </div>
-                            <h5 className="font-semibold text-[#002244] text-xs leading-tight mb-1">
+                            <h5 className="font-semibold text-[#002244] dark:text-white text-xs leading-tight mb-1 transition-colors duration-300">
                               <a
                                 href={item.link}
                                 target="_blank"
@@ -360,7 +398,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                                 {item.title}
                               </a>
                             </h5>
-                            <p className="text-xs text-[#708090] leading-relaxed">
+                            <p className="text-xs text-[#708090] dark:text-[#96abdc] leading-relaxed transition-colors duration-300">
                               {sanitizeHTML(item.description).length > 80
                                 ? `${sanitizeHTML(item.description).substring(0, 80)}...`
                                 : sanitizeHTML(item.description)}
@@ -369,7 +407,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                         ))
                       ) : (
                         <div className="text-center h-24 flex items-center justify-center">
-                          <span className="text-[#708090] text-sm">
+                          <span className="text-[#708090] dark:text-[#96abdc] text-sm transition-colors duration-300">
                             No news items found
                           </span>
                         </div>
