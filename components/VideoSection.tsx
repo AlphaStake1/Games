@@ -4,7 +4,14 @@ const VideoSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white transition-colors duration-300">
-            Fantasy Football Show
+            <a
+              href="https://www.youtube.com/@Blondentertainmentmk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              Fantasy Football Show
+            </a>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 transition-colors duration-300">
             Watch expert fantasy football analysis and insights
