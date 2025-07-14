@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FantasyFootballContent from "@/components/FantasyFootballContent";
 
@@ -11,7 +10,6 @@ export const metadata = {
 export default function FantasyPage() {
   return (
     <div className="min-h-screen bg-[#faf9f5] dark:bg-[#1a1a2e] transition-colors duration-300">
-      <Header />
       <FantasyFootballContent />
       <Footer />
     </div>

@@ -1,5 +1,4 @@
 import { WhatAreNftsContent } from "@/components/WhatAreNftsContent";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata = {
@@ -11,7 +10,6 @@ export const metadata = {
 export default function WhatAreNftsPage() {
   return (
     <div className="min-h-screen bg-[#faf9f5] dark:bg-[#444341] transition-colors duration-300">
-      <Header />
       <WhatAreNftsContent />
       <Footer />
     </div>

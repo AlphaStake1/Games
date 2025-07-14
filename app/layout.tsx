@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CoachBChatbot from "@/components/CoachBChatbot";
 
 const recursive = Recursive({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          <CoachBChatbot />
         </Providers>
       </body>
     </html>

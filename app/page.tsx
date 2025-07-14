@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Hero from '@/components/Hero';
 import SquaresGrid from '@/components/SquaresGrid';
 import HowItWorks from '@/components/HowItWorks';
@@ -12,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export default function Home() {
+  const router = useRouter();
   const [gameId, setGameId] = useState<string>('');
   const [showBoard, setShowBoard] = useState(false);
 
@@ -22,10 +24,12 @@ export default function Home() {
   };
 
   const handleCreateGame = () => {
-    // In real implementation, this would create a new game via the Anchor program
-    const newGameId = Math.floor(Math.random() * 10000) + 1;
-    setGameId(newGameId.toString());
-    setShowBoard(true);
+    // Only run on client
+    if (typeof window !== 'undefined') {
+      const newGameId = Math.floor(Math.random() * 10000) + 1;
+      setGameId(newGameId.toString());
+      setShowBoard(true);
+    }
   };
 
   if (showBoard) {
@@ -71,7 +75,7 @@ export default function Home() {
         {/* Main Content Area */}
         <div className="flex-1">
           {/* Main Game Selection Section */}
-          <section className="py-16 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+          <section id="ready-to-play" className="py-16 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-12">
@@ -107,7 +111,7 @@ export default function Home() {
                       </div>
                       <Button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white border-0 transition-colors duration-200"
-                        onClick={() => {/* Handle season-long signup */}}
+                        onClick={() => router.push('/boards?mode=seasonal')}
                       >
                         Join Season-Long Competition
                       </Button>
@@ -130,13 +134,12 @@ export default function Home() {
                         <ul className="text-sm space-y-1 text-gray-600 dark:text-gray-400">
                           <li>• Choose your own squares (up to 5 per board)</li>
                           <li>• Instant payouts after each quarter</li>
-                          <li>• Various price points ($10, $25, $50+)</li>
                           <li>• No long-term commitment required</li>
                         </ul>
                       </div>
                       <Button
                         className="w-full bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black transition-colors duration-200"
-                        onClick={() => {/* Handle weekly games */}}
+                        onClick={() => router.push('/boards?mode=weekly')}
                       >
                         Browse Weekly Games
                       </Button>
@@ -214,7 +217,11 @@ export default function Home() {
                       </div>
                       <Button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white border-0 transition-colors duration-200"
-                        onClick={() => window.open('/fantasy', '_blank')}
+                        onClick={() => {
+                          if (typeof window !== 'undefined') {
+                            window.open('/fantasy', '_blank');
+                          }
+                        }}
                       >
                         Explore Fantasy Guide
                       </Button>
@@ -242,7 +249,11 @@ export default function Home() {
                       </div>
                       <Button
                         className="w-full bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black transition-colors duration-200"
-                        onClick={() => window.open('/fantasy', '_blank')}
+                        onClick={() => {
+                          if (typeof window !== 'undefined') {
+                            window.open('/fantasy', '_blank');
+                          }
+                        }}
                       >
                         Learn Strategy Integration
                       </Button>
@@ -274,7 +285,11 @@ export default function Home() {
                             variant="outline"
                             size="sm"
                             className="w-full text-xs border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
-                            onClick={() => window.open(platform.url, '_blank')}
+                            onClick={() => {
+                              if (typeof window !== 'undefined') {
+                                window.open(platform.url, '_blank');
+                              }
+                            }}
                           >
                             Visit Site
                           </Button>

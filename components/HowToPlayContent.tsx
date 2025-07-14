@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Grid3X3,
   Trophy,
@@ -17,6 +18,7 @@ import {
 } from "lucide-react";
 
 const HowToPlayContent = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("basics");
   const [selectedSquare, setSelectedSquare] = useState<number | null>(null);
   const [playerNames, setPlayerNames] = useState<string[]>([]);
@@ -1205,7 +1207,10 @@ const HowToPlayContent = () => {
               and experience the excitement of crypto-powered NFL action.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-4 rounded-full font-bold text-lg hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2">
+              <button
+                onClick={() => router.push("/#ready-to-play")}
+                className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-4 rounded-full font-bold text-lg hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2"
+              >
                 <Play className="w-6 h-6" />
                 Play Your First Game
               </button>

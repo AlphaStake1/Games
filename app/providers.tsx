@@ -44,13 +44,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     [network]
   );
 
-  if (!mounted) {
-    return <>{children}</>;
-  }
-
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
+      <WalletProvider wallets={wallets} autoConnect={mounted}>
         <WalletModalProvider>
           <ThemeProvider
             attribute="class"

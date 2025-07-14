@@ -1,10 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { PlayCircle } from "lucide-react";
 
 const Hero = () => {
+  const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleJoinGames = () => {
+    router.push('/boards?mode=weekly');
+  };
 
   return (
     <section className="bg-black text-white py-20 lg:py-32">
@@ -20,6 +26,7 @@ const Hero = () => {
               Join upcoming NFL games with instant payouts every quarter.
             </p>
             <button
+              onClick={handleJoinGames}
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-xl inline-flex items-center gap-3"
               aria-label="Join weekly cash games"
             >

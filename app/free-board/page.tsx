@@ -8,32 +8,46 @@ const SUPERBOWL_WINNER = "Kansas City Chiefs"; // Update this yearly as needed
 
 const upgradeOptions = [
   {
-    id: "black-signature",
-    label: "Black Signature (Default)",
-    description: "Basic NFT with black signature.",
+    id: "default-signature",
+    label: "Default Signature",
+    description: "Plain black, handwritten “First Name + Last Initial” the system grants every player automatically.",
     icon: PenTool,
-    price: "Free",
+    price: "$0",
   },
   {
     id: "custom-signature",
     label: "Custom Signature",
-    description: "Upgrade to a custom signature NFT.",
+    description: "Same handwritten look, but in any color.",
     icon: Star,
-    price: "0.1 SOL",
+    price: "$3",
   },
   {
-    id: "nickname",
-    label: "Nickname",
-    description: "Upgrade to display your nickname on the board.",
+    id: "custom-hand-drawn-symbol",
+    label: "Custom Hand-Drawn Symbol",
+    description: "Player-supplied simple doodle/icon (photo, scan, or stylus drawing).",
     icon: Users,
-    price: "0.05 SOL",
+    price: "$3",
   },
   {
-    id: "house-image",
-    label: "House Pre-generated Image NFT",
-    description: "Upgrade to a special house image NFT.",
+    id: "house-generated-artwork",
+    label: "House-Generated Artwork",
+    description: "Static full-color art produced by the Football Squares design team.",
     icon: ImageIcon,
-    price: "0.2 SOL",
+    price: "$7",
+  },
+  {
+    id: "ai-generated-artwork",
+    label: "AI-Generated Artwork",
+    description: "AI image created from the player’s text prompt or transformed from their uploaded art.",
+    icon: ImageIcon,
+    price: "$14",
+  },
+  {
+    id: "premium-animated",
+    label: "Premium (VIP) Animated",
+    description: "Custom or uploaded art that we convert to an animated NFT; VIP-only access.",
+    icon: Star,
+    price: "$21",
   },
 ];
 
@@ -333,7 +347,7 @@ export default function FreeBoardPage() {
                 <li>• Select available squares on the 10x10 grid</li>
                 <li>• Numbers 0-9 are randomly assigned to rows and columns</li>
                 <li>• Winners determined by last digit of each team's score</li>
-                <li>• Payouts occur at the end of each quarter</li>
+                <li>• Points awarded at the end of each quarter</li>
               </ul>
             </div>
             <div>

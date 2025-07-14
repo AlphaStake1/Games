@@ -53,9 +53,9 @@ export default function PrivacyPolicyContent() {
           addresses, blockchain network).
         </li>
         <li>
-          <strong>Payment & Prize‑Fulfilment Details</strong> (e.g., contact
-          details for prize distribution, limited KYC/AML data where required by
-          law).
+          <strong>Blockchain Wallet Information</strong> (e.g., public wallet
+          addresses for smart contract interactions, no personal financial data
+          required).
         </li>
         <li>
           <strong>Support Communications</strong> (correspondence, requests,
@@ -133,8 +133,8 @@ export default function PrivacyPolicyContent() {
               <strong>Security & Fraud Prevention</strong>
             </td>
             <td>
-              Authenticate users, detect suspicious activity, conduct KYC/AML
-              checks where legally required.
+              Authenticate wallet connections, detect platform abuse, monitor
+              smart contract interactions for security.
             </td>
           </tr>
           <tr>

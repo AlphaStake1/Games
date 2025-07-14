@@ -8,6 +8,16 @@ A decentralized Football Squares game built on Solana blockchain with real-time 
 ![Anchor](https://img.shields.io/badge/Anchor-FF6B35?style=for-the-badge&logo=anchor&logoColor=white)
 
 ## 🎯 Overview
+## NFT Tiers & Pricing
+
+| NFT Tier | What it is | One-time mint cost |
+|----------|------------|--------------------|
+| **Default Signature** | Plain black, handwritten “First Name + Last Initial” the system grants every player automatically. | **$0** |
+| **Custom Signature** | Same handwritten look, but in any color. | **$3** |
+| **Custom Hand-Drawn Symbol** | Player-supplied simple doodle/icon (photo, scan, or stylus drawing). | **$3** |
+| **House-Generated Artwork** | Static full-color art produced by the Football Squares design team. | **$7** |
+| **AI-Generated Artwork** | AI image created from the player’s text prompt *or* transformed from their uploaded art. | **$14** |
+| **Premium (VIP) Animated** | Custom or uploaded art that we convert to an animated NFT; VIP-only access. | **$21** |
 
 The Football Squares dApp is a production-ready decentralized application that brings the classic Super Bowl squares game to the blockchain. Built with cutting-edge Web3 technologies, it features automated game management, real-time updates, verifiable randomness, and seamless user experience.
 
@@ -22,6 +32,7 @@ The Football Squares dApp is a production-ready decentralized application that b
 - **📊 Decentralized Logging**: Ceramic Network integration
 - **🐳 Containerized Deployment**: Docker and Akash Network ready
 - **🔒 Enterprise Security**: Comprehensive testing and monitoring
+- **✨ Animated NFT Board Markers (VIP Only)**: Exclusive animated NFT board markers are available only to VIP players.
 
 ## 🏗️ Architecture
 
