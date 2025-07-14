@@ -54,7 +54,19 @@ const PricingPanel: React.FC<PricingPanelProps> = ({
   };
 
   const potentialWinnings = calculatePotentialWinnings();
-  const maxPotentialWin = potentialWinnings.q1 + potentialWinnings.q2 + potentialWinnings.q3 + potentialWinnings.q4 + potentialWinnings.overtime;
+
+  let potentialQ4OvertimeTotal = 0;
+  let potentialFinalOvertimeTotal = 0;
+
+  selections.forEach(selection => {
+    const squareCount = selection.squareIndices.length;
+    if (selection.potentialPayouts.q4Overtime) {
+      potentialQ4OvertimeTotal += selection.potentialPayouts.q4Overtime * squareCount;
+    }
+    if (selection.potentialPayouts.finalOvertime) {
+      potentialFinalOvertimeTotal += selection.potentialPayouts.finalOvertime * squareCount;
+    }
+  });
 
   return (
     <Card className={`sticky top-4 ${className}`}>
@@ -148,33 +160,33 @@ const PricingPanel: React.FC<PricingPanelProps> = ({
                 </div>
               </div>
 
-              {potentialWinnings.overtime > 0 && (
-                <div className="bg-blue-50 dark:bg-blue-950 rounded p-2">
-                  <div className="flex justify-between text-xs">
-                    <span>Overtime:</span>
-                    <span className="font-medium">{formatCurrency(potentialWinnings.overtime)}</span>
-                  </div>
-                </div>
-              )}
-
-              <div className="bg-green-50 dark:bg-green-950 rounded p-2">
+              <div className="bg-green-50 dark:bg-green-950 rounded p-2 mt-4">
                 <div className="flex justify-between">
-                  <span className="text-sm font-medium">Max Win:</span>
+                  <span className="text-sm font-medium">Max Cumulative Win (Regulation End):</span>
                   <span className="text-sm font-bold text-green-600">
-                    {formatCurrency(maxPotentialWin)}
+                    {formatCurrency(potentialWinnings.q1 + potentialWinnings.q2 + potentialWinnings.q3 + potentialWinnings.q4)}
                   </span>
                 </div>
-                <div className="text-xs text-gray-500 mt-1 space-y-1">
-                  <p>If you win every quarter in a 0-0 game:</p>
-                  {potentialWinnings.overtime > 0 ? (
-                    <div className="space-y-1">
-                      <p>• No overtime: {formatCurrency(maxPotentialWin - potentialWinnings.overtime)} (most likely scenario)</p>
-                      <p>• With overtime: {formatCurrency(maxPotentialWin)} (includes bonus payout)</p>
+                {potentialQ4OvertimeTotal > 0 && potentialFinalOvertimeTotal > 0 && (
+                  <div className="text-xs text-gray-500 mt-1 space-y-1">
+                    <p className="font-semibold mt-2">If game goes to Overtime:</p>
+                    <div className="flex justify-between">
+                      <span>Q4 Overtime Scenario Payout:</span>
+                      <span>{formatCurrency(potentialQ4OvertimeTotal)}</span>
                     </div>
-                  ) : (
-                    <p>• Total payout for 0-0 game: {formatCurrency(maxPotentialWin)}</p>
-                  )}
-                </div>
+                    <div className="flex justify-between">
+                      <span>Overtime Payout:</span>
+                      <span>{formatCurrency(potentialFinalOvertimeTotal)}</span>
+                    </div>
+                    <p className="mt-2 text-blue-800 dark:text-blue-200">
+                      Note: In overtime scenarios, the Q4 and Overtime payouts are distinct.
+                    </p>
+                    <div className="flex justify-between font-bold text-green-700 dark:text-green-300 mt-2">
+                      <span>Max Payout with OT split:</span>
+                      <span>{formatCurrency(potentialWinnings.q1 + potentialWinnings.q2 + potentialWinnings.q3 + potentialQ4OvertimeTotal)}</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

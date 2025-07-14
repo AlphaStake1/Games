@@ -39,7 +39,7 @@ const upgradeOptions = [
     id: "ai-generated-artwork",
     label: "AI-Generated Artwork",
     description: "AI image created from the player’s text prompt or transformed from their uploaded art.",
-    icon: ImageIcon,
+    icon: Play,
     price: "$14",
   },
   {
@@ -328,9 +328,11 @@ export default function FreeBoardPage() {
               className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-6 sm:px-8 py-3 rounded-full font-bold text-sm sm:text-lg hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={selectedUpgrade === "black-signature" || isLoading}
             >
-              {isLoading ? 'Processing...' :
-               selectedUpgrade === "black-signature" ? "Default NFT Active" :
-               `Upgrade to ${upgradeOptions.find(opt => opt.id === selectedUpgrade)?.label}`}
+              {isLoading
+                ? 'Processing...'
+                : selectedUpgrade === "default-signature"
+                  ? "Upgrade Your NFT"
+                  : `Upgrade to ${upgradeOptions.find(opt => opt.id === selectedUpgrade)?.label}`}
             </button>
           </div>
         </section>
