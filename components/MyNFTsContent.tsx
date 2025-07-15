@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   Palette,
   Sparkles,
@@ -25,6 +26,7 @@ import {
   Target,
   Gift,
   Flame,
+  PenTool,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -43,6 +45,7 @@ const MyNFTsContent = () => {
   const [activeCreationType, setActiveCreationType] = useState<string | null>(
     null,
   );
+  const [activeTab, setActiveTab] = useState("collection");
 
   // Sample NFTs data - showing how they appear on squares
   const sampleNFTs = [
@@ -90,53 +93,81 @@ const MyNFTsContent = () => {
   // NFT Creation Tiers
   const creationTiers = [
     {
-      id: "signature",
-      name: "Signature NFT",
-      price: "$3",
+      id: "default-signature",
+      name: "Default Signature",
+      price: "$0",
       icon: Brush,
-      description: "Create a personalized marker from your digital signature",
+      description: "Plain black, handwritten 'First Name + Last Initial' the system grants every player automatically.",
+      features: [
+        "Standard black signature",
+        "Default for all players",
+        "No cost, always available",
+        "Non-transferable",
+      ],
+      color: "from-gray-400 to-gray-600",
+    },
+    {
+      id: "custom-signature",
+      name: "Custom Signature",
+      price: "$3",
+      icon: Star,
+      description: "Same handwritten look, but in any color.",
       features: [
         "Your signature in custom colored ink",
+        "Personalized marker",
         "Use on any square you purchase",
-        "Replaces standard black signature",
         "Transferable to any wallet",
       ],
       color: "from-[#ed5925] to-[#d14a1f]",
     },
     {
-      id: "house",
-      name: "House Collection",
-      price: "$7",
-      icon: Star,
-      description: "Professional designs - can be won free or redeemed",
+      id: "custom-hand-drawn-symbol",
+      name: "Custom Hand-Drawn Symbol",
+      price: "$3",
+      icon: PenTool,
+      description: "Draw your own simple symbol or doodle directly on the website using our whiteboard tool.",
       features: [
-        "Pre-designed professional artwork",
-        "Can be won in free games",
-        "Redeemable during cash game payouts",
-        "Cost deducted from winnings ($7)",
+        "Draw your symbol or doodle on the site",
+        "Hand-drawn using the web whiteboard",
+        "Unique personal marker",
+        "Use on any square you purchase",
       ],
       color: "from-[#96abdc] to-[#7a95d1]",
     },
     {
-      id: "custom",
-      name: "Custom Artwork",
-      price: "$14",
-      description: "Upload your own unique artwork as a square marker",
+      id: "house-generated-artwork",
+      name: "House-Generated Artwork",
+      price: "$7",
       icon: ImageIcon,
+      description: "Static full-color art produced by the Football Squares design team.",
       features: [
-        "Upload your own image/artwork",
-        "Professional formatting for squares",
-        "Unique personal marker",
+        "Pre-designed professional art",
+        "Win in free games or redeem from winnings",
         "High-quality display on game boards",
+        "Cost deducted from winnings ($7)",
       ],
       color: "from-[#004953] to-[#003a42]",
     },
     {
-      id: "animated",
-      name: "Animated NFT",
+      id: "ai-generated-artwork",
+      name: "AI-Generated Artwork",
+      price: "$14",
+      icon: Play,
+      description: "AI image created from the player’s text prompt or transformed from their uploaded art.",
+      features: [
+        "AI-generated from your prompt or art",
+        "Unique, one-of-a-kind marker",
+        "Professional formatting for squares",
+        "High-quality display on game boards",
+      ],
+      color: "from-[#8d594d] to-[#6b4238]",
+    },
+    {
+      id: "premium-animated",
+      name: "Premium (VIP) Animated",
       price: "$21",
-      description: "Animated artwork that moves on your squares",
-      icon: Zap,
+      icon: Star,
+      description: "Custom or uploaded art that we convert to an animated NFT; VIP-only access.",
       features: [
         "Custom animated artwork",
         "Eye-catching movement on game boards",
@@ -203,7 +234,7 @@ const MyNFTsContent = () => {
     },
     {
       q: "What's the difference between NFT types?",
-      a: "Signature NFTs ($3) use your digital signature, House NFTs ($7) are professionally designed and can be won free or redeemed from winnings, Custom NFTs ($14) use your uploaded artwork, and Animated NFTs ($21) add movement to your squares.",
+      a: "Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is custom or uploaded art with animation, available to VIPs.",
     },
     {
       q: "How can I get House NFTs for free?",
@@ -237,10 +268,14 @@ const MyNFTsContent = () => {
             with your unique design on every square you purchase.
           </p>
           <div className="flex justify-center gap-4">
-            <Button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-3 rounded-full font-bold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2">
-              <Plus className="w-5 h-5" />
-              Create New Marker
-            </Button>
+            <Link href="/create-nft/custom-signature">
+              <Button
+                className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-3 rounded-full font-bold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2"
+              >
+                <Plus className="w-5 h-5" />
+                Create New Marker
+              </Button>
+            </Link>
             <Button
               variant="outline"
               className="px-8 py-3 rounded-full font-bold border-2 border-[#708090] text-[#708090] dark:text-[#96abdc] hover:bg-[#708090] hover:text-white dark:hover:bg-[#96abdc] dark:hover:text-[#002244] transition-all duration-200 inline-flex items-center gap-2"
@@ -409,7 +444,7 @@ const MyNFTsContent = () => {
         </div>
 
         {/* Main Tabs */}
-        <Tabs defaultValue="collection" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 bg-white dark:bg-[#002244] border border-gray-200 dark:border-[#004953] rounded-xl p-1 transition-colors duration-300">
             <TabsTrigger
               value="collection"
@@ -615,67 +650,65 @@ const MyNFTsContent = () => {
           <TabsContent value="create" className="mt-8">
             <div className="space-y-12">
               {/* Creation Tiers */}
-              <div>
+              <div id="choose-marker-type">
                 <h2 className="text-3xl font-bold text-[#002244] dark:text-white mb-8 text-center transition-colors duration-300">
                   Choose Your Square Marker Type
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {creationTiers.map((tier) => (
-                    <Card
-                      key={tier.id}
-                      className={`bg-white dark:bg-[#002244] border-2 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 cursor-pointer ${
-                        activeCreationType === tier.id
-                          ? "border-[#ed5925] shadow-lg"
-                          : "border-gray-200 dark:border-[#004953] hover:border-[#ed5925]"
-                      }`}
-                      onClick={() =>
-                        setActiveCreationType(
-                          activeCreationType === tier.id ? null : tier.id,
-                        )
-                      }
-                    >
-                      <CardContent className="p-6 text-center">
-                        <div
-                          className={`bg-gradient-to-r ${tier.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}
+                  {creationTiers
+                    .filter((tier) => tier.id !== "default-signature")
+                    .map((tier) => {
+                      // Map tier.id to the correct route
+                      let href = "#";
+                      if (tier.id === "custom-signature") href = "/create-nft/custom-signature";
+                      if (tier.id === "custom-hand-drawn-symbol") href = "/create-nft/custom-hand-drawn-symbol";
+                      if (tier.id === "house-generated-artwork") href = "/create-nft/house-generated-artwork";
+                      if (tier.id === "ai-generated-artwork") href = "/create-nft/ai-generated-artwork";
+                      if (tier.id === "premium-animated") href = "/create-nft/premium-animated";
+                      return (
+                        <Card
+                          key={tier.id}
+                          className="bg-white dark:bg-[#002244] border-2 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 cursor-pointer border-gray-200 dark:border-[#004953] hover:border-[#ed5925]"
                         >
-                          <tier.icon className="w-8 h-8 text-white" />
-                        </div>
-                        <h3 className="text-xl font-bold text-[#002244] dark:text-white mb-2 transition-colors duration-300">
-                          {tier.name}
-                        </h3>
-                        <div className="text-3xl font-bold text-[#ed5925] mb-3">
-                          {tier.price}
-                        </div>
-                        <p className="text-[#708090] dark:text-[#96abdc] text-sm mb-4 transition-colors duration-300">
-                          {tier.description}
-                        </p>
-                        <ul className="space-y-2 text-left">
-                          {tier.features.map((feature, index) => (
-                            <li
-                              key={index}
-                              className="flex items-start gap-2 text-sm"
+                          <CardContent className="p-6 text-center">
+                            <div
+                              className={`bg-gradient-to-r ${tier.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}
                             >
-                              <CheckCircle className="w-4 h-4 text-[#ed5925] mt-0.5 flex-shrink-0" />
-                              <span className="text-[#708090] dark:text-[#96abdc] transition-colors duration-300">
-                                {feature}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                        <Button
-                          className={`w-full mt-4 ${
-                            activeCreationType === tier.id
-                              ? "bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white"
-                              : "bg-gray-100 dark:bg-[#1a1a2e] text-[#708090] dark:text-[#96abdc] hover:bg-[#ed5925] hover:text-white"
-                          } transition-all duration-200`}
-                        >
-                          {activeCreationType === tier.id
-                            ? "Selected"
-                            : "Select Type"}
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
+                              <tier.icon className="w-8 h-8 text-white" />
+                            </div>
+                            <h3 className="text-xl font-bold text-[#002244] dark:text-white mb-2 transition-colors duration-300">
+                              {tier.name}
+                            </h3>
+                            <div className="text-3xl font-bold text-[#ed5925] mb-3">
+                              {tier.price}
+                            </div>
+                            <p className="text-[#708090] dark:text-[#96abdc] text-sm mb-4 transition-colors duration-300">
+                              {tier.description}
+                            </p>
+                            <ul className="space-y-2 text-left">
+                              {tier.features.map((feature, index) => (
+                                <li
+                                  key={index}
+                                  className="flex items-start gap-2 text-sm"
+                                >
+                                  <CheckCircle className="w-4 h-4 text-[#ed5925] mt-0.5 flex-shrink-0" />
+                                  <span className="text-[#708090] dark:text-[#96abdc] transition-colors duration-300">
+                                    {feature}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                            <a href={href}>
+                              <Button
+                                className="w-full mt-4 bg-gray-100 dark:bg-[#1a1a2e] text-[#708090] dark:text-[#96abdc] hover:bg-[#ed5925] hover:text-white transition-all duration-200"
+                              >
+                                Select Type
+                              </Button>
+                            </a>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
                 </div>
               </div>
 
@@ -717,242 +750,6 @@ const MyNFTsContent = () => {
                 </div>
               </div>
 
-              {/* Signature NFT Creator */}
-              {activeCreationType === "signature" && (
-                <div className="bg-white dark:bg-[#002244] rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-[#004953] transition-colors duration-300">
-                  <h3 className="text-2xl font-bold text-[#002244] dark:text-white mb-6 text-center transition-colors duration-300">
-                    Create Your Signature Square Marker
-                  </h3>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Input Section */}
-                    <div className="space-y-6">
-                      <div>
-                        <label className="block text-sm font-medium text-[#002244] dark:text-white mb-2 transition-colors duration-300">
-                          Your Signature
-                        </label>
-                        <input
-                          type="text"
-                          value={signatureText}
-                          onChange={(e) => setSignatureText(e.target.value)}
-                          placeholder="Enter your signature text"
-                          className="w-full px-4 py-3 border border-gray-300 dark:border-[#004953] rounded-lg focus:ring-2 focus:ring-[#ed5925] focus:border-transparent bg-white dark:bg-[#1a1a2e] text-[#002244] dark:text-white transition-colors duration-300"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-[#002244] dark:text-white mb-2 transition-colors duration-300">
-                          Ink Color
-                        </label>
-                        <div className="grid grid-cols-4 gap-3">
-                          {colorOptions.map((color) => (
-                            <button
-                              key={color.value}
-                              onClick={() => setSelectedColor(color.value)}
-                              className={`w-full h-12 rounded-lg border-2 transition-all duration-200 ${
-                                selectedColor === color.value
-                                  ? "border-[#002244] dark:border-white scale-110"
-                                  : "border-gray-300 dark:border-[#004953] hover:scale-105"
-                              }`}
-                              style={{ backgroundColor: color.value }}
-                              title={color.name}
-                            />
-                          ))}
-                        </div>
-                      </div>
-
-                      <Button className="w-full bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white py-3 rounded-lg font-bold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200">
-                        Create Signature Marker - $3
-                      </Button>
-                    </div>
-
-                    {/* Preview Section */}
-                    <div className="bg-[#faf9f5] dark:bg-[#1a1a2e] rounded-xl p-6 transition-colors duration-300">
-                      <h4 className="text-lg font-semibold text-[#002244] dark:text-white mb-4 text-center transition-colors duration-300">
-                        Square Preview
-                      </h4>
-                      <div className="bg-white dark:bg-[#002244] rounded-lg p-8 border-2 border-dashed border-gray-300 dark:border-[#004953] min-h-[200px] flex items-center justify-center transition-colors duration-300">
-                        {signatureText ? (
-                          <div className="text-center">
-                            <div className="w-24 h-24 bg-gray-100 dark:bg-[#1a1a2e] rounded-lg border-2 border-gray-300 dark:border-[#004953] flex items-center justify-center mb-4 mx-auto transition-colors duration-300">
-                              <div
-                                className="text-lg font-bold"
-                                style={{
-                                  color: selectedColor,
-                                  fontFamily: "cursive",
-                                  textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
-                                }}
-                              >
-                                {signatureText}
-                              </div>
-                            </div>
-                            <p className="text-sm text-[#708090] dark:text-[#96abdc] transition-colors duration-300">
-                              This replaces the standard black signature on your
-                              squares
-                            </p>
-                          </div>
-                        ) : (
-                          <div className="text-center text-[#708090] dark:text-[#96abdc] transition-colors duration-300">
-                            <Brush className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                            <p>Enter your signature to see preview</p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* House Collection */}
-              {activeCreationType === "house" && (
-                <div className="bg-white dark:bg-[#002244] rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-[#004953] transition-colors duration-300">
-                  <h3 className="text-2xl font-bold text-[#002244] dark:text-white mb-6 text-center transition-colors duration-300">
-                    House Collection Square Markers
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {houseNFTs.map((nft) => (
-                      <Card
-                        key={nft.id}
-                        className="bg-[#faf9f5] dark:bg-[#1a1a2e] border border-gray-200 dark:border-[#004953] hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
-                      >
-                        <CardContent className="p-4">
-                          <img
-                            src={nft.image}
-                            alt={nft.name}
-                            className="w-full h-40 object-cover rounded-lg mb-4 group-hover:scale-105 transition-transform duration-300"
-                          />
-                          <h4 className="font-bold text-[#002244] dark:text-white mb-1 transition-colors duration-300">
-                            {nft.name}
-                          </h4>
-                          <p className="text-sm text-[#708090] dark:text-[#96abdc] mb-2 transition-colors duration-300">
-                            {nft.theme} Theme
-                          </p>
-                          <p className="text-xs text-[#708090] dark:text-[#96abdc] mb-3 transition-colors duration-300">
-                            {nft.availability}
-                          </p>
-                          <div className="space-y-2">
-                            <Button
-                              size="sm"
-                              className="w-full bg-gradient-to-r from-[#96abdc] to-[#7a95d1] text-white hover:from-[#7a95d1] hover:to-[#6b84c7] transition-all duration-200"
-                            >
-                              Purchase - $7
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="w-full text-xs border-[#96abdc] text-[#96abdc] hover:bg-[#96abdc] hover:text-white"
-                            >
-                              Play Free to Win
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Custom Artwork */}
-              {activeCreationType === "custom" && (
-                <div className="bg-white dark:bg-[#002244] rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-[#004953] transition-colors duration-300">
-                  <h3 className="text-2xl font-bold text-[#002244] dark:text-white mb-6 text-center transition-colors duration-300">
-                    Upload Your Custom Square Marker
-                  </h3>
-                  <div className="max-w-2xl mx-auto">
-                    <div className="border-2 border-dashed border-[#ed5925] rounded-xl p-12 text-center bg-[#faf9f5] dark:bg-[#1a1a2e] transition-colors duration-300">
-                      <ImageIcon className="w-16 h-16 text-[#ed5925] mx-auto mb-4" />
-                      <h4 className="text-lg font-semibold text-[#002244] dark:text-white mb-2 transition-colors duration-300">
-                        Drop your artwork here
-                      </h4>
-                      <p className="text-[#708090] dark:text-[#96abdc] mb-6 transition-colors duration-300">
-                        Supports JPG, PNG, GIF up to 10MB. Will be formatted to
-                        fit square markers.
-                      </p>
-                      <Button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-3 rounded-lg font-bold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200">
-                        Choose File
-                      </Button>
-                    </div>
-                    <div className="mt-6 text-center">
-                      <Button className="bg-gradient-to-r from-[#004953] to-[#003a42] text-white px-12 py-3 rounded-lg font-bold hover:from-[#003a42] hover:to-[#002a2f] transition-all duration-200">
-                        Create Custom Marker - $14
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Animated NFT */}
-              {activeCreationType === "animated" && (
-                <div className="bg-white dark:bg-[#002244] rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-[#004953] transition-colors duration-300">
-                  <h3 className="text-2xl font-bold text-[#002244] dark:text-white mb-6 text-center transition-colors duration-300">
-                    Create Animated Square Marker
-                  </h3>
-                  <div className="max-w-4xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                      <div className="space-y-6">
-                        <div className="border-2 border-dashed border-[#8d594d] rounded-xl p-8 text-center bg-[#faf9f5] dark:bg-[#1a1a2e] transition-colors duration-300">
-                          <Wand2 className="w-12 h-12 text-[#8d594d] mx-auto mb-4" />
-                          <h4 className="text-lg font-semibold text-[#002244] dark:text-white mb-2 transition-colors duration-300">
-                            Upload Your Artwork
-                          </h4>
-                          <p className="text-[#708090] dark:text-[#96abdc] mb-4 transition-colors duration-300">
-                            We'll add professional animation effects for your
-                            square marker
-                          </p>
-                          <Button
-                            variant="outline"
-                            className="border-[#8d594d] text-[#8d594d] hover:bg-[#8d594d] hover:text-white"
-                          >
-                            Choose File
-                          </Button>
-                        </div>
-
-                        <div className="space-y-4">
-                          <h4 className="font-semibold text-[#002244] dark:text-white transition-colors duration-300">
-                            Animation Effects
-                          </h4>
-                          {[
-                            "Floating Glow",
-                            "Particle Effects",
-                            "Color Pulse",
-                            "Gentle Rotation",
-                          ].map((effect) => (
-                            <label
-                              key={effect}
-                              className="flex items-center gap-3 cursor-pointer"
-                            >
-                              <input
-                                type="checkbox"
-                                className="rounded border-gray-300 text-[#ed5925] focus:ring-[#ed5925]"
-                              />
-                              <span className="text-[#708090] dark:text-[#96abdc] transition-colors duration-300">
-                                {effect}
-                              </span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="bg-[#faf9f5] dark:bg-[#1a1a2e] rounded-xl p-6 transition-colors duration-300">
-                        <h4 className="text-lg font-semibold text-[#002244] dark:text-white mb-4 text-center transition-colors duration-300">
-                          Square Animation Preview
-                        </h4>
-                        <div className="bg-black rounded-lg h-64 flex items-center justify-center">
-                          <div className="text-center text-white">
-                            <div className="w-16 h-16 bg-gradient-to-r from-[#8d594d] to-[#6b4238] rounded-lg mx-auto mb-4 animate-pulse"></div>
-                            <p>Upload artwork to see animated preview</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-8 text-center">
-                      <Button className="bg-gradient-to-r from-[#8d594d] to-[#6b4238] text-white px-12 py-3 rounded-lg font-bold hover:from-[#6b4238] hover:to-[#4a2e26] transition-all duration-200">
-                        Create Animated Marker - $21
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </TabsContent>
 

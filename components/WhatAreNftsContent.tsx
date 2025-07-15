@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Accordion,
@@ -38,6 +39,7 @@ import {
   Lock,
   Unlock,
   Recycle,
+  PenTool,
 } from "lucide-react";
 
 export function WhatAreNftsContent() {
@@ -50,16 +52,17 @@ export function WhatAreNftsContent() {
 
   const nftTiers = [
     {
-      id: 1,
-      name: "Signature NFT",
+      id: 2,
+      name: "Custom Signature",
+      slug: "custom-signature",
       price: "$3",
-      icon: Brush,
-      description: "Your personalized digital signature with custom colors",
+      icon: Star,
+      description: "Same handwritten look, but in any color.",
       features: [
-        "Custom colored ink signature",
-        "Replaces standard black text",
-        "Use on unlimited squares",
-        "Transferable ownership",
+        "Your signature in custom colored ink",
+        "Personalized marker",
+        "Use on any square you purchase",
+        "Transferable to any wallet",
       ],
       gradient: "from-[#ed5925] to-[#d14a1f]",
       bgColor: "bg-gradient-to-br from-[#ed5925]/10 to-[#d14a1f]/10",
@@ -67,55 +70,80 @@ export function WhatAreNftsContent() {
       example: "Your signature in vibrant orange ink",
     },
     {
-      id: 2,
-      name: "House Collection",
-      price: "$7",
-      icon: Star,
-      description: "Professional artwork - win free or redeem from winnings",
+      id: 3,
+      name: "Custom Hand-Drawn Symbol",
+      slug: "custom-hand-drawn-symbol",
+      price: "$3",
+      icon: PenTool,
+      description: "Draw your own simple symbol or doodle directly on the website using our whiteboard tool.",
+      buttonText: "Draw NFT",
       features: [
-        "Pre-designed professional art",
-        "Win in free games",
-        "Redeem from cash winnings",
-        "High-quality designs",
+        "Draw your symbol or doodle on the site",
+        "Hand-drawn using the web whiteboard",
+        "Unique personal marker",
+        "Use on any square you purchase",
       ],
       gradient: "from-[#96abdc] to-[#7a95d1]",
       bgColor: "bg-gradient-to-br from-[#96abdc]/10 to-[#7a95d1]/10",
       borderColor: "border-[#96abdc]/20",
-      example: "Championship trophies, team logos, football themes",
+      example: "Your own doodle or icon",
     },
     {
-      id: 3,
-      name: "Custom Artwork",
-      price: "$14",
+      id: 4,
+      name: "House-Generated Artwork",
+      slug: "house-generated-artwork",
+      price: "$7",
       icon: ImageIcon,
-      description: "Upload your own unique images and artwork",
+      description: "Static full-color art produced by the Football Squares design team.",
+      buttonText: "Choose Art NFT",
       features: [
-        "Upload any image/photo",
-        "Professional square formatting",
-        "Personal artwork display",
-        "Unique visual marker",
+        "Pre-designed professional art",
+        "Win in free games or redeem from winnings",
+        "High-quality display on game boards",
+        "Cost deducted from winnings ($7)",
       ],
       gradient: "from-[#004953] to-[#003a42]",
       bgColor: "bg-gradient-to-br from-[#004953]/10 to-[#003a42]/10",
       borderColor: "border-[#004953]/20",
-      example: "Family photos, pet pictures, personal art",
+      example: "Championship trophies, team logos, football themes",
     },
     {
-      id: 4,
-      name: "Animated NFT",
-      price: "$21",
-      icon: Zap,
-      description: "Moving artwork with eye-catching animations",
+      id: 5,
+      name: "AI-Generated Artwork",
+      slug: "ai-generated-artwork",
+      price: "$14",
+      icon: Play,
+      description: "AI image created from the player’s text prompt or transformed from their uploaded art.",
+      buttonText: "Custom NFT",
       features: [
-        "Custom animated effects",
-        "Eye-catching movement",
-        "Premium square presence",
-        "Advanced visual features",
+        "AI-generated from your prompt or art",
+        "Unique, one-of-a-kind marker",
+        "Professional formatting for squares",
+        "High-quality display on game boards",
       ],
       gradient: "from-[#8d594d] to-[#6b4238]",
       bgColor: "bg-gradient-to-br from-[#8d594d]/10 to-[#6b4238]/10",
       borderColor: "border-[#8d594d]/20",
-      example: "Floating effects, color pulses, gentle rotations",
+      example: "AI art from your prompt",
+    },
+    {
+      id: 6,
+      name: "Premium (VIP) Animated",
+      slug: "premium-animated",
+      price: "$21",
+      icon: Star,
+      description: "Custom or uploaded art that we convert to an animated NFT; VIP-only access.",
+      buttonText: "Animate NFT",
+      features: [
+        "Custom animated artwork",
+        "Eye-catching movement on game boards",
+        "Premium square marker",
+        "Exclusive animated features",
+      ],
+      gradient: "from-amber-400 to-yellow-500",
+      bgColor: "bg-gradient-to-br from-amber-400/10 to-yellow-500/10",
+      borderColor: "border-amber-400/20",
+      example: "Animated custom or uploaded art",
     },
   ];
 
@@ -228,10 +256,12 @@ export function WhatAreNftsContent() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-4 rounded-full font-bold text-lg hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                  <Play className="w-5 h-5 mr-2" />
-                  Start Creating NFTs
-                </Button>
+                <Link href="/create-nft/custom-signature">
+                  <Button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-4 rounded-full font-bold text-lg hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <Play className="w-5 h-5 mr-2" />
+                    Start Creating NFTs
+                  </Button>
+                </Link>
                 <Button
                   variant="outline"
                   className="border-2 border-[#002244] dark:border-white/30 text-[#002244] dark:text-white bg-white/90 dark:bg-transparent px-8 py-4 rounded-full font-bold text-lg hover:bg-[#002244] hover:text-white dark:hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
@@ -460,8 +490,7 @@ export function WhatAreNftsContent() {
               NFT Square Marker Types
             </h2>
             <p className="text-xl text-[#708090] dark:text-[#96abdc] max-w-3xl mx-auto">
-              Choose from four distinct types of NFT markers, each offering
-              unique personalization options
+              Choose from six distinct types of NFT markers, each offering unique personalization options and benefits.
             </p>
           </div>
 
@@ -530,16 +559,19 @@ export function WhatAreNftsContent() {
                     </p>
                   </div>
 
-                  {selectedCard === tier.id && (
-                    <div className="mt-6 pt-6 border-t border-[#708090]/20 animate-fade-in">
+                  <div className="mt-6 pt-6 border-t border-[#708090]/20">
+                    <Link
+                      href={`/create-nft/${tier.slug}`}
+                      passHref
+                    >
                       <Button
                         className={`w-full bg-gradient-to-r ${tier.gradient} text-white py-3 rounded-xl font-bold hover:shadow-lg transform hover:scale-105 transition-all duration-300`}
                       >
-                        Create {tier.name}
+                        {tier.buttonText || `Create ${tier.name}`}
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
-                    </div>
-                  )}
+                    </Link>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -819,8 +851,8 @@ export function WhatAreNftsContent() {
                   a: "When you purchase a square in any Football Squares game, your NFT appears as the visual marker instead of the standard black signature text. For example, instead of seeing 'John D.' in plain text, other players see your custom NFT design - whether it's a colorful signature, professional artwork, or animated graphics.",
                 },
                 {
-                  q: "What's the difference between the four NFT types?",
-                  a: "Signature NFTs ($3) display your digital signature in custom colors. House Collection NFTs ($7) are professionally designed artwork that can be won in free games or redeemed from winnings. Custom Artwork NFTs ($14) let you upload your own images. Animated NFTs ($21) feature moving graphics with special effects.",
+                  q: "What's the difference between the six NFT types?",
+                  a: "Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is custom or uploaded art with animation, available to VIPs.",
                 },
                 {
                   q: "Can I use the same NFT on multiple squares?",
