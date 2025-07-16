@@ -110,7 +110,7 @@ const MyNFTsContent = () => {
       id: "custom-signature",
       name: "Custom Signature",
       price: "$3",
-      icon: Star,
+      icon: Brush,
       description: "Same handwritten look, but in any color.",
       features: [
         "Your signature in custom colored ink",
@@ -118,7 +118,7 @@ const MyNFTsContent = () => {
         "Use on any square you purchase",
         "Transferable to any wallet",
       ],
-      color: "from-[#ed5925] to-[#d14a1f]",
+      color: "from-green-500 to-emerald-600",
     },
     {
       id: "custom-hand-drawn-symbol",
@@ -146,7 +146,7 @@ const MyNFTsContent = () => {
         "High-quality display on game boards",
         "Cost deducted from winnings ($7)",
       ],
-      color: "from-[#004953] to-[#003a42]",
+      color: "from-orange-500 to-orange-600",
     },
     {
       id: "ai-generated-artwork",
@@ -174,7 +174,7 @@ const MyNFTsContent = () => {
         "Premium square marker",
         "Exclusive animated features",
       ],
-      color: "from-[#8d594d] to-[#6b4238]",
+      color: "from-yellow-400 to-amber-600",
     },
   ];
 
@@ -700,7 +700,7 @@ const MyNFTsContent = () => {
                             </ul>
                             <a href={href}>
                               <Button
-                                className="w-full mt-4 bg-gray-100 dark:bg-[#1a1a2e] text-[#708090] dark:text-[#96abdc] hover:bg-[#ed5925] hover:text-white transition-all duration-200"
+                                className="w-full mt-4 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-100 hover:bg-[#ed5925] hover:text-white dark:hover:bg-[#ed5925] dark:hover:text-white transition-all duration-200"
                               >
                                 Select Type
                               </Button>
