@@ -136,7 +136,7 @@ const BoardsPage: React.FC = () => {
       updateToast({
         title: 'Purchase Successful!',
         description: 'Your squares have been secured.',
-        variant: 'success',
+        variant: 'default',
       });
 
       setActiveSelections([]);
@@ -156,10 +156,69 @@ const BoardsPage: React.FC = () => {
     setActiveSelections([]);
   };
 
-  const handleVipUpgrade = (tier: 'monthly' | 'yearly') => {
-    console.log('Upgrading to VIP:', tier);
-    setVIPStatus(true);
-    setShowVipUpgrade(false);
+  // Platform's wallet address for VIP payments (replace with real address)
+  const VIP_RECIPIENT = new PublicKey('11111111111111111111111111111112'); // System Program ID as placeholder
+
+  // USD to SOL conversion (replace with dynamic price lookup in production)
+  const USD_TO_SOL = 0.01; // 1 USD = 0.01 SOL (example: 1 SOL = $100)
+  const VIP_PRICE_USD = 97;
+  const VIP_PRICE_SOL = VIP_PRICE_USD * USD_TO_SOL;
+
+  const handleVipUpgrade = async (tier: 'monthly' | 'yearly') => {
+    if (!publicKey || !sendTransaction) {
+      toast({
+        title: 'Wallet Not Connected',
+        description: 'Please connect your wallet to upgrade.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsProcessing(true);
+    const { update: updateToast } = toast({
+      title: 'Processing VIP Payment',
+      description: 'Please approve the transaction in your wallet...',
+    });
+
+    try {
+      // Construct transaction
+      const transaction = new Transaction().add(
+        SystemProgram.transfer({
+          fromPubkey: publicKey,
+          toPubkey: VIP_RECIPIENT,
+          lamports: Math.round(VIP_PRICE_SOL * LAMPORTS_PER_SOL),
+        })
+      );
+
+      // Send transaction
+      const signature = await sendTransaction(transaction, connection);
+
+      updateToast({
+        title: 'Transaction Submitted',
+        description: `Waiting for confirmation...`,
+        variant: 'default'
+      });
+
+      await connection.confirmTransaction(signature, 'processed');
+
+      updateToast({
+        title: 'VIP Upgrade Successful!',
+        description: 'You are now a VIP member.',
+        variant: 'default',
+      });
+
+      setVIPStatus(true);
+      setShowVipUpgrade(false);
+    } catch (error: any) {
+      console.error('VIP upgrade failed', error);
+      updateToast({
+        title: 'VIP Upgrade Failed',
+        description: error.message || 'An unknown error occurred. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   if (!isConnected) {
@@ -273,10 +332,20 @@ const BoardsPage: React.FC = () => {
 
           <div className="flex items-center gap-4">
             {preferences?.isVIP && (
-              <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900">
-                <Crown className="w-4 h-4 mr-1" />
-                VIP Member
-              </Badge>
+              <>
+                <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900">
+                  <Crown className="w-4 h-4 mr-1" />
+                  VIP Member
+                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setVIPStatus(false)}
+                  className="ml-2"
+                >
+                  Clear VIP (Test)
+                </Button>
+              </>
             )}
             <WalletMultiButton />
           </div>
