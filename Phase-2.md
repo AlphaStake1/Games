@@ -1,4 +1,5 @@
-# Phase 2 — Production Implementation  
+# Phase 2 — Production Implementation
+
 > Football Squares dApp · Solana · Aug 2025 target
 
 ---
@@ -7,14 +8,14 @@
 
 Phase-2 turns the Phase-1 skeleton into a **launch-ready application**:
 
-| Layer          | Milestones (Phase-2)                               |
-|----------------|----------------------------------------------------|
-| **On-chain**   | Complete Anchor program (board logic, VRF, payout) |
-| **Off-chain**  | Fully-wired LLM agents + Clockwork threads         |
-| **Front-end**  | Live board UI, wallet flow, winner pop-ups         |
-| **Email**      | Proton Bridge receipts + unsubscribe flow          |
-| **Ops**        | Docker / Akash deploy, CI pipelines, alerts        |
-| **Security**   | Immutable randomness, PDA audits, rate limits      |
+| Layer         | Milestones (Phase-2)                               |
+| ------------- | -------------------------------------------------- |
+| **On-chain**  | Complete Anchor program (board logic, VRF, payout) |
+| **Off-chain** | Fully-wired LLM agents + Clockwork threads         |
+| **Front-end** | Live board UI, wallet flow, winner pop-ups         |
+| **Email**     | Proton Bridge receipts + unsubscribe flow          |
+| **Ops**       | Docker / Akash deploy, CI pipelines, alerts        |
+| **Security**  | Immutable randomness, PDA audits, rate limits      |
 
 > **Goal date**: **2025-08-15** mainnet-beta MVP.
 
@@ -53,7 +54,7 @@ Persistent Logs (Ceramic)
 
 ---
 
-## 2 · Directory Evolution  (Phase-2)
+## 2 · Directory Evolution (Phase-2)
 
 ```
 
@@ -120,20 +121,20 @@ pub fn fulfill_vrf(ctx: Context<FulfillVrf>, randomness: [u8; 16]) -> Result<()>
 
 ```ts
 // agents/OrchestratorAgent/index.ts
-import { Agent, ToolCall } from "llm-agent-sdk";
-import schema from "../../schemas/orchestrator.schema.json";
+import { Agent, ToolCall } from 'llm-agent-sdk';
+import schema from '../../schemas/orchestrator.schema.json';
 
 export class OrchestratorAgent extends Agent<typeof schema> {
   constructor() {
-    super("Orchestrator", "claude-sonnet-4-20250514", schema);
+    super('Orchestrator', 'claude-sonnet-4-20250514', schema);
   }
 
   protected async plan() {
     const context = await this.fetchGameContext();
-    const decision = await this.callLLM("plan_tasks", { context });
+    const decision = await this.callLLM('plan_tasks', { context });
 
     const toolCalls: ToolCall[] = [];
-    decision.tasks.forEach(t => {
+    decision.tasks.forEach((t) => {
       toolCalls.push({ tool: t.agent, args: t.args });
     });
     return toolCalls;
@@ -141,10 +142,10 @@ export class OrchestratorAgent extends Agent<typeof schema> {
 
   protected tools = {
     board_create: async (args) => BoardAgent.create(args.gameId),
-    randomize:    async (args) => RandomizerAgent.request(args.boardPda),
-    oracle_poll:  async ()    => OracleAgent.poll(),
-    settle:       async (args) => WinnerAgent.settle(args.boardPda),
-    payout:       async (args) => PayoutAgent.pay(args.boardPda),
+    randomize: async (args) => RandomizerAgent.request(args.boardPda),
+    oracle_poll: async () => OracleAgent.poll(),
+    settle: async (args) => WinnerAgent.settle(args.boardPda),
+    payout: async (args) => PayoutAgent.pay(args.boardPda),
   };
 }
 ```
@@ -152,7 +153,7 @@ export class OrchestratorAgent extends Agent<typeof schema> {
 ### 3.3 Proton EmailAgent (simplified)
 
 ```ts
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransporter({
   host: process.env.SMTP_HOST,
@@ -164,7 +165,7 @@ export async function sendWinnerEmail(recipient: string, tx: string) {
   await transporter.sendMail({
     from: '"Football Squares" <no-reply@footballsquares.app>',
     to: recipient,
-    subject: "🏆 You won!",
+    subject: '🏆 You won!',
     html: `<p>Your payout is on-chain: <a href="https://solscan.io/tx/${tx}">${tx}</a></p>`,
   });
 }
@@ -174,22 +175,21 @@ export async function sendWinnerEmail(recipient: string, tx: string) {
 
 ```ts
 // scripts/create_thread.ts
-import { ClockworkProvider } from "@clockwork-xyz/sdk";
-import { squaresIdl, PROGRAM_ID } from "../target/types/squares_idl";
-import * as anchor from "@coral-xyz/anchor";
+import { ClockworkProvider } from '@clockwork-xyz/sdk';
+import { squaresIdl, PROGRAM_ID } from '../target/types/squares_idl';
+import * as anchor from '@coral-xyz/anchor';
 
 export async function createPreGameThread(boardPda: anchor.web3.PublicKey) {
   const provider = ClockworkProvider.fromAnchorProvider(
-    anchor.AnchorProvider.env()
+    anchor.AnchorProvider.env(),
   );
 
   await provider.threadCreate({
     name: `winner-check-${boardPda.toBase58()}`,
-    rate: { cron: "*/5 * * * *", skippable: true },
+    rate: { cron: '*/5 * * * *', skippable: true },
     programId: PROGRAM_ID,
     accounts: [{ pubkey: boardPda, isSigner: false, isWritable: true }],
-    ixData: squaresIdl.instructions.find((i) => i.name === "recordScore")!
-      .data,
+    ixData: squaresIdl.instructions.find((i) => i.name === 'recordScore')!.data,
   });
 }
 ```
@@ -210,12 +210,12 @@ AKASH_DEPLOY_KEY=                 # wallet for deploy
 
 ```yaml
 # docker/docker-compose.yml (local dev)
-version: "3.9"
+version: '3.9'
 services:
   validator:
     image: solanalabs/solana:v1.18.2
     command: solana-test-validator -q
-    ports: ["8899:8899"]
+    ports: ['8899:8899']
 
   app:
     build: ..
@@ -227,7 +227,7 @@ services:
     build:
       context: .
       dockerfile: proton-bridge.Dockerfile
-    ports: ["1025:1025"]  # SMTP
+    ports: ['1025:1025'] # SMTP
 ```
 
 An Akash SDL (`deploy.yaml`) is provided under `/docker/` for staging.
@@ -259,24 +259,24 @@ jobs:
 
 ## 7 · Phase-2 Acceptance Criteria
 
-| # | Item                          | Test/Metric                                                         |
-| - | ----------------------------- | ------------------------------------------------------------------- |
-| 1 | **Board randomization**       | VRF proof stored; headers unique; test passes.                      |
-| 2 | **Winner detection + payout** | Anchor test simulates score feed; SOL transferred; Email sent.      |
-| 3 | **Live UI**                   | Board updates via WebSocket ≤ 3 s latency.                          |
-| 4 | **Clockwork threads**         | Crank logs show tasks every 5 min.                                  |
-| 5 | **Docs & research**           | `/docs/architecture.md` updated; `/research` includes any new APIs. |
-| 6 | **CI green**                  | All jobs pass on PR merge.                                          |
+| #   | Item                          | Test/Metric                                                         |
+| --- | ----------------------------- | ------------------------------------------------------------------- |
+| 1   | **Board randomization**       | VRF proof stored; headers unique; test passes.                      |
+| 2   | **Winner detection + payout** | Anchor test simulates score feed; SOL transferred; Email sent.      |
+| 3   | **Live UI**                   | Board updates via WebSocket ≤ 3 s latency.                          |
+| 4   | **Clockwork threads**         | Crank logs show tasks every 5 min.                                  |
+| 5   | **Docs & research**           | `/docs/architecture.md` updated; `/research` includes any new APIs. |
+| 6   | **CI green**                  | All jobs pass on PR merge.                                          |
 
 ---
 
 ## 8 · Post-Launch Hardening (Phase-3 preview)
 
-* Ledger hardware-signer integration for payouts
-* Multi-chain oracle fallback
-* Full analytics dashboard (Ceramic log queries)
-* NFT achievements & leaderboard email digests
-* Multi-language UI with i18n-next
+- Ledger hardware-signer integration for payouts
+- Multi-chain oracle fallback
+- Full analytics dashboard (Ceramic log queries)
+- NFT achievements & leaderboard email digests
+- Multi-language UI with i18n-next
 
 ---
 

@@ -21,12 +21,14 @@ This guide provides comprehensive instructions for developers who want to contri
 ### Prerequisites
 
 **System Requirements:**
+
 - Operating System: Linux (Ubuntu 20.04+), macOS 12+, or Windows 11 with WSL2
 - RAM: 16GB minimum, 32GB recommended
 - Storage: 50GB free space for development tools and dependencies
 - Network: Stable internet connection for blockchain interactions
 
 **Required Software:**
+
 - Node.js 18+ (LTS recommended)
 - Rust 1.75+ with Cargo
 - Git 2.35+
@@ -75,6 +77,7 @@ nano .env.local
 ```
 
 **Required Environment Variables for Development:**
+
 ```bash
 # Blockchain Configuration
 RPC_ENDPOINT=http://localhost:8899
@@ -130,6 +133,7 @@ npm run dev          # Frontend
 #### VS Code Configuration
 
 Install recommended extensions:
+
 ```bash
 # Install VS Code extensions
 code --install-extension ms-vscode.vscode-typescript-next
@@ -140,6 +144,7 @@ code --install-extension ms-vscode.vscode-json
 ```
 
 **VS Code Settings (.vscode/settings.json):**
+
 ```json
 {
   "typescript.preferences.importModuleSpecifier": "relative",
@@ -194,19 +199,23 @@ football-squares/
 ### Key File Descriptions
 
 **Smart Contract:**
+
 - [`programs/squares/src/lib.rs`](../programs/squares/src/lib.rs): Main Anchor program
 - [`programs/squares/Cargo.toml`](../programs/squares/Cargo.toml): Rust dependencies
 
 **Frontend:**
+
 - [`app/page.tsx`](../app/page.tsx): Main page component
 - [`components/SquaresGrid.tsx`](../components/SquaresGrid.tsx): Interactive game board
 - [`app/providers.tsx`](../app/providers.tsx): Context providers
 
 **Backend Services:**
+
 - [`server/websocket.ts`](../server/websocket.ts): Real-time communication
 - [`agents/*/index.ts`](../agents/): AI agent implementations
 
 **Infrastructure:**
+
 - [`docker/docker-compose.yml`](../docker/docker-compose.yml): Container orchestration
 - [`.github/workflows/ci.yml`](../.github/workflows/ci.yml): CI/CD pipeline
 
@@ -313,6 +322,7 @@ type(scope): description
 ```
 
 **Types:**
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation
@@ -322,6 +332,7 @@ type(scope): description
 - `chore`: Maintenance
 
 **Examples:**
+
 ```bash
 feat(squares): add automatic payout functionality
 fix(websocket): resolve connection timeout issues
@@ -360,7 +371,7 @@ enum GamePhase {
   Created = 'created',
   Active = 'active',
   InPlay = 'in_play',
-  Completed = 'completed'
+  Completed = 'completed',
 }
 ```
 
@@ -378,10 +389,8 @@ class InsufficientFundsError extends Error {
 // Handle async operations properly
 async function purchaseSquare(squareIndex: number): Promise<string> {
   try {
-    const transaction = await program.methods
-      .purchaseSquare(squareIndex)
-      .rpc();
-    
+    const transaction = await program.methods.purchaseSquare(squareIndex).rpc();
+
     return transaction;
   } catch (error) {
     console.error('Failed to purchase square:', error);
@@ -412,12 +421,12 @@ pub enum ErrorCode {
 
 // Document public functions
 /// Calculates the winner for a given quarter based on scores
-/// 
+///
 /// # Arguments
 /// * `home_score` - Home team score
 /// * `away_score` - Away team score
 /// * `headers` - Row and column header numbers
-/// 
+///
 /// # Returns
 /// * `Option<u8>` - Square index of winner, or None if no winner
 pub fn calculate_winner(
@@ -507,11 +516,11 @@ describe('calculateWinner', () => {
   it('should return correct winner for valid scores', () => {
     const homeHeaders = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const awayHeaders = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
-    
+
     const winner = calculateWinner(14, 7, homeHeaders, awayHeaders);
     expect(winner).toBe(47); // Row 4, Column 7
   });
-  
+
   it('should handle edge cases', () => {
     const winner = calculateWinner(0, 0, homeHeaders, awayHeaders);
     expect(winner).toBe(9); // Row 0, Column 0
@@ -526,13 +535,13 @@ describe('calculateWinner', () => {
 describe('SquaresGrid Integration', () => {
   it('should handle square purchase flow', async () => {
     render(<SquaresGrid gameId="test-game" />);
-    
+
     const square = screen.getByTestId('square-42');
     fireEvent.click(square);
-    
+
     const purchaseButton = screen.getByText('Purchase Selected');
     fireEvent.click(purchaseButton);
-    
+
     await waitFor(() => {
       expect(mockPurchaseSquare).toHaveBeenCalledWith(42);
     });
@@ -548,7 +557,7 @@ describe('Squares Program', () => {
   it('creates board successfully', async () => {
     const boardKeypair = Keypair.generate();
     const pricePerSquare = new BN(1_000_000);
-    
+
     await program.methods
       .createBoard(pricePerSquare)
       .accounts({
@@ -557,7 +566,7 @@ describe('Squares Program', () => {
       })
       .signers([boardKeypair])
       .rpc();
-    
+
     const board = await program.account.board.fetch(boardKeypair.publicKey);
     expect(board.pricePerSquare.toNumber()).toBe(1_000_000);
   });
@@ -592,12 +601,14 @@ npm run test:debug
 export const createMockBoard = (overrides?: Partial<Board>): Board => ({
   authority: new PublicKey('11111111111111111111111111111112'),
   pricePerSquare: new BN(1_000_000),
-  squares: Array(100).fill(null).map(() => ({ owner: null, purchasedAt: null })),
+  squares: Array(100)
+    .fill(null)
+    .map(() => ({ owner: null, purchasedAt: null })),
   homeHeaders: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
   awayHeaders: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
   state: BoardState.Active,
   createdAt: new BN(Date.now()),
-  ...overrides
+  ...overrides,
 });
 
 // Use test utilities
@@ -605,14 +616,14 @@ export const testUtils = {
   async deployTestProgram(): Promise<Program> {
     // Deploy program for testing
   },
-  
+
   async createTestWallet(): Promise<Keypair> {
     // Create funded test wallet
   },
-  
+
   async setupTestBoard(): Promise<PublicKey> {
     // Create and configure test board
-  }
+  },
 };
 ```
 
@@ -644,11 +655,11 @@ const debug = require('debug')('footballsquares:component');
 
 export const SquaresGrid = () => {
   const [squares, setSquares] = useState([]);
-  
+
   useEffect(() => {
     debug('Squares updated:', squares);
   }, [squares]);
-  
+
   // Component implementation
 };
 
@@ -702,7 +713,7 @@ npx lighthouse http://localhost:3000
 
 ```rust
 // Add compute unit logging
-msg!("Compute units consumed: {}", 
+msg!("Compute units consumed: {}",
       ctx.remaining_accounts.len() * 1000);
 
 // Optimize account access
@@ -744,21 +755,25 @@ docs(api): update smart contract examples
 
 ```markdown
 ## Description
+
 Brief description of changes made.
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## Testing
+
 - [ ] Unit tests pass
 - [ ] Integration tests pass
 - [ ] Manual testing completed
 - [ ] Performance impact assessed
 
 ## Checklist
+
 - [ ] Code follows project standards
 - [ ] Self-review completed
 - [ ] Comments added for complex logic
@@ -787,6 +802,7 @@ Brief description of changes made.
 ### Version Management
 
 We follow [Semantic Versioning](https://semver.org/):
+
 - **MAJOR**: Breaking changes
 - **MINOR**: New features (backward compatible)
 - **PATCH**: Bug fixes (backward compatible)
@@ -986,14 +1002,14 @@ import type { BoardState, Square } from '@/types/game';
 
 #### Code Documentation
 
-```typescript
+````typescript
 /**
  * Calculates the payout amount for a quarter winner
- * 
+ *
  * @param totalPot - Total pot amount in lamports
  * @param quarter - Quarter number (1-4)
  * @returns Payout amount for the quarter
- * 
+ *
  * @example
  * ```typescript
  * const payout = calculateQuarterPayout(1000000000, 1);
@@ -1002,11 +1018,11 @@ import type { BoardState, Square } from '@/types/game';
  */
 export function calculateQuarterPayout(
   totalPot: number,
-  quarter: number
+  quarter: number,
 ): number {
   return totalPot / 4;
 }
-```
+````
 
 #### API Documentation
 
@@ -1015,13 +1031,13 @@ export function calculateQuarterPayout(
  * @api {post} /api/boards Create Board
  * @apiName CreateBoard
  * @apiGroup Boards
- * 
+ *
  * @apiParam {Number} pricePerSquare Price per square in lamports
  * @apiParam {String} authority Board authority public key
- * 
+ *
  * @apiSuccess {String} boardId Created board ID
  * @apiSuccess {String} transactionId Transaction hash
- * 
+ *
  * @apiError {String} error Error message
  */
 ```
@@ -1046,6 +1062,6 @@ export function calculateQuarterPayout(
 
 ---
 
-*Happy coding! 🚀*
+_Happy coding! 🚀_
 
-*Last updated: January 2025*
+_Last updated: January 2025_

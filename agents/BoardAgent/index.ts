@@ -31,16 +31,20 @@ export class BoardAgent extends EventEmitter {
   private provider: AnchorProvider;
   private program: Program;
 
-  constructor(connection: Connection, provider: AnchorProvider, program: Program) {
+  constructor(
+    connection: Connection,
+    provider: AnchorProvider,
+    program: Program,
+  ) {
     super();
     this.connection = connection;
     this.provider = provider;
     this.program = program;
-    
+
     if (!process.env.OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY is required');
     }
-    
+
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
@@ -48,14 +52,18 @@ export class BoardAgent extends EventEmitter {
     console.log('BoardAgent initialized with GPT-4');
   }
 
-  async createBoard(gameId: number): Promise<{ boardPda: PublicKey; signature: string }> {
+  async createBoard(
+    gameId: number,
+  ): Promise<{ boardPda: PublicKey; signature: string }> {
     try {
       const [boardPda] = PublicKey.findProgramAddressSync(
         [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
-        this.program.programId
+        this.program.programId,
       );
 
-      console.log(`Creating board for game ${gameId} at PDA: ${boardPda.toString()}`);
+      console.log(
+        `Creating board for game ${gameId} at PDA: ${boardPda.toString()}`,
+      );
 
       const tx = await this.program.methods
         .createBoard(new BN(gameId))
@@ -67,7 +75,7 @@ export class BoardAgent extends EventEmitter {
         .rpc();
 
       this.emit('boardCreated', { gameId, boardPda, signature: tx });
-      
+
       return { boardPda, signature: tx };
     } catch (error) {
       console.error('Error creating board:', error);
@@ -78,7 +86,7 @@ export class BoardAgent extends EventEmitter {
   async getBoardState(boardPda: PublicKey): Promise<BoardState> {
     try {
       const boardAccount = await this.program.account.board.fetch(boardPda);
-      
+
       return {
         gameId: boardAccount.gameId.toNumber(),
         authority: boardAccount.authority,
@@ -110,7 +118,7 @@ Game ID: ${boardState.gameId}
 Game State: ${boardState.gameStarted ? 'Started' : 'Not Started'}
 Current Score: ${boardState.homeScore}-${boardState.awayScore} Q${boardState.quarter}
 Total Pot: ${boardState.totalPot} lamports
-Players: ${boardState.squares.filter(s => !s.equals(PublicKey.default)).length}/100
+Players: ${boardState.squares.filter((s) => !s.equals(PublicKey.default)).length}/100
 
 Home Headers: ${boardState.homeHeaders.join(', ')}
 Away Headers: ${boardState.awayHeaders.join(', ')}
@@ -139,7 +147,10 @@ Keep response under 200 words.
     }
   }
 
-  async purchaseSquare(boardPda: PublicKey, squareIndex: number): Promise<string> {
+  async purchaseSquare(
+    boardPda: PublicKey,
+    squareIndex: number,
+  ): Promise<string> {
     try {
       const tx = await this.program.methods
         .purchaseSquare(squareIndex)
@@ -151,7 +162,7 @@ Keep response under 200 words.
         .rpc();
 
       this.emit('squarePurchased', { boardPda, squareIndex, signature: tx });
-      
+
       return tx;
     } catch (error) {
       console.error('Error purchasing square:', error);
@@ -163,13 +174,13 @@ Keep response under 200 words.
     try {
       const boardState = await this.getBoardState(boardPda);
       const availableSquares: number[] = [];
-      
+
       for (let i = 0; i < 100; i++) {
         if (boardState.squares[i].equals(PublicKey.default)) {
           availableSquares.push(i);
         }
       }
-      
+
       return availableSquares;
     } catch (error) {
       console.error('Error getting available squares:', error);
@@ -185,7 +196,9 @@ Keep response under 200 words.
   }> {
     try {
       const boardState = await this.getBoardState(boardPda);
-      const totalSquaresSold = boardState.squares.filter(s => !s.equals(PublicKey.default)).length;
+      const totalSquaresSold = boardState.squares.filter(
+        (s) => !s.equals(PublicKey.default),
+      ).length;
       const totalRevenue = boardState.totalPot;
       const occupancyRate = (totalSquaresSold / 100) * 100;
       const averageSquareValue = totalRevenue / Math.max(totalSquaresSold, 1);
@@ -204,13 +217,13 @@ Keep response under 200 words.
 
   async monitorBoardActivity(boardPda: PublicKey): Promise<void> {
     console.log(`Starting board monitoring for ${boardPda.toString()}`);
-    
+
     // Set up event listener for board changes
     this.program.addEventListener('squarePurchased', (event) => {
       if (event.boardId.toString() === boardPda.toString()) {
         this.emit('boardActivity', {
           type: 'square_purchased',
-          data: event
+          data: event,
         });
       }
     });
@@ -219,7 +232,7 @@ Keep response under 200 words.
       if (event.boardId.toString() === boardPda.toString()) {
         this.emit('boardActivity', {
           type: 'score_recorded',
-          data: event
+          data: event,
         });
       }
     });
@@ -228,7 +241,7 @@ Keep response under 200 words.
       if (event.boardId.toString() === boardPda.toString()) {
         this.emit('boardActivity', {
           type: 'winner_settled',
-          data: event
+          data: event,
         });
       }
     });
@@ -238,14 +251,14 @@ Keep response under 200 words.
     try {
       // Check connection to Solana
       await this.connection.getLatestBlockhash();
-      
+
       // Check OpenAI API
       await this.openai.chat.completions.create({
         model: 'gpt-4',
         messages: [{ role: 'user', content: 'health check' }],
         max_tokens: 5,
       });
-      
+
       return true;
     } catch (error) {
       console.error('BoardAgent health check failed:', error);

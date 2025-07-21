@@ -1,10 +1,10 @@
-import FaqContent from "@/components/FaqContent";
-import Footer from "@/components/Footer";
+import FaqContent from '@/components/FaqContent';
+import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: "FAQ | Football Squares - Frequently Asked Questions",
+  title: 'FAQ | Football Squares - Frequently Asked Questions',
   description:
-    "Find answers to all your questions about Football Squares NFTs, gameplay, payouts, Community Board Leaders, VIP membership, and more.",
+    'Find answers to all your questions about Football Squares NFTs, gameplay, payouts, Community Board Leaders, VIP membership, and more.',
 };
 
 const FaqPage = () => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function PrivacyPolicyContent() {
   return (
@@ -240,7 +240,7 @@ export default function PrivacyPolicyContent() {
       </ul>
 
       <p>
-        To exercise these rights, contact us using the details in{" "}
+        To exercise these rights, contact us using the details in{' '}
         <strong>Section 12</strong>.
       </p>
 
@@ -296,7 +296,7 @@ export default function PrivacyPolicyContent() {
 
       <blockquote>
         <p>
-          <strong>Email:</strong>{" "}
+          <strong>Email:</strong>{' '}
           <a href="mailto:coachb@protonmail.com">coachb@protonmail.com</a>
           <br />
           <strong>Postal Mail:</strong> Football Squares, Attn: Coach B
@@ -321,10 +321,10 @@ export default function PrivacyPolicyContent() {
       <p>
         Any claim, dispute, or controversy arising out of or relating to the
         Services or this Privacy Policy shall be submitted to and resolved
-        exclusively by{" "}
+        exclusively by{' '}
         <strong>
           confidential, binding arbitration administered in the Cayman Islands
-        </strong>{" "}
+        </strong>{' '}
         under the Arbitration Rules of the Cayman International Arbitration
         Centre (CIAC) then in force. The arbitral tribunal shall consist of a
         single arbitrator, and the language of arbitration shall be English.

@@ -8,13 +8,13 @@ This document outlines the security-hardened procedures for setting up and opera
 
 Our operational security is based on mitigating specific risks.
 
-| Area                  | Default Risk                                        | Mitigation Strategy                                                              |
-| --------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------- |
-| **Network Traffic**   | ISP can see you are connecting to the Tor network.  | **VPN → Tor Chain**: Connect to a VPN *before* starting Tor. Your ISP only sees encrypted VPN traffic. |
-| **Platform Isolation**| Host OS (e.g., Windows) can read/modify guest (WSL).| **Use a dedicated secure OS** (Tails, Whonix) for all sensitive operations. Keep WSL for development only. |
-| **Wallet Keys**       | Hot wallets stored on a networked machine are vulnerable. | **Use a hardware wallet** or an air-gapped signing device. Never store private keys or seed phrases on a development machine. |
-| **Account Recovery**  | Losing an anonymous email locks you out of services. | **Use offline recovery methods**: GPG-encrypted recovery codes or a secondary anonymous email. Never use a phone number. |
-| **Database Access**   | Public-facing DBs can be exploited if misconfigured. | **Enable Row-Level Security (RLS)** on Supabase and use a service-role key stored securely, never client-side. |
+| Area                   | Default Risk                                              | Mitigation Strategy                                                                                                           |
+| ---------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| **Network Traffic**    | ISP can see you are connecting to the Tor network.        | **VPN → Tor Chain**: Connect to a VPN _before_ starting Tor. Your ISP only sees encrypted VPN traffic.                        |
+| **Platform Isolation** | Host OS (e.g., Windows) can read/modify guest (WSL).      | **Use a dedicated secure OS** (Tails, Whonix) for all sensitive operations. Keep WSL for development only.                    |
+| **Wallet Keys**        | Hot wallets stored on a networked machine are vulnerable. | **Use a hardware wallet** or an air-gapped signing device. Never store private keys or seed phrases on a development machine. |
+| **Account Recovery**   | Losing an anonymous email locks you out of services.      | **Use offline recovery methods**: GPG-encrypted recovery codes or a secondary anonymous email. Never use a phone number.      |
+| **Database Access**    | Public-facing DBs can be exploited if misconfigured.      | **Enable Row-Level Security (RLS)** on Supabase and use a service-role key stored securely, never client-side.                |
 
 ---
 
@@ -24,12 +24,12 @@ For all operational tasks, route your traffic through a VPN first, then through 
 
 ### Recommended Environments
 
-| Environment                             | Pros                                                | Cons                               | Best For                                     |
-| --------------------------------------- | --------------------------------------------------- | ---------------------------------- | -------------------------------------------- |
-| **Tails OS (Live USB)**                 | Best isolation; amnesiac (no disk traces); MAC spoofing. | Requires reboot; slower performance. | **High-value operations**: Key generation, signing transactions, initial account setups. |
-| **Whonix (in Qubes or VirtualBox)**     | Persistent; all traffic is forced through Tor.      | Heavier resource usage.            | **Continuous agent operation**: Running the "Coach B." bot 24/7. |
-| **Tor Browser (on a hardened Linux VM)**| Familiar and easy to use.                           | Requires self-discipline; can be fingerprinted. | Day-to-day low-risk research.                |
-| **WSL (Windows Subsystem for Linux)**   | Convenient for development.                         | **Low isolation**. Windows can read/modify WSL files. | **Not recommended for production operations.** |
+| Environment                              | Pros                                                     | Cons                                                  | Best For                                                                                 |
+| ---------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Tails OS (Live USB)**                  | Best isolation; amnesiac (no disk traces); MAC spoofing. | Requires reboot; slower performance.                  | **High-value operations**: Key generation, signing transactions, initial account setups. |
+| **Whonix (in Qubes or VirtualBox)**      | Persistent; all traffic is forced through Tor.           | Heavier resource usage.                               | **Continuous agent operation**: Running the "Coach B." bot 24/7.                         |
+| **Tor Browser (on a hardened Linux VM)** | Familiar and easy to use.                                | Requires self-discipline; can be fingerprinted.       | Day-to-day low-risk research.                                                            |
+| **WSL (Windows Subsystem for Linux)**    | Convenient for development.                              | **Low isolation**. Windows can read/modify WSL files. | **Not recommended for production operations.**                                           |
 
 **Recommendation:** Use your existing WSL environment for coding and testing. For all administrative and operational tasks (creating wallets, managing Supabase keys, etc.), boot into a **Tails OS** live session from a USB drive.
 
@@ -64,11 +64,13 @@ Follow these steps inside a fresh Tails OS session to create your anonymous cred
 The safest method is using a hardware wallet.
 
 **Hardware Wallet (Recommended):**
+
 1.  Connect your hardware wallet (e.g., Ledger, Trezor) to the computer.
 2.  In the Tor Browser, access the wallet's web interface (e.g., `suite.trezor.io/web`).
 3.  Generate a new wallet. **Write down the seed phrase on paper and store it securely offline.** Never type it or save it digitally.
 
 **Software Wallet (If you must):**
+
 1.  Use a Tor-aware wallet like Electrum, configured to use the SOCKS5 proxy at `127.0.0.1:9050`.
 2.  Save the wallet file to a Veracrypt-encrypted volume.
 
@@ -77,16 +79,16 @@ The safest method is using a hardware wallet.
 1.  In the Tor Browser, sign up for a Supabase account using your new anonymous Proton Mail address.
 2.  If Supabase blocks the connection, use the "New Circuit for this Site" feature in Tor Browser to get a new exit node and try again.
 3.  Once in the dashboard, immediately configure security settings:
-    *   **Authentication Providers**: Enable `Email` and `Anonymous`.
-    *   **Row-Level Security (RLS)**: Enable RLS on all tables holding sensitive data.
-        ```sql
-        -- Example RLS policy: only allow anonymous users to read
-        ALTER TABLE public.boards ENABLE ROW LEVEL SECURITY;
-        CREATE POLICY "Allow anon read-only access"
-        ON public.boards FOR SELECT
-        TO anon
-        USING (true);
-        ```
+    - **Authentication Providers**: Enable `Email` and `Anonymous`.
+    - **Row-Level Security (RLS)**: Enable RLS on all tables holding sensitive data.
+      ```sql
+      -- Example RLS policy: only allow anonymous users to read
+      ALTER TABLE public.boards ENABLE ROW LEVEL SECURITY;
+      CREATE POLICY "Allow anon read-only access"
+      ON public.boards FOR SELECT
+      TO anon
+      USING (true);
+      ```
 4.  Copy your `anon key` and `service_role key`. Store the `service_role key` in an encrypted vault; it should never be exposed client-side.
 
 ---
@@ -118,12 +120,12 @@ SMTP_PASS="your-proton-bridge-app-password"
 
 ### Day-to-Day Workflow
 
-| Task                       | Recommended Environment & Practice                                        |
-| -------------------------- | ------------------------------------------------------------------------- |
-| **Code Editing & Testing** | Use your standard development machine (e.g., Windows + WSL).              |
-| **Committing Code**        | Use your standard machine. Your Git identity can be public for open-source work. |
-| **Creating Accounts**      | Use a **Tails OS** session over a VPN.                                    |
-| **Signing Transactions**   | Use a **hardware wallet** connected to a Tails OS session.                |
+| Task                       | Recommended Environment & Practice                                                          |
+| -------------------------- | ------------------------------------------------------------------------------------------- |
+| **Code Editing & Testing** | Use your standard development machine (e.g., Windows + WSL).                                |
+| **Committing Code**        | Use your standard machine. Your Git identity can be public for open-source work.            |
+| **Creating Accounts**      | Use a **Tails OS** session over a VPN.                                                      |
+| **Signing Transactions**   | Use a **hardware wallet** connected to a Tails OS session.                                  |
 | **Running the Agent**      | Deploy to a hardened, privacy-respecting VPS or a decentralized compute network like Akash. |
 
 By strictly separating development from operations, you significantly reduce the risk of compromising the keys and credentials that secure the live application.

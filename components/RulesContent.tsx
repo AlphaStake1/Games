@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -6,8 +6,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/ui/table';
+import { Separator } from '@/components/ui/separator';
 
 const RulesContent = () => {
   return (
@@ -16,7 +16,7 @@ const RulesContent = () => {
         🏈 Football Squares — Official Rules & Variations
       </h1>
       <p className="text-center text-muted-foreground mb-12">
-        X-axis = <strong>Home-team</strong> last digit | Y-axis ={" "}
+        X-axis = <strong>Home-team</strong> last digit | Y-axis ={' '}
         <strong>Away-team</strong> last digit
       </p>
 
@@ -49,7 +49,7 @@ const RulesContent = () => {
               </li>
               <li>
                 <strong>Digit Shuffle:</strong> Numbers 0-9 on both axes are
-                shuffled by a verifiable random function (VRF){" "}
+                shuffled by a verifiable random function (VRF){' '}
                 <strong>after</strong> all squares for a game are assigned.
               </li>
               <li>
@@ -104,25 +104,25 @@ const RulesContent = () => {
               </TableHeader>
               <TableBody>
                 {[
-                  { order: 1, name: "Northern Conference", price: "$100" },
-                  { order: 2, name: "Southern Conference", price: "$200" },
-                  { order: 3, name: "Eastern Conference", price: "$300" },
-                  { order: 4, name: "Western Conference", price: "$400" },
-                  { order: 5, name: "North-West Conference", price: "$500" },
-                  { order: 6, name: "South-West Conference", price: "$100" },
-                  { order: 7, name: "North-East Conference", price: "$200" },
-                  { order: 8, name: "South-East Conference", price: "$300" },
-                  { order: 9, name: "Central Conference", price: "$400" },
-                  { order: 10, name: "Mountain Conference", price: "$500" },
-                  { order: 11, name: "Pacific Conference", price: "$100" },
-                  { order: 12, name: "Great Lakes Conference", price: "$200" },
+                  { order: 1, name: 'Northern Conference', price: '$100' },
+                  { order: 2, name: 'Southern Conference', price: '$200' },
+                  { order: 3, name: 'Eastern Conference', price: '$300' },
+                  { order: 4, name: 'Western Conference', price: '$400' },
+                  { order: 5, name: 'North-West Conference', price: '$500' },
+                  { order: 6, name: 'South-West Conference', price: '$100' },
+                  { order: 7, name: 'North-East Conference', price: '$200' },
+                  { order: 8, name: 'South-East Conference', price: '$300' },
+                  { order: 9, name: 'Central Conference', price: '$400' },
+                  { order: 10, name: 'Mountain Conference', price: '$500' },
+                  { order: 11, name: 'Pacific Conference', price: '$100' },
+                  { order: 12, name: 'Great Lakes Conference', price: '$200' },
                   {
                     order: 13,
-                    name: "Gulf of America Conference",
-                    price: "$300",
+                    name: 'Gulf of America Conference',
+                    price: '$300',
                   },
-                  { order: 14, name: "Atlantic Conference", price: "$400" },
-                  { order: 15, name: "Heartland Conference", price: "$500" },
+                  { order: 14, name: 'Atlantic Conference', price: '$400' },
+                  { order: 15, name: 'Heartland Conference', price: '$500' },
                 ].map((c) => (
                   <TableRow key={c.order}>
                     <TableCell>{c.order}</TableCell>
@@ -232,7 +232,7 @@ const RulesContent = () => {
                 single board.
               </li>
               <li>
-                <strong>Sales Close:</strong> All board sales close exactly{" "}
+                <strong>Sales Close:</strong> All board sales close exactly{' '}
                 <strong>T-3 hours</strong> before kickoff or when all 100
                 squares are sold, whichever comes first.
               </li>
@@ -362,7 +362,7 @@ const RulesContent = () => {
             <ul className="list-disc pl-6 space-y-2">
               <li>
                 <strong>Board Lock:</strong> All boards (Season-Long, Weekly,
-                and Free-to-Play) close for new entries exactly{" "}
+                and Free-to-Play) close for new entries exactly{' '}
                 <strong>3 hours prior to the scheduled kickoff time</strong> for
                 the designated game.
               </li>

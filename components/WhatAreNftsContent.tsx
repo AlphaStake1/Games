@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
 import {
   Sparkles,
   Palette,
@@ -40,7 +40,7 @@ import {
   Unlock,
   Recycle,
   PenTool,
-} from "lucide-react";
+} from 'lucide-react';
 
 export function WhatAreNftsContent() {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
@@ -53,122 +53,126 @@ export function WhatAreNftsContent() {
   const nftTiers = [
     {
       id: 2,
-      name: "Custom Signature",
-      slug: "custom-signature",
-      price: "$3",
+      name: 'Custom Signature',
+      slug: 'custom-signature',
+      price: '$3',
       icon: Star,
-      description: "Same handwritten look, but in any color.",
+      description: 'Same handwritten look, but in any color.',
       features: [
-        "Your signature in custom colored ink",
-        "Personalized marker",
-        "Use on any square you purchase",
-        "Transferable to any wallet",
+        'Your signature in custom colored ink',
+        'Personalized marker',
+        'Use on any square you purchase',
+        'Transferable to any wallet',
       ],
-      gradient: "from-[#ed5925] to-[#d14a1f]",
-      bgColor: "bg-gradient-to-br from-[#ed5925]/10 to-[#d14a1f]/10",
-      borderColor: "border-[#ed5925]/20",
-      example: "Your signature in vibrant orange ink",
+      gradient: 'from-[#ed5925] to-[#d14a1f]',
+      bgColor: 'bg-gradient-to-br from-[#ed5925]/10 to-[#d14a1f]/10',
+      borderColor: 'border-[#ed5925]/20',
+      example: 'Your signature in vibrant orange ink',
     },
     {
       id: 3,
-      name: "Custom Hand-Drawn Symbol",
-      slug: "custom-hand-drawn-symbol",
-      price: "$3",
+      name: 'Custom Hand-Drawn Symbol',
+      slug: 'custom-hand-drawn-symbol',
+      price: '$3',
       icon: PenTool,
-      description: "Draw your own simple symbol or doodle directly on the website using our whiteboard tool.",
-      buttonText: "Draw NFT",
+      description:
+        'Draw your own simple symbol or doodle directly on the website using our whiteboard tool.',
+      buttonText: 'Draw NFT',
       features: [
-        "Draw your symbol or doodle on the site",
-        "Hand-drawn using the web whiteboard",
-        "Unique personal marker",
-        "Use on any square you purchase",
+        'Draw your symbol or doodle on the site',
+        'Hand-drawn using the web whiteboard',
+        'Unique personal marker',
+        'Use on any square you purchase',
       ],
-      gradient: "from-[#96abdc] to-[#7a95d1]",
-      bgColor: "bg-gradient-to-br from-[#96abdc]/10 to-[#7a95d1]/10",
-      borderColor: "border-[#96abdc]/20",
-      example: "Your own doodle or icon",
+      gradient: 'from-[#96abdc] to-[#7a95d1]',
+      bgColor: 'bg-gradient-to-br from-[#96abdc]/10 to-[#7a95d1]/10',
+      borderColor: 'border-[#96abdc]/20',
+      example: 'Your own doodle or icon',
     },
     {
       id: 4,
-      name: "House-Generated Artwork",
-      slug: "house-generated-artwork",
-      price: "$7",
+      name: 'House-Generated Artwork',
+      slug: 'house-generated-artwork',
+      price: '$7',
       icon: ImageIcon,
-      description: "Static full-color art produced by the Football Squares design team.",
-      buttonText: "Choose Art NFT",
+      description:
+        'Static full-color art produced by the Football Squares design team.',
+      buttonText: 'Choose Art NFT',
       features: [
-        "Pre-designed professional art",
-        "Win in free games or redeem from winnings",
-        "High-quality display on game boards",
-        "Cost deducted from winnings ($7)",
+        'Pre-designed professional art',
+        'Win in free games or redeem from winnings',
+        'High-quality display on game boards',
+        'Cost deducted from winnings ($7)',
       ],
-      gradient: "from-[#004953] to-[#003a42]",
-      bgColor: "bg-gradient-to-br from-[#004953]/10 to-[#003a42]/10",
-      borderColor: "border-[#004953]/20",
-      example: "Championship trophies, team logos, football themes",
+      gradient: 'from-[#004953] to-[#003a42]',
+      bgColor: 'bg-gradient-to-br from-[#004953]/10 to-[#003a42]/10',
+      borderColor: 'border-[#004953]/20',
+      example: 'Championship trophies, team logos, football themes',
     },
     {
       id: 5,
-      name: "AI-Generated Artwork",
-      slug: "ai-generated-artwork",
-      price: "$14",
+      name: 'AI-Generated Artwork',
+      slug: 'ai-generated-artwork',
+      price: '$14',
       icon: Play,
-      description: "AI image created from the player’s text prompt or transformed from their uploaded art.",
-      buttonText: "Custom NFT",
+      description:
+        'AI image created from the player’s text prompt or transformed from their uploaded art.',
+      buttonText: 'Custom NFT',
       features: [
-        "AI-generated from your prompt or art",
-        "Unique, one-of-a-kind marker",
-        "Professional formatting for squares",
-        "High-quality display on game boards",
+        'AI-generated from your prompt or art',
+        'Unique, one-of-a-kind marker',
+        'Professional formatting for squares',
+        'High-quality display on game boards',
       ],
-      gradient: "from-[#8d594d] to-[#6b4238]",
-      bgColor: "bg-gradient-to-br from-[#8d594d]/10 to-[#6b4238]/10",
-      borderColor: "border-[#8d594d]/20",
-      example: "AI art from your prompt",
+      gradient: 'from-[#8d594d] to-[#6b4238]',
+      bgColor: 'bg-gradient-to-br from-[#8d594d]/10 to-[#6b4238]/10',
+      borderColor: 'border-[#8d594d]/20',
+      example: 'AI art from your prompt',
     },
     {
       id: 6,
-      name: "Premium (VIP) Animated",
-      slug: "premium-animated",
-      price: "$21",
+      name: 'Premium (VIP) Animated',
+      slug: 'premium-animated',
+      price: '$21',
       icon: Star,
-      description: "Custom or uploaded art that we convert to an animated NFT; VIP-only access.",
-      buttonText: "Animate NFT",
+      description:
+        'Custom or uploaded art that we convert to an animated NFT; VIP-only access.',
+      buttonText: 'Animate NFT',
       features: [
-        "Custom animated artwork",
-        "Eye-catching movement on game boards",
-        "Premium square marker",
-        "Exclusive animated features",
+        'Custom animated artwork',
+        'Eye-catching movement on game boards',
+        'Premium square marker',
+        'Exclusive animated features',
       ],
-      gradient: "from-amber-400 to-yellow-500",
-      bgColor: "bg-gradient-to-br from-amber-400/10 to-yellow-500/10",
-      borderColor: "border-amber-400/20",
-      example: "Animated custom or uploaded art",
+      gradient: 'from-amber-400 to-yellow-500',
+      bgColor: 'bg-gradient-to-br from-amber-400/10 to-yellow-500/10',
+      borderColor: 'border-amber-400/20',
+      example: 'Animated custom or uploaded art',
     },
   ];
 
   const blockchainFeatures = [
     {
       icon: Shield,
-      title: "True Ownership",
+      title: 'True Ownership',
       description:
-        "Your NFTs are stored on the Solana blockchain, giving you complete ownership and control.",
+        'Your NFTs are stored on the Solana blockchain, giving you complete ownership and control.',
     },
     {
       icon: Zap,
-      title: "Fast & Affordable",
+      title: 'Fast & Affordable',
       description:
         "Solana's high-speed, low-cost network makes minting and trading NFTs seamless.",
     },
     {
       icon: Eye,
-      title: "Visible in Wallet",
+      title: 'Visible in Wallet',
       description:
         "View your collection directly in your Phantom wallet's collectibles section.",
     },
     {
       icon: Unlock,
-      title: "Transferable",
+      title: 'Transferable',
       description:
         "Send, sell, or trade your NFTs to other wallets - they're truly yours forever.",
     },
@@ -177,21 +181,21 @@ export function WhatAreNftsContent() {
   const burnBenefits = [
     {
       icon: Coins,
-      title: "Reclaim SOL",
+      title: 'Reclaim SOL',
       description:
-        "Get back the rent fees (small amount of SOL) locked in your NFT when you burn it.",
+        'Get back the rent fees (small amount of SOL) locked in your NFT when you burn it.',
     },
     {
       icon: Recycle,
-      title: "Clean Wallet",
+      title: 'Clean Wallet',
       description:
-        "Remove unwanted NFTs from your collection to keep your wallet organized.",
+        'Remove unwanted NFTs from your collection to keep your wallet organized.',
     },
     {
       icon: Target,
-      title: "Strategic Choice",
+      title: 'Strategic Choice',
       description:
-        "Burn NFTs you no longer need and use the reclaimed SOL for new purchases.",
+        'Burn NFTs you no longer need and use the reclaimed SOL for new purchases.',
     },
   ];
 
@@ -200,7 +204,7 @@ export function WhatAreNftsContent() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Stunning Hero Section */}
         <div
-          className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#002244] via-[#004953] to-[#002244] text-white mb-20 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#002244] via-[#004953] to-[#002244] text-white mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           {/* Animated Background Elements */}
           <div className="absolute inset-0 overflow-hidden">
@@ -490,7 +494,8 @@ export function WhatAreNftsContent() {
               NFT Square Marker Types
             </h2>
             <p className="text-xl text-[#708090] dark:text-[#96abdc] max-w-3xl mx-auto">
-              Choose from six distinct types of NFT markers, each offering unique personalization options and benefits.
+              Choose from six distinct types of NFT markers, each offering
+              unique personalization options and benefits.
             </p>
           </div>
 
@@ -500,8 +505,8 @@ export function WhatAreNftsContent() {
                 key={tier.id}
                 className={`${tier.bgColor} border-2 ${tier.borderColor} dark:border-opacity-40 hover:shadow-xl transform hover:-translate-y-2 transition-all duration-500 cursor-pointer group overflow-hidden relative ${
                   selectedCard === tier.id
-                    ? "ring-2 ring-[#ed5925] shadow-2xl"
-                    : ""
+                    ? 'ring-2 ring-[#ed5925] shadow-2xl'
+                    : ''
                 }`}
                 onClick={() =>
                   setSelectedCard(selectedCard === tier.id ? null : tier.id)
@@ -560,10 +565,7 @@ export function WhatAreNftsContent() {
                   </div>
 
                   <div className="mt-6 pt-6 border-t border-[#708090]/20">
-                    <Link
-                      href={`/create-nft/${tier.slug}`}
-                      passHref
-                    >
+                    <Link href={`/create-nft/${tier.slug}`} passHref>
                       <Button
                         className={`w-full bg-gradient-to-r ${tier.gradient} text-white py-3 rounded-xl font-bold hover:shadow-lg transform hover:scale-105 transition-all duration-300`}
                       >
@@ -775,25 +777,25 @@ export function WhatAreNftsContent() {
                       {[
                         {
                           step: 1,
-                          title: "Connect Wallet",
+                          title: 'Connect Wallet',
                           description:
-                            "Link your Phantom or other Solana wallet",
+                            'Link your Phantom or other Solana wallet',
                         },
                         {
                           step: 2,
-                          title: "Select NFTs",
-                          description: "Choose which NFTs you want to burn",
+                          title: 'Select NFTs',
+                          description: 'Choose which NFTs you want to burn',
                         },
                         {
                           step: 3,
-                          title: "Confirm Burning",
-                          description: "Permanently destroy the selected NFTs",
+                          title: 'Confirm Burning',
+                          description: 'Permanently destroy the selected NFTs',
                         },
                         {
                           step: 4,
-                          title: "Reclaim SOL",
+                          title: 'Reclaim SOL',
                           description:
-                            "Get back the storage rent as SOL tokens",
+                            'Get back the storage rent as SOL tokens',
                         },
                       ].map((step) => (
                         <div
@@ -847,44 +849,44 @@ export function WhatAreNftsContent() {
             <Accordion type="single" collapsible className="space-y-4">
               {[
                 {
-                  q: "How do NFTs work as square markers in Football Squares?",
+                  q: 'How do NFTs work as square markers in Football Squares?',
                   a: "When you purchase a square in any Football Squares game, your NFT appears as the visual marker instead of the standard black signature text. For example, instead of seeing 'John D.' in plain text, other players see your custom NFT design - whether it's a colorful signature, professional artwork, or animated graphics.",
                 },
                 {
                   q: "What's the difference between the six NFT types?",
-                  a: "Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is custom or uploaded art with animation, available to VIPs.",
+                  a: 'Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is custom or uploaded art with animation, available to VIPs.',
                 },
                 {
-                  q: "Can I use the same NFT on multiple squares?",
-                  a: "Yes! Once you own an NFT, you can use it as your marker on unlimited squares across all future games. Your NFT becomes your permanent digital signature that replaces the standard black text wherever you play.",
+                  q: 'Can I use the same NFT on multiple squares?',
+                  a: 'Yes! Once you own an NFT, you can use it as your marker on unlimited squares across all future games. Your NFT becomes your permanent digital signature that replaces the standard black text wherever you play.',
                 },
                 {
-                  q: "How do I get House Collection NFTs for free?",
+                  q: 'How do I get House Collection NFTs for free?',
                   a: "House Collection NFTs can be won as prizes in free Football Squares games. You can also choose to redeem them when you win cash games - the $7 cost gets deducted from your payout, so you're essentially using your winnings to get the NFT.",
                 },
                 {
-                  q: "Where can I view my NFT collection?",
+                  q: 'Where can I view my NFT collection?',
                   a: "Your NFTs appear automatically in your connected Solana wallet (like Phantom) under the 'Collectibles' or 'NFTs' section. You can view, transfer, or manage them just like any other digital asset in your wallet.",
                 },
                 {
-                  q: "What happens if I sell or transfer my NFT?",
+                  q: 'What happens if I sell or transfer my NFT?',
                   a: "If you sell or transfer your NFT to another wallet, you'll lose the ability to use it as your square marker. You'll need to create a new NFT or revert to using the standard black signature text for future square purchases.",
                 },
                 {
-                  q: "Why should I burn my NFTs with Sol Incinerator?",
-                  a: "Burning NFTs with Sol Incinerator helps you reclaim the small amount of SOL (storage rent) locked up in unwanted NFTs. It also cleans up your wallet by permanently removing NFTs you no longer want, keeping your collection organized.",
+                  q: 'Why should I burn my NFTs with Sol Incinerator?',
+                  a: 'Burning NFTs with Sol Incinerator helps you reclaim the small amount of SOL (storage rent) locked up in unwanted NFTs. It also cleans up your wallet by permanently removing NFTs you no longer want, keeping your collection organized.',
                 },
                 {
-                  q: "Are my NFTs stored on the Solana blockchain?",
-                  a: "Yes, all Football Squares NFTs are minted and stored on the Solana blockchain. This gives you true ownership, fast transactions, low fees, and the ability to verify authenticity. The blockchain serves as your permanent certificate of ownership.",
+                  q: 'Are my NFTs stored on the Solana blockchain?',
+                  a: 'Yes, all Football Squares NFTs are minted and stored on the Solana blockchain. This gives you true ownership, fast transactions, low fees, and the ability to verify authenticity. The blockchain serves as your permanent certificate of ownership.',
                 },
                 {
-                  q: "Can I create animated NFTs with my own artwork?",
-                  a: "Yes! For Animated NFTs ($21), you upload your artwork and we add professional animation effects like floating glow, particle effects, color pulses, or gentle rotation. You choose which effects to apply to make your square marker truly eye-catching.",
+                  q: 'Can I create animated NFTs with my own artwork?',
+                  a: 'Yes! For Animated NFTs ($21), you upload your artwork and we add professional animation effects like floating glow, particle effects, color pulses, or gentle rotation. You choose which effects to apply to make your square marker truly eye-catching.',
                 },
                 {
-                  q: "What file formats can I upload for Custom Artwork NFTs?",
-                  a: "Custom Artwork NFTs support JPG, PNG, and GIF files up to 10MB. We automatically format your uploaded image to fit perfectly within square markers while maintaining quality and visual appeal.",
+                  q: 'What file formats can I upload for Custom Artwork NFTs?',
+                  a: 'Custom Artwork NFTs support JPG, PNG, and GIF files up to 10MB. We automatically format your uploaded image to fit perfectly within square markers while maintaining quality and visual appeal.',
                 },
               ].map((item, index) => (
                 <AccordionItem

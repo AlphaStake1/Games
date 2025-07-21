@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Play } from "lucide-react";
+import { Play } from 'lucide-react';
 
 const AdBanner = () => {
   return (

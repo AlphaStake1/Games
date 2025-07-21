@@ -30,8 +30,8 @@ class TestRunner {
       args: ['test', '--skip-local-validator'],
       timeout: 120000, // 2 minutes
       env: {
-        RPC_ENDPOINT: 'http://localhost:8899'
-      }
+        RPC_ENDPOINT: 'http://localhost:8899',
+      },
     },
     {
       name: 'TypeScript Compilation',
@@ -52,19 +52,24 @@ class TestRunner {
       timeout: 180000, // 3 minutes
       env: {
         NODE_ENV: 'test',
-        RPC_ENDPOINT: 'http://localhost:8899'
-      }
+        RPC_ENDPOINT: 'http://localhost:8899',
+      },
     },
     {
       name: 'Integration Tests',
       command: 'npx',
-      args: ['mocha', 'tests/integration.test.ts', '--require', 'ts-node/register'],
+      args: [
+        'mocha',
+        'tests/integration.test.ts',
+        '--require',
+        'ts-node/register',
+      ],
       timeout: 300000, // 5 minutes
       env: {
         NODE_ENV: 'test',
         RPC_ENDPOINT: 'http://localhost:8899',
-        WS_PORT: '8081'
-      }
+        WS_PORT: '8081',
+      },
     },
     {
       name: 'Agent Health Checks',
@@ -77,7 +82,7 @@ class TestRunner {
       command: 'npm',
       args: ['audit', '--audit-level=high'],
       timeout: 120000, // 2 minutes
-    }
+    },
   ];
 
   private results: TestResult[] = [];
@@ -98,7 +103,7 @@ class TestRunner {
     this.printResults(totalDuration);
     this.generateReport();
 
-    const failed = this.results.filter(r => !r.passed);
+    const failed = this.results.filter((r) => !r.passed);
     if (failed.length > 0) {
       process.exit(1);
     }
@@ -106,7 +111,7 @@ class TestRunner {
 
   private async runTestSuite(suite: TestSuite): Promise<void> {
     console.log(`🔍 Running: ${suite.name}`);
-    
+
     const startTime = Date.now();
     let output = '';
     let error = '';
@@ -121,7 +126,7 @@ class TestRunner {
         passed: result.success,
         duration,
         output: result.output,
-        error: result.error
+        error: result.error,
       });
 
       if (result.success) {
@@ -139,7 +144,7 @@ class TestRunner {
         passed: false,
         duration,
         output: '',
-        error: error.toString()
+        error: error.toString(),
       });
 
       console.log(`❌ ${suite.name} - FAILED (${duration}ms)`);
@@ -147,11 +152,16 @@ class TestRunner {
     }
   }
 
-  private executeCommand(suite: TestSuite): Promise<{ success: boolean; output: string; error: string }> {
+  private executeCommand(
+    suite: TestSuite,
+  ): Promise<{ success: boolean; output: string; error: string }> {
     return new Promise((resolve) => {
       const env = { ...process.env, ...suite.env };
-      const child = spawn(suite.command, suite.args, { env, cwd: process.cwd() });
-      
+      const child = spawn(suite.command, suite.args, {
+        env,
+        cwd: process.cwd(),
+      });
+
       let output = '';
       let error = '';
 
@@ -168,7 +178,7 @@ class TestRunner {
         resolve({
           success: false,
           output,
-          error: `Test timed out after ${suite.timeout}ms`
+          error: `Test timed out after ${suite.timeout}ms`,
         });
       }, suite.timeout);
 
@@ -177,7 +187,7 @@ class TestRunner {
         resolve({
           success: code === 0,
           output,
-          error: code !== 0 ? error : ''
+          error: code !== 0 ? error : '',
         });
       });
 
@@ -186,7 +196,7 @@ class TestRunner {
         resolve({
           success: false,
           output,
-          error: err.message
+          error: err.message,
         });
       });
     });
@@ -195,9 +205,9 @@ class TestRunner {
   private printResults(totalDuration: number): void {
     console.log('\n📊 Test Results Summary');
     console.log('=======================');
-    
-    const passed = this.results.filter(r => r.passed).length;
-    const failed = this.results.filter(r => !r.passed).length;
+
+    const passed = this.results.filter((r) => r.passed).length;
+    const failed = this.results.filter((r) => !r.passed).length;
     const total = this.results.length;
 
     console.log(`Total Tests: ${total}`);
@@ -209,14 +219,14 @@ class TestRunner {
     if (failed > 0) {
       console.log('\n❌ Failed Tests:');
       this.results
-        .filter(r => !r.passed)
-        .forEach(result => {
+        .filter((r) => !r.passed)
+        .forEach((result) => {
           console.log(`  - ${result.suite}: ${result.error}`);
         });
     }
 
     console.log('\n⏱️ Test Durations:');
-    this.results.forEach(result => {
+    this.results.forEach((result) => {
       const status = result.passed ? '✅' : '❌';
       console.log(`  ${status} ${result.suite}: ${result.duration}ms`);
     });
@@ -227,10 +237,10 @@ class TestRunner {
     const report = {
       timestamp: new Date().toISOString(),
       totalTests: this.results.length,
-      passed: this.results.filter(r => r.passed).length,
-      failed: this.results.filter(r => !r.passed).length,
+      passed: this.results.filter((r) => r.passed).length,
+      failed: this.results.filter((r) => !r.passed).length,
       totalDuration: this.results.reduce((sum, r) => sum + r.duration, 0),
-      results: this.results
+      results: this.results,
     };
 
     fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
@@ -238,12 +248,14 @@ class TestRunner {
   }
 
   async runSingleTest(suiteName: string): Promise<void> {
-    const suite = this.testSuites.find(s => s.name.toLowerCase().includes(suiteName.toLowerCase()));
-    
+    const suite = this.testSuites.find((s) =>
+      s.name.toLowerCase().includes(suiteName.toLowerCase()),
+    );
+
     if (!suite) {
       console.error(`❌ Test suite "${suiteName}" not found`);
       console.log('Available test suites:');
-      this.testSuites.forEach(s => console.log(`  - ${s.name}`));
+      this.testSuites.forEach((s) => console.log(`  - ${s.name}`));
       process.exit(1);
     }
 
@@ -261,7 +273,7 @@ class TestRunner {
           const version = process.version;
           const major = parseInt(version.slice(1).split('.')[0]);
           return major >= 16;
-        }
+        },
       },
       {
         name: 'Solana CLI',
@@ -271,13 +283,13 @@ class TestRunner {
               name: 'solana-version',
               command: 'solana',
               args: ['--version'],
-              timeout: 10000
+              timeout: 10000,
             });
             return result.success;
           } catch {
             return false;
           }
-        }
+        },
       },
       {
         name: 'Anchor CLI',
@@ -287,33 +299,35 @@ class TestRunner {
               name: 'anchor-version',
               command: 'anchor',
               args: ['--version'],
-              timeout: 10000
+              timeout: 10000,
             });
             return result.success;
           } catch {
             return false;
           }
-        }
+        },
       },
       {
         name: 'Required environment variables',
         check: () => {
           const required = ['RPC_ENDPOINT'];
-          return required.every(key => process.env[key]);
-        }
+          return required.every((key) => process.env[key]);
+        },
       },
       {
         name: 'Test dependencies',
         check: () => {
           const packageJsonPath = path.join(process.cwd(), 'package.json');
           if (!fs.existsSync(packageJsonPath)) return false;
-          
-          const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+
+          const packageJson = JSON.parse(
+            fs.readFileSync(packageJsonPath, 'utf8'),
+          );
           const devDeps = packageJson.devDependencies || {};
-          
-          return ['mocha', 'chai', 'ts-node'].every(dep => devDeps[dep]);
-        }
-      }
+
+          return ['mocha', 'chai', 'ts-node'].every((dep) => devDeps[dep]);
+        },
+      },
     ];
 
     let allPassed = true;
@@ -329,7 +343,9 @@ class TestRunner {
       }
     }
 
-    console.log(`\n${allPassed ? '✅' : '❌'} Environment validation ${allPassed ? 'passed' : 'failed'}\n`);
+    console.log(
+      `\n${allPassed ? '✅' : '❌'} Environment validation ${allPassed ? 'passed' : 'failed'}\n`,
+    );
     return allPassed;
   }
 }
@@ -346,7 +362,9 @@ async function main() {
     case undefined:
       const envValid = await runner.validateEnvironment();
       if (!envValid) {
-        console.error('❌ Environment validation failed. Please fix the issues above.');
+        console.error(
+          '❌ Environment validation failed. Please fix the issues above.',
+        );
         process.exit(1);
       }
       await runner.runAllTests();

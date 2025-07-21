@@ -1,6 +1,6 @@
-import React from "react";
-import Footer from "@/components/Footer";
-import WalletGuideContent from "@/components/WalletGuideContent";
+import React from 'react';
+import Footer from '@/components/Footer';
+import WalletGuideContent from '@/components/WalletGuideContent';
 
 export default function WalletGuidePage() {
   return (

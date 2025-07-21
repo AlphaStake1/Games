@@ -1,8 +1,10 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Free Football Squares Board - Dallas Cowboys vs Kansas City Chiefs | Football Squares',
-  description: 'Join our free Football Squares board featuring Dallas Cowboys vs Kansas City Chiefs. Claim your square and experience NFL squares with no cost. Interactive gameplay with NFT upgrades available.',
+  title:
+    'Free Football Squares Board - Dallas Cowboys vs Kansas City Chiefs | Football Squares',
+  description:
+    'Join our free Football Squares board featuring Dallas Cowboys vs Kansas City Chiefs. Claim your square and experience NFL squares with no cost. Interactive gameplay with NFT upgrades available.',
   keywords: [
     'football squares',
     'free football squares',
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
     'sports betting',
     'NFT upgrades',
     'blockchain gaming',
-    'Solana'
+    'Solana',
   ],
   authors: [{ name: 'Football Squares' }],
   creator: 'Football Squares',
@@ -25,7 +27,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Free Football Squares Board - Dallas Cowboys vs Kansas City Chiefs',
-    description: 'Join our free Football Squares board featuring Dallas Cowboys vs Kansas City Chiefs. Claim your square and experience NFL squares with no cost.',
+    description:
+      'Join our free Football Squares board featuring Dallas Cowboys vs Kansas City Chiefs. Claim your square and experience NFL squares with no cost.',
     url: 'https://footballsquares.com/free-board',
     siteName: 'Football Squares',
     images: [
@@ -42,7 +45,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Free Football Squares Board - Dallas Cowboys vs Kansas City Chiefs',
-    description: 'Join our free Football Squares board featuring Dallas Cowboys vs Kansas City Chiefs. Claim your square and experience NFL squares with no cost.',
+    description:
+      'Join our free Football Squares board featuring Dallas Cowboys vs Kansas City Chiefs. Claim your square and experience NFL squares with no cost.',
     images: ['https://footballsquares.com/assets/free-board-twitter.jpg'],
     creator: '@FootballSquares',
   },

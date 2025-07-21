@@ -7,6 +7,7 @@ This document provides comprehensive API documentation for the Football Squares 
 ## Smart Contract API (Anchor Program)
 
 ### Program ID
+
 ```
 Program ID: [Will be generated upon deployment]
 Cluster: Devnet/Mainnet-beta
@@ -15,6 +16,7 @@ Cluster: Devnet/Mainnet-beta
 ### Data Structures
 
 #### Board Account
+
 ```rust
 pub struct Board {
     pub authority: Pubkey,          // 32 bytes - Board creator
@@ -29,6 +31,7 @@ pub struct Board {
 ```
 
 #### Square Structure
+
 ```rust
 pub struct Square {
     pub owner: Option<Pubkey>,      // 33 bytes - Owner public key
@@ -37,6 +40,7 @@ pub struct Square {
 ```
 
 #### Game Score Structure
+
 ```rust
 pub struct GameScore {
     pub home_score: u8,    // 1 byte - Home team score
@@ -47,6 +51,7 @@ pub struct GameScore {
 ```
 
 #### Board State Enum
+
 ```rust
 pub enum BoardState {
     Created,      // 0 - Board created, accepting purchases
@@ -67,6 +72,7 @@ pub enum BoardState {
 **Description:** Initialize a new Football Squares board with specified square price.
 
 **Accounts:**
+
 ```rust
 pub struct CreateBoard<'info> {
     #[account(
@@ -77,20 +83,22 @@ pub struct CreateBoard<'info> {
         bump
     )]
     pub board: Account<'info, Board>,
-    
+
     #[account(mut)]
     pub authority: Signer<'info>,
-    
+
     pub system_program: Program<'info, System>,
-    
+
     pub clock: Sysvar<'info, Clock>,
 }
 ```
 
 **Parameters:**
+
 - `price_per_square: u64` - Cost per square in lamports
 
 **Usage Example:**
+
 ```typescript
 const boardKeypair = Keypair.generate();
 const pricePerSquare = 1_000_000; // 0.001 SOL
@@ -114,6 +122,7 @@ await program.methods
 **Description:** Purchase a specific square on the board.
 
 **Accounts:**
+
 ```rust
 pub struct PurchaseSquare<'info> {
     #[account(
@@ -121,24 +130,26 @@ pub struct PurchaseSquare<'info> {
         constraint = board.state == BoardState::Active || board.state == BoardState::Created
     )]
     pub board: Account<'info, Board>,
-    
+
     #[account(mut)]
     pub buyer: Signer<'info>,
-    
+
     /// CHECK: Board authority receives payment
     #[account(mut)]
     pub authority: AccountInfo<'info>,
-    
+
     pub system_program: Program<'info, System>,
-    
+
     pub clock: Sysvar<'info, Clock>,
 }
 ```
 
 **Parameters:**
+
 - `square_index: u8` - Index of square to purchase (0-99)
 
 **Usage Example:**
+
 ```typescript
 const squareIndex = 42; // Middle square
 
@@ -161,6 +172,7 @@ await program.methods
 **Description:** Generate random numbers for row and column headers using VRF.
 
 **Accounts:**
+
 ```rust
 pub struct RandomizeHeaders<'info> {
     #[account(
@@ -169,23 +181,24 @@ pub struct RandomizeHeaders<'info> {
         has_one = authority
     )]
     pub board: Account<'info, Board>,
-    
+
     pub authority: Signer<'info>,
-    
+
     // Switchboard VRF accounts
     pub vrf: AccountLoader<'info, VrfAccountData>,
     pub vrf_permission: AccountLoader<'info, PermissionAccountData>,
     pub oracle_queue: AccountLoader<'info, OracleQueueAccountData>,
-    
+
     /// CHECK: VRF escrow account
     #[account(mut)]
     pub escrow: AccountInfo<'info>,
-    
+
     pub switchboard_program: Program<'info, SwitchboardProgram>,
 }
 ```
 
 **Usage Example:**
+
 ```typescript
 await program.methods
   .randomizeHeaders()
@@ -208,6 +221,7 @@ await program.methods
 **Description:** Record game scores for a specific quarter (Oracle only).
 
 **Accounts:**
+
 ```rust
 pub struct RecordScore<'info> {
     #[account(
@@ -215,24 +229,26 @@ pub struct RecordScore<'info> {
         constraint = board.state == BoardState::InPlay || board.state == BoardState::Randomized
     )]
     pub board: Account<'info, Board>,
-    
+
     #[account(
         constraint = is_oracle(&oracle.key())
     )]
     pub oracle: Signer<'info>,
-    
+
     pub clock: Sysvar<'info, Clock>,
 }
 ```
 
 **Parameters:**
+
 - `home_score: u8` - Home team score
-- `away_score: u8` - Away team score  
+- `away_score: u8` - Away team score
 - `quarter: u8` - Quarter number (1-4)
 
 **Access Control:** Only authorized oracles can call this instruction.
 
 **Usage Example:**
+
 ```typescript
 // Only callable by oracle accounts
 await program.methods
@@ -253,6 +269,7 @@ await program.methods
 **Description:** Calculate and pay out the winner for a specific quarter.
 
 **Accounts:**
+
 ```rust
 pub struct SettleWinner<'info> {
     #[account(
@@ -260,21 +277,23 @@ pub struct SettleWinner<'info> {
         constraint = board.state == BoardState::InPlay
     )]
     pub board: Account<'info, Board>,
-    
+
     pub authority: Signer<'info>,
-    
+
     /// CHECK: Winner account receives payout
     #[account(mut)]
     pub winner: AccountInfo<'info>,
-    
+
     pub system_program: Program<'info, System>,
 }
 ```
 
 **Parameters:**
+
 - `quarter: u8` - Quarter to settle (1-4)
 
 **Usage Example:**
+
 ```typescript
 await program.methods
   .settleWinner(1) // Settle Q1 winner
@@ -294,28 +313,28 @@ await program.methods
 pub enum ErrorCode {
     #[msg("Square is already owned")]
     SquareAlreadyOwned = 6000,
-    
+
     #[msg("Invalid square index")]
     InvalidSquareIndex = 6001,
-    
+
     #[msg("Board is not in correct state for this operation")]
     InvalidBoardState = 6002,
-    
+
     #[msg("Insufficient payment for square")]
     InsufficientPayment = 6003,
-    
+
     #[msg("Unauthorized oracle")]
     UnauthorizedOracle = 6004,
-    
+
     #[msg("Invalid quarter")]
     InvalidQuarter = 6005,
-    
+
     #[msg("Score already recorded for this quarter")]
     ScoreAlreadyRecorded = 6006,
-    
+
     #[msg("No winner found for this quarter")]
     NoWinnerFound = 6007,
-    
+
     #[msg("Payout already processed")]
     PayoutAlreadyProcessed = 6008,
 }
@@ -359,13 +378,16 @@ interface WebSocketMessage {
 ```
 
 **Response:**
+
 ```json
 {
   "type": "subscription_confirmed",
   "gameId": "board_pubkey_base58",
   "data": {
     "status": "subscribed",
-    "currentBoard": { /* current board state */ }
+    "currentBoard": {
+      /* current board state */
+    }
   }
 }
 ```
@@ -394,6 +416,7 @@ interface WebSocketMessage {
 ```
 
 **Response:**
+
 ```json
 {
   "type": "pong",
@@ -530,7 +553,7 @@ enum WebSocketErrorCode {
   GAME_NOT_FOUND = 'GAME_NOT_FOUND',
   SUBSCRIPTION_FAILED = 'SUBSCRIPTION_FAILED',
   RATE_LIMIT_EXCEEDED = 'RATE_LIMIT_EXCEEDED',
-  INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR'
+  INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
 }
 ```
 
@@ -550,7 +573,7 @@ const program = new Program(idl, programId, provider);
 // Create a new board
 async function createBoard(pricePerSquare: number) {
   const boardKeypair = Keypair.generate();
-  
+
   const tx = await program.methods
     .createBoard(new BN(pricePerSquare))
     .accounts({
@@ -561,7 +584,7 @@ async function createBoard(pricePerSquare: number) {
     })
     .signers([boardKeypair])
     .rpc();
-    
+
   return { tx, boardPublicKey: boardKeypair.publicKey };
 }
 
@@ -577,7 +600,7 @@ async function purchaseSquare(boardPublicKey: PublicKey, squareIndex: number) {
       clock: SYSVAR_CLOCK_PUBKEY,
     })
     .rpc();
-    
+
   return tx;
 }
 
@@ -586,7 +609,7 @@ const ws = new WebSocket('ws://localhost:8080');
 
 ws.onmessage = (event) => {
   const message = JSON.parse(event.data);
-  
+
   switch (message.type) {
     case 'board_update':
       handleBoardUpdate(message.data);
@@ -602,10 +625,12 @@ ws.onmessage = (event) => {
 
 // Subscribe to game updates
 function subscribeToGame(gameId: string) {
-  ws.send(JSON.stringify({
-    type: 'subscribe',
-    gameId: gameId
-  }));
+  ws.send(
+    JSON.stringify({
+      type: 'subscribe',
+      gameId: gameId,
+    }),
+  );
 }
 ```
 
@@ -619,21 +644,24 @@ export function useWebSocket() {
 
   useEffect(() => {
     const ws = new WebSocket(process.env.NEXT_PUBLIC_WS_URL!);
-    
+
     ws.onopen = () => setSocket(ws);
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      setMessages(prev => [...prev, message]);
+      setMessages((prev) => [...prev, message]);
     };
-    
+
     return () => ws.close();
   }, []);
 
-  const sendMessage = useCallback((message: any) => {
-    if (socket?.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify(message));
-    }
-  }, [socket]);
+  const sendMessage = useCallback(
+    (message: any) => {
+      if (socket?.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify(message));
+      }
+    },
+    [socket],
+  );
 
   return { socket, messages, sendMessage };
 }
@@ -650,11 +678,11 @@ export function useGameSubscription(gameId: string) {
   }, [gameId, sendMessage]);
 
   useEffect(() => {
-    const gameMessages = messages.filter(m => m.gameId === gameId);
+    const gameMessages = messages.filter((m) => m.gameId === gameId);
     const latestBoardUpdate = gameMessages
-      .filter(m => m.type === 'board_update')
+      .filter((m) => m.type === 'board_update')
       .slice(-1)[0];
-      
+
     if (latestBoardUpdate) {
       setBoardState(latestBoardUpdate.data);
     }
@@ -667,16 +695,19 @@ export function useGameSubscription(gameId: string) {
 ## Rate Limits
 
 ### Smart Contract
+
 - **Transaction Rate**: Limited by Solana network capacity (~65,000 TPS)
 - **Account Rent**: Minimum balance required for account storage
 - **Compute Units**: Each instruction has compute unit limits
 
 ### WebSocket API
+
 - **Connection Limit**: 1000 concurrent connections per server
 - **Message Rate**: 100 messages per minute per client
 - **Subscription Limit**: 10 active game subscriptions per client
 
 ### HTTP Endpoints (if applicable)
+
 - **Request Rate**: 1000 requests per hour per IP
 - **Burst Limit**: 10 requests per second
 
@@ -690,9 +721,9 @@ describe('Football Squares Program', () => {
   it('creates a board successfully', async () => {
     const pricePerSquare = 1_000_000; // 0.001 SOL
     const { tx, boardPublicKey } = await createBoard(pricePerSquare);
-    
+
     expect(tx).toBeDefined();
-    
+
     const board = await program.account.board.fetch(boardPublicKey);
     expect(board.pricePerSquare.toNumber()).toEqual(pricePerSquare);
     expect(board.state).toEqual({ created: {} });
@@ -707,7 +738,7 @@ describe('Football Squares Program', () => {
 describe('WebSocket Integration', () => {
   it('broadcasts board updates', (done) => {
     const ws = new WebSocket('ws://localhost:8080');
-    
+
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
       if (message.type === 'board_update') {
@@ -716,7 +747,7 @@ describe('WebSocket Integration', () => {
         done();
       }
     };
-    
+
     // Trigger a board update by purchasing a square
     // ... test logic
   });
@@ -726,6 +757,7 @@ describe('WebSocket Integration', () => {
 ## Support
 
 For API support and questions:
+
 - **Documentation**: [docs/](../docs/)
 - **GitHub Issues**: [Repository Issues](https://github.com/your-repo/issues)
 - **Discord**: [Community Server](https://discord.gg/your-server)
@@ -733,4 +765,4 @@ For API support and questions:
 
 ---
 
-*Last updated: January 2025*
+_Last updated: January 2025_

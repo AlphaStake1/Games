@@ -29,6 +29,7 @@ The system consists of three main components:
 Subscribe a user to email updates.
 
 **Request Body:**
+
 ```json
 {
   "email": "user@example.com",
@@ -38,6 +39,7 @@ Subscribe a user to email updates.
 ```
 
 **Response (201):**
+
 ```json
 {
   "message": "Successfully subscribed to email updates",
@@ -46,6 +48,7 @@ Subscribe a user to email updates.
 ```
 
 **Error Responses:**
+
 - `400`: Invalid email format
 - `409`: Email already subscribed
 - `500`: Internal server error
@@ -57,6 +60,7 @@ Subscribe a user to email updates.
 A reusable React component for capturing email subscriptions.
 
 **Props:**
+
 - `source?: string` - Track subscription source (default: "general")
 - `title?: string` - Custom title
 - `description?: string` - Custom description
@@ -68,13 +72,13 @@ A reusable React component for capturing email subscriptions.
 <EmailCapture />
 
 // Custom configuration for different contexts
-<EmailCapture 
+<EmailCapture
   source="free_board_popup"
   title="Get Alerts for New Boards"
   description="Be the first to know when new boards open!"
 />
 
-<EmailCapture 
+<EmailCapture
   source="winners_page"
   title="Get Winner Notifications"
   description="Receive instant notifications when winners are announced."
@@ -84,11 +88,13 @@ A reusable React component for capturing email subscriptions.
 ## Data Storage
 
 ### Development
+
 - Uses file-based storage (`data/subscriptions.json`)
 - Data directory is gitignored for privacy
 - Automatic directory creation
 
 ### Production Considerations
+
 - Current implementation uses file storage
 - Recommended: Migrate to PostgreSQL or MongoDB for production
 - Schema is designed to be database-agnostic
@@ -97,22 +103,24 @@ A reusable React component for capturing email subscriptions.
 
 ```typescript
 interface EmailSubscription {
-  id: string;           // UUID
-  email: string;        // User's email (unique)
+  id: string; // UUID
+  email: string; // User's email (unique)
   walletAddress: string | null; // Optional wallet address
-  source: string;       // Subscription source
-  createdAt: string;    // ISO timestamp
+  source: string; // Subscription source
+  createdAt: string; // ISO timestamp
 }
 ```
 
 ## Email Service
 
 ### Development
+
 - Uses Ethereal Email for testing
 - Logs email content to console
 - Test URLs provided for viewing emails
 
 ### Production
+
 - Integrates with Proton Mail SMTP
 - Requires environment variables
 - Health check functionality
@@ -144,8 +152,9 @@ PROTON_EMAIL_PASS=your-proton-app-password
 ## Usage in Different Contexts
 
 ### 1. General Newsletter Signup
+
 ```tsx
-<EmailCapture 
+<EmailCapture
   source="homepage"
   title="Get Weekly NFL Tips"
   description="Weekly strategies and insights delivered to your inbox."
@@ -153,8 +162,9 @@ PROTON_EMAIL_PASS=your-proton-app-password
 ```
 
 ### 2. Board-specific Alerts
+
 ```tsx
-<EmailCapture 
+<EmailCapture
   source="board_entry"
   title="Get Board Updates"
   description="Receive notifications about this specific board."
@@ -162,8 +172,9 @@ PROTON_EMAIL_PASS=your-proton-app-password
 ```
 
 ### 3. Winner Notifications
+
 ```tsx
-<EmailCapture 
+<EmailCapture
   source="winner_page"
   title="Winner Alerts"
   description="Get notified when winners are announced."
@@ -173,12 +184,14 @@ PROTON_EMAIL_PASS=your-proton-app-password
 ## Analytics & Tracking
 
 The system tracks:
+
 - Total subscriptions
 - Subscriptions by source
 - Subscriptions by month
 - Wallet vs non-wallet subscribers
 
 Access analytics via:
+
 ```typescript
 import { getSubscriptionAnalytics } from '@/lib/emailSubscriptions';
 
@@ -196,11 +209,13 @@ const analytics = await getSubscriptionAnalytics();
 ## Testing
 
 Run the test suite:
+
 ```bash
 node tests/email-subscription.test.js
 ```
 
 The test covers:
+
 - Subscription creation
 - Duplicate prevention
 - Email service functionality
@@ -209,6 +224,7 @@ The test covers:
 ## Deployment Checklist
 
 ### Before Production:
+
 1. ✅ Set up Proton Mail business account
 2. ✅ Configure environment variables
 3. ✅ Test email sending in staging
@@ -218,6 +234,7 @@ The test covers:
 7. ✅ Test with real wallet addresses
 
 ### Proton Mail Setup:
+
 1. Create Proton Mail business account
 2. Enable SMTP access
 3. Generate app-specific password
@@ -227,6 +244,7 @@ The test covers:
 ## Future Enhancements
 
 ### Planned Features:
+
 - **Unsubscribe API**: Allow users to unsubscribe
 - **Email Preferences**: Let users choose email types
 - **Segmentation**: Target specific user groups
@@ -235,6 +253,7 @@ The test covers:
 - **Database Migration**: Move to production database
 
 ### Integration Opportunities:
+
 - **Ceramic Network**: Store preferences on-chain
 - **Solana Programs**: Trigger emails from smart contracts
 - **Web3 Messaging**: XMTP integration for wallet-to-wallet messaging
@@ -263,6 +282,7 @@ The test covers:
    - Handle wallet disconnection gracefully
 
 ### Debug Commands:
+
 ```bash
 # Test email service
 node -e "const {getEmailService} = require('./lib/emailService'); getEmailService().sendWelcomeEmail('test@example.com')"
@@ -274,6 +294,7 @@ node -e "const {getAllSubscriptions} = require('./lib/emailSubscriptions'); getA
 ## Support
 
 For issues or questions:
+
 1. Check this documentation
 2. Review error logs
 3. Test with development environment
@@ -282,4 +303,4 @@ For issues or questions:
 
 ---
 
-*This system is designed to scale with your platform while maintaining user privacy and providing excellent user experience.*
+_This system is designed to scale with your platform while maintaining user privacy and providing excellent user experience._

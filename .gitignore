@@ -42,3 +42,12 @@ venv/
 .venv/
 __pycache__/
 *.pyc
+
+# Solana releases - prevent accidentally committing large binary files
+solana-release*
+*.tar.bz2
+
+# Local Solana test validator ledger data
+test-ledger/
+*.tar.zst
+*.bin

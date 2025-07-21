@@ -49,6 +49,7 @@ The Football Squares dApp is built as a multi-layered decentralized application 
 ### 1. Frontend Layer (Next.js 13)
 
 **Technology Stack:**
+
 - Next.js 13 with App Router
 - TypeScript for type safety
 - Tailwind CSS for styling
@@ -56,11 +57,13 @@ The Football Squares dApp is built as a multi-layered decentralized application 
 - Solana Web3.js for blockchain interaction
 
 **Key Components:**
+
 - [`SquaresGrid.tsx`](../components/SquaresGrid.tsx): Interactive game board
 - [`WalletProvider`](../app/providers.tsx): Solana wallet integration
 - Real-time state management via WebSocket
 
 **Design Patterns:**
+
 - **Component-based Architecture**: Reusable UI components
 - **Provider Pattern**: Context-based state management
 - **Static Site Generation**: Optimized for performance and SEO
@@ -70,12 +73,14 @@ The Football Squares dApp is built as a multi-layered decentralized application 
 **File:** [`server/websocket.ts`](../server/websocket.ts)
 
 **Responsibilities:**
+
 - Real-time client-server communication
 - Event broadcasting to multiple clients
 - Game state synchronization
 - Connection management and health monitoring
 
 **Message Types:**
+
 ```typescript
 interface WebSocketMessage {
   type: 'subscribe' | 'board_update' | 'score_update' | 'winner_announcement';
@@ -85,6 +90,7 @@ interface WebSocketMessage {
 ```
 
 **Architecture Benefits:**
+
 - Low-latency updates for live gaming experience
 - Scalable connection handling
 - Event-driven state synchronization
@@ -112,6 +118,7 @@ The AI agent system is the core automation layer, consisting of specialized agen
 #### Individual Agent Responsibilities
 
 **Orchestrator Agent** ([`agents/OrchestratorAgent/index.ts`](../agents/OrchestratorAgent/index.ts))
+
 - **AI Model**: Claude Sonnet 4
 - **Purpose**: High-level task planning and coordination
 - **Responsibilities**:
@@ -121,6 +128,7 @@ The AI agent system is the core automation layer, consisting of specialized agen
   - Monitor overall system health
 
 **Board Agent** ([`agents/BoardAgent/index.ts`](../agents/BoardAgent/index.ts))
+
 - **AI Model**: GPT-4
 - **Purpose**: Game state management and analytics
 - **Responsibilities**:
@@ -130,6 +138,7 @@ The AI agent system is the core automation layer, consisting of specialized agen
   - Monitor user interactions
 
 **Randomizer Agent** ([`agents/RandomizerAgent/index.ts`](../agents/RandomizerAgent/index.ts))
+
 - **Purpose**: VRF request handling and randomness verification
 - **Responsibilities**:
   - Request VRF randomness from Switchboard
@@ -138,6 +147,7 @@ The AI agent system is the core automation layer, consisting of specialized agen
   - Handle randomization failures
 
 **Oracle Agent** ([`agents/OracleAgent/index.ts`](../agents/OracleAgent/index.ts))
+
 - **Purpose**: External data integration
 - **Responsibilities**:
   - Fetch NFL scores from APIs
@@ -146,6 +156,7 @@ The AI agent system is the core automation layer, consisting of specialized agen
   - Handle API rate limiting
 
 **Winner Agent** ([`agents/WinnerAgent/index.ts`](../agents/WinnerAgent/index.ts))
+
 - **Purpose**: Winner calculation and payout processing
 - **Responsibilities**:
   - Calculate quarter winners
@@ -154,6 +165,7 @@ The AI agent system is the core automation layer, consisting of specialized agen
   - Generate winner reports
 
 **Email Agent** ([`agents/EmailAgent/index.ts`](../agents/EmailAgent/index.ts))
+
 - **Purpose**: Notification system management
 - **Responsibilities**:
   - Send transactional emails
@@ -222,9 +234,9 @@ pub struct GameScore {
 ┌─────────────┐  randomize_headers ┌─────────────┐
 │ Randomized  │◄──────────────────│  Filled     │
 └─────────────┘                   └─────────────┘
-       │                                  
-       │ record_score                     
-       ▼                                  
+       │
+       │ record_score
+       ▼
 ┌─────────────┐    settle_winner   ┌─────────────┐
 │  In Play    │──────────────────►│  Completed  │
 └─────────────┘                   └─────────────┘
@@ -233,11 +245,13 @@ pub struct GameScore {
 ### 5. External Service Integration
 
 #### Switchboard VRF (Verifiable Random Function)
+
 - **Purpose**: Provably fair randomness for header generation
 - **Integration**: Direct smart contract calls
 - **Verification**: On-chain randomness verification
 
 #### Clockwork Threads
+
 - **File**: [`scripts/create_thread.ts`](../scripts/create_thread.ts)
 - **Purpose**: Automated task scheduling
 - **Use Cases**:
@@ -247,6 +261,7 @@ pub struct GameScore {
   - Cleanup tasks
 
 #### Ceramic Network
+
 - **Files**: [`ceramic/client.ts`](../ceramic/client.ts), [`lib/ceramic-integration.ts`](../lib/ceramic-integration.ts)
 - **Purpose**: Decentralized event logging and analytics
 - **Benefits**:
@@ -255,12 +270,14 @@ pub struct GameScore {
   - Cross-platform compatibility
 
 #### Solana Name Service (SNS) Integration
+
 - **Documentation**: [`docs/external-references/sns-documentation-reference.md`](external-references/sns-documentation-reference.md)
 - **Complete Docs**: [`docs/external-references/sns-complete-documentation.md`](external-references/sns-complete-documentation.md)
 - **Purpose**: Potential integration with Solana Name Service for domain resolution
 - **Note**: **All agents must review SNS documentation before developing backend infrastructure**
 
 #### Proton Mail Bridge
+
 - **File**: [`agents/EmailAgent/index.ts`](../agents/EmailAgent/index.ts)
 - **Purpose**: Secure email notifications
 - **Features**:
@@ -311,6 +328,7 @@ pub struct GameScore {
 ### Smart Contract Security
 
 **Access Control:**
+
 ```rust
 #[access_control(is_oracle(&ctx.accounts.oracle))]
 pub fn record_score(ctx: Context<RecordScore>, ...) -> Result<()> {
@@ -319,12 +337,14 @@ pub fn record_score(ctx: Context<RecordScore>, ...) -> Result<()> {
 ```
 
 **Economic Security:**
+
 - Minimum square prices prevent spam
 - Escrow-based fund management
 - Automatic payout mechanisms
 - Anti-MEV protections
 
 **State Validation:**
+
 - Comprehensive error handling
 - State transition validation
 - Overflow protection
@@ -333,18 +353,21 @@ pub fn record_score(ctx: Context<RecordScore>, ...) -> Result<()> {
 ### Infrastructure Security
 
 **Network Security:**
+
 - TLS/SSL for all communications
 - WebSocket connection authentication
 - Rate limiting and DDoS protection
 - Firewall configurations
 
 **API Security:**
+
 - JWT token authentication
 - Request signing verification
 - Input validation and sanitization
 - CORS policy enforcement
 
 **Deployment Security:**
+
 - Environment variable isolation
 - Secret management via Docker secrets
 - Container security scanning
@@ -355,24 +378,28 @@ pub fn record_score(ctx: Context<RecordScore>, ...) -> Result<()> {
 ### Scalability Optimizations
 
 **Frontend:**
+
 - Static site generation for fast loading
 - Component lazy loading
 - Image optimization
 - CDN distribution
 
 **WebSocket:**
+
 - Connection pooling
 - Message queuing
 - Horizontal scaling support
 - Load balancing
 
 **Blockchain:**
+
 - Transaction batching
 - Account optimization
 - Compute unit efficiency
 - Parallel processing
 
 **Agent System:**
+
 - Concurrent execution
 - Task prioritization
 - Resource management
@@ -381,12 +408,14 @@ pub fn record_score(ctx: Context<RecordScore>, ...) -> Result<()> {
 ### Monitoring and Observability
 
 **Health Checks:**
+
 - [`scripts/health-check.ts`](../scripts/health-check.ts)
 - Service availability monitoring
 - Performance metrics collection
 - Alert system integration
 
 **Logging:**
+
 - Structured logging format
 - Centralized log aggregation
 - Error tracking and alerting
@@ -397,18 +426,20 @@ pub fn record_score(ctx: Context<RecordScore>, ...) -> Result<()> {
 ### Container Orchestration
 
 **Docker Compose Configuration:**
+
 ```yaml
 services:
-  app:                    # Next.js frontend
-  websocket:             # WebSocket server
-  agents:                # AI agent system
-  proton-bridge:         # Email service
-  ceramic:               # Logging service
+  app: # Next.js frontend
+  websocket: # WebSocket server
+  agents: # AI agent system
+  proton-bridge: # Email service
+  ceramic: # Logging service
 ```
 
 ### Akash Network Deployment
 
 **Benefits:**
+
 - Decentralized infrastructure
 - Cost-effective hosting
 - Geographic distribution
@@ -421,6 +452,7 @@ services:
 **GitHub Actions:** [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 
 **Pipeline Stages:**
+
 1. Code quality checks (ESLint, TypeScript)
 2. Security scanning (Audit, SAST)
 3. Test execution (Unit, Integration)
@@ -433,11 +465,13 @@ services:
 ### Scalability Improvements
 
 **Layer 2 Integration:**
+
 - State channels for micro-transactions
 - Rollup integration for batch processing
 - Cross-chain bridge implementation
 
 **Microservices Migration:**
+
 - Service decomposition
 - API gateway implementation
 - Event-driven architecture
@@ -446,12 +480,14 @@ services:
 ### Enhanced AI Capabilities
 
 **Machine Learning Integration:**
+
 - Predictive analytics for game outcomes
 - User behavior analysis
 - Fraud detection algorithms
 - Personalized recommendations
 
 **Advanced Automation:**
+
 - Dynamic pricing algorithms
 - Intelligent game scheduling
 - Automated customer support

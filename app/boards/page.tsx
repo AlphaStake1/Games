@@ -33,7 +33,7 @@ import {
   Users,
   Grid,
   TrendingUp,
-  Info
+  Info,
 } from 'lucide-react';
 
 const BoardsPage: React.FC = () => {
@@ -42,23 +42,23 @@ const BoardsPage: React.FC = () => {
   const { toast } = useToast();
   const searchParams = useSearchParams();
   const demoMode = searchParams.get('demo') === 'true';
-  const walletAddress = publicKey?.toString() || (demoMode ? 'demo-wallet-address' : null);
-  
+  const walletAddress =
+    publicKey?.toString() || (demoMode ? 'demo-wallet-address' : null);
+
   // Check if we're in demo mode or actually connected
   const isConnected = connected || demoMode;
-  
-  const { 
-    preferences, 
-    isLoading, 
-    isFirstTime, 
-    setFavoriteTeam, 
-    setVIPStatus 
-  } = useUserPreferences(walletAddress);
+
+  const { preferences, isLoading, isFirstTime, setFavoriteTeam, setVIPStatus } =
+    useUserPreferences(walletAddress);
 
   const [showTeamSelection, setShowTeamSelection] = useState(false);
   const [showVipUpgrade, setShowVipUpgrade] = useState(false);
-  const [selectedBoard, setSelectedBoard] = useState<BoardConfiguration | null>(null);
-  const [activeSelections, setActiveSelections] = useState<SquareSelection[]>([]);
+  const [selectedBoard, setSelectedBoard] = useState<BoardConfiguration | null>(
+    null,
+  );
+  const [activeSelections, setActiveSelections] = useState<SquareSelection[]>(
+    [],
+  );
   const [isProcessing, setIsProcessing] = useState(false);
   const [viewMode, setViewMode] = useState<'selection' | 'board'>('selection');
 
@@ -85,8 +85,8 @@ const BoardsPage: React.FC = () => {
   };
 
   const handleSquareSelectionChange = (selection: SquareSelection) => {
-    setActiveSelections(prev => {
-      const filtered = prev.filter(s => s.boardId !== selection.boardId);
+    setActiveSelections((prev) => {
+      const filtered = prev.filter((s) => s.boardId !== selection.boardId);
       if (selection.squareIndices.length > 0) {
         return [...filtered, selection];
       }
@@ -111,8 +111,11 @@ const BoardsPage: React.FC = () => {
     });
 
     try {
-      const totalCost = activeSelections.reduce((acc, s) => acc + s.totalCost, 0);
-      
+      const totalCost = activeSelections.reduce(
+        (acc, s) => acc + s.totalCost,
+        0,
+      );
+
       const recipientPublicKey = SystemProgram.programId;
 
       const transaction = new Transaction().add(
@@ -120,17 +123,17 @@ const BoardsPage: React.FC = () => {
           fromPubkey: publicKey,
           toPubkey: recipientPublicKey,
           lamports: totalCost * 1000,
-        })
+        }),
       );
 
       const signature = await sendTransaction(transaction, connection);
-      
+
       updateToast({
         title: 'Transaction Submitted',
         description: `Waiting for confirmation...`,
-        variant: 'default'
+        variant: 'default',
       });
-      
+
       await connection.confirmTransaction(signature, 'processed');
 
       updateToast({
@@ -144,7 +147,8 @@ const BoardsPage: React.FC = () => {
       console.error('Purchase failed', error);
       updateToast({
         title: 'Purchase Failed',
-        description: error.message || 'An unknown error occurred. Please try again.',
+        description:
+          error.message || 'An unknown error occurred. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -187,7 +191,7 @@ const BoardsPage: React.FC = () => {
           fromPubkey: publicKey,
           toPubkey: VIP_RECIPIENT,
           lamports: Math.round(VIP_PRICE_SOL * LAMPORTS_PER_SOL),
-        })
+        }),
       );
 
       // Send transaction
@@ -196,7 +200,7 @@ const BoardsPage: React.FC = () => {
       updateToast({
         title: 'Transaction Submitted',
         description: `Waiting for confirmation...`,
-        variant: 'default'
+        variant: 'default',
       });
 
       await connection.confirmTransaction(signature, 'processed');
@@ -213,7 +217,8 @@ const BoardsPage: React.FC = () => {
       console.error('VIP upgrade failed', error);
       updateToast({
         title: 'VIP Upgrade Failed',
-        description: error.message || 'An unknown error occurred. Please try again.',
+        description:
+          error.message || 'An unknown error occurred. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -238,7 +243,7 @@ const BoardsPage: React.FC = () => {
                   <p className="text-lg text-gray-600 dark:text-gray-400">
                     Connect your wallet to start playing Football Squares
                   </p>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div className="flex items-center gap-2">
                       <Grid className="w-5 h-5 text-blue-600" />
@@ -262,7 +267,14 @@ const BoardsPage: React.FC = () => {
                 <Alert>
                   <Info className="w-4 h-4" />
                   <AlertDescription>
-                    New to crypto wallets? Check out our <a href="/wallet-guide" className="text-blue-600 hover:underline">wallet setup guide</a> to get started.
+                    New to crypto wallets? Check out our{' '}
+                    <a
+                      href="/wallet-guide"
+                      className="text-blue-600 hover:underline"
+                    >
+                      wallet setup guide
+                    </a>{' '}
+                    to get started.
                   </AlertDescription>
                 </Alert>
               </CardContent>
@@ -297,7 +309,9 @@ const BoardsPage: React.FC = () => {
           <div className="max-w-2xl mx-auto text-center">
             <Card>
               <CardContent className="py-12">
-                <p className="text-lg text-red-600">Error loading user preferences</p>
+                <p className="text-lg text-red-600">
+                  Error loading user preferences
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -325,7 +339,9 @@ const BoardsPage: React.FC = () => {
             <div>
               <h1 className="text-3xl font-bold">Football Squares</h1>
               <p className="text-gray-600 dark:text-gray-400">
-                {viewMode === 'selection' ? 'Select Your Game Board' : 'Choose Your Squares'}
+                {viewMode === 'selection'
+                  ? 'Select Your Game Board'
+                  : 'Choose Your Squares'}
               </p>
             </div>
           </div>
@@ -354,7 +370,19 @@ const BoardsPage: React.FC = () => {
         {viewMode === 'selection' ? (
           /* Board Selection Mode */
           <BoardSelector
-            userTeam={preferences?.favoriteTeam || { id: 'dal', name: 'Cowboys', city: 'Dallas', abbreviation: 'DAL', conference: 'NFC', division: 'East', primaryColor: '#041E42', secondaryColor: '#869397', logoUrl: '/assets/teams/dal.png' }}
+            userTeam={
+              preferences?.favoriteTeam || {
+                id: 'dal',
+                name: 'Cowboys',
+                city: 'Dallas',
+                abbreviation: 'DAL',
+                conference: 'NFC',
+                division: 'East',
+                primaryColor: '#041E42',
+                secondaryColor: '#869397',
+                logoUrl: '/assets/teams/dal.png',
+              }
+            }
             isVIP={preferences?.isVIP || false}
             onBoardSelect={handleBoardSelect}
             onVIPUpgrade={() => setShowVipUpgrade(true)}
@@ -371,7 +399,9 @@ const BoardsPage: React.FC = () => {
                   userWalletAddress={walletAddress}
                   isVIP={preferences?.isVIP || false}
                   onSquareSelectionChange={handleSquareSelectionChange}
-                  currentSelection={activeSelections.find(s => s.boardId === selectedBoard.boardId)}
+                  currentSelection={activeSelections.find(
+                    (s) => s.boardId === selectedBoard.boardId,
+                  )}
                 />
               )}
             </div>

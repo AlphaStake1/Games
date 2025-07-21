@@ -6,18 +6,24 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
-import { BOARD_TIERS, BoardTier, GameSchedule, BoardConfiguration, getAvailableTiers } from '@/lib/boardTypes';
+import {
+  BOARD_TIERS,
+  BoardTier,
+  GameSchedule,
+  BoardConfiguration,
+  getAvailableTiers,
+} from '@/lib/boardTypes';
 import { NFLTeam } from '@/lib/nflTeams';
 import { formatCurrency } from '@/lib/utils';
-import { 
-  Crown, 
-  Users, 
-  Clock, 
-  TrendingUp, 
-  Lock, 
+import {
+  Crown,
+  Users,
+  Clock,
+  TrendingUp,
+  Lock,
   Unlock,
   Star,
-  AlertTriangle 
+  AlertTriangle,
 } from 'lucide-react';
 
 interface BoardSelectorProps {
@@ -33,40 +39,46 @@ interface BoardSelectorProps {
 const generateMockGames = (userTeam: NFLTeam): GameSchedule[] => {
   const currentWeek = 1;
   const games: GameSchedule[] = [];
-  
+
   // Generate 4 upcoming games for the user's team
   for (let i = 0; i < 4; i++) {
     games.push({
       gameId: `game-${userTeam.id}-${currentWeek + i}`,
       week: currentWeek + i,
-      homeTeam: i % 2 === 0 ? userTeam : { 
-        id: 'opp', 
-        name: 'Opponent', 
-        city: 'Away', 
-        abbreviation: 'OPP',
-        conference: userTeam.conference === 'AFC' ? 'NFC' : 'AFC',
-        division: 'North',
-        primaryColor: '#666666',
-        secondaryColor: '#999999',
-        logoUrl: '/assets/teams/default.png'
-      },
-      awayTeam: i % 2 === 1 ? userTeam : {
-        id: 'opp', 
-        name: 'Opponent', 
-        city: 'Away', 
-        abbreviation: 'OPP',
-        conference: userTeam.conference === 'AFC' ? 'NFC' : 'AFC',
-        division: 'North',
-        primaryColor: '#666666',
-        secondaryColor: '#999999',
-        logoUrl: '/assets/teams/default.png'
-      },
+      homeTeam:
+        i % 2 === 0
+          ? userTeam
+          : {
+              id: 'opp',
+              name: 'Opponent',
+              city: 'Away',
+              abbreviation: 'OPP',
+              conference: userTeam.conference === 'AFC' ? 'NFC' : 'AFC',
+              division: 'North',
+              primaryColor: '#666666',
+              secondaryColor: '#999999',
+              logoUrl: '/assets/teams/default.png',
+            },
+      awayTeam:
+        i % 2 === 1
+          ? userTeam
+          : {
+              id: 'opp',
+              name: 'Opponent',
+              city: 'Away',
+              abbreviation: 'OPP',
+              conference: userTeam.conference === 'AFC' ? 'NFC' : 'AFC',
+              division: 'North',
+              primaryColor: '#666666',
+              secondaryColor: '#999999',
+              logoUrl: '/assets/teams/default.png',
+            },
       gameDate: new Date(Date.now() + (i + 1) * 7 * 24 * 60 * 60 * 1000),
       isPlayoffs: false,
-      gameType: 'regular'
+      gameType: 'regular',
     });
   }
-  
+
   return games;
 };
 
@@ -76,11 +88,11 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
   onBoardSelect,
   onVIPUpgrade,
   selectedBoards = [],
-  className = ''
+  className = '',
 }) => {
   const [selectedGame, setSelectedGame] = useState<GameSchedule | null>(null);
   const [availableGames, setAvailableGames] = useState<GameSchedule[]>([]);
-  
+
   useEffect(() => {
     const games = generateMockGames(userTeam);
     setAvailableGames(games);
@@ -97,11 +109,14 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
     return {
       totalSquaresSold: soldSquares,
       availableSquares: 100 - soldSquares,
-      isActive: soldSquares < 100
+      isActive: soldSquares < 100,
     };
   };
 
-  const createBoardConfiguration = (tier: BoardTier, game: GameSchedule): BoardConfiguration => {
+  const createBoardConfiguration = (
+    tier: BoardTier,
+    game: GameSchedule,
+  ): BoardConfiguration => {
     const availability = getBoardAvailability(tier, game);
     return {
       boardId: `${game.gameId}-${tier.id}`,
@@ -113,11 +128,17 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
       totalSquaresSold: availability.totalSquaresSold,
       isActive: availability.isActive,
       createdAt: new Date(),
-      gameStartTime: game.gameDate
+      gameStartTime: game.gameDate,
     };
   };
 
-  const BoardTierCard = ({ tier, game }: { tier: BoardTier; game: GameSchedule }) => {
+  const BoardTierCard = ({
+    tier,
+    game,
+  }: {
+    tier: BoardTier;
+    game: GameSchedule;
+  }) => {
     const board = createBoardConfiguration(tier, game);
     const fillPercentage = (board.totalSquaresSold / 100) * 100;
     const isSelected = selectedBoards.includes(board.boardId);
@@ -126,20 +147,30 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
 
     const calculateMaxWin = (tier: BoardTier) => {
       const { payouts } = tier;
-      const regularGameTotal = payouts.q1Regular + payouts.q2Regular + payouts.q3Regular + payouts.q4Regular;
-      const overtimeSplit = (payouts.q1Overtime ?? 0) + (payouts.q2Overtime ?? 0) + (payouts.q3Overtime ?? 0) + (payouts.q4Overtime ?? 0);
+      const regularGameTotal =
+        payouts.q1Regular +
+        payouts.q2Regular +
+        payouts.q3Regular +
+        payouts.q4Regular;
+      const overtimeSplit =
+        (payouts.q1Overtime ?? 0) +
+        (payouts.q2Overtime ?? 0) +
+        (payouts.q3Overtime ?? 0) +
+        (payouts.q4Overtime ?? 0);
       const expiredOvertime = payouts.finalOvertime ?? 0;
       return {
         regularGameTotal,
         overtimeSplit,
-        expiredOvertime
-      }
-    }
+        expiredOvertime,
+      };
+    };
 
     return (
-      <Card className={`relative transition-all duration-200 hover:shadow-md ${
-        isSelected ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-950' : ''
-      } ${!canSelect ? 'opacity-60' : ''}`}>
+      <Card
+        className={`relative transition-all duration-200 hover:shadow-md ${
+          isSelected ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-950' : ''
+        } ${!canSelect ? 'opacity-60' : ''}`}
+      >
         {/* VIP Badge */}
         {isVIPTier && (
           <div className="absolute -top-2 -right-2 z-10">
@@ -192,30 +223,42 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div className="flex justify-between">
                 <span>Q1:</span>
-                <span className="font-medium">{formatCurrency(tier.payouts.q1Regular)}</span>
+                <span className="font-medium">
+                  {formatCurrency(tier.payouts.q1Regular)}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>Q2:</span>
-                <span className="font-medium">{formatCurrency(tier.payouts.q2Regular)}</span>
+                <span className="font-medium">
+                  {formatCurrency(tier.payouts.q2Regular)}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>Q3:</span>
-                <span className="font-medium">{formatCurrency(tier.payouts.q3Regular)}</span>
+                <span className="font-medium">
+                  {formatCurrency(tier.payouts.q3Regular)}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>Q4:</span>
-                <span className="font-bold text-green-600">{formatCurrency(tier.payouts.q4Regular)}</span>
+                <span className="font-bold text-green-600">
+                  {formatCurrency(tier.payouts.q4Regular)}
+                </span>
               </div>
             </div>
             {tier.payouts.finalOvertime && (
               <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between text-xs">
                   <span>Overtime (Split):</span>
-                  <span className="font-medium">{formatCurrency(calculateMaxWin(tier).overtimeSplit)}</span>
+                  <span className="font-medium">
+                    {formatCurrency(calculateMaxWin(tier).overtimeSplit)}
+                  </span>
                 </div>
                 <div className="flex justify-between text-xs">
                   <span>Overtime (Expired):</span>
-                  <span className="font-medium">{formatCurrency(calculateMaxWin(tier).expiredOvertime ?? 0)}</span>
+                  <span className="font-medium">
+                    {formatCurrency(calculateMaxWin(tier).expiredOvertime ?? 0)}
+                  </span>
                 </div>
               </div>
             )}
@@ -266,18 +309,20 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
       {/* Team Header */}
       <div className="text-center">
         <div className="flex items-center justify-center gap-4 mb-4">
-          <div 
+          <div
             className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl"
             style={{ backgroundColor: userTeam.primaryColor }}
           >
             {userTeam.abbreviation}
           </div>
           <div>
-            <h2 className="text-2xl font-bold">{userTeam.city} {userTeam.name}</h2>
+            <h2 className="text-2xl font-bold">
+              {userTeam.city} {userTeam.name}
+            </h2>
             <p className="text-gray-600 dark:text-gray-400">Your Home Team</p>
           </div>
         </div>
-        
+
         {isVIP && (
           <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900">
             <Crown className="w-4 h-4 mr-1" />
@@ -299,7 +344,9 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
             {availableGames.map((game) => (
               <Button
                 key={game.gameId}
-                variant={selectedGame?.gameId === game.gameId ? 'default' : 'outline'}
+                variant={
+                  selectedGame?.gameId === game.gameId ? 'default' : 'outline'
+                }
                 onClick={() => setSelectedGame(game)}
                 className="h-auto p-4 flex flex-col items-center"
               >
@@ -338,7 +385,8 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
                         Unlock Premium Boards
                       </h4>
                       <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                        Upgrade to VIP for a 5% bonus on all winnings, unlimited squares, $250-$1000 boards, and all teams access.
+                        Upgrade to VIP for a 5% bonus on all winnings, unlimited
+                        squares, $250-$1000 boards, and all teams access.
                       </p>
                     </div>
                   </div>
@@ -359,7 +407,6 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
               <BoardTierCard key={tier.id} tier={tier} game={selectedGame} />
             ))}
           </div>
-
         </div>
       )}
     </div>

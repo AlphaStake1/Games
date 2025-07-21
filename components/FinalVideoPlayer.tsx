@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 interface FinalVideoPlayerProps {
   videoId: string;
@@ -25,8 +25,8 @@ const FinalVideoPlayer: React.FC<FinalVideoPlayerProps> = ({
         window.location.href = videoUrl;
       }}
       onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          window.open(videoUrl, "_blank", "noopener");
+        if (e.key === 'Enter' || e.key === ' ') {
+          window.open(videoUrl, '_blank', 'noopener');
         }
       }}
       className="relative block aspect-video rounded-lg overflow-hidden group bg-slate-800 cursor-pointer"

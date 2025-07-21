@@ -31,7 +31,7 @@ class ClockworkThreadManager {
 
   constructor() {
     this.connection = new Connection(
-      process.env.RPC_ENDPOINT || 'https://api.devnet.solana.com'
+      process.env.RPC_ENDPOINT || 'https://api.devnet.solana.com',
     );
 
     // Load wallet
@@ -42,7 +42,9 @@ class ClockworkThreadManager {
       commitment: 'confirmed',
     });
 
-    this.clockworkProvider = ClockworkProvider.fromAnchorProvider(this.provider);
+    this.clockworkProvider = ClockworkProvider.fromAnchorProvider(
+      this.provider,
+    );
 
     // Load program
     const idl = JSON.parse(fs.readFileSync(IDL_PATH, 'utf8'));
@@ -52,8 +54,10 @@ class ClockworkThreadManager {
   }
 
   private loadWallet(): Keypair {
-    const walletPath = process.env.KEYPAIR_PATH || path.join(process.env.HOME!, '.config/solana/id.json');
-    
+    const walletPath =
+      process.env.KEYPAIR_PATH ||
+      path.join(process.env.HOME!, '.config/solana/id.json');
+
     if (!fs.existsSync(walletPath)) {
       throw new Error(`Wallet not found at ${walletPath}`);
     }
@@ -65,7 +69,7 @@ class ClockworkThreadManager {
   async createGameMonitoringThread(gameId: number): Promise<string> {
     const [boardPda] = PublicKey.findProgramAddressSync(
       [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
-      PROGRAM_ID
+      PROGRAM_ID,
     );
 
     const threadConfig: ThreadConfig = {
@@ -95,7 +99,7 @@ class ClockworkThreadManager {
         instructions: [
           {
             programId: PROGRAM_ID,
-            accounts: threadConfig.accounts.map(acc => ({
+            accounts: threadConfig.accounts.map((acc) => ({
               pubkey: acc.pubkey,
               isSigner: acc.isSigner,
               isWritable: acc.isWritable,
@@ -123,10 +127,13 @@ class ClockworkThreadManager {
     }
   }
 
-  async createRandomizationThread(gameId: number, startTime: Date): Promise<string> {
+  async createRandomizationThread(
+    gameId: number,
+    startTime: Date,
+  ): Promise<string> {
     const [boardPda] = PublicKey.findProgramAddressSync(
       [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
-      PROGRAM_ID
+      PROGRAM_ID,
     );
 
     // Create VRF account (placeholder)
@@ -155,7 +162,9 @@ class ClockworkThreadManager {
       ],
     };
 
-    console.log(`Creating randomization thread for game ${gameId} at ${startTime}...`);
+    console.log(
+      `Creating randomization thread for game ${gameId} at ${startTime}...`,
+    );
 
     try {
       const threadId = await this.clockworkProvider.threadCreate({
@@ -164,7 +173,7 @@ class ClockworkThreadManager {
         instructions: [
           {
             programId: PROGRAM_ID,
-            accounts: threadConfig.accounts.map(acc => ({
+            accounts: threadConfig.accounts.map((acc) => ({
               pubkey: acc.pubkey,
               isSigner: acc.isSigner,
               isWritable: acc.isWritable,
@@ -188,10 +197,13 @@ class ClockworkThreadManager {
     }
   }
 
-  async createWinnerSettlementThread(gameId: number, gameEndTime: Date): Promise<string> {
+  async createWinnerSettlementThread(
+    gameId: number,
+    gameEndTime: Date,
+  ): Promise<string> {
     const [boardPda] = PublicKey.findProgramAddressSync(
       [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
-      PROGRAM_ID
+      PROGRAM_ID,
     );
 
     // Schedule for 5 minutes after game end
@@ -215,7 +227,9 @@ class ClockworkThreadManager {
       ],
     };
 
-    console.log(`Creating winner settlement thread for game ${gameId} at ${settlementTime}...`);
+    console.log(
+      `Creating winner settlement thread for game ${gameId} at ${settlementTime}...`,
+    );
 
     try {
       const threadId = await this.clockworkProvider.threadCreate({
@@ -224,7 +238,7 @@ class ClockworkThreadManager {
         instructions: [
           {
             programId: PROGRAM_ID,
-            accounts: threadConfig.accounts.map(acc => ({
+            accounts: threadConfig.accounts.map((acc) => ({
               pubkey: acc.pubkey,
               isSigner: acc.isSigner,
               isWritable: acc.isWritable,
@@ -250,7 +264,9 @@ class ClockworkThreadManager {
 
   async listThreads(): Promise<any[]> {
     try {
-      const threads = await this.clockworkProvider.threadList(this.provider.wallet.publicKey);
+      const threads = await this.clockworkProvider.threadList(
+        this.provider.wallet.publicKey,
+      );
       return threads;
     } catch (error) {
       console.error('Error listing threads:', error);
@@ -336,23 +352,33 @@ async function main() {
 
     case 'create-randomization':
       if (args.length < 3) {
-        console.error('Usage: npm run create-thread create-randomization <gameId> <startTime>');
+        console.error(
+          'Usage: npm run create-thread create-randomization <gameId> <startTime>',
+        );
         process.exit(1);
       }
       const randGameId = parseInt(args[1]);
       const startTime = new Date(args[2]);
-      const randThreadId = await manager.createRandomizationThread(randGameId, startTime);
+      const randThreadId = await manager.createRandomizationThread(
+        randGameId,
+        startTime,
+      );
       console.log(`Randomization thread created: ${randThreadId}`);
       break;
 
     case 'create-settlement':
       if (args.length < 3) {
-        console.error('Usage: npm run create-thread create-settlement <gameId> <endTime>');
+        console.error(
+          'Usage: npm run create-thread create-settlement <gameId> <endTime>',
+        );
         process.exit(1);
       }
       const settleGameId = parseInt(args[1]);
       const endTime = new Date(args[2]);
-      const settleThreadId = await manager.createWinnerSettlementThread(settleGameId, endTime);
+      const settleThreadId = await manager.createWinnerSettlementThread(
+        settleGameId,
+        endTime,
+      );
       console.log(`Settlement thread created: ${settleThreadId}`);
       break;
 

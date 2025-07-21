@@ -1,11 +1,12 @@
-import Footer from "@/components/Footer";
-import WalletConnectionContent from "@/components/WalletConnectionContent";
+import Footer from '@/components/Footer';
+import WalletConnectionContent from '@/components/WalletConnectionContent';
 
 export const metadata = {
-  title: "Wallet Connection Guide | Football Squares",
+  title: 'Wallet Connection Guide | Football Squares',
   description:
-    "Learn how to connect your Solana wallet to participate in trustless Football Squares games. Step-by-step setup for Phantom, Solflare, and other supported wallets.",
-  keywords: "Solana wallet, Phantom wallet, Solflare wallet, wallet connection, trustless gaming, smart contracts, Football Squares wallet setup",
+    'Learn how to connect your Solana wallet to participate in trustless Football Squares games. Step-by-step setup for Phantom, Solflare, and other supported wallets.',
+  keywords:
+    'Solana wallet, Phantom wallet, Solflare wallet, wallet connection, trustless gaming, smart contracts, Football Squares wallet setup',
 };
 
 export default function PaymentGuidePage() {

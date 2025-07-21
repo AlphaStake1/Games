@@ -23,9 +23,9 @@
 ```ts
 // OrchestratorAgent (Claude Sonnet 4)
 const taskMatrix: AgentTask[] = [
-  { name: "BoardAgent", trigger: "PreGame", model: "gpt-4.1" },
-  { name: "RandomizerAgent", trigger: "VRFReady", model: "gpt-4.1" },
-  { name: "OracleAgent", trigger: "Every5Min", model: "gpt-4.1" },
+  { name: 'BoardAgent', trigger: 'PreGame', model: 'gpt-4.1' },
+  { name: 'RandomizerAgent', trigger: 'VRFReady', model: 'gpt-4.1' },
+  { name: 'OracleAgent', trigger: 'Every5Min', model: 'gpt-4.1' },
   // …
 ];
 ```

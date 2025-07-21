@@ -41,11 +41,11 @@ export const BOARD_TIERS: BoardTier[] = [
       q2Overtime: 119,
       q3Overtime: 71,
       q4Overtime: 107,
-      finalOvertime: 107
+      finalOvertime: 107,
     },
     isVIPOnly: false,
     displayName: '$5 Entry',
-    description: 'Perfect for beginners - $500 total pot'
+    description: 'Perfect for beginners - $500 total pot',
   },
   {
     id: 'tier-10',
@@ -62,11 +62,11 @@ export const BOARD_TIERS: BoardTier[] = [
       q2Overtime: 238,
       q3Overtime: 142,
       q4Overtime: 214,
-      finalOvertime: 214
+      finalOvertime: 214,
     },
     isVIPOnly: false,
     displayName: '$10 Entry',
-    description: 'Popular choice - $1K total pot'
+    description: 'Popular choice - $1K total pot',
   },
   {
     id: 'tier-20',
@@ -83,11 +83,11 @@ export const BOARD_TIERS: BoardTier[] = [
       q2Overtime: 475,
       q3Overtime: 285,
       q4Overtime: 428,
-      finalOvertime: 428
+      finalOvertime: 428,
     },
     isVIPOnly: false,
     displayName: '$20 Entry',
-    description: 'Mid-tier action - $2K total pot'
+    description: 'Mid-tier action - $2K total pot',
   },
   {
     id: 'tier-50',
@@ -104,11 +104,11 @@ export const BOARD_TIERS: BoardTier[] = [
       q2Overtime: 1188,
       q3Overtime: 712,
       q4Overtime: 1069,
-      finalOvertime: 1069
+      finalOvertime: 1069,
     },
     isVIPOnly: false,
     displayName: '$50 Entry',
-    description: 'Serious players - $5K total pot'
+    description: 'Serious players - $5K total pot',
   },
   {
     id: 'tier-100',
@@ -125,11 +125,11 @@ export const BOARD_TIERS: BoardTier[] = [
       q2Overtime: 2375,
       q3Overtime: 1425,
       q4Overtime: 2138,
-      finalOvertime: 2138
+      finalOvertime: 2138,
     },
     isVIPOnly: false,
     displayName: '$100 Entry',
-    description: 'High stakes - $10K total pot'
+    description: 'High stakes - $10K total pot',
   },
   {
     id: 'tier-250',
@@ -146,11 +146,11 @@ export const BOARD_TIERS: BoardTier[] = [
       q2Overtime: 5938,
       q3Overtime: 3562,
       q4Overtime: 5344,
-      finalOvertime: 5344
+      finalOvertime: 5344,
     },
     isVIPOnly: true,
     displayName: '$250 Entry - VIP Only',
-    description: 'Elite tier - $25K total pot'
+    description: 'Elite tier - $25K total pot',
   },
   {
     id: 'tier-500',
@@ -167,11 +167,11 @@ export const BOARD_TIERS: BoardTier[] = [
       q2Overtime: 11875,
       q3Overtime: 7125,
       q4Overtime: 10688,
-      finalOvertime: 10688
+      finalOvertime: 10688,
     },
     isVIPOnly: true,
     displayName: '$500 Entry - VIP Only',
-    description: 'Ultra high stakes - $50K total pot'
+    description: 'Ultra high stakes - $50K total pot',
   },
   {
     id: 'tier-1000',
@@ -188,12 +188,12 @@ export const BOARD_TIERS: BoardTier[] = [
       q2Overtime: 23750,
       q3Overtime: 14250,
       q4Overtime: 21375,
-      finalOvertime: 21375
+      finalOvertime: 21375,
     },
     isVIPOnly: true,
     displayName: '$1000 Entry - VIP Only',
-    description: 'Whale tier - $100K total pot'
-  }
+    description: 'Whale tier - $100K total pot',
+  },
 ];
 
 export interface GameSchedule {
@@ -238,14 +238,17 @@ export interface UserBoardPreferences {
 
 // Utility functions
 export const getBoardTierById = (id: string): BoardTier | undefined => {
-  return BOARD_TIERS.find(tier => tier.id === id);
+  return BOARD_TIERS.find((tier) => tier.id === id);
 };
 
 export const getAvailableTiers = (isVIP: boolean): BoardTier[] => {
-  return BOARD_TIERS.filter(tier => !tier.isVIPOnly || isVIP);
+  return BOARD_TIERS.filter((tier) => !tier.isVIPOnly || isVIP);
 };
 
-export const calculateSquareSelectionCost = (tier: BoardTier, squareCount: number): number => {
+export const calculateSquareSelectionCost = (
+  tier: BoardTier,
+  squareCount: number,
+): number => {
   return tier.pricePerSquare * squareCount;
 };
 

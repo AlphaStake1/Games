@@ -108,14 +108,14 @@ Merge → Netlify **build + test + deploy** → DNS instant-swap. Failed builds 
 
 Adopt this solo-centric loop and you’ll iterate as quickly as the code and your AI copilots can keep up, while Netlify ensures only green builds ever reach your users.
 
-[1]: https://docs.netlify.com/site-deploys/deploy-previews/?utm_source=chatgpt.com "Deploy Previews | Netlify Docs"
-[2]: https://docs.netlify.com/site-deploys/overview/?utm_source=chatgpt.com "Site deploys overview - Netlify Docs"
-[3]: https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot?utm_source=chatgpt.com "Best practices for using GitHub Copilot"
-[4]: https://github.blog/developer-skills/github/how-to-use-github-copilot-in-your-ide-tips-tricks-and-best-practices/?utm_source=chatgpt.com "Using GitHub Copilot in your IDE: Tips, tricks, and best practices"
-[5]: https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow?utm_source=chatgpt.com "Git Feature Branch Workflow | Atlassian Git Tutorial"
-[6]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow?utm_source=chatgpt.com "Gitflow Workflow | Atlassian Git Tutorial"
-[7]: https://www.netlify.com/blog/enhance-your-development-workflow-with-continuous-deployment/?utm_source=chatgpt.com "Enhance Your Development Workflow With Continuous Deployment"
-[8]: https://www.netlify.com/blog/2019/09/27/git-centric-workflow-the-one-api-to-rule-them-all/?utm_source=chatgpt.com "Git-Centric Workflow: The One API to Rule Them All | Netlify"
-[9]: https://nimafarzin-pr.medium.com/understanding-semantic-versioning-and-conventional-commits-in-software-development-3826eda2f087?utm_source=chatgpt.com "Understanding Semantic Versioning and Conventional Commits in ..."
-[10]: https://www.reddit.com/r/learnprogramming/comments/11rt9az/relationship_between_conventional_commits_and/?utm_source=chatgpt.com "Relationship between Conventional Commits and Semantic ... - Reddit"
-[11]: https://www.wired.com/story/ai-write-code-like-humans-bugs?utm_source=chatgpt.com "AI Can Write Code Like Humans-Bugs and All"
+[1]: https://docs.netlify.com/site-deploys/deploy-previews/?utm_source=chatgpt.com 'Deploy Previews | Netlify Docs'
+[2]: https://docs.netlify.com/site-deploys/overview/?utm_source=chatgpt.com 'Site deploys overview - Netlify Docs'
+[3]: https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot?utm_source=chatgpt.com 'Best practices for using GitHub Copilot'
+[4]: https://github.blog/developer-skills/github/how-to-use-github-copilot-in-your-ide-tips-tricks-and-best-practices/?utm_source=chatgpt.com 'Using GitHub Copilot in your IDE: Tips, tricks, and best practices'
+[5]: https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow?utm_source=chatgpt.com 'Git Feature Branch Workflow | Atlassian Git Tutorial'
+[6]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow?utm_source=chatgpt.com 'Gitflow Workflow | Atlassian Git Tutorial'
+[7]: https://www.netlify.com/blog/enhance-your-development-workflow-with-continuous-deployment/?utm_source=chatgpt.com 'Enhance Your Development Workflow With Continuous Deployment'
+[8]: https://www.netlify.com/blog/2019/09/27/git-centric-workflow-the-one-api-to-rule-them-all/?utm_source=chatgpt.com 'Git-Centric Workflow: The One API to Rule Them All | Netlify'
+[9]: https://nimafarzin-pr.medium.com/understanding-semantic-versioning-and-conventional-commits-in-software-development-3826eda2f087?utm_source=chatgpt.com 'Understanding Semantic Versioning and Conventional Commits in ...'
+[10]: https://www.reddit.com/r/learnprogramming/comments/11rt9az/relationship_between_conventional_commits_and/?utm_source=chatgpt.com 'Relationship between Conventional Commits and Semantic ... - Reddit'
+[11]: https://www.wired.com/story/ai-write-code-like-humans-bugs?utm_source=chatgpt.com 'AI Can Write Code Like Humans-Bugs and All'

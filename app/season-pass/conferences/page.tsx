@@ -7,12 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Crown, 
-  Trophy, 
-  Star, 
-  Zap, 
-  Users, 
+import {
+  Crown,
+  Trophy,
+  Star,
+  Zap,
+  Users,
   DollarSign,
   ArrowLeft,
   ChevronRight,
@@ -20,7 +20,7 @@ import {
   Clock,
   Wallet,
   Shield,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 
 interface Conference {
@@ -45,8 +45,11 @@ interface PassPricing {
 const ConferencesPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [selectedConference, setSelectedConference] = useState<Conference | null>(null);
-  const [selectedPassType, setSelectedPassType] = useState<'full' | 'half'>('full');
+  const [selectedConference, setSelectedConference] =
+    useState<Conference | null>(null);
+  const [selectedPassType, setSelectedPassType] = useState<'full' | 'half'>(
+    'full',
+  );
   const [selectedPassCount, setSelectedPassCount] = useState(1);
   const [isConnecting, setIsConnecting] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
@@ -62,7 +65,7 @@ const ConferencesPage = () => {
       capacity: 100,
       description: 'Entry-level conference with solid competition',
       prizePool: 10000,
-      isActive: true
+      isActive: true,
     },
     {
       id: 2,
@@ -72,7 +75,7 @@ const ConferencesPage = () => {
       capacity: 100,
       description: 'Mid-tier conference for serious players',
       prizePool: 20000,
-      isActive: true
+      isActive: true,
     },
     {
       id: 3,
@@ -82,7 +85,7 @@ const ConferencesPage = () => {
       capacity: 100,
       description: 'High-stakes competition with premium rewards',
       prizePool: 30000,
-      isActive: true
+      isActive: true,
     },
     {
       id: 4,
@@ -92,7 +95,7 @@ const ConferencesPage = () => {
       capacity: 100,
       description: 'Elite conference for top-tier players',
       prizePool: 40000,
-      isActive: true
+      isActive: true,
     },
     {
       id: 5,
@@ -103,7 +106,7 @@ const ConferencesPage = () => {
       description: 'Ultimate championship conference',
       prizePool: 50000,
       isActive: true,
-      featured: true
+      featured: true,
     },
   ];
 
@@ -111,7 +114,9 @@ const ConferencesPage = () => {
   useEffect(() => {
     const conferenceId = searchParams.get('id');
     if (conferenceId) {
-      const conference = conferences.find(c => c.id === parseInt(conferenceId));
+      const conference = conferences.find(
+        (c) => c.id === parseInt(conferenceId),
+      );
       if (conference) {
         setSelectedConference(conference);
       }
@@ -121,23 +126,28 @@ const ConferencesPage = () => {
   // Calculate pricing for half-season passes
   const calculateHalfSeasonPricing = (basePrice: number): PassPricing[] => {
     const scaleCurve = [0, 1000, 2000, 3000, 4000]; // BPS values
-    
+
     return scaleCurve.map((bps, index) => {
       const multiplier = (10000 + bps) / 10000;
       const price = Math.floor(basePrice * multiplier);
-      
+
       return {
         passCount: index + 1,
         price,
         multiplier,
-        savings: index > 0 ? Math.floor(basePrice * (index + 1) - price) : undefined
+        savings:
+          index > 0 ? Math.floor(basePrice * (index + 1) - price) : undefined,
       };
     });
   };
 
   // Helper to detect Phantom provider
   function getPhantomProvider() {
-    if (typeof window !== "undefined" && window.solana && window.solana.isPhantom) {
+    if (
+      typeof window !== 'undefined' &&
+      window.solana &&
+      window.solana.isPhantom
+    ) {
       return window.solana;
     }
     return null;
@@ -152,7 +162,9 @@ const ConferencesPage = () => {
     try {
       const provider = getPhantomProvider();
       if (!provider) {
-        setWalletError("Phantom wallet not detected. Please install the Phantom extension and refresh the page.");
+        setWalletError(
+          'Phantom wallet not detected. Please install the Phantom extension and refresh the page.',
+        );
         setIsConnecting(false);
         return;
       }
@@ -161,13 +173,13 @@ const ConferencesPage = () => {
       if (response && response.publicKey) {
         setWalletConnected(true);
       } else {
-        setWalletError("Wallet connection failed or was rejected.");
+        setWalletError('Wallet connection failed or was rejected.');
       }
     } catch (error: any) {
       if (error && error.code === 4001) {
-        setWalletError("Wallet connection was rejected by the user.");
+        setWalletError('Wallet connection was rejected by the user.');
       } else {
-        setWalletError("Failed to connect to Phantom wallet.");
+        setWalletError('Failed to connect to Phantom wallet.');
       }
       setWalletConnected(false);
     } finally {
@@ -177,7 +189,7 @@ const ConferencesPage = () => {
 
   const handleMintPass = async () => {
     if (!selectedConference || !walletConnected) return;
-    
+
     setIsMinting(true);
     // Simulate minting process
     setTimeout(() => {
@@ -186,7 +198,10 @@ const ConferencesPage = () => {
     }, 3000);
   };
 
-  const ConferenceCard = ({ conference, isSelected = false }: {
+  const ConferenceCard = ({
+    conference,
+    isSelected = false,
+  }: {
     conference: Conference;
     isSelected?: boolean;
   }) => {
@@ -196,10 +211,14 @@ const ConferencesPage = () => {
 
     const cardClasses = conference.featured
       ? `cursor-pointer transition-all duration-300 hover:shadow-lg border-2 bg-gradient-to-br from-indigo-900/80 to-purple-900/80 border-indigo-400/50 dark:from-indigo-800/60 dark:to-purple-800/60 dark:border-indigo-300/40 ${
-          isSelected ? 'border-yellow-400 bg-yellow-50/5' : 'hover:border-indigo-400'
+          isSelected
+            ? 'border-yellow-400 bg-yellow-50/5'
+            : 'hover:border-indigo-400'
         } ${isFull ? 'opacity-60' : ''}`
       : `cursor-pointer transition-all duration-300 hover:shadow-lg border-2 ${
-          isSelected ? 'border-yellow-400 bg-yellow-50/5' : 'border-gray-700 hover:border-gray-600'
+          isSelected
+            ? 'border-yellow-400 bg-yellow-50/5'
+            : 'border-gray-700 hover:border-gray-600'
         } ${isFull ? 'opacity-60' : ''}`;
 
     return (
@@ -210,7 +229,9 @@ const ConferencesPage = () => {
         <CardHeader className="pb-3">
           <div className="flex justify-between items-start">
             <div>
-              <CardTitle className={`text-xl ${conference.featured ? 'text-indigo-100' : ''}`}>
+              <CardTitle
+                className={`text-xl ${conference.featured ? 'text-indigo-100' : ''}`}
+              >
                 {conference.name}
               </CardTitle>
               {conference.featured && (
@@ -220,10 +241,14 @@ const ConferencesPage = () => {
               )}
             </div>
             <div className="text-right">
-              <p className={`text-2xl font-bold ${conference.featured ? 'text-indigo-200' : 'text-green-600'}`}>
+              <p
+                className={`text-2xl font-bold ${conference.featured ? 'text-indigo-200' : 'text-green-600'}`}
+              >
                 ${conference.basePrice}
               </p>
-              <p className={`text-xs ${conference.featured ? 'text-indigo-300' : 'text-gray-500'}`}>
+              <p
+                className={`text-xs ${conference.featured ? 'text-indigo-300' : 'text-gray-500'}`}
+              >
                 base price
               </p>
             </div>
@@ -231,23 +256,33 @@ const ConferencesPage = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <p className={`text-sm ${conference.featured ? 'text-indigo-300' : 'text-gray-400'}`}>
+            <p
+              className={`text-sm ${conference.featured ? 'text-indigo-300' : 'text-gray-400'}`}
+            >
               {conference.description}
             </p>
-            
+
             <div className="flex justify-between items-center">
-              <span className={`text-sm font-medium ${conference.featured ? 'text-indigo-200' : ''}`}>
+              <span
+                className={`text-sm font-medium ${conference.featured ? 'text-indigo-200' : ''}`}
+              >
                 Prize Pool
               </span>
-              <span className={`text-lg font-bold ${conference.featured ? 'text-indigo-200' : 'text-green-500'}`}>
+              <span
+                className={`text-lg font-bold ${conference.featured ? 'text-indigo-200' : 'text-green-500'}`}
+              >
                 ${conference.prizePool.toLocaleString()}
               </span>
             </div>
 
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className={conference.featured ? 'text-indigo-200' : ''}>Capacity</span>
-                <span className={`font-medium ${conference.featured ? 'text-indigo-100' : ''}`}>
+                <span className={conference.featured ? 'text-indigo-200' : ''}>
+                  Capacity
+                </span>
+                <span
+                  className={`font-medium ${conference.featured ? 'text-indigo-100' : ''}`}
+                >
                   {conference.filled}/100
                 </span>
               </div>
@@ -255,9 +290,7 @@ const ConferencesPage = () => {
               {isAlmostFull && !isFull && (
                 <p className="text-xs text-orange-600 mt-1">🔥 Almost full!</p>
               )}
-              {isFull && (
-                <p className="text-xs text-red-600 mt-1">❌ Full</p>
-              )}
+              {isFull && <p className="text-xs text-red-600 mt-1">❌ Full</p>}
             </div>
 
             {isSelected && (
@@ -272,7 +305,9 @@ const ConferencesPage = () => {
     );
   };
 
-  const halfSeasonPricing = selectedConference ? calculateHalfSeasonPricing(selectedConference.basePrice) : [];
+  const halfSeasonPricing = selectedConference
+    ? calculateHalfSeasonPricing(selectedConference.basePrice)
+    : [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
@@ -287,13 +322,15 @@ const ConferencesPage = () => {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Season Pass
           </Button>
-          
+
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold">Select Your Conference</h1>
-              <p className="text-gray-400 mt-2">Choose your conference and mint your Season-Pass NFT</p>
+              <p className="text-gray-400 mt-2">
+                Choose your conference and mint your Season-Pass NFT
+              </p>
             </div>
-            
+
             <div className="flex flex-col items-end gap-2">
               {!walletConnected ? (
                 <>
@@ -306,7 +343,9 @@ const ConferencesPage = () => {
                     {isConnecting ? 'Connecting...' : 'Connect Wallet'}
                   </Button>
                   {walletError && (
-                    <span className="text-xs text-red-400 mt-1 max-w-xs text-right">{walletError}</span>
+                    <span className="text-xs text-red-400 mt-1 max-w-xs text-right">
+                      {walletError}
+                    </span>
                   )}
                 </>
               ) : (
@@ -358,7 +397,9 @@ const ConferencesPage = () => {
                       <h3 className="font-semibold mb-3">Pass Type</h3>
                       <div className="grid grid-cols-2 gap-2">
                         <Button
-                          variant={selectedPassType === 'full' ? 'default' : 'outline'}
+                          variant={
+                            selectedPassType === 'full' ? 'default' : 'outline'
+                          }
                           onClick={() => setSelectedPassType('full')}
                           className="text-sm"
                         >
@@ -366,7 +407,9 @@ const ConferencesPage = () => {
                           Full-Season
                         </Button>
                         <Button
-                          variant={selectedPassType === 'half' ? 'default' : 'outline'}
+                          variant={
+                            selectedPassType === 'half' ? 'default' : 'outline'
+                          }
                           onClick={() => setSelectedPassType('half')}
                           className="text-sm"
                         >
@@ -386,12 +429,23 @@ const ConferencesPage = () => {
                           {halfSeasonPricing.map((pricing) => (
                             <Button
                               key={pricing.passCount}
-                              variant={selectedPassCount === pricing.passCount ? 'default' : 'outline'}
-                              onClick={() => setSelectedPassCount(pricing.passCount)}
+                              variant={
+                                selectedPassCount === pricing.passCount
+                                  ? 'default'
+                                  : 'outline'
+                              }
+                              onClick={() =>
+                                setSelectedPassCount(pricing.passCount)
+                              }
                               className="w-full justify-between text-sm"
                             >
-                              <span>{pricing.passCount} Pass{pricing.passCount > 1 ? 'es' : ''}</span>
-                              <span className="font-bold">${pricing.price}</span>
+                              <span>
+                                {pricing.passCount} Pass
+                                {pricing.passCount > 1 ? 'es' : ''}
+                              </span>
+                              <span className="font-bold">
+                                ${pricing.price}
+                              </span>
                             </Button>
                           ))}
                         </div>
@@ -402,25 +456,35 @@ const ConferencesPage = () => {
 
                     {/* Selected Configuration */}
                     <div>
-                      <h3 className="font-semibold mb-3">Selected Configuration</h3>
+                      <h3 className="font-semibold mb-3">
+                        Selected Configuration
+                      </h3>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
                           <span>Conference:</span>
-                          <span className="font-medium">{selectedConference.name}</span>
+                          <span className="font-medium">
+                            {selectedConference.name}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span>Pass Type:</span>
-                          <span className="font-medium capitalize">{selectedPassType}-Season</span>
+                          <span className="font-medium capitalize">
+                            {selectedPassType}-Season
+                          </span>
                         </div>
                         {selectedPassType === 'half' && (
                           <div className="flex justify-between">
                             <span>Pass Count:</span>
-                            <span className="font-medium">{selectedPassCount}</span>
+                            <span className="font-medium">
+                              {selectedPassCount}
+                            </span>
                           </div>
                         )}
                         <div className="flex justify-between">
                           <span>Prize Pool:</span>
-                          <span className="font-medium text-green-400">${selectedConference.prizePool.toLocaleString()}</span>
+                          <span className="font-medium text-green-400">
+                            ${selectedConference.prizePool.toLocaleString()}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -430,18 +494,26 @@ const ConferencesPage = () => {
                     {/* Total Cost */}
                     <div className="bg-gray-900/50 p-4 rounded-lg">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-lg font-semibold">Total Cost:</span>
+                        <span className="text-lg font-semibold">
+                          Total Cost:
+                        </span>
                         <span className="text-2xl font-bold text-green-400">
-                          ${selectedPassType === 'full' 
-                            ? selectedConference.basePrice 
-                            : halfSeasonPricing.find(p => p.passCount === selectedPassCount)?.price || 0
-                          }
+                          $
+                          {selectedPassType === 'full'
+                            ? selectedConference.basePrice
+                            : halfSeasonPricing.find(
+                                (p) => p.passCount === selectedPassCount,
+                              )?.price || 0}
                         </span>
                       </div>
-                      
+
                       {selectedPassType === 'half' && selectedPassCount > 1 && (
                         <div className="text-xs text-gray-400">
-                          Scaling multiplier: {halfSeasonPricing.find(p => p.passCount === selectedPassCount)?.multiplier.toFixed(1)}x
+                          Scaling multiplier:{' '}
+                          {halfSeasonPricing
+                            .find((p) => p.passCount === selectedPassCount)
+                            ?.multiplier.toFixed(1)}
+                          x
                         </div>
                       )}
                     </div>
@@ -474,11 +546,16 @@ const ConferencesPage = () => {
                     <div className="text-xs text-gray-400 space-y-1">
                       <div className="flex items-start gap-2">
                         <AlertCircle className="w-3 h-3 mt-0.5 text-yellow-400" />
-                        <span>Season-Pass NFTs are non-transferable and soulbound to your wallet</span>
+                        <span>
+                          Season-Pass NFTs are non-transferable and soulbound to
+                          your wallet
+                        </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <AlertCircle className="w-3 h-3 mt-0.5 text-yellow-400" />
-                        <span>Payment is processed in USDC on Solana network</span>
+                        <span>
+                          Payment is processed in USDC on Solana network
+                        </span>
                       </div>
                     </div>
                   </>

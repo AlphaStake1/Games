@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
 // Function to sanitize HTML content
 const sanitizeHTML = (html: string) => {
-  const tempDiv = document.createElement("div");
+  const tempDiv = document.createElement('div');
   tempDiv.innerHTML = html;
-  return tempDiv.textContent || tempDiv.innerText || "";
+  return tempDiv.textContent || tempDiv.innerText || '';
 };
 
-import { Clock, TrendingUp } from "lucide-react";
-import { useState, useEffect } from "react";
-import RssParser from "rss-parser";
+import { Clock, TrendingUp } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import RssParser from 'rss-parser';
 
 interface RSSItem {
   title: string;
@@ -50,21 +50,21 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
         const data = await response.json();
         console.log(`RSS2JSON response for ${feedName}:`, data);
 
-        if (data.status !== "ok") {
-          throw new Error(`RSS2JSON error: ${data.message || "Unknown error"}`);
+        if (data.status !== 'ok') {
+          throw new Error(`RSS2JSON error: ${data.message || 'Unknown error'}`);
         }
 
         if (!data.items || data.items.length === 0) {
-          throw new Error("No items found in RSS feed");
+          throw new Error('No items found in RSS feed');
         }
 
         const parsedItems: RSSItem[] = data.items
           .slice(0, 5)
           .map((item: any, index: number) => ({
-            title: item.title || "",
-            description: item.description || item.content || "",
-            link: item.link || "",
-            pubDate: item.pubDate || "",
+            title: item.title || '',
+            description: item.description || item.content || '',
+            link: item.link || '',
+            pubDate: item.pubDate || '',
             guid: item.guid || item.link || `item-${index}`,
           }));
 
@@ -75,7 +75,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
       } catch (error) {
         console.error(`Error fetching ${feedName} RSS feed:`, error);
         setErrorState(
-          `${feedName}: ${error instanceof Error ? error.message : "Unknown error"}`,
+          `${feedName}: ${error instanceof Error ? error.message : 'Unknown error'}`,
         );
         return [];
       }
@@ -87,28 +87,28 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
       setRazzballError(null);
       setFftodayError(null);
 
-      console.log("Starting to fetch all RSS feeds...");
+      console.log('Starting to fetch all RSS feeds...');
 
       const [pffFeed, razzballFeed, fftodayFeed] = await Promise.all([
-        fetchRSSFeed("https://www.pff.com/feed", "PFF", setPffError),
+        fetchRSSFeed('https://www.pff.com/feed', 'PFF', setPffError),
         fetchRSSFeed(
-          "https://football.razzball.com/feed",
-          "Razzball",
+          'https://football.razzball.com/feed',
+          'Razzball',
           setRazzballError,
         ),
         fetchRSSFeed(
-          "https://www.fftoday.com/rss/news.xml",
-          "FFToday",
+          'https://www.fftoday.com/rss/news.xml',
+          'FFToday',
           setFftodayError,
         ),
       ]);
 
       console.log(
-        "All feeds fetched. PFF items:",
+        'All feeds fetched. PFF items:',
         pffFeed.length,
-        "Razzball items:",
+        'Razzball items:',
         razzballFeed.length,
-        "FFToday items:",
+        'FFToday items:',
         fftodayFeed.length,
       );
 
@@ -132,69 +132,146 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
         (now.getTime() - date.getTime()) / (1000 * 60 * 60),
       );
 
-      if (diffInHours < 1) return "Just now";
+      if (diffInHours < 1) return 'Just now';
       if (diffInHours < 24) return `${diffInHours} hours ago`;
 
       const diffInDays = Math.floor(diffInHours / 24);
-      if (diffInDays === 1) return "1 day ago";
+      if (diffInDays === 1) return '1 day ago';
       if (diffInDays < 7) return `${diffInDays} days ago`;
 
       return date.toLocaleDateString();
     } catch {
-      return "Recently";
+      return 'Recently';
     }
   };
 
   // Filter function to only show NFL-related stories
   const filterNFLStories = (items: RSSItem[]): RSSItem[] => {
     const nflKeywords = [
-      'nfl', 'national football league', 'super bowl', 'playoff', 'wildcard',
-      'afc', 'nfc', 'afc east', 'afc west', 'afc north', 'afc south',
-      'nfc east', 'nfc west', 'nfc north', 'nfc south',
-      'chiefs', 'bills', 'bengals', 'browns', 'steelers', 'texans', 'colts', 'jaguars', 'titans',
-      'broncos', 'chargers', 'raiders', 'dolphins', 'patriots', 'jets', 'ravens',
-      'cowboys', 'giants', 'eagles', 'commanders', 'bears', 'lions', 'packers', 'vikings',
-      'falcons', 'panthers', 'saints', 'buccaneers', 'cardinals', 'rams', 'seahawks', '49ers',
-      'mahomes', 'allen', 'burrow', 'jackson', 'herbert', 'tua', 'wilson', 'rodgers',
-      'fantasy football', 'waiver wire', 'start sit', 'lineup', 'dfs', 'draft kings', 'fanduel'
+      'nfl',
+      'national football league',
+      'super bowl',
+      'playoff',
+      'wildcard',
+      'afc',
+      'nfc',
+      'afc east',
+      'afc west',
+      'afc north',
+      'afc south',
+      'nfc east',
+      'nfc west',
+      'nfc north',
+      'nfc south',
+      'chiefs',
+      'bills',
+      'bengals',
+      'browns',
+      'steelers',
+      'texans',
+      'colts',
+      'jaguars',
+      'titans',
+      'broncos',
+      'chargers',
+      'raiders',
+      'dolphins',
+      'patriots',
+      'jets',
+      'ravens',
+      'cowboys',
+      'giants',
+      'eagles',
+      'commanders',
+      'bears',
+      'lions',
+      'packers',
+      'vikings',
+      'falcons',
+      'panthers',
+      'saints',
+      'buccaneers',
+      'cardinals',
+      'rams',
+      'seahawks',
+      '49ers',
+      'mahomes',
+      'allen',
+      'burrow',
+      'jackson',
+      'herbert',
+      'tua',
+      'wilson',
+      'rodgers',
+      'fantasy football',
+      'waiver wire',
+      'start sit',
+      'lineup',
+      'dfs',
+      'draft kings',
+      'fanduel',
     ];
 
     // Exclude college football and other non-NFL content
     const excludeKeywords = [
-      'college', 'ncaa', 'big 12', 'big12', 'sec', 'acc', 'pac-12', 'pac12', 'big ten', 'big10',
-      'conference championship', 'bowl game', 'cfp', 'college football playoff',
-      'alabama', 'georgia', 'texas tech', 'oklahoma', 'clemson', 'michigan', 'ohio state',
-      'recruiting', 'transfer portal', 'high school', 'commits', 'recruiting class'
+      'college',
+      'ncaa',
+      'big 12',
+      'big12',
+      'sec',
+      'acc',
+      'pac-12',
+      'pac12',
+      'big ten',
+      'big10',
+      'conference championship',
+      'bowl game',
+      'cfp',
+      'college football playoff',
+      'alabama',
+      'georgia',
+      'texas tech',
+      'oklahoma',
+      'clemson',
+      'michigan',
+      'ohio state',
+      'recruiting',
+      'transfer portal',
+      'high school',
+      'commits',
+      'recruiting class',
     ];
 
-    return items.filter(item => {
+    return items.filter((item) => {
       const titleLower = item.title.toLowerCase();
       const descriptionLower = sanitizeHTML(item.description).toLowerCase();
       const combinedText = `${titleLower} ${descriptionLower}`;
-      
+
       // First check if it contains excluded terms (college football)
-      const hasExcludedContent = excludeKeywords.some(keyword => combinedText.includes(keyword));
+      const hasExcludedContent = excludeKeywords.some((keyword) =>
+        combinedText.includes(keyword),
+      );
       if (hasExcludedContent) {
         return false;
       }
-      
+
       // Then check if it contains NFL content
-      return nflKeywords.some(keyword => combinedText.includes(keyword));
+      return nflKeywords.some((keyword) => combinedText.includes(keyword));
     });
   };
 
   const adSlots = [
     {
-      id: "ad-1",
-      title: "Premium Ad Slot",
-      size: "300x250",
-      description: "Banner Advertisement",
+      id: 'ad-1',
+      title: 'Premium Ad Slot',
+      size: '300x250',
+      description: 'Banner Advertisement',
     },
     {
-      id: "ad-2",
-      title: "Sponsored Content",
-      size: "300x600",
-      description: "Skyscraper Advertisement",
+      id: 'ad-2',
+      title: 'Sponsored Content',
+      size: '300x600',
+      description: 'Skyscraper Advertisement',
     },
   ];
 
@@ -210,48 +287,50 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
 
           <div className="space-y-4">
             {rssItems.length > 0 ? (
-              filterNFLStories(rssItems).slice(0, 2).map((item) => (
-                <article
-                  key={item.guid}
-                  className="bg-[#faf9f5] dark:bg-[#1a1a2e] rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-[#2a2a3e] transition-colors duration-200 cursor-pointer border border-gray-100 dark:border-gray-800"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <span className="text-xs bg-[#004953] text-white px-2 py-1 rounded-full">
-                      Fantasy
-                    </span>
-                    <div className="flex items-center gap-1 text-xs text-[#708090]">
-                      <Clock className="w-3 h-3" />
-                      {formatTimeAgo(item.pubDate)}
+              filterNFLStories(rssItems)
+                .slice(0, 2)
+                .map((item) => (
+                  <article
+                    key={item.guid}
+                    className="bg-[#faf9f5] dark:bg-[#1a1a2e] rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-[#2a2a3e] transition-colors duration-200 cursor-pointer border border-gray-100 dark:border-gray-800"
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <span className="text-xs bg-[#004953] text-white px-2 py-1 rounded-full">
+                        Fantasy
+                      </span>
+                      <div className="flex items-center gap-1 text-xs text-[#708090]">
+                        <Clock className="w-3 h-3" />
+                        {formatTimeAgo(item.pubDate)}
+                      </div>
                     </div>
-                  </div>
 
-                  <h4 className="font-semibold text-[#002244] dark:text-white mb-2 text-sm leading-tight transition-colors duration-300">
+                    <h4 className="font-semibold text-[#002244] dark:text-white mb-2 text-sm leading-tight transition-colors duration-300">
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[#ed5925] transition-colors"
+                      >
+                        {item.title}
+                      </a>
+                    </h4>
+
+                    <p className="text-xs text-[#708090] dark:text-[#96abdc] leading-relaxed transition-colors duration-300">
+                      {sanitizeHTML(item.description).length > 100
+                        ? `${sanitizeHTML(item.description).substring(0, 100)}...`
+                        : sanitizeHTML(item.description)}
+                    </p>
+
                     <a
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-[#ed5925] transition-colors"
+                      className="text-xs text-[#ed5925] hover:text-[#d14a1f] font-medium mt-2 hover:underline"
                     >
-                      {item.title}
+                      Read More →
                     </a>
-                  </h4>
-
-                  <p className="text-xs text-[#708090] dark:text-[#96abdc] leading-relaxed transition-colors duration-300">
-                    {sanitizeHTML(item.description).length > 100
-                      ? `${sanitizeHTML(item.description).substring(0, 100)}...`
-                      : sanitizeHTML(item.description)}
-                  </p>
-
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-[#ed5925] hover:text-[#d14a1f] font-medium mt-2 hover:underline"
-                  >
-                    Read More →
-                  </a>
-                </article>
-              ))
+                  </article>
+                ))
             ) : (
               <div className="text-center p-4">Loading news...</div>
             )}
@@ -293,7 +372,7 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                   </div>
                   <div
                     className={`w-full bg-gradient-to-br from-[#ed5925] to-[#96abdc] opacity-20 rounded flex items-center justify-center ${
-                      ad.size === "300x600" ? "h-48" : "h-24"
+                      ad.size === '300x600' ? 'h-48' : 'h-24'
                     }`}
                   >
                     <span className="text-[#002244] font-semibold text-sm">
@@ -321,23 +400,23 @@ const SidebarAds = ({ refreshTrigger }: { refreshTrigger: number }) => {
                     </span>
                   </div>
                   <h4 className="font-semibold text-[#002244] dark:text-white mb-2 transition-colors duration-300">
-                    {num === 1 && "PFF News Feed"}
-                    {num === 2 && "Razzball News Feed"}
-                    {num === 3 && "FFToday News Feed"}
+                    {num === 1 && 'PFF News Feed'}
+                    {num === 2 && 'Razzball News Feed'}
+                    {num === 3 && 'FFToday News Feed'}
                     {num > 3 && `News Stream ${num}`}
                   </h4>
                   <p className="text-sm text-[#708090] dark:text-[#96abdc] mb-2 transition-colors duration-300">
                     {num <= 3
-                      ? "Latest fantasy football news"
-                      : "Live news feed placeholder"}
+                      ? 'Latest fantasy football news'
+                      : 'Live news feed placeholder'}
                   </p>
                 </div>
                 <div className="mt-4 p-4 bg-white dark:bg-[#002244] border border-gray-200 dark:border-gray-800 rounded transition-colors duration-300">
                   <div className="text-xs text-[#708090] dark:text-[#96abdc] mb-2 transition-colors duration-300">
-                    {num === 1 && "PFF RSS Feed"}
-                    {num === 2 && "Razzball RSS Feed"}
-                    {num === 3 && "FFToday RSS Feed"}
-                    {num > 3 && "News Stream Content"}
+                    {num === 1 && 'PFF RSS Feed'}
+                    {num === 2 && 'Razzball RSS Feed'}
+                    {num === 3 && 'FFToday RSS Feed'}
+                    {num > 3 && 'News Stream Content'}
                   </div>
                   {num === 1 || num === 2 || num === 3 ? (
                     <div className="text-left space-y-3">

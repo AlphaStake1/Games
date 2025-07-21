@@ -22,20 +22,24 @@ export class RandomizerAgent extends EventEmitter {
   private program: Program;
   private vrfQueue: PublicKey;
 
-  constructor(connection: Connection, provider: AnchorProvider, program: Program) {
+  constructor(
+    connection: Connection,
+    provider: AnchorProvider,
+    program: Program,
+  ) {
     super();
     this.connection = connection;
     this.provider = provider;
     this.program = program;
-    
+
     if (!process.env.OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY is required');
     }
-    
+
     if (!process.env.SWITCHBOARD_VRF_QUEUE) {
       throw new Error('SWITCHBOARD_VRF_QUEUE is required');
     }
-    
+
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
@@ -45,13 +49,15 @@ export class RandomizerAgent extends EventEmitter {
     console.log('RandomizerAgent initialized with GPT-4 and Switchboard VRF');
   }
 
-  async requestRandomization(boardPda: PublicKey): Promise<{ vrfAccount: PublicKey; signature: string }> {
+  async requestRandomization(
+    boardPda: PublicKey,
+  ): Promise<{ vrfAccount: PublicKey; signature: string }> {
     try {
       console.log(`Requesting randomization for board: ${boardPda.toString()}`);
 
       // Create VRF account (simplified - in real implementation would use Switchboard SDK)
       const vrfAccount = new PublicKey('11111111111111111111111111111111'); // Placeholder
-      
+
       const tx = await this.program.methods
         .requestRandomization()
         .accounts({
@@ -61,10 +67,14 @@ export class RandomizerAgent extends EventEmitter {
         })
         .rpc();
 
-      this.emit('randomizationRequested', { boardPda, vrfAccount, signature: tx });
-      
+      this.emit('randomizationRequested', {
+        boardPda,
+        vrfAccount,
+        signature: tx,
+      });
+
       console.log(`VRF request submitted with signature: ${tx}`);
-      
+
       return { vrfAccount, signature: tx };
     } catch (error) {
       console.error('Error requesting randomization:', error);
@@ -76,9 +86,9 @@ export class RandomizerAgent extends EventEmitter {
     try {
       // In real implementation, this would check Switchboard VRF account status
       // For now, we'll simulate the check
-      
+
       const accountInfo = await this.connection.getAccountInfo(vrfAccount);
-      
+
       if (!accountInfo) {
         return {
           requested: false,
@@ -99,7 +109,9 @@ export class RandomizerAgent extends EventEmitter {
       };
 
       if (status.fulfilled) {
-        status.randomness = Array.from({ length: 32 }, () => Math.floor(Math.random() * 256));
+        status.randomness = Array.from({ length: 32 }, () =>
+          Math.floor(Math.random() * 256),
+        );
         status.fulfillTime = new Date();
       }
 
@@ -110,12 +122,16 @@ export class RandomizerAgent extends EventEmitter {
     }
   }
 
-  async fulfillVrfCallback(boardPda: PublicKey, vrfAccount: PublicKey, randomness: number[]): Promise<string> {
+  async fulfillVrfCallback(
+    boardPda: PublicKey,
+    vrfAccount: PublicKey,
+    randomness: number[],
+  ): Promise<string> {
     try {
       console.log(`Fulfilling VRF callback for board: ${boardPda.toString()}`);
 
       const randomnessBuffer = Buffer.from(randomness);
-      
+
       const tx = await this.program.methods
         .fulfillVrfCallback(Array.from(randomnessBuffer))
         .accounts({
@@ -125,10 +141,15 @@ export class RandomizerAgent extends EventEmitter {
         })
         .rpc();
 
-      this.emit('vrfFulfilled', { boardPda, vrfAccount, randomness, signature: tx });
-      
+      this.emit('vrfFulfilled', {
+        boardPda,
+        vrfAccount,
+        randomness,
+        signature: tx,
+      });
+
       console.log(`VRF fulfilled with signature: ${tx}`);
-      
+
       return tx;
     } catch (error) {
       console.error('Error fulfilling VRF callback:', error);
@@ -169,7 +190,9 @@ Keep response under 150 words.
     }
   }
 
-  async deriveHeaders(randomness: number[]): Promise<{ homeHeaders: number[]; awayHeaders: number[] }> {
+  async deriveHeaders(
+    randomness: number[],
+  ): Promise<{ homeHeaders: number[]; awayHeaders: number[] }> {
     const homeRandomness = randomness.slice(0, 16);
     const awayRandomness = randomness.slice(16, 32);
 
@@ -185,12 +208,12 @@ Keep response under 150 words.
 
     for (let i = 0; i < 10; i++) {
       let value = randomness[i % randomness.length] % 10;
-      
+
       // Ensure no duplicates
       while (used[value]) {
         value = (value + 1) % 10;
       }
-      
+
       headers.push(value);
       used[value] = true;
     }
@@ -200,14 +223,14 @@ Keep response under 150 words.
 
   async monitorVrfRequests(): Promise<void> {
     console.log('Starting VRF request monitoring');
-    
+
     // Set up event listener for VRF requests
     this.program.addEventListener('randomizationRequested', (event: any) => {
       this.emit('vrfActivity', {
         type: 'vrf_requested',
-        data: event
+        data: event,
       });
-      
+
       // Start polling for VRF fulfillment
       this.pollVrfStatus(event.vrfAccount);
     });
@@ -220,7 +243,7 @@ Keep response under 150 words.
     const poll = async () => {
       try {
         const status = await this.checkVrfStatus(vrfAccount);
-        
+
         if (status.fulfilled && status.randomness) {
           console.log(`VRF fulfilled for account: ${vrfAccount.toString()}`);
           this.emit('vrfReady', { vrfAccount, randomness: status.randomness });
@@ -231,7 +254,9 @@ Keep response under 150 words.
         if (attempts < maxAttempts) {
           setTimeout(poll, 5000); // Poll every 5 seconds
         } else {
-          console.warn(`VRF polling timeout for account: ${vrfAccount.toString()}`);
+          console.warn(
+            `VRF polling timeout for account: ${vrfAccount.toString()}`,
+          );
           this.emit('vrfTimeout', { vrfAccount });
         }
       } catch (error) {
@@ -292,17 +317,17 @@ Keep response under 150 words.
     try {
       // Check connection to Solana
       await this.connection.getLatestBlockhash();
-      
+
       // Check OpenAI API
       await this.openai.chat.completions.create({
         model: 'gpt-4',
         messages: [{ role: 'user', content: 'health check' }],
         max_tokens: 5,
       });
-      
+
       // Check VRF queue status
       const queueStats = await this.getVrfQueueStats();
-      
+
       return queueStats.successRate > 0.8;
     } catch (error) {
       console.error('RandomizerAgent health check failed:', error);

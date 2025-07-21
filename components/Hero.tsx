@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { PlayCircle } from "lucide-react";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { PlayCircle } from 'lucide-react';
 
 const Hero = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const Hero = () => {
           {/* Text Content */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Weekly Cash Games{" "}
+              Weekly Cash Games{' '}
               <span className="text-blue-500">Start Here</span>
             </h1>
             <p className="text-xl sm:text-2xl text-gray-400 mb-8 leading-relaxed">
@@ -39,7 +39,7 @@ const Hero = () => {
           <div className="flex justify-center lg:justify-end">
             <div
               className={`relative transition-transform duration-500 ${
-                isHovered ? "scale-110" : "scale-100"
+                isHovered ? 'scale-110' : 'scale-100'
               }`}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
@@ -53,7 +53,7 @@ const Hero = () => {
                     <div
                       key={`v-${i}`}
                       className="absolute h-full w-px bg-gray-600 opacity-30"
-                      style={{ left: `${((i + 1) * 10)}%` }}
+                      style={{ left: `${(i + 1) * 10}%` }}
                     />
                   ))}
                   {/* Horizontal lines */}
@@ -61,7 +61,7 @@ const Hero = () => {
                     <div
                       key={`h-${i}`}
                       className="absolute w-full h-px bg-gray-600 opacity-30"
-                      style={{ top: `${((i + 1) * 10)}%` }}
+                      style={{ top: `${(i + 1) * 10}%` }}
                     />
                   ))}
                 </div>

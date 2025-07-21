@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Grid3X3,
   Trophy,
@@ -15,11 +15,11 @@ import {
   Wallet,
   Shield,
   Zap,
-} from "lucide-react";
+} from 'lucide-react';
 
 const HowToPlayContent = () => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("basics");
+  const [activeTab, setActiveTab] = useState('basics');
   const [selectedSquare, setSelectedSquare] = useState<number | null>(null);
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [sampleGrid, setSampleGrid] = useState<any[]>([]);
@@ -29,129 +29,129 @@ const HowToPlayContent = () => {
   // Generate 100 unique names with first name + last initial
   const generatePlayerNames = () => {
     const firstNames = [
-      "James",
-      "Maria",
-      "Alex",
-      "Katie",
-      "Michael",
-      "Sarah",
-      "David",
-      "Emma",
-      "Chris",
-      "Lisa",
-      "Ryan",
-      "Anna",
-      "Tyler",
-      "Nicole",
-      "Brandon",
-      "Jessica",
-      "Kevin",
-      "Ashley",
-      "Jason",
-      "Amanda",
-      "Daniel",
-      "Stephanie",
-      "Matthew",
-      "Rachel",
-      "Andrew",
-      "Lauren",
-      "Joshua",
-      "Megan",
-      "Justin",
-      "Samantha",
-      "Robert",
-      "Elizabeth",
-      "John",
-      "Jennifer",
-      "William",
-      "Michelle",
-      "Thomas",
-      "Kimberly",
-      "Richard",
-      "Amy",
-      "Charles",
-      "Angela",
-      "Joseph",
-      "Melissa",
-      "Christopher",
-      "Brenda",
-      "Anthony",
-      "Emma",
-      "Mark",
-      "Olivia",
-      "Donald",
-      "Cynthia",
-      "Steven",
-      "Marie",
-      "Paul",
-      "Janet",
-      "Kenneth",
-      "Catherine",
-      "Joshua",
-      "Frances",
-      "Kevin",
-      "Christine",
-      "Brian",
-      "Samantha",
-      "George",
-      "Edward",
-      "Ronald",
-      "Carolyn",
-      "Timothy",
-      "Janet",
-      "Jason",
-      "Virginia",
-      "Jeffrey",
-      "Maria",
-      "Ryan",
-      "Heather",
-      "Jacob",
-      "Diane",
-      "Gary",
-      "Julie",
-      "Nicholas",
-      "Joyce",
-      "Eric",
-      "Victoria",
-      "Jonathan",
-      "Kelly",
-      "Stephen",
-      "Christina",
-      "Larry",
-      "Joan",
-      "Justin",
-      "Evelyn",
-      "Scott",
-      "Judith",
+      'James',
+      'Maria',
+      'Alex',
+      'Katie',
+      'Michael',
+      'Sarah',
+      'David',
+      'Emma',
+      'Chris',
+      'Lisa',
+      'Ryan',
+      'Anna',
+      'Tyler',
+      'Nicole',
+      'Brandon',
+      'Jessica',
+      'Kevin',
+      'Ashley',
+      'Jason',
+      'Amanda',
+      'Daniel',
+      'Stephanie',
+      'Matthew',
+      'Rachel',
+      'Andrew',
+      'Lauren',
+      'Joshua',
+      'Megan',
+      'Justin',
+      'Samantha',
+      'Robert',
+      'Elizabeth',
+      'John',
+      'Jennifer',
+      'William',
+      'Michelle',
+      'Thomas',
+      'Kimberly',
+      'Richard',
+      'Amy',
+      'Charles',
+      'Angela',
+      'Joseph',
+      'Melissa',
+      'Christopher',
+      'Brenda',
+      'Anthony',
+      'Emma',
+      'Mark',
+      'Olivia',
+      'Donald',
+      'Cynthia',
+      'Steven',
+      'Marie',
+      'Paul',
+      'Janet',
+      'Kenneth',
+      'Catherine',
+      'Joshua',
+      'Frances',
+      'Kevin',
+      'Christine',
+      'Brian',
+      'Samantha',
+      'George',
+      'Edward',
+      'Ronald',
+      'Carolyn',
+      'Timothy',
+      'Janet',
+      'Jason',
+      'Virginia',
+      'Jeffrey',
+      'Maria',
+      'Ryan',
+      'Heather',
+      'Jacob',
+      'Diane',
+      'Gary',
+      'Julie',
+      'Nicholas',
+      'Joyce',
+      'Eric',
+      'Victoria',
+      'Jonathan',
+      'Kelly',
+      'Stephen',
+      'Christina',
+      'Larry',
+      'Joan',
+      'Justin',
+      'Evelyn',
+      'Scott',
+      'Judith',
     ];
 
     const lastInitials = [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
+      'A',
+      'B',
+      'C',
+      'D',
+      'E',
+      'F',
+      'G',
+      'H',
+      'I',
+      'J',
+      'K',
+      'L',
+      'M',
+      'N',
+      'O',
+      'P',
+      'Q',
+      'R',
+      'S',
+      'T',
+      'U',
+      'V',
+      'W',
+      'X',
+      'Y',
+      'Z',
     ];
 
     const names = [];
@@ -205,7 +205,7 @@ const HowToPlayContent = () => {
   ) => {
     const grid = [];
     // NFT symbols for some squares
-    const nftSymbols = ["🏆", "⭐", "🎯", "💎", "🔥", "⚡", "🎨", "🌟"];
+    const nftSymbols = ['🏆', '⭐', '🎯', '💎', '🔥', '⚡', '🎨', '🌟'];
     const nftSquares = [5, 12, 23, 34, 45, 56, 67, 78]; // Random squares with NFTs
 
     for (let i = 0; i < 100; i++) {
@@ -231,7 +231,7 @@ const HowToPlayContent = () => {
         if (col === homeNumIndex && row === awayNumIndex) {
           isWinning = true;
           quarter =
-            q === 0 ? "1st" : q === 1 ? "2nd" : q === 2 ? "3rd" : "Final";
+            q === 0 ? '1st' : q === 1 ? '2nd' : q === 2 ? '3rd' : 'Final';
           break;
         }
       }
@@ -283,41 +283,41 @@ const HowToPlayContent = () => {
   ]);
 
   const tabs = [
-    { id: "basics", label: "Game Basics", icon: Grid3X3 },
-    { id: "rules", label: "Rules & Scoring", icon: Trophy },
-    { id: "crypto", label: "Crypto Payouts", icon: Wallet },
-    { id: "strategy", label: "Tips & Strategy", icon: Target },
+    { id: 'basics', label: 'Game Basics', icon: Grid3X3 },
+    { id: 'rules', label: 'Rules & Scoring', icon: Trophy },
+    { id: 'crypto', label: 'Crypto Payouts', icon: Wallet },
+    { id: 'strategy', label: 'Tips & Strategy', icon: Target },
   ];
 
   const gameSteps = [
     {
       step: 1,
-      title: "Choose Your Game",
-      description: "Select from available NFL games and join a squares board.",
+      title: 'Choose Your Game',
+      description: 'Select from available NFL games and join a squares board.',
       icon: Grid3X3,
       details:
-        "Browse active games and pick the matchup you want to play. Each game has its own 10x10 grid with 100 squares available.",
+        'Browse active games and pick the matchup you want to play. Each game has its own 10x10 grid with 100 squares available.',
     },
     {
       step: 2,
-      title: "Claim Your Squares",
-      description: "Purchase one or more squares on the 10x10 grid.",
+      title: 'Claim Your Squares',
+      description: 'Purchase one or more squares on the 10x10 grid.',
       icon: Target,
       details:
-        "Click on empty squares to claim them. You can buy multiple squares to increase your chances of winning.",
+        'Click on empty squares to claim them. You can buy multiple squares to increase your chances of winning.',
     },
     {
       step: 3,
-      title: "Numbers Are Drawn",
-      description: "Random numbers 0-9 are assigned to rows and columns.",
+      title: 'Numbers Are Drawn',
+      description: 'Random numbers 0-9 are assigned to rows and columns.',
       icon: Users,
       details:
-        "After all squares are sold, numbers are randomly assigned to each row (one team) and column (other team).",
+        'After all squares are sold, numbers are randomly assigned to each row (one team) and column (other team).',
     },
     {
       step: 4,
-      title: "Watch & Win",
-      description: "Win prizes based on the score at the end of each quarter.",
+      title: 'Watch & Win',
+      description: 'Win prizes based on the score at the end of each quarter.',
       icon: Trophy,
       details:
         "Your square wins if the last digit of each team's score matches your row and column numbers.",
@@ -326,116 +326,116 @@ const HowToPlayContent = () => {
 
   // Mock game data with corrected scores that match the winning squares
   const mockGameData = {
-    homeTeam: "Dallas Cowboys",
-    awayTeam: "Philadelphia Eagles",
+    homeTeam: 'Dallas Cowboys',
+    awayTeam: 'Philadelphia Eagles',
     quarters: [
       {
-        quarter: "1st Quarter",
+        quarter: '1st Quarter',
         homeScore: 7, // Last digit 7
         awayScore: 3, // Last digit 3 → 7-3 combination
         winningNumbers: { home: 7, away: 3 },
-        winningSquare: "7-3",
-        payout: "15%",
+        winningSquare: '7-3',
+        payout: '15%',
       },
       {
-        quarter: "2nd Quarter",
+        quarter: '2nd Quarter',
         homeScore: 14, // Last digit 4
         awayScore: 10, // Last digit 0 → 4-0 combination
         winningNumbers: { home: 4, away: 0 },
-        winningSquare: "4-0",
-        payout: "25%",
+        winningSquare: '4-0',
+        payout: '25%',
       },
       {
-        quarter: "3rd Quarter",
+        quarter: '3rd Quarter',
         homeScore: 17, // Last digit 7
         awayScore: 17, // Last digit 7 → 7-7 combination
         winningNumbers: { home: 7, away: 7 },
-        winningSquare: "7-7",
-        payout: "15%",
+        winningSquare: '7-7',
+        payout: '15%',
       },
       {
-        quarter: "Final Score",
+        quarter: 'Final Score',
         homeScore: 26, // Last digit 6
         awayScore: 20, // Last digit 0 → 6-0 combination
         winningNumbers: { home: 6, away: 0 },
-        winningSquare: "6-0",
-        payout: "45%",
+        winningSquare: '6-0',
+        payout: '45%',
       },
     ],
   };
 
   const scoringExamples = [
     {
-      quarter: "1st Quarter",
-      score: "Cowboys: 7, Eagles: 3",
-      winner: "Square at 7-3 combination",
-      payout: "15%",
+      quarter: '1st Quarter',
+      score: 'Cowboys: 7, Eagles: 3',
+      winner: 'Square at 7-3 combination',
+      payout: '15%',
     },
     {
-      quarter: "2nd Quarter",
-      score: "Cowboys: 14, Eagles: 10",
-      winner: "Square at 4-0 combination",
-      payout: "25%",
+      quarter: '2nd Quarter',
+      score: 'Cowboys: 14, Eagles: 10',
+      winner: 'Square at 4-0 combination',
+      payout: '25%',
     },
     {
-      quarter: "3rd Quarter",
-      score: "Cowboys: 17, Eagles: 17",
-      winner: "Square at 7-7 combination",
-      payout: "15%",
+      quarter: '3rd Quarter',
+      score: 'Cowboys: 17, Eagles: 17',
+      winner: 'Square at 7-7 combination',
+      payout: '15%',
     },
     {
-      quarter: "Final Score",
-      score: "Cowboys: 26, Eagles: 20",
-      winner: "Square at 6-0 combination",
-      payout: "45%",
+      quarter: 'Final Score',
+      score: 'Cowboys: 26, Eagles: 20',
+      winner: 'Square at 6-0 combination',
+      payout: '45%',
     },
   ];
 
   const cryptoFeatures = [
     {
       icon: Shield,
-      title: "Secure Transactions",
+      title: 'Secure Transactions',
       description:
-        "All payments and payouts are handled through secure blockchain transactions.",
+        'All payments and payouts are handled through secure blockchain transactions.',
     },
     {
       icon: Zap,
-      title: "Instant Payouts",
+      title: 'Instant Payouts',
       description:
-        "Winners receive their crypto payouts automatically when each quarter ends.",
+        'Winners receive their crypto payouts automatically when each quarter ends.',
     },
     {
       icon: Wallet,
-      title: "Multiple Currencies",
+      title: 'Multiple Currencies',
       description:
-        "Play with Bitcoin, Ethereum, Solana, and various stablecoins.",
+        'Play with Bitcoin, Ethereum, Solana, and various stablecoins.',
     },
   ];
 
   const strategies = [
     {
-      title: "Corner Strategy",
+      title: 'Corner Strategy',
       description:
-        "Squares with 0, 3, 7 are historically more likely to win due to common football scoring patterns.",
-      tip: "Focus on squares that end in these numbers for better odds.",
+        'Squares with 0, 3, 7 are historically more likely to win due to common football scoring patterns.',
+      tip: 'Focus on squares that end in these numbers for better odds.',
     },
     {
-      title: "Multiple Squares",
+      title: 'Multiple Squares',
       description:
-        "Buying multiple squares increases your chances, but also increases your investment.",
-      tip: "Balance risk and reward based on your budget and confidence in the game.",
+        'Buying multiple squares increases your chances, but also increases your investment.',
+      tip: 'Balance risk and reward based on your budget and confidence in the game.',
     },
     {
-      title: "Quarter Analysis",
+      title: 'Quarter Analysis',
       description:
-        "Different quarters have different payout percentages - final score usually pays the most.",
-      tip: "Consider which quarters matter most for your strategy and budget accordingly.",
+        'Different quarters have different payout percentages - final score usually pays the most.',
+      tip: 'Consider which quarters matter most for your strategy and budget accordingly.',
     },
     {
-      title: "Team Research",
+      title: 'Team Research',
       description:
-        "Research team scoring patterns and tendencies for the season.",
-      tip: "Some teams consistently score in certain patterns that could inform your square selection.",
+        'Research team scoring patterns and tendencies for the season.',
+      tip: 'Some teams consistently score in certain patterns that could inform your square selection.',
     },
   ];
 
@@ -489,8 +489,8 @@ const HowToPlayContent = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-200 ${
                 activeTab === tab.id
-                  ? "bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white shadow-lg"
-                  : "bg-white dark:bg-[#002244] text-[#708090] dark:text-[#96abdc] hover:text-[#002244] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#004953] border border-gray-200 dark:border-[#004953]"
+                  ? 'bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white shadow-lg'
+                  : 'bg-white dark:bg-[#002244] text-[#708090] dark:text-[#96abdc] hover:text-[#002244] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#004953] border border-gray-200 dark:border-[#004953]'
               }`}
             >
               <tab.icon className="w-5 h-5" />
@@ -502,7 +502,7 @@ const HowToPlayContent = () => {
         {/* Tab Content */}
         <div className="bg-white dark:bg-[#002244] rounded-2xl shadow-lg overflow-hidden transition-colors duration-300">
           {/* Game Basics Tab */}
-          {activeTab === "basics" && (
+          {activeTab === 'basics' && (
             <div className="p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-[#002244] dark:text-white mb-8 text-center transition-colors duration-300">
                 Game Basics
@@ -511,7 +511,7 @@ const HowToPlayContent = () => {
               {/* Mock Game Scoreboard */}
               <div className="mb-12">
                 <h3 className="text-2xl font-bold text-[#002244] dark:text-white mb-6 text-center transition-colors duration-300">
-                  Sample Game: {mockGameData.homeTeam} vs{" "}
+                  Sample Game: {mockGameData.homeTeam} vs{' '}
                   {mockGameData.awayTeam}
                 </h3>
 
@@ -548,7 +548,7 @@ const HowToPlayContent = () => {
                             Winning Numbers:
                           </p>
                           <p className="font-bold text-[#ed5925] text-sm">
-                            {quarter.winningNumbers.home} -{" "}
+                            {quarter.winningNumbers.home} -{' '}
                             {quarter.winningNumbers.away}
                           </p>
                           <p className="text-xs text-[#708090] dark:text-[#96abdc] transition-colors duration-300">
@@ -631,8 +631,8 @@ const HowToPlayContent = () => {
                         <div
                           className="w-20 bg-gradient-to-b from-green-600 to-black text-white font-bold text-sm flex items-center justify-center border-r-2 border-black"
                           style={{
-                            writingMode: "vertical-rl",
-                            textOrientation: "mixed",
+                            writingMode: 'vertical-rl',
+                            textOrientation: 'mixed',
                           }}
                         >
                           <span className="transform rotate-180">
@@ -668,16 +668,16 @@ const HowToPlayContent = () => {
                                     }
                                     className={`relative text-sm font-medium transition-all duration-200 bg-white border-r border-b border-black hover:bg-gray-50 h-16 flex-1 ${
                                       square.isWinning
-                                        ? "bg-yellow-400 text-[#002244] animate-pulse"
+                                        ? 'bg-yellow-400 text-[#002244] animate-pulse'
                                         : square.isSelected
-                                          ? "bg-[#ed5925] text-white"
-                                          : ""
+                                          ? 'bg-[#ed5925] text-white'
+                                          : ''
                                     }`}
                                   >
                                     {/* Square number in background */}
                                     <div
                                       className="absolute top-0 left-0 text-gray-400 text-xs opacity-50 leading-none p-0.5"
-                                      style={{ fontSize: "10px" }}
+                                      style={{ fontSize: '10px' }}
                                     >
                                       {square.id}
                                     </div>
@@ -690,7 +690,7 @@ const HowToPlayContent = () => {
                                       ) : (
                                         <span
                                           className="text-xs text-[#002244]"
-                                          style={{ fontFamily: "cursive" }}
+                                          style={{ fontFamily: 'cursive' }}
                                         >
                                           {square.player}
                                         </span>
@@ -700,7 +700,7 @@ const HowToPlayContent = () => {
                                     {square.isWinning && (
                                       <div
                                         className="absolute -top-1 -right-1 bg-[#ed5925] text-white text-xs px-1 rounded-full font-bold"
-                                        style={{ fontSize: "10px" }}
+                                        style={{ fontSize: '10px' }}
                                       >
                                         {square.quarter}
                                       </div>
@@ -762,7 +762,7 @@ const HowToPlayContent = () => {
           )}
 
           {/* Rules & Scoring Tab */}
-          {activeTab === "rules" && (
+          {activeTab === 'rules' && (
             <div className="p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-[#002244] dark:text-white mb-8 text-center transition-colors duration-300">
                 Rules & Scoring System
@@ -866,39 +866,39 @@ const HowToPlayContent = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {[
                     {
-                      title: "Square Ownership",
+                      title: 'Square Ownership',
                       rules: [
-                        "Each square can only be owned by one player",
-                        "Players can purchase multiple squares",
-                        "Squares are sold on a first-come, first-served basis",
-                        "No refunds once the game starts",
+                        'Each square can only be owned by one player',
+                        'Players can purchase multiple squares',
+                        'Squares are sold on a first-come, first-served basis',
+                        'No refunds once the game starts',
                       ],
                     },
                     {
-                      title: "Number Assignment",
+                      title: 'Number Assignment',
                       rules: [
-                        "Numbers are randomly assigned after all squares are sold",
-                        "Each row and column gets one number (0-9)",
-                        "Assignment is done transparently and fairly",
-                        "Numbers cannot be changed once assigned",
+                        'Numbers are randomly assigned after all squares are sold',
+                        'Each row and column gets one number (0-9)',
+                        'Assignment is done transparently and fairly',
+                        'Numbers cannot be changed once assigned',
                       ],
                     },
                     {
-                      title: "Winning Conditions",
+                      title: 'Winning Conditions',
                       rules: [
                         "Winners determined by last digit of each team's score",
-                        "Payouts happen at the end of each quarter",
-                        "Overtime scores count for final score payout only",
-                        "Ties are handled according to official NFL rules",
+                        'Payouts happen at the end of each quarter',
+                        'Overtime scores count for final score payout only',
+                        'Ties are handled according to official NFL rules',
                       ],
                     },
                     {
-                      title: "Payout Rules",
+                      title: 'Payout Rules',
                       rules: [
-                        "Payouts are automatic and immediate",
-                        "Winners receive crypto directly to their wallet",
-                        "Platform takes a small fee for hosting",
-                        "All transactions are recorded on the blockchain",
+                        'Payouts are automatic and immediate',
+                        'Winners receive crypto directly to their wallet',
+                        'Platform takes a small fee for hosting',
+                        'All transactions are recorded on the blockchain',
                       ],
                     },
                   ].map((section, index) => (
@@ -928,7 +928,7 @@ const HowToPlayContent = () => {
           )}
 
           {/* Crypto Payouts Tab */}
-          {activeTab === "crypto" && (
+          {activeTab === 'crypto' && (
             <div className="p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-[#002244] dark:text-white mb-8 text-center transition-colors duration-300">
                 Crypto Payouts & Security
@@ -1005,30 +1005,30 @@ const HowToPlayContent = () => {
                   {[
                     {
                       step: 1,
-                      title: "Connect Your Wallet",
+                      title: 'Connect Your Wallet',
                       description:
-                        "Link your crypto wallet to participate in games and receive payouts.",
+                        'Link your crypto wallet to participate in games and receive payouts.',
                       icon: Wallet,
                     },
                     {
                       step: 2,
-                      title: "Purchase Squares",
+                      title: 'Purchase Squares',
                       description:
-                        "Buy squares using your preferred cryptocurrency from your connected wallet.",
+                        'Buy squares using your preferred cryptocurrency from your connected wallet.',
                       icon: Grid3X3,
                     },
                     {
                       step: 3,
-                      title: "Automatic Payouts",
+                      title: 'Automatic Payouts',
                       description:
-                        "Winners receive payouts automatically to their wallet at the end of each quarter.",
+                        'Winners receive payouts automatically to their wallet at the end of each quarter.',
                       icon: Zap,
                     },
                     {
                       step: 4,
-                      title: "Blockchain Verification",
+                      title: 'Blockchain Verification',
                       description:
-                        "All transactions are recorded on the blockchain for complete transparency.",
+                        'All transactions are recorded on the blockchain for complete transparency.',
                       icon: Shield,
                     },
                   ].map((step) => (
@@ -1056,7 +1056,7 @@ const HowToPlayContent = () => {
           )}
 
           {/* Tips & Strategy Tab */}
-          {activeTab === "strategy" && (
+          {activeTab === 'strategy' && (
             <div className="p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-[#002244] dark:text-white mb-8 text-center transition-colors duration-300">
                 Winning Tips & Strategies
@@ -1096,16 +1096,16 @@ const HowToPlayContent = () => {
                   </p>
                   <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
                     {[
-                      { num: 0, freq: "High", color: "bg-green-500" },
-                      { num: 1, freq: "Medium", color: "bg-yellow-500" },
-                      { num: 2, freq: "Low", color: "bg-red-500" },
-                      { num: 3, freq: "High", color: "bg-green-500" },
-                      { num: 4, freq: "Medium", color: "bg-yellow-500" },
-                      { num: 5, freq: "Low", color: "bg-red-500" },
-                      { num: 6, freq: "Medium", color: "bg-yellow-500" },
-                      { num: 7, freq: "High", color: "bg-green-500" },
-                      { num: 8, freq: "Medium", color: "bg-yellow-500" },
-                      { num: 9, freq: "Low", color: "bg-red-500" },
+                      { num: 0, freq: 'High', color: 'bg-green-500' },
+                      { num: 1, freq: 'Medium', color: 'bg-yellow-500' },
+                      { num: 2, freq: 'Low', color: 'bg-red-500' },
+                      { num: 3, freq: 'High', color: 'bg-green-500' },
+                      { num: 4, freq: 'Medium', color: 'bg-yellow-500' },
+                      { num: 5, freq: 'Low', color: 'bg-red-500' },
+                      { num: 6, freq: 'Medium', color: 'bg-yellow-500' },
+                      { num: 7, freq: 'High', color: 'bg-green-500' },
+                      { num: 8, freq: 'Medium', color: 'bg-yellow-500' },
+                      { num: 9, freq: 'Low', color: 'bg-red-500' },
                     ].map((item) => (
                       <div key={item.num} className="text-center">
                         <div
@@ -1155,11 +1155,11 @@ const HowToPlayContent = () => {
                       </h4>
                       <ul className="space-y-2">
                         {[
-                          "Start with smaller games to learn",
-                          "Research team scoring patterns",
-                          "Consider buying multiple squares",
-                          "Set a budget and stick to it",
-                          "Have fun and enjoy the game!",
+                          'Start with smaller games to learn',
+                          'Research team scoring patterns',
+                          'Consider buying multiple squares',
+                          'Set a budget and stick to it',
+                          'Have fun and enjoy the game!',
                         ].map((tip, index) => (
                           <li key={index} className="flex items-start gap-2">
                             <CheckCircle className="w-4 h-4 text-[#ed5925] mt-0.5 flex-shrink-0" />
@@ -1208,7 +1208,7 @@ const HowToPlayContent = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => router.push("/#ready-to-play")}
+                onClick={() => router.push('/#ready-to-play')}
                 className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-4 rounded-full font-bold text-lg hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2"
               >
                 <Play className="w-6 h-6" />

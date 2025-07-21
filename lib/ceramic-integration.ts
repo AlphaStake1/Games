@@ -18,17 +18,17 @@ export class CeramicIntegration extends EventEmitter {
 
   constructor(config: Partial<LoggingConfig> = {}) {
     super();
-    
+
     this.config = {
       enabled: true,
       logLevel: 'info',
       bufferSize: 50,
       flushInterval: 10000, // 10 seconds
-      ...config
+      ...config,
     };
 
     this.ceramicLogger = new CeramicLogger();
-    
+
     if (this.config.enabled) {
       this.initialize();
     }
@@ -39,7 +39,7 @@ export class CeramicIntegration extends EventEmitter {
       await this.ceramicLogger.initialize();
       this.isInitialized = true;
       this.startBufferFlush();
-      
+
       this.emit('initialized');
       console.log('Ceramic integration initialized successfully');
     } catch (error) {
@@ -80,7 +80,7 @@ export class CeramicIntegration extends EventEmitter {
             break;
         }
       }
-      
+
       this.emit('bufferFlushed', eventsToFlush.length);
     } catch (error) {
       console.error('Error flushing buffer to Ceramic:', error);
@@ -91,78 +91,116 @@ export class CeramicIntegration extends EventEmitter {
   }
 
   // Public logging methods
-  public logBoardCreated(gameId: number, authority: string, boardPda: string): void {
+  public logBoardCreated(
+    gameId: number,
+    authority: string,
+    boardPda: string,
+  ): void {
     this.addToBuffer('game_event', {
       eventType: 'board_created',
       gameId,
       timestamp: Date.now(),
-      data: { authority, boardPda }
+      data: { authority, boardPda },
     });
   }
 
-  public logSquarePurchased(gameId: number, squareIndex: number, buyer: string, amount: number): void {
+  public logSquarePurchased(
+    gameId: number,
+    squareIndex: number,
+    buyer: string,
+    amount: number,
+  ): void {
     this.addToBuffer('game_event', {
       eventType: 'square_purchased',
       gameId,
       timestamp: Date.now(),
-      data: { squareIndex, buyer, amount }
+      data: { squareIndex, buyer, amount },
     });
   }
 
-  public logHeadersRandomized(gameId: number, homeHeaders: number[], awayHeaders: number[]): void {
+  public logHeadersRandomized(
+    gameId: number,
+    homeHeaders: number[],
+    awayHeaders: number[],
+  ): void {
     this.addToBuffer('game_event', {
       eventType: 'headers_randomized',
       gameId,
       timestamp: Date.now(),
-      data: { homeHeaders, awayHeaders }
+      data: { homeHeaders, awayHeaders },
     });
   }
 
-  public logScoreUpdate(gameId: number, homeScore: number, awayScore: number, quarter: number): void {
+  public logScoreUpdate(
+    gameId: number,
+    homeScore: number,
+    awayScore: number,
+    quarter: number,
+  ): void {
     this.addToBuffer('game_event', {
       eventType: 'score_recorded',
       gameId,
       timestamp: Date.now(),
-      data: { homeScore, awayScore, quarter }
+      data: { homeScore, awayScore, quarter },
     });
   }
 
-  public logWinnerSettled(gameId: number, winner: string, payoutAmount: number, squareIndex: number): void {
+  public logWinnerSettled(
+    gameId: number,
+    winner: string,
+    payoutAmount: number,
+    squareIndex: number,
+  ): void {
     this.addToBuffer('game_event', {
       eventType: 'winner_settled',
       gameId,
       timestamp: Date.now(),
-      data: { winner, payoutAmount, squareIndex }
+      data: { winner, payoutAmount, squareIndex },
     });
   }
 
-  public logPayoutCompleted(gameId: number, winner: string, amount: number, transactionId: string): void {
+  public logPayoutCompleted(
+    gameId: number,
+    winner: string,
+    amount: number,
+    transactionId: string,
+  ): void {
     this.addToBuffer('game_event', {
       eventType: 'winner_paid',
       gameId,
       timestamp: Date.now(),
-      data: { winner, amount, transactionId }
+      data: { winner, amount, transactionId },
     });
   }
 
-  public logUserAction(actionType: string, userId: string, gameId?: number, data?: any): void {
+  public logUserAction(
+    actionType: string,
+    userId: string,
+    gameId?: number,
+    data?: any,
+  ): void {
     this.addToBuffer('user_action', {
       actionType,
       userId,
       gameId,
       timestamp: Date.now(),
-      data: data || {}
+      data: data || {},
     });
   }
 
-  public logSystemEvent(component: string, level: 'info' | 'warn' | 'error' | 'debug', message: string, metadata?: any): void {
+  public logSystemEvent(
+    component: string,
+    level: 'info' | 'warn' | 'error' | 'debug',
+    message: string,
+    metadata?: any,
+  ): void {
     if (this.shouldLog(level)) {
       this.addToBuffer('system_log', {
         logLevel: level,
         component,
         message,
         timestamp: Date.now(),
-        metadata
+        metadata,
       });
     }
   }
@@ -195,11 +233,11 @@ export class CeramicIntegration extends EventEmitter {
 
     const events = await this.ceramicLogger.getGameEvents(gameId);
     const actions = await this.ceramicLogger.getUserActions(undefined, gameId);
-    
+
     return {
       events,
       actions,
-      analytics: await this.ceramicLogger.getAnalytics(gameId)
+      analytics: await this.ceramicLogger.getAnalytics(gameId),
     };
   }
 
@@ -212,7 +250,10 @@ export class CeramicIntegration extends EventEmitter {
     return { actions };
   }
 
-  public async getSystemLogs(component?: string, logLevel?: string): Promise<any> {
+  public async getSystemLogs(
+    component?: string,
+    logLevel?: string,
+  ): Promise<any> {
     if (!this.isInitialized) {
       throw new Error('Ceramic integration not initialized');
     }
@@ -242,7 +283,7 @@ export class CeramicIntegration extends EventEmitter {
       initialized: this.isInitialized,
       enabled: this.config.enabled,
       bufferSize: this.eventBuffer.length,
-      streamIds: this.isInitialized ? this.ceramicLogger.getStreamIds() : null
+      streamIds: this.isInitialized ? this.ceramicLogger.getStreamIds() : null,
     };
   }
 
@@ -255,7 +296,7 @@ export class CeramicIntegration extends EventEmitter {
       clearInterval(this.flushTimer);
       this.flushTimer = null;
     }
-    
+
     // Final flush before stopping
     this.flushBuffer();
   }
@@ -271,7 +312,9 @@ export function getCeramicIntegration(): CeramicIntegration {
   return ceramicIntegration;
 }
 
-export function initializeCeramicIntegration(config?: Partial<LoggingConfig>): CeramicIntegration {
+export function initializeCeramicIntegration(
+  config?: Partial<LoggingConfig>,
+): CeramicIntegration {
   ceramicIntegration = new CeramicIntegration(config);
   return ceramicIntegration;
 }

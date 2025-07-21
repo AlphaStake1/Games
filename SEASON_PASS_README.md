@@ -20,22 +20,26 @@ app/page.tsx                             # Updated main page routing
 ## 🚀 Key Features
 
 ### 1. **Soulbound NFT System**
+
 - **Token-2022 Implementation**: Non-transferable NFTs bound to player wallets
 - **One-Time Minting**: Single payment grants access to entire season
 - **Auto-Assignment**: Random square assignment before each game
 
 ### 2. **Conference System**
+
 - **100-Player Capacity**: Each conference accommodates exactly 100 players
 - **5 Tier Levels**: $100, $200, $300, $400, $500 conferences
 - **Sequential Filling**: Conferences fill in order, cycling through tiers
 - **Independent Leaderboards**: Each conference has its own competition
 
 ### 3. **Season Types**
+
 - **Full-Season Pass**: Weeks 1-18 + playoffs, 1 pass per wallet
 - **Half-Season Pass**: Weeks 10-18 + playoffs, up to 5 passes per wallet
 - **Scaling Prices**: Half-season passes scale: 1x, 1.1x, 1.2x, 1.3x, 1.4x
 
 ### 4. **Scoring System**
+
 - **Hit Patterns**: Forward (10pts), Backward (7pts), Forward+5 (5pts), Backward+5 (3pts)
 - **Playoff Multipliers**: Wild Card (1.5x), Divisional (2x), Conference (2.5x), Super Bowl (3x)
 - **Overtime Support**: Full points for overtime scoring events
@@ -45,6 +49,7 @@ app/page.tsx                             # Updated main page routing
     - Example: A Forward hit in a Divisional overtime = 10 pts × 2 = 20 pts, exactly what you’d have earned in the 1st quarter. There’s no reduction, decay, or “half-credit” just because the clock passed 60:00. Overtime keeps the scoreboard live and lets trailing players pile up points as long as the game continues.
 
 ### 5. **Prize Distribution**
+
 - **7-Tier Payout**: Top 7 finishers per conference
 - **Percentage-Based**: 50%, 20%, 10%, 5%, 5%, 5%, 5%
 - **Automatic Distribution**: Smart contract handles prize payouts
@@ -82,6 +87,7 @@ pub fn calculate_playoff_multiplier(...)
 ### Frontend Pages
 
 #### 1. **Landing Page** (`app/season-pass/page.tsx`)
+
 - Hero section with conversion-focused copy
 - Pass type selection (Full vs Half-Season)
 - Conference availability display
@@ -89,6 +95,7 @@ pub fn calculate_playoff_multiplier(...)
 - Payout structure visualization
 
 #### 2. **Conference Selection** (`app/season-pass/conferences/page.tsx`)
+
 - Real-time conference capacity display
 - Pass type and quantity selection
 - Wallet connection interface
@@ -96,6 +103,7 @@ pub fn calculate_playoff_multiplier(...)
 - Price calculation with scaling
 
 #### 3. **Player Dashboard** (`app/season-pass/dashboard/page.tsx`)
+
 - **Tabbed Interface**: Season-Pass, Weekly Cash, Free Play
 - **Stats Overview**: Total points, rank, hit rate, streaks
 - **Conference Leaderboard**: Live rankings with current user highlight
@@ -103,6 +111,7 @@ pub fn calculate_playoff_multiplier(...)
 - **Season Progress**: Visual progress tracking
 
 #### 4. **Rules & Onboarding** (`app/season-pass/rules/page.tsx`)
+
 - **Step-by-step onboarding guide**
 - **Comprehensive scoring rules**
 - **Conference system explanation**
@@ -140,21 +149,25 @@ const getGameTypeConfig = (gameType: string) => {
 ## 🔧 Configuration
 
 ### Conference Pricing
+
 ```rust
 const CONFERENCE_PRICES: [u64; 5] = [100, 200, 300, 400, 500];
 ```
 
 ### Hit Pattern Points
+
 ```rust
 const HIT_POINTS: [u8; 4] = [10, 7, 5, 3]; // Forward, Backward, Forward+5, Backward+5
 ```
 
 ### Playoff Multipliers
+
 ```rust
 const PLAYOFF_MULTIPLIERS: [f32; 4] = [1.5, 2.0, 2.5, 3.0]; // Wild Card through Super Bowl
 ```
 
 ### Half-Season Scaling
+
 ```rust
 const SCALE_CURVE_BPS: [u16; 5] = [0, 1000, 2000, 3000, 4000]; // 1x, 1.1x, 1.2x, 1.3x, 1.4x
 ```

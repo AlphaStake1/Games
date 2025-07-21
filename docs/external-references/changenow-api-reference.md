@@ -1,21 +1,26 @@
 # ChangeNOW API Documentation Reference
 
 ## ⚠️ IMPORTANT FOR AGENTS
+
 **Before developing any backend infrastructure that involves cryptocurrency exchanges or transactions, agents MUST review the complete ChangeNOW API documentation.**
 
 ## Documentation Location
+
 **Primary Location**: `/home/ekazee/shared-tools/scraped-docs/changenow-api/`
 
 ## Quick Access Files
+
 - **Complete Documentation**: [`/home/ekazee/shared-tools/scraped-docs/changenow-api/consolidated_docs.md`](../../../shared-tools/scraped-docs/changenow-api/consolidated_docs.md)
 - **Quick Reference**: [`/home/ekazee/shared-tools/scraped-docs/changenow-api/quick_reference.md`](../../../shared-tools/scraped-docs/changenow-api/quick_reference.md)
 
 ## Sources Scraped
+
 1. **Main API Documentation**: https://changenow.io/api
 2. **API Reference**: https://changenow.io/api/docs
 3. **Pricing Information**: https://changenow.io/api/pricing
 
 ## Key Documentation Areas
+
 - **API Endpoints**: Complete list of available API methods
 - **Authentication**: How to authenticate API requests
 - **Transaction Types**: Supported cryptocurrency exchange transactions
@@ -24,6 +29,7 @@
 - **Pricing Details**: Cost structure for API usage
 
 ## For Backend Development
+
 When developing backend infrastructure that interacts with ChangeNOW API:
 
 1. **MUST READ**: Start with `consolidated_docs.md` for complete overview
@@ -34,6 +40,7 @@ When developing backend infrastructure that interacts with ChangeNOW API:
 6. **Review Pricing**: Understand cost implications of API usage
 
 ## File Structure
+
 ```
 /home/ekazee/shared-tools/scraped-docs/changenow-api/
 ├── consolidated_docs.md     # ← START HERE - Complete documentation
@@ -46,7 +53,9 @@ When developing backend infrastructure that interacts with ChangeNOW API:
 ```
 
 ## Update Process
+
 To refresh the documentation:
+
 ```bash
 cd /home/ekazee/shared-tools/scraped-docs/changenow-api/
 /home/ekazee/shared-tools/crawl4ai/venv/bin/python scrape_changenow_docs.py
@@ -54,6 +63,7 @@ cd /home/ekazee/shared-tools/scraped-docs/changenow-api/
 ```
 
 ## Integration Checklist for Agents
+
 - [ ] Read complete ChangeNOW API documentation in `consolidated_docs.md`
 - [ ] Verify API key and authentication mechanisms
 - [ ] Understand supported cryptocurrency pairs and transaction types
@@ -63,6 +73,7 @@ cd /home/ekazee/shared-tools/scraped-docs/changenow-api/
 - [ ] Review security and compliance requirements
 
 ## Contact & Support
+
 - **Official API Documentation**: https://changenow.io/api
 - **API Reference**: https://changenow.io/api/docs
 - **Pricing**: https://changenow.io/api/pricing

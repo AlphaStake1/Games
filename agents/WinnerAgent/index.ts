@@ -30,16 +30,20 @@ export class WinnerAgent extends EventEmitter {
   private provider: AnchorProvider;
   private program: Program;
 
-  constructor(connection: Connection, provider: AnchorProvider, program: Program) {
+  constructor(
+    connection: Connection,
+    provider: AnchorProvider,
+    program: Program,
+  ) {
     super();
     this.connection = connection;
     this.provider = provider;
     this.program = program;
-    
+
     if (!process.env.OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY is required');
     }
-    
+
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
@@ -47,13 +51,15 @@ export class WinnerAgent extends EventEmitter {
     console.log('WinnerAgent initialized with GPT-4');
   }
 
-  async settleWinner(boardPda: PublicKey): Promise<{ winnerInfo: WinnerInfo; signature: string }> {
+  async settleWinner(
+    boardPda: PublicKey,
+  ): Promise<{ winnerInfo: WinnerInfo; signature: string }> {
     try {
       console.log(`Settling winner for board: ${boardPda.toString()}`);
 
       // First, get the current board state
       const boardAccount = await this.program.account.board.fetch(boardPda);
-      
+
       if (!boardAccount.gameEnded) {
         throw new Error('Game has not ended yet');
       }
@@ -73,14 +79,14 @@ export class WinnerAgent extends EventEmitter {
 
       // Fetch updated board state to get winner info
       const updatedBoard = await this.program.account.board.fetch(boardPda);
-      
+
       const winnerInfo: WinnerInfo = {
         winner: updatedBoard.winner,
         squareIndex: this.calculateSquareIndex(
           updatedBoard.homeHeaders,
           updatedBoard.awayHeaders,
           updatedBoard.homeScore % 10,
-          updatedBoard.awayScore % 10
+          updatedBoard.awayScore % 10,
         ),
         payoutAmount: updatedBoard.payoutAmount.toNumber(),
         homeScore: updatedBoard.homeScore,
@@ -92,9 +98,11 @@ export class WinnerAgent extends EventEmitter {
       };
 
       this.emit('winnerSettled', { boardPda, winnerInfo, signature: tx });
-      
-      console.log(`Winner settled: ${winnerInfo.winner.toString()} wins ${winnerInfo.payoutAmount} lamports`);
-      
+
+      console.log(
+        `Winner settled: ${winnerInfo.winner.toString()} wins ${winnerInfo.payoutAmount} lamports`,
+      );
+
       return { winnerInfo, signature: tx };
     } catch (error) {
       console.error('Error settling winner:', error);
@@ -102,12 +110,15 @@ export class WinnerAgent extends EventEmitter {
     }
   }
 
-  async payoutWinner(boardPda: PublicKey, winnerKey: PublicKey): Promise<PayoutResult> {
+  async payoutWinner(
+    boardPda: PublicKey,
+    winnerKey: PublicKey,
+  ): Promise<PayoutResult> {
     try {
       console.log(`Processing payout for winner: ${winnerKey.toString()}`);
 
       const boardAccount = await this.program.account.board.fetch(boardPda);
-      
+
       if (boardAccount.winner.equals(PublicKey.default)) {
         throw new Error('No winner has been settled yet');
       }
@@ -140,13 +151,15 @@ export class WinnerAgent extends EventEmitter {
       };
 
       this.emit('payoutCompleted', { boardPda, result });
-      
-      console.log(`Payout completed: ${payoutAmount} lamports to ${winnerKey.toString()}`);
-      
+
+      console.log(
+        `Payout completed: ${payoutAmount} lamports to ${winnerKey.toString()}`,
+      );
+
       return result;
     } catch (error) {
       console.error('Error processing payout:', error);
-      
+
       const result: PayoutResult = {
         success: false,
         error: error.message,
@@ -155,7 +168,7 @@ export class WinnerAgent extends EventEmitter {
       };
 
       this.emit('payoutFailed', { boardPda, result, error });
-      
+
       return result;
     }
   }
@@ -168,7 +181,7 @@ export class WinnerAgent extends EventEmitter {
   }> {
     try {
       const boardAccount = await this.program.account.board.fetch(boardPda);
-      
+
       const totalPot = boardAccount.totalPot.toNumber();
       const feePercentage = 0.05; // 5% fee
       const feeAmount = Math.floor(totalPot * feePercentage);
@@ -190,22 +203,22 @@ export class WinnerAgent extends EventEmitter {
     homeHeaders: number[],
     awayHeaders: number[],
     homeDigit: number,
-    awayDigit: number
+    awayDigit: number,
   ): number {
     const homeIndex = homeHeaders.indexOf(homeDigit);
     const awayIndex = awayHeaders.indexOf(awayDigit);
-    
+
     if (homeIndex === -1 || awayIndex === -1) {
       throw new Error('Invalid score digits for current headers');
     }
-    
+
     return homeIndex * 10 + awayIndex;
   }
 
   async analyzeWinningProbabilities(boardPda: PublicKey): Promise<string> {
     try {
       const boardAccount = await this.program.account.board.fetch(boardPda);
-      
+
       const prompt = `
 Analyze the winning probabilities for this Football Squares board:
 
@@ -248,7 +261,7 @@ Keep response under 200 words.
   } | null> {
     try {
       const boardAccount = await this.program.account.board.fetch(boardPda);
-      
+
       if (boardAccount.winner.equals(PublicKey.default)) {
         return null;
       }
@@ -260,7 +273,7 @@ Keep response under 200 words.
           boardAccount.homeHeaders,
           boardAccount.awayHeaders,
           boardAccount.homeScore % 10,
-          boardAccount.awayScore % 10
+          boardAccount.awayScore % 10,
         ),
         payoutAmount: boardAccount.payoutAmount.toNumber(),
         finalScore: {
@@ -275,7 +288,10 @@ Keep response under 200 words.
     }
   }
 
-  async validateWinnerClaim(boardPda: PublicKey, claimantKey: PublicKey): Promise<{
+  async validateWinnerClaim(
+    boardPda: PublicKey,
+    claimantKey: PublicKey,
+  ): Promise<{
     valid: boolean;
     reason?: string;
     squareIndex?: number;
@@ -283,7 +299,7 @@ Keep response under 200 words.
   }> {
     try {
       const boardAccount = await this.program.account.board.fetch(boardPda);
-      
+
       if (!boardAccount.gameEnded) {
         return { valid: false, reason: 'Game has not ended' };
       }
@@ -304,7 +320,7 @@ Keep response under 200 words.
         boardAccount.homeHeaders,
         boardAccount.awayHeaders,
         boardAccount.homeScore % 10,
-        boardAccount.awayScore % 10
+        boardAccount.awayScore % 10,
       );
 
       return {
@@ -319,14 +335,16 @@ Keep response under 200 words.
   }
 
   async monitorWinnerEvents(boardPda: PublicKey): Promise<void> {
-    console.log(`Starting winner event monitoring for board: ${boardPda.toString()}`);
-    
+    console.log(
+      `Starting winner event monitoring for board: ${boardPda.toString()}`,
+    );
+
     // Set up event listeners for winner-related events
     this.program.addEventListener('winnerSettled', (event: any) => {
       if (event.boardId.toString() === boardPda.toString()) {
         this.emit('winnerActivity', {
           type: 'winner_settled',
-          data: event
+          data: event,
         });
       }
     });
@@ -335,7 +353,7 @@ Keep response under 200 words.
       if (event.boardId.toString() === boardPda.toString()) {
         this.emit('winnerActivity', {
           type: 'winner_paid',
-          data: event
+          data: event,
         });
       }
     });
@@ -361,14 +379,14 @@ Keep response under 200 words.
     try {
       // Check connection to Solana
       await this.connection.getLatestBlockhash();
-      
+
       // Check OpenAI API
       await this.openai.chat.completions.create({
         model: 'gpt-4',
         messages: [{ role: 'user', content: 'health check' }],
         max_tokens: 5,
       });
-      
+
       return true;
     } catch (error) {
       console.error('WinnerAgent health check failed:', error);

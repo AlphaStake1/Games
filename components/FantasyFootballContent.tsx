@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import FantasyLinksGrid from "./FantasyLinksGrid";
+import { useState } from 'react';
+import FantasyLinksGrid from './FantasyLinksGrid';
 import {
   Trophy,
   Users,
@@ -27,267 +27,267 @@ import {
   Crown,
   Medal,
   Flame,
-} from "lucide-react";
+} from 'lucide-react';
 
 const FantasyFootballContent = () => {
-  const [activeTab, setActiveTab] = useState("basics");
+  const [activeTab, setActiveTab] = useState('basics');
 
   const tabs = [
-    { id: "basics", label: "The Basics", icon: Trophy },
-    { id: "platforms", label: "Platform Guide", icon: Users },
-    { id: "scoring", label: "Scoring & Strategy", icon: Target },
-    { id: "getting-started", label: "Getting Started", icon: Play },
+    { id: 'basics', label: 'The Basics', icon: Trophy },
+    { id: 'platforms', label: 'Platform Guide', icon: Users },
+    { id: 'scoring', label: 'Scoring & Strategy', icon: Target },
+    { id: 'getting-started', label: 'Getting Started', icon: Play },
   ];
 
   const platforms = [
     {
-      id: "espn",
-      name: "ESPN Fantasy",
-      logo: "🏈",
-      color: "from-red-600 to-red-800",
+      id: 'espn',
+      name: 'ESPN Fantasy',
+      logo: '🏈',
+      color: 'from-red-600 to-red-800',
       strengths:
-        "Huge public-league pool, robust mobile app, free advanced live scoring (FantasyCast)",
+        'Huge public-league pool, robust mobile app, free advanced live scoring (FantasyCast)',
       unique:
-        "Salary-cap (FAB) waivers; in-app player video highlights; lineup-optimizer prompts after injury alerts",
-      bestFor: "Largest public leagues / mainstream feel",
+        'Salary-cap (FAB) waivers; in-app player video highlights; lineup-optimizer prompts after injury alerts',
+      bestFor: 'Largest public leagues / mainstream feel',
       features: [
-        "FantasyCast live scoring",
-        "Video highlights integration",
-        "Injury alert optimizer",
-        "Large public league pool",
+        'FantasyCast live scoring',
+        'Video highlights integration',
+        'Injury alert optimizer',
+        'Large public league pool',
       ],
     },
     {
-      id: "nfl",
-      name: "NFL Fantasy",
-      logo: "🏆",
-      color: "from-blue-600 to-blue-800",
+      id: 'nfl',
+      name: 'NFL Fantasy',
+      logo: '🏆',
+      color: 'from-blue-600 to-blue-800',
       strengths:
-        "Official league flavor with exclusive video highlights and Next Gen Stats overlays",
+        'Official league flavor with exclusive video highlights and Next Gen Stats overlays',
       unique:
         'The mobile app\'s "Optimize Lineup" button auto-starts your best roster each week—great for busy beginners',
-      bestFor: "Official NFL branding & highlight videos",
+      bestFor: 'Official NFL branding & highlight videos',
       features: [
-        "Official NFL content",
-        "Next Gen Stats integration",
-        "Auto-optimize lineup feature",
-        "Exclusive video highlights",
+        'Official NFL content',
+        'Next Gen Stats integration',
+        'Auto-optimize lineup feature',
+        'Exclusive video highlights',
       ],
     },
     {
-      id: "yahoo",
-      name: "Yahoo Fantasy",
-      logo: "⚡",
-      color: "from-purple-600 to-purple-800",
+      id: 'yahoo',
+      name: 'Yahoo Fantasy',
+      logo: '⚡',
+      color: 'from-purple-600 to-purple-800',
       strengths:
-        "All-rounder with premium upsells. 24/7 mock drafts, integrated research tabs during drafts",
+        'All-rounder with premium upsells. 24/7 mock drafts, integrated research tabs during drafts',
       unique:
-        "Fantasy Plus features: Draft Scout (ADP heat-map), Trade Hub, and optimal-lineup suggestions",
-      bestFor: "Deep mobile tools & premium helpers",
+        'Fantasy Plus features: Draft Scout (ADP heat-map), Trade Hub, and optimal-lineup suggestions',
+      bestFor: 'Deep mobile tools & premium helpers',
       features: [
-        "24/7 mock drafts",
-        "Draft Scout ADP heat-map",
-        "Trade Hub with metrics",
-        "Fantasy Plus premium tools",
+        '24/7 mock drafts',
+        'Draft Scout ADP heat-map',
+        'Trade Hub with metrics',
+        'Fantasy Plus premium tools',
       ],
     },
     {
-      id: "sleeper",
-      name: "Sleeper",
-      logo: "💤",
-      color: "from-green-600 to-green-800",
+      id: 'sleeper',
+      name: 'Sleeper',
+      logo: '💤',
+      color: 'from-green-600 to-green-800',
       strengths:
-        "Social-first & ad-free. Built-in league chat with read receipts and meme GIFs",
+        'Social-first & ad-free. Built-in league chat with read receipts and meme GIFs',
       unique:
-        "Dynasty and best-ball formats are one-click add-ons. Scoring customization is unmatched—tiered PPR, first-down points",
-      bestFor: "Chatty leagues, dynasty, or creative scoring",
+        'Dynasty and best-ball formats are one-click add-ons. Scoring customization is unmatched—tiered PPR, first-down points',
+      bestFor: 'Chatty leagues, dynasty, or creative scoring',
       features: [
-        "Built-in league chat with GIFs",
-        "Dynasty league support",
-        "Custom scoring options",
-        "Fastest push notifications",
+        'Built-in league chat with GIFs',
+        'Dynasty league support',
+        'Custom scoring options',
+        'Fastest push notifications',
       ],
     },
     {
-      id: "cbs",
-      name: "CBS Sports Fantasy",
-      logo: "📊",
-      color: "from-orange-600 to-orange-800",
+      id: 'cbs',
+      name: 'CBS Sports Fantasy',
+      logo: '📊',
+      color: 'from-orange-600 to-orange-800',
       strengths:
-        "Max-flexibility for custom leagues. Hundreds of scoring categories, IDP support",
+        'Max-flexibility for custom leagues. Hundreds of scoring categories, IDP support',
       unique:
-        "Multi-matchup schedules, and the ability to lock or unlock any rule mid-season",
-      bestFor: "Full commissioner control & paid cash leagues",
+        'Multi-matchup schedules, and the ability to lock or unlock any rule mid-season',
+      bestFor: 'Full commissioner control & paid cash leagues',
       features: [
-        "Hundreds of scoring categories",
-        "IDP (Individual Defensive Player) support",
-        "Mid-season rule changes",
-        "Multi-matchup scheduling",
+        'Hundreds of scoring categories',
+        'IDP (Individual Defensive Player) support',
+        'Mid-season rule changes',
+        'Multi-matchup scheduling',
       ],
     },
     {
-      id: "draftsharks",
-      name: "DraftSharks",
-      logo: "🦈",
-      color: "from-gray-600 to-gray-800",
+      id: 'draftsharks',
+      name: 'DraftSharks',
+      logo: '🦈',
+      color: 'from-gray-600 to-gray-800',
       strengths:
-        "Not a host—an analytics toolkit. Offers Draft War Room, real-time injury predictor",
+        'Not a host—an analytics toolkit. Offers Draft War Room, real-time injury predictor',
       unique:
-        "Live-draft sync you can overlay on any host site. Great if you want data-driven edges",
-      bestFor: "Elite prep analytics layered on top",
+        'Live-draft sync you can overlay on any host site. Great if you want data-driven edges',
+      bestFor: 'Elite prep analytics layered on top',
       features: [
-        "Draft War Room analytics",
-        "Real-time injury predictor",
-        "Live-draft sync overlay",
-        "Advanced statistical tools",
+        'Draft War Room analytics',
+        'Real-time injury predictor',
+        'Live-draft sync overlay',
+        'Advanced statistical tools',
       ],
     },
   ];
 
   const scoringTypes = [
     {
-      type: "Standard",
-      description: "Traditional scoring without points for receptions",
+      type: 'Standard',
+      description: 'Traditional scoring without points for receptions',
       points: [
-        { action: "Rushing/Receiving Yard", points: "0.1" },
-        { action: "Passing Yard", points: "0.04" },
-        { action: "Rushing/Receiving TD", points: "6" },
-        { action: "Passing TD", points: "4" },
-        { action: "Interception/Fumble", points: "-2" },
+        { action: 'Rushing/Receiving Yard', points: '0.1' },
+        { action: 'Passing Yard', points: '0.04' },
+        { action: 'Rushing/Receiving TD', points: '6' },
+        { action: 'Passing TD', points: '4' },
+        { action: 'Interception/Fumble', points: '-2' },
       ],
     },
     {
-      type: "PPR (Point Per Reception)",
+      type: 'PPR (Point Per Reception)',
       description:
-        "Adds 1 point for each reception, favoring pass-catching players",
+        'Adds 1 point for each reception, favoring pass-catching players',
       points: [
-        { action: "Reception", points: "1" },
-        { action: "Rushing/Receiving Yard", points: "0.1" },
-        { action: "Passing Yard", points: "0.04" },
-        { action: "Rushing/Receiving TD", points: "6" },
-        { action: "Passing TD", points: "4" },
+        { action: 'Reception', points: '1' },
+        { action: 'Rushing/Receiving Yard', points: '0.1' },
+        { action: 'Passing Yard', points: '0.04' },
+        { action: 'Rushing/Receiving TD', points: '6' },
+        { action: 'Passing TD', points: '4' },
       ],
     },
     {
-      type: "Half-PPR",
+      type: 'Half-PPR',
       description:
-        "Compromise between Standard and PPR with 0.5 points per reception",
+        'Compromise between Standard and PPR with 0.5 points per reception',
       points: [
-        { action: "Reception", points: "0.5" },
-        { action: "Rushing/Receiving Yard", points: "0.1" },
-        { action: "Passing Yard", points: "0.04" },
-        { action: "Rushing/Receiving TD", points: "6" },
-        { action: "Passing TD", points: "4" },
+        { action: 'Reception', points: '0.5' },
+        { action: 'Rushing/Receiving Yard', points: '0.1' },
+        { action: 'Passing Yard', points: '0.04' },
+        { action: 'Rushing/Receiving TD', points: '6' },
+        { action: 'Passing TD', points: '4' },
       ],
     },
   ];
 
   const weeklySteps = [
     {
-      step: "Set Lineup",
+      step: 'Set Lineup',
       icon: Users,
-      description: "Lock in your starting players before their games begin",
-      tips: "Check injury reports, weather conditions, and matchup difficulty",
+      description: 'Lock in your starting players before their games begin',
+      tips: 'Check injury reports, weather conditions, and matchup difficulty',
     },
     {
-      step: "Waiver Wire",
+      step: 'Waiver Wire',
       icon: UserPlus,
-      description: "Claim free agents once a week to improve your roster",
-      tips: "Prioritize players with upcoming favorable matchups or increased opportunity",
+      description: 'Claim free agents once a week to improve your roster',
+      tips: 'Prioritize players with upcoming favorable matchups or increased opportunity',
     },
     {
-      step: "Make Trades",
+      step: 'Make Trades',
       icon: Shuffle,
-      description: "Swap players with other managers for roster balance",
-      tips: "Target teams with complementary needs and offer fair value",
+      description: 'Swap players with other managers for roster balance',
+      tips: 'Target teams with complementary needs and offer fair value',
     },
     {
-      step: "Monitor Scoring",
+      step: 'Monitor Scoring',
       icon: BarChart3,
       description: "Track your players' performance throughout the games",
-      tips: "Use live scoring apps to follow your team in real-time",
+      tips: 'Use live scoring apps to follow your team in real-time',
     },
   ];
 
   const draftStrategies = [
     {
-      strategy: "Zero RB",
+      strategy: 'Zero RB',
       description:
-        "Wait on running backs and load up on WRs and elite TEs early",
+        'Wait on running backs and load up on WRs and elite TEs early',
       pros: [
-        "Less injury risk early",
-        "WR/TE more consistent",
-        "RB depth available late",
+        'Less injury risk early',
+        'WR/TE more consistent',
+        'RB depth available late',
       ],
-      cons: ["Requires waiver wire success", "Can lack early RB production"],
+      cons: ['Requires waiver wire success', 'Can lack early RB production'],
     },
     {
-      strategy: "Robust RB",
-      description: "Draft RBs early and often to secure the scarce position",
-      pros: ["Secures scarce position", "Trade leverage", "Consistent touches"],
-      cons: ["Higher injury risk", "May miss elite WRs"],
+      strategy: 'Robust RB',
+      description: 'Draft RBs early and often to secure the scarce position',
+      pros: ['Secures scarce position', 'Trade leverage', 'Consistent touches'],
+      cons: ['Higher injury risk', 'May miss elite WRs'],
     },
     {
-      strategy: "Best Player Available",
+      strategy: 'Best Player Available',
       description:
-        "Simply draft the highest-ranked player regardless of position",
-      pros: ["Maximizes talent", "Flexible approach", "Good for beginners"],
-      cons: ["Can create positional imbalances", "May miss positional runs"],
+        'Simply draft the highest-ranked player regardless of position',
+      pros: ['Maximizes talent', 'Flexible approach', 'Good for beginners'],
+      cons: ['Can create positional imbalances', 'May miss positional runs'],
     },
     {
-      strategy: "Late Round QB",
-      description: "Wait until rounds 10+ to draft a quarterback",
+      strategy: 'Late Round QB',
+      description: 'Wait until rounds 10+ to draft a quarterback',
       pros: [
-        "QB depth is deep",
-        "More skill position talent",
-        "Streaming options available",
+        'QB depth is deep',
+        'More skill position talent',
+        'Streaming options available',
       ],
-      cons: ["May miss elite QB upside", "Requires backup plan"],
+      cons: ['May miss elite QB upside', 'Requires backup plan'],
     },
   ];
 
   const glossaryTerms = [
     {
-      term: "ADP",
+      term: 'ADP',
       definition:
-        "Average Draft Position - where players typically get drafted",
+        'Average Draft Position - where players typically get drafted',
     },
     {
-      term: "FAB",
-      definition: "Free-Agent Budget - blind bids for waiver wire claims",
+      term: 'FAB',
+      definition: 'Free-Agent Budget - blind bids for waiver wire claims',
     },
     {
-      term: "Handcuff",
-      definition: "Backup RB who would start if the starter gets injured",
+      term: 'Handcuff',
+      definition: 'Backup RB who would start if the starter gets injured',
     },
     {
-      term: "Streaming",
+      term: 'Streaming',
       definition:
-        "Starting different defenses/kickers each week based on matchups",
+        'Starting different defenses/kickers each week based on matchups',
     },
     {
-      term: "Boom/Bust",
-      definition: "Players with high variance - useful in underdog matchups",
+      term: 'Boom/Bust',
+      definition: 'Players with high variance - useful in underdog matchups',
     },
     {
-      term: "Floor",
-      definition: "The minimum points a player is likely to score",
+      term: 'Floor',
+      definition: 'The minimum points a player is likely to score',
     },
     {
-      term: "Ceiling",
-      definition: "The maximum points a player could realistically score",
+      term: 'Ceiling',
+      definition: 'The maximum points a player could realistically score',
     },
     {
-      term: "Stacking",
-      definition: "Starting QB + WR from same team for correlated scoring",
+      term: 'Stacking',
+      definition: 'Starting QB + WR from same team for correlated scoring',
     },
     {
-      term: "Waiver Priority",
-      definition: "Order in which teams can claim free agents",
+      term: 'Waiver Priority',
+      definition: 'Order in which teams can claim free agents',
     },
     {
-      term: "FLEX",
-      definition: "Roster spot that can be filled by RB, WR, or TE",
+      term: 'FLEX',
+      definition: 'Roster spot that can be filled by RB, WR, or TE',
     },
   ];
 
@@ -322,8 +322,8 @@ const FantasyFootballContent = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-200 ${
                 activeTab === tab.id
-                  ? "bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white shadow-lg"
-                  : "bg-white dark:bg-[#002244] text-[#708090] dark:text-[#96abdc] hover:text-[#002244] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#004953] border border-gray-200 dark:border-[#004953]"
+                  ? 'bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white shadow-lg'
+                  : 'bg-white dark:bg-[#002244] text-[#708090] dark:text-[#96abdc] hover:text-[#002244] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#004953] border border-gray-200 dark:border-[#004953]'
               }`}
             >
               <tab.icon className="w-5 h-5" />
@@ -335,7 +335,7 @@ const FantasyFootballContent = () => {
         {/* Tab Content */}
         <div className="bg-white dark:bg-[#002244] rounded-2xl shadow-lg overflow-hidden transition-colors duration-300">
           {/* The Basics Tab */}
-          {activeTab === "basics" && (
+          {activeTab === 'basics' && (
             <div className="p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-[#002244] dark:text-white mb-8 text-center transition-colors duration-300">
                 Fantasy Football Fundamentals
@@ -362,36 +362,36 @@ const FantasyFootballContent = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                   {[
                     {
-                      phase: "Draft",
+                      phase: 'Draft',
                       icon: Users,
-                      time: "Pre-Season",
+                      time: 'Pre-Season',
                       description:
-                        "Build your initial roster by selecting players in draft order",
-                      color: "from-[#ed5925] to-[#d14a1f]",
+                        'Build your initial roster by selecting players in draft order',
+                      color: 'from-[#ed5925] to-[#d14a1f]',
                     },
                     {
-                      phase: "Manage",
+                      phase: 'Manage',
                       icon: RefreshCw,
-                      time: "Weekly",
+                      time: 'Weekly',
                       description:
-                        "Set lineups, claim free agents, make trades, and optimize your roster",
-                      color: "from-[#96abdc] to-[#7a95d1]",
+                        'Set lineups, claim free agents, make trades, and optimize your roster',
+                      color: 'from-[#96abdc] to-[#7a95d1]',
                     },
                     {
-                      phase: "Score",
+                      phase: 'Score',
                       icon: BarChart3,
-                      time: "Game Days",
+                      time: 'Game Days',
                       description:
                         "Earn points based on your players' real NFL performance",
-                      color: "from-[#004953] to-[#003a42]",
+                      color: 'from-[#004953] to-[#003a42]',
                     },
                     {
-                      phase: "Compete",
+                      phase: 'Compete',
                       icon: Crown,
-                      time: "Playoffs",
+                      time: 'Playoffs',
                       description:
-                        "Battle through playoffs for championship glory and prizes",
-                      color: "from-[#8d594d] to-[#6b4238]",
+                        'Battle through playoffs for championship glory and prizes',
+                      color: 'from-[#8d594d] to-[#6b4238]',
                     },
                   ].map((phase, index) => (
                     <div key={index} className="text-center">
@@ -423,52 +423,52 @@ const FantasyFootballContent = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {[
                       {
-                        position: "Quarterback (QB)",
-                        count: "1 starter",
+                        position: 'Quarterback (QB)',
+                        count: '1 starter',
                         description:
-                          "Earns points for passing yards, TDs, and rushing stats",
+                          'Earns points for passing yards, TDs, and rushing stats',
                       },
                       {
-                        position: "Running Back (RB)",
-                        count: "2 starters",
+                        position: 'Running Back (RB)',
+                        count: '2 starters',
                         description:
-                          "Points for rushing/receiving yards, TDs, and receptions",
+                          'Points for rushing/receiving yards, TDs, and receptions',
                       },
                       {
-                        position: "Wide Receiver (WR)",
-                        count: "2-3 starters",
+                        position: 'Wide Receiver (WR)',
+                        count: '2-3 starters',
                         description:
-                          "Points for receiving yards, TDs, and receptions",
+                          'Points for receiving yards, TDs, and receptions',
                       },
                       {
-                        position: "Tight End (TE)",
-                        count: "1 starter",
+                        position: 'Tight End (TE)',
+                        count: '1 starter',
                         description:
-                          "Points for receiving stats, often harder to predict",
+                          'Points for receiving stats, often harder to predict',
                       },
                       {
-                        position: "FLEX (RB/WR/TE)",
-                        count: "1 starter",
+                        position: 'FLEX (RB/WR/TE)',
+                        count: '1 starter',
                         description:
-                          "Flexible spot for your best remaining skill player",
+                          'Flexible spot for your best remaining skill player',
                       },
                       {
-                        position: "Defense/ST (DST)",
-                        count: "1 starter",
+                        position: 'Defense/ST (DST)',
+                        count: '1 starter',
                         description:
-                          "Points for sacks, turnovers, TDs, and points allowed",
+                          'Points for sacks, turnovers, TDs, and points allowed',
                       },
                       {
-                        position: "Kicker (K)",
-                        count: "1 starter",
+                        position: 'Kicker (K)',
+                        count: '1 starter',
                         description:
-                          "Points for field goals and extra points made",
+                          'Points for field goals and extra points made',
                       },
                       {
-                        position: "Bench Players",
-                        count: "5-7 players",
+                        position: 'Bench Players',
+                        count: '5-7 players',
                         description:
-                          "Backups, handcuffs, and players for bye weeks",
+                          'Backups, handcuffs, and players for bye weeks',
                       },
                     ].map((pos, index) => (
                       <div
@@ -521,7 +521,7 @@ const FantasyFootballContent = () => {
           )}
 
           {/* Platform Guide Tab */}
-          {activeTab === "platforms" && (
+          {activeTab === 'platforms' && (
             <div className="p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-[#002244] dark:text-white mb-8 text-center transition-colors duration-300">
                 Platform Comparison Guide
@@ -587,26 +587,26 @@ const FantasyFootballContent = () => {
                     </thead>
                     <tbody>
                       {[
-                        ["Largest public leagues / mainstream feel", "ESPN"],
+                        ['Largest public leagues / mainstream feel', 'ESPN'],
                         [
-                          "Official NFL branding & highlight videos",
-                          "NFL Fantasy",
+                          'Official NFL branding & highlight videos',
+                          'NFL Fantasy',
                         ],
                         [
-                          "Deep mobile tools & premium helpers",
-                          "Yahoo (+Fantasy Plus)",
+                          'Deep mobile tools & premium helpers',
+                          'Yahoo (+Fantasy Plus)',
                         ],
                         [
-                          "Chatty leagues, dynasty, or creative scoring",
-                          "Sleeper",
+                          'Chatty leagues, dynasty, or creative scoring',
+                          'Sleeper',
                         ],
                         [
-                          "Full commissioner control & paid cash leagues",
-                          "CBS Sports",
+                          'Full commissioner control & paid cash leagues',
+                          'CBS Sports',
                         ],
                         [
-                          "Elite prep analytics layered on top",
-                          "DraftSharks (addon)",
+                          'Elite prep analytics layered on top',
+                          'DraftSharks (addon)',
                         ],
                       ].map(([criteria, platform], index) => (
                         <tr
@@ -629,7 +629,7 @@ const FantasyFootballContent = () => {
           )}
 
           {/* Scoring & Strategy Tab */}
-          {activeTab === "scoring" && (
+          {activeTab === 'scoring' && (
             <div className="p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-[#002244] dark:text-white mb-8 text-center transition-colors duration-300">
                 Scoring Systems & Draft Strategies
@@ -754,7 +754,7 @@ const FantasyFootballContent = () => {
           )}
 
           {/* Getting Started Tab */}
-          {activeTab === "getting-started" && (
+          {activeTab === 'getting-started' && (
             <div className="p-8 lg:p-12">
               <h2 className="text-3xl font-bold text-[#002244] dark:text-white mb-8 text-center transition-colors duration-300">
                 Your 5-Step Launch Checklist
@@ -765,47 +765,47 @@ const FantasyFootballContent = () => {
                 {[
                   {
                     step: 1,
-                    title: "Pick Your Platform",
+                    title: 'Pick Your Platform',
                     description:
-                      "Choose the fantasy platform that best fits your needs and preferences",
+                      'Choose the fantasy platform that best fits your needs and preferences',
                     action:
-                      "Use our platform comparison guide above to make your decision",
+                      'Use our platform comparison guide above to make your decision',
                     icon: Target,
                   },
                   {
                     step: 2,
-                    title: "Join or Create a League",
+                    title: 'Join or Create a League',
                     description:
-                      "Find a league to join or create your own with friends",
+                      'Find a league to join or create your own with friends',
                     action:
-                      "Public leagues for fastest entry; private leagues for custom rules with friends",
+                      'Public leagues for fastest entry; private leagues for custom rules with friends',
                     icon: Users,
                   },
                   {
                     step: 3,
-                    title: "Practice with Mock Drafts",
+                    title: 'Practice with Mock Drafts',
                     description:
-                      "Get familiar with draft strategy and player values",
+                      'Get familiar with draft strategy and player values',
                     action:
-                      "Complete at least 2 mock drafts to learn ADP trends (Yahoo/ESPN lobbies)",
+                      'Complete at least 2 mock drafts to learn ADP trends (Yahoo/ESPN lobbies)',
                     icon: Gamepad2,
                   },
                   {
                     step: 4,
-                    title: "Prepare for Draft Day",
+                    title: 'Prepare for Draft Day',
                     description:
-                      "Research players, print rankings, and set up your draft environment",
+                      'Research players, print rankings, and set up your draft environment',
                     action:
-                      "Print or open rankings (DraftSharks/Yahoo Kit) and prepare your draft space",
+                      'Print or open rankings (DraftSharks/Yahoo Kit) and prepare your draft space',
                     icon: Trophy,
                   },
                   {
                     step: 5,
-                    title: "Set Up Management Reminders",
+                    title: 'Set Up Management Reminders',
                     description:
-                      "Stay on top of weekly tasks and important deadlines",
+                      'Stay on top of weekly tasks and important deadlines',
                     action:
-                      "Set reminders for waivers (Tuesday night) and lineup locks (Thu 8 PM ET & Sunday noon)",
+                      'Set reminders for waivers (Tuesday night) and lineup locks (Thu 8 PM ET & Sunday noon)',
                     icon: Clock,
                   },
                 ].map((step) => (
@@ -847,10 +847,10 @@ const FantasyFootballContent = () => {
                     </h4>
                     <ul className="space-y-2">
                       {[
-                        "Start safe with high-floor players, finish bold with high-ceiling picks",
-                        "Consider stacking QB + WR from same team for correlated scoring",
+                        'Start safe with high-floor players, finish bold with high-ceiling picks',
+                        'Consider stacking QB + WR from same team for correlated scoring',
                         "Don't reach for players just because you like the team",
-                        "Have a backup plan for every position",
+                        'Have a backup plan for every position',
                       ].map((tip, index) => (
                         <li key={index} className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-[#ed5925] mt-0.5 flex-shrink-0" />
@@ -865,10 +865,10 @@ const FantasyFootballContent = () => {
                     </h4>
                     <ul className="space-y-2">
                       {[
-                        "Stay active on the waiver wire - championships are won there",
+                        'Stay active on the waiver wire - championships are won there',
                         "Don't be afraid to make trades, but ensure fair value",
-                        "Stream defenses and kickers based on matchups",
-                        "Keep an eye on playoff schedules when making moves",
+                        'Stream defenses and kickers based on matchups',
+                        'Keep an eye on playoff schedules when making moves',
                       ].map((tip, index) => (
                         <li key={index} className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-[#ed5925] mt-0.5 flex-shrink-0" />

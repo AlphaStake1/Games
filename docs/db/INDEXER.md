@@ -64,12 +64,12 @@ Use Docker to run the indexer stack locally. The official self-hosting snippet p
 
 ```yaml
 # docker-compose.yml
-version: "3"
+version: '3'
 services:
   db:
     image: postgres:15
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
@@ -87,7 +87,7 @@ services:
     depends_on:
       - db
     ports:
-      - "4350:4350"
+      - '4350:4350'
     environment:
       - DB_URL=postgres://user:password@db:5432/squares
 volumes:
@@ -99,7 +99,7 @@ Add a healthcheck to ensure Postgres is ready before the processor starts:
 ```yaml
 # ... inside db service definition
 healthcheck:
-  test: ["CMD-SHELL", "pg_isready -U user -d squares"]
+  test: ['CMD-SHELL', 'pg_isready -U user -d squares']
   interval: 5s
   timeout: 5s
   retries: 5
@@ -120,11 +120,11 @@ For managed hosting, use a `squid.yaml` manifest.
 manifestVersion: subsquid.io/v0.1
 name: football-squares
 version: 1
-description: "Indexer for Football Squares"
+description: 'Indexer for Football Squares'
 build: .
 processor:
   - name: subsquid-solana-processor
-    cmd: ["node", "lib/main"]
+    cmd: ['node', 'lib/main']
 deploy:
   addons:
     postgres: # Request a managed Postgres database

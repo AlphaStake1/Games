@@ -2,38 +2,44 @@ name: "Multi-Agent System: Oracle Poller with Winner-Email Sub-Agent"
 description: |
 
 ## Purpose
-Demonstrate the **agent-as-tool** pattern in *Football Squares* by building:
 
-* **ScoreOracleAgent** – polls the Switchboard NFL score feed and streams updates.  
-* **EmailPayoutAgent** – uses Proton Bridge SMTP to draft/send winner notifications.  
-* The Oracle agent can call the Email agent as an internal **tool** when it detects a new final score and the Anchor program marks a winner.
+Demonstrate the **agent-as-tool** pattern in _Football Squares_ by building:
+
+- **ScoreOracleAgent** – polls the Switchboard NFL score feed and streams updates.
+- **EmailPayoutAgent** – uses Proton Bridge SMTP to draft/send winner notifications.
+- The Oracle agent can call the Email agent as an internal **tool** when it detects a new final score and the Anchor program marks a winner.
 
 ## Core Principles
-1. **Context is King** – always link Anchor IDs, PDA seeds, oracle docs.  
-2. **Validation Loops** – include Anchor tests + Vitest to prove end-to-end flow.  
-3. **Information Dense** – reference Solana keywords (PDA, CPI, thread).  
-4. **Progressive Success** – poll → detect → call tool → send mail.  
+
+1. **Context is King** – always link Anchor IDs, PDA seeds, oracle docs.
+2. **Validation Loops** – include Anchor tests + Vitest to prove end-to-end flow.
+3. **Information Dense** – reference Solana keywords (PDA, CPI, thread).
+4. **Progressive Success** – poll → detect → call tool → send mail.
 
 ---
 
 ## Goal
+
 CLI command `pnpm oracle:run --devnet` continuously:
 
-1. Fetches live scores from Switchboard devnet feed.  
-2. On score change, calls `record_score` ix on the Squares program.  
+1. Fetches live scores from Switchboard devnet feed.
+2. On score change, calls `record_score` ix on the Squares program.
 3. When program emits `WinnerSettled` event, invokes **EmailPayoutAgent** to email the winner with a Solscan link to their payout tx.
 
 ## Why
-* **Business value** – automated, trust-minimised payout confirmations.  
-* **Integration** – marries on-chain Solana events with off-chain user comms.  
-* **Problem solved** – eliminates manual winner notification; improves UX.
+
+- **Business value** – automated, trust-minimised payout confirmations.
+- **Integration** – marries on-chain Solana events with off-chain user comms.
+- **Problem solved** – eliminates manual winner notification; improves UX.
 
 ## What
-* **Oracle poll** every 15 s (respect rate-limit).  
-* **Tool-call** interface: `send_winner_email({wallet, txSig})`.  
-* **Streaming CLI** – colour-coded logs of tool invocations.
+
+- **Oracle poll** every 15 s (respect rate-limit).
+- **Tool-call** interface: `send_winner_email({wallet, txSig})`.
+- **Streaming CLI** – colour-coded logs of tool invocations.
 
 ### Success Criteria
+
 - [ ] Oracle agent records scores; Anchor test passes.
 - [ ] Program emits `WinnerSettled` for devnet game.
 - [ ] Email agent sends Proton mail; mock SMTP test green.
@@ -216,20 +222,20 @@ pnpm ts-node scripts/oracle_run.ts --devnet --once
 
 ## Final Checklist
 
-* [ ] All tests pass & CI green
-* [ ] `pnpm oracle:run` prints tool calls
-* [ ] Email arrives in Proton Bridge logs
-* [ ] No hard-coded secrets; .env validated
-* [ ] `docs/agents.md` updated with sequence diagram
+- [ ] All tests pass & CI green
+- [ ] `pnpm oracle:run` prints tool calls
+- [ ] Email arrives in Proton Bridge logs
+- [ ] No hard-coded secrets; .env validated
+- [ ] `docs/agents.md` updated with sequence diagram
 
 ---
 
 ## Anti-Patterns to Avoid
 
-* ❌ Polling feed faster than Switchboard TTL
-* ❌ Sync code in async agent context
-* ❌ Skipping VRF/Score proof verification
-* ❌ Committing `.env`, id.json, or Proton creds
+- ❌ Polling feed faster than Switchboard TTL
+- ❌ Sync code in async agent context
+- ❌ Skipping VRF/Score proof verification
+- ❌ Committing `.env`, id.json, or Proton creds
 
 ## Confidence Score: **9 / 10**
 

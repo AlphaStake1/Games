@@ -27,19 +27,31 @@ describe('Football Squares Program', () => {
 
     // Airdrop SOL to test accounts
     await provider.connection.confirmTransaction(
-      await provider.connection.requestAirdrop(authority.publicKey, 2 * LAMPORTS_PER_SOL)
+      await provider.connection.requestAirdrop(
+        authority.publicKey,
+        2 * LAMPORTS_PER_SOL,
+      ),
     );
     await provider.connection.confirmTransaction(
-      await provider.connection.requestAirdrop(player1.publicKey, 2 * LAMPORTS_PER_SOL)
+      await provider.connection.requestAirdrop(
+        player1.publicKey,
+        2 * LAMPORTS_PER_SOL,
+      ),
     );
     await provider.connection.confirmTransaction(
-      await provider.connection.requestAirdrop(player2.publicKey, 2 * LAMPORTS_PER_SOL)
+      await provider.connection.requestAirdrop(
+        player2.publicKey,
+        2 * LAMPORTS_PER_SOL,
+      ),
     );
 
     // Calculate board PDA
     [boardPda] = PublicKey.findProgramAddressSync(
-      [Buffer.from('board'), new anchor.BN(gameId).toArrayLike(Buffer, 'le', 8)],
-      program.programId
+      [
+        Buffer.from('board'),
+        new anchor.BN(gameId).toArrayLike(Buffer, 'le', 8),
+      ],
+      program.programId,
     );
   });
 
@@ -60,7 +72,9 @@ describe('Football Squares Program', () => {
       // Verify board state
       const boardAccount = await program.account.board.fetch(boardPda);
       expect(boardAccount.gameId.toNumber()).to.equal(gameId);
-      expect(boardAccount.authority.toString()).to.equal(authority.publicKey.toString());
+      expect(boardAccount.authority.toString()).to.equal(
+        authority.publicKey.toString(),
+      );
       expect(boardAccount.finalized).to.be.false;
       expect(boardAccount.randomized).to.be.false;
       expect(boardAccount.gameStarted).to.be.false;
@@ -69,7 +83,9 @@ describe('Football Squares Program', () => {
 
       // Verify all squares are empty
       for (let i = 0; i < 100; i++) {
-        expect(boardAccount.squares[i].toString()).to.equal(PublicKey.default.toString());
+        expect(boardAccount.squares[i].toString()).to.equal(
+          PublicKey.default.toString(),
+        );
       }
 
       // Verify headers are unset (sentinel value 10)
@@ -90,7 +106,7 @@ describe('Football Squares Program', () => {
           })
           .signers([authority])
           .rpc();
-        
+
         expect.fail('Should have thrown an error for duplicate game ID');
       } catch (error) {
         expect(error.message).to.include('custom program error');
@@ -103,8 +119,11 @@ describe('Football Squares Program', () => {
       const squareIndex = 0;
       const squarePrice = 0.01 * LAMPORTS_PER_SOL; // 0.01 SOL
 
-      const initialBalance = await provider.connection.getBalance(player1.publicKey);
-      const initialBoardBalance = await provider.connection.getBalance(boardPda);
+      const initialBalance = await provider.connection.getBalance(
+        player1.publicKey,
+      );
+      const initialBoardBalance =
+        await provider.connection.getBalance(boardPda);
 
       const tx = await program.methods
         .purchaseSquare(squareIndex)
@@ -120,14 +139,21 @@ describe('Football Squares Program', () => {
 
       // Verify board state
       const boardAccount = await program.account.board.fetch(boardPda);
-      expect(boardAccount.squares[squareIndex].toString()).to.equal(player1.publicKey.toString());
+      expect(boardAccount.squares[squareIndex].toString()).to.equal(
+        player1.publicKey.toString(),
+      );
       expect(boardAccount.totalPot.toNumber()).to.equal(squarePrice);
 
       // Verify balances
-      const finalBalance = await provider.connection.getBalance(player1.publicKey);
+      const finalBalance = await provider.connection.getBalance(
+        player1.publicKey,
+      );
       const finalBoardBalance = await provider.connection.getBalance(boardPda);
-      
-      expect(finalBalance).to.be.approximately(initialBalance - squarePrice, 10000); // Allow for tx fees
+
+      expect(finalBalance).to.be.approximately(
+        initialBalance - squarePrice,
+        10000,
+      ); // Allow for tx fees
       expect(finalBoardBalance).to.equal(initialBoardBalance + squarePrice);
     });
 
@@ -144,7 +170,7 @@ describe('Football Squares Program', () => {
           })
           .signers([player2])
           .rpc();
-        
+
         expect.fail('Should have thrown an error for already owned square');
       } catch (error) {
         expect(error.message).to.include('SquareAlreadyOwned');
@@ -166,7 +192,9 @@ describe('Football Squares Program', () => {
         .rpc();
 
       const boardAccount = await program.account.board.fetch(boardPda);
-      expect(boardAccount.squares[squareIndex].toString()).to.equal(player2.publicKey.toString());
+      expect(boardAccount.squares[squareIndex].toString()).to.equal(
+        player2.publicKey.toString(),
+      );
       expect(boardAccount.totalPot.toNumber()).to.equal(squarePrice * 2); // Two squares purchased
     });
   });
@@ -191,14 +219,16 @@ describe('Football Squares Program', () => {
         .rpc();
 
       console.log('Randomization request transaction:', tx);
-      
+
       // In a real test, we would verify the VRF request was properly formatted
       // For now, we just ensure the transaction succeeds
     });
 
     it('Fulfills VRF callback with random headers', async () => {
       // Generate mock randomness (32 bytes)
-      const randomness = Array.from({ length: 32 }, () => Math.floor(Math.random() * 256));
+      const randomness = Array.from({ length: 32 }, () =>
+        Math.floor(Math.random() * 256),
+      );
 
       const tx = await program.methods
         .fulfillVrfCallback(randomness)
@@ -217,14 +247,18 @@ describe('Football Squares Program', () => {
       expect(boardAccount.randomized).to.be.true;
 
       // Verify headers are set (no longer 10)
-      const homeHeadersSet = boardAccount.homeHeaders.every(h => h !== 10);
-      const awayHeadersSet = boardAccount.awayHeaders.every(h => h !== 10);
+      const homeHeadersSet = boardAccount.homeHeaders.every((h) => h !== 10);
+      const awayHeadersSet = boardAccount.awayHeaders.every((h) => h !== 10);
       expect(homeHeadersSet).to.be.true;
       expect(awayHeadersSet).to.be.true;
 
       // Verify headers contain values 0-9
-      const homeHeadersValid = boardAccount.homeHeaders.every(h => h >= 0 && h <= 9);
-      const awayHeadersValid = boardAccount.awayHeaders.every(h => h >= 0 && h <= 9);
+      const homeHeadersValid = boardAccount.homeHeaders.every(
+        (h) => h >= 0 && h <= 9,
+      );
+      const awayHeadersValid = boardAccount.awayHeaders.every(
+        (h) => h >= 0 && h <= 9,
+      );
       expect(homeHeadersValid).to.be.true;
       expect(awayHeadersValid).to.be.true;
 
@@ -236,7 +270,9 @@ describe('Football Squares Program', () => {
     });
 
     it('Prevents double randomization', async () => {
-      const randomness = Array.from({ length: 32 }, () => Math.floor(Math.random() * 256));
+      const randomness = Array.from({ length: 32 }, () =>
+        Math.floor(Math.random() * 256),
+      );
 
       try {
         await program.methods
@@ -248,7 +284,7 @@ describe('Football Squares Program', () => {
           })
           .signers([authority])
           .rpc();
-        
+
         expect.fail('Should have thrown an error for already randomized board');
       } catch (error) {
         expect(error.message).to.include('AlreadyRandomized');
@@ -316,7 +352,9 @@ describe('Football Squares Program', () => {
       console.log('Winner settlement transaction:', tx);
 
       const boardAccount = await program.account.board.fetch(boardPda);
-      expect(boardAccount.winner.toString()).to.not.equal(PublicKey.default.toString());
+      expect(boardAccount.winner.toString()).to.not.equal(
+        PublicKey.default.toString(),
+      );
       expect(boardAccount.payoutAmount.toNumber()).to.be.greaterThan(0);
 
       // Winner should be either player1 or player2 (only ones who bought squares)
@@ -335,7 +373,7 @@ describe('Football Squares Program', () => {
           })
           .signers([authority])
           .rpc();
-        
+
         expect.fail('Should have thrown an error for already settled game');
       } catch (error) {
         expect(error.message).to.include('AlreadySettled');
@@ -348,7 +386,7 @@ describe('Football Squares Program', () => {
 
     before(async () => {
       const boardAccount = await program.account.board.fetch(boardPda);
-      
+
       // Determine which player won
       if (boardAccount.winner.equals(player1.publicKey)) {
         winner = player1;
@@ -362,9 +400,12 @@ describe('Football Squares Program', () => {
     it('Pays out the winner', async () => {
       const boardAccount = await program.account.board.fetch(boardPda);
       const payoutAmount = boardAccount.payoutAmount.toNumber();
-      
-      const initialWinnerBalance = await provider.connection.getBalance(winner.publicKey);
-      const initialBoardBalance = await provider.connection.getBalance(boardPda);
+
+      const initialWinnerBalance = await provider.connection.getBalance(
+        winner.publicKey,
+      );
+      const initialBoardBalance =
+        await provider.connection.getBalance(boardPda);
 
       const tx = await program.methods
         .payoutWinner()
@@ -379,12 +420,14 @@ describe('Football Squares Program', () => {
       console.log('Payout transaction:', tx);
 
       // Verify balances
-      const finalWinnerBalance = await provider.connection.getBalance(winner.publicKey);
+      const finalWinnerBalance = await provider.connection.getBalance(
+        winner.publicKey,
+      );
       const finalBoardBalance = await provider.connection.getBalance(boardPda);
 
       expect(finalWinnerBalance).to.be.approximately(
-        initialWinnerBalance + payoutAmount, 
-        10000 // Allow for tx fees
+        initialWinnerBalance + payoutAmount,
+        10000, // Allow for tx fees
       );
       expect(finalBoardBalance).to.equal(initialBoardBalance - payoutAmount);
 
@@ -407,7 +450,7 @@ describe('Football Squares Program', () => {
           })
           .signers([wrongWinner])
           .rpc();
-        
+
         expect.fail('Should have thrown an error for invalid winner');
       } catch (error) {
         expect(error.message).to.include('InvalidWinner');
@@ -425,7 +468,7 @@ describe('Football Squares Program', () => {
           })
           .signers([winner])
           .rpc();
-        
+
         expect.fail('Should have thrown an error for no payout available');
       } catch (error) {
         expect(error.message).to.include('NoPayout');
@@ -445,7 +488,7 @@ describe('Football Squares Program', () => {
           })
           .signers([player1])
           .rpc();
-        
+
         expect.fail('Should have thrown an error for invalid square index');
       } catch (error) {
         expect(error.message).to.include('InvalidSquareIndex');
@@ -462,7 +505,7 @@ describe('Football Squares Program', () => {
           })
           .signers([authority])
           .rpc();
-        
+
         expect.fail('Should have thrown an error for invalid quarter');
       } catch (error) {
         expect(error.message).to.include('InvalidQuarter');

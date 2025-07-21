@@ -2,31 +2,37 @@ name: "Base PRP Template v2 — Football Squares (Solana)"
 description: |
 
 ## Purpose
+
 Reusable pull-request plan (PRP) template for **Football-Squares**.  
 Optimised for AI-assisted implementation with tight feedback loops,  
 clear context links, and deterministic tests.
 
 ## Core Principles
-1. **Context is King** – link every doc / file the agent must read.  
-2. **Validation Loops** – supply commands the agent can run & fix.  
-3. **Information Dense** – include codebase keywords, PDAs, seeds.  
-4. **Progressive Success** – ship small, compile, test, enhance.  
+
+1. **Context is King** – link every doc / file the agent must read.
+2. **Validation Loops** – supply commands the agent can run & fix.
+3. **Information Dense** – include codebase keywords, PDAs, seeds.
+4. **Progressive Success** – ship small, compile, test, enhance.
 5. **Obey `CLAUDE.md`** – style-guide, anti-patterns, env rules.
 
 ---
 
-## Goal  
+## Goal
+
 [ Describe the exact feature / bug-fix / refactor ]
 
-## Why  
-- Business value & user impact  
-- How it fits current architecture  
-- Which pain-point or metric it improves  
+## Why
 
-## What  
+- Business value & user impact
+- How it fits current architecture
+- Which pain-point or metric it improves
+
+## What
+
 User-visible behaviour **and** technical spec.
 
 ### Success Criteria
+
 - [ ] Quantitative / testable outcomes here
 
 ---
@@ -55,9 +61,10 @@ User-visible behaviour **and** technical spec.
 
 ### Current Codebase Tree
 
-*(run `tree -L 2` before you start and paste below)*
+_(run `tree -L 2` before you start and paste below)_
 
 ```bash
+
 ```
 
 ### Desired Codebase Tree (new / modified files)
@@ -197,24 +204,25 @@ pnpm ts-node agents/ScoreOracleAgent/index.ts --devnet
 
 ## Final Checklist
 
-* [ ] All tests green (Anchor + Vitest)
-* [ ] `pnpm lint` & `tsc` clean
-* [ ] `cargo clippy` clean
-* [ ] Manual localnet run shows board UI updating
-* [ ] CHANGELOG.md entry added
-* [ ] Docs updated (`docs/oracle.md`)
+- [ ] All tests green (Anchor + Vitest)
+- [ ] `pnpm lint` & `tsc` clean
+- [ ] `cargo clippy` clean
+- [ ] Manual localnet run shows board UI updating
+- [ ] CHANGELOG.md entry added
+- [ ] Docs updated (`docs/oracle.md`)
 
 ---
 
 ## Anti-Patterns to Avoid
 
-* ❌ Hard-coding PDAs or RPC URLs
-* ❌ Skipping VRF or score-proof verification
-* ❌ Adding new build tools when existing scripts suffice
-* ❌ Catch-all `try … catch` without specific error handling
-* ❌ Committing `.env` or keypair files
+- ❌ Hard-coding PDAs or RPC URLs
+- ❌ Skipping VRF or score-proof verification
+- ❌ Adding new build tools when existing scripts suffice
+- ❌ Catch-all `try … catch` without specific error handling
+- ❌ Committing `.env` or keypair files
 
-> **How to use:**  
-> 1. Duplicate this file into `/PRPs/` and rename with a concise feature title, e.g. `PRP_score_oracle.md`.  
-> 2. Fill the *Goal / Why / What / Success* sections and the blank code-tree blocks.  
+> **How to use:**
+>
+> 1. Duplicate this file into `/PRPs/` and rename with a concise feature title, e.g. `PRP_score_oracle.md`.
+> 2. Fill the _Goal / Why / What / Success_ sections and the blank code-tree blocks.
 > 3. Attach in the PR so reviewers (and Claude) have deterministic specs and commands.

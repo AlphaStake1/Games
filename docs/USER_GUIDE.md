@@ -50,6 +50,7 @@ Before you can play Football Squares, you'll need:
 ### Game Overview
 
 Football Squares is simple:
+
 1. Buy squares on a 10x10 grid (100 squares total)
 2. After all squares are sold, random numbers (0-9) are assigned to rows and columns
 3. Winners are determined by the last digit of each team's score each quarter
@@ -107,6 +108,7 @@ Football Squares is simple:
 Winners are determined by the **last digit** of each team's score:
 
 **Example:**
+
 - Home Team: 14 points (last digit = 4)
 - Away Team: 7 points (last digit = 7)
 - **Winning square**: Row 4, Column 7
@@ -114,12 +116,14 @@ Winners are determined by the **last digit** of each team's score:
 ### Payout Structure
 
 Standard payout percentages:
+
 - **1st Quarter**: 25% of total pot
 - **2nd Quarter**: 25% of total pot
 - **3rd Quarter**: 25% of total pot
 - **Final Score**: 25% of total pot
 
 **Example with 100 squares at 0.01 SOL each:**
+
 - Total pot: 1 SOL
 - Each quarter winner: 0.25 SOL
 
@@ -137,18 +141,21 @@ Standard payout percentages:
 ### Recommended Wallets
 
 #### Phantom Wallet (Recommended)
+
 - **Website**: [phantom.app](https://phantom.app)
 - **Platforms**: Browser extension, mobile app
 - **Features**: Easy to use, built-in DEX, staking
 - **Setup**: 5 minutes
 
 #### Solflare Wallet
+
 - **Website**: [solflare.com](https://solflare.com)
 - **Platforms**: Browser extension, mobile app, web wallet
 - **Features**: Hardware wallet support, advanced features
 - **Setup**: 5-10 minutes
 
 #### Backpack Wallet
+
 - **Website**: [backpack.app](https://backpack.app)
 - **Platforms**: Browser extension, mobile app
 - **Features**: Multi-chain support, modern interface
@@ -166,17 +173,20 @@ Standard payout percentages:
 ### Getting SOL
 
 #### Centralized Exchanges
+
 - **Coinbase**: Easy for beginners, high fees
 - **Binance**: Lower fees, more options
 - **Kraken**: Good security, professional features
 - **FTX**: Advanced trading features
 
 #### Decentralized Exchanges
+
 - **Jupiter**: Solana DEX aggregator
 - **Raydium**: Popular Solana DEX
 - **Orca**: User-friendly interface
 
 #### Direct Onramps
+
 - **MoonPay**: Buy SOL with credit card
 - **Ramp**: Fiat to crypto onramp
 - **Transak**: Credit card purchases
@@ -193,16 +203,19 @@ Standard payout percentages:
 ### Selection Strategy
 
 #### Random Selection
+
 - Click squares randomly across the board
 - Good for casual players
 - Equal chance of winning
 
 #### Strategic Selection
+
 - Corner squares (0,0) and (9,9) hit less frequently
 - Middle numbers (3,4,5,6) are more common in football
 - Some players prefer multiple squares
 
 #### Multiple Squares
+
 - Buying more squares increases winning chances
 - Each square is independent
 - Consider your budget carefully
@@ -210,16 +223,19 @@ Standard payout percentages:
 ### Purchase Process
 
 1. **Connect Wallet**
+
    ```
    Click "Connect Wallet" → Select wallet type → Approve connection
    ```
 
 2. **Select Squares**
+
    ```
    Click empty squares → Review selection → Check total cost
    ```
 
 3. **Confirm Purchase**
+
    ```
    Click "Purchase" → Review transaction → Approve in wallet
    ```
@@ -238,16 +254,19 @@ Standard payout percentages:
 ### Common Issues
 
 **"Insufficient funds"**
+
 - Check SOL balance in wallet
 - Ensure you have extra for transaction fees
 - Try refreshing the page
 
 **"Square already owned"**
+
 - Someone else purchased it first
 - Select a different square
 - Refresh the board
 
 **"Transaction failed"**
+
 - Check internet connection
 - Try again with higher priority fee
 - Contact support if persistent
@@ -257,6 +276,7 @@ Standard payout percentages:
 ### Real-Time Updates
 
 The board updates automatically during games:
+
 - **Live scores** appear at the top
 - **Current quarter** is highlighted
 - **Winning squares** are marked
@@ -265,6 +285,7 @@ The board updates automatically during games:
 ### Score Updates
 
 Scores are updated every few minutes:
+
 - **Quarter endings** trigger automatic winner calculation
 - **Final scores** determine the last winner
 - **Overtime** follows standard rules (last quarter)
@@ -272,6 +293,7 @@ Scores are updated every few minutes:
 ### Mobile Experience
 
 The dApp works on mobile devices:
+
 - **Responsive design** adapts to screen size
 - **Touch-friendly** square selection
 - **Push notifications** for important updates (if enabled)
@@ -280,6 +302,7 @@ The dApp works on mobile devices:
 ### Game Day Checklist
 
 Before the game starts:
+
 - [ ] Check that you own the squares you expect
 - [ ] Verify the game start time
 - [ ] Ensure your device has internet connection
@@ -291,6 +314,7 @@ Before the game starts:
 ### Automatic Payouts
 
 Winnings are processed automatically:
+
 1. **Quarter ends** → Scores recorded → Winner calculated
 2. **Smart contract** processes payout instantly
 3. **SOL sent** directly to winner's wallet
@@ -299,11 +323,13 @@ Winnings are processed automatically:
 ### Checking Winnings
 
 **On the Board:**
+
 - Winning squares are highlighted in green
 - Your winnings amount is displayed
 - Transaction hash links to Solana explorer
 
 **In Your Wallet:**
+
 - Check recent transactions
 - Look for incoming SOL transfers
 - Verify amounts match expected payouts
@@ -328,6 +354,7 @@ Winnings are processed automatically:
 ### Connection Issues
 
 **Wallet won't connect:**
+
 1. Refresh the page
 2. Try a different browser
 3. Disable ad blockers
@@ -335,6 +362,7 @@ Winnings are processed automatically:
 5. Clear browser cache
 
 **Board not loading:**
+
 1. Check internet connection
 2. Try refreshing the page
 3. Disable VPN if using one
@@ -343,12 +371,14 @@ Winnings are processed automatically:
 ### Transaction Problems
 
 **Transaction failing:**
+
 1. Check SOL balance (including fees)
 2. Increase priority fee
 3. Wait for network congestion to clear
 4. Try again later
 
 **Slow confirmations:**
+
 1. Solana network may be congested
 2. Wait 2-3 minutes
 3. Check transaction on Solana explorer
@@ -357,12 +387,14 @@ Winnings are processed automatically:
 ### Display Issues
 
 **Squares not updating:**
+
 1. Refresh the browser
 2. Check network connection
 3. Clear browser cache
 4. Try incognito/private mode
 
 **Scores not updating:**
+
 1. Check if game has started
 2. Verify internet connection
 3. Refresh the page
@@ -371,12 +403,14 @@ Winnings are processed automatically:
 ### Getting Help
 
 **Support Channels:**
+
 - **Email**: support@footballsquares.dev
 - **Discord**: [Community Server](https://discord.gg/footballsquares)
 - **Twitter**: [@FootballSquares](https://twitter.com/footballsquares)
 - **GitHub**: [Issues Page](https://github.com/footballsquares/issues)
 
 **Before Contacting Support:**
+
 - Note your wallet address
 - Save transaction hashes
 - Screenshot any error messages
@@ -459,18 +493,21 @@ A: Yes, our contracts undergo regular security audits. Code is open source and v
 ## Tips for Success
 
 ### For Beginners
+
 1. **Start small** - Buy 1-2 squares your first time
 2. **Read the rules** carefully before playing
 3. **Practice** with small amounts
 4. **Join our Discord** to learn from other players
 
 ### For Experienced Players
+
 1. **Multiple games** - Diversify across different games
 2. **Track performance** - Keep records of wins/losses
 3. **Strategic timing** - Buy squares early for better selection
 4. **Community involvement** - Share strategies and tips
 
 ### Money Management
+
 1. **Set a budget** - Only gamble what you can afford to lose
 2. **Never chase losses** - Stick to your budget
 3. **Take breaks** - Don't play continuously
@@ -480,8 +517,8 @@ A: Yes, our contracts undergo regular security audits. Code is open source and v
 
 **Ready to play?** Visit [footballsquares.dev](https://footballsquares.dev) and get started!
 
-*For additional support, email: support@footballsquares.dev*
+_For additional support, email: support@footballsquares.dev_
 
 ---
 
-*Last updated: January 2025*
+_Last updated: January 2025_

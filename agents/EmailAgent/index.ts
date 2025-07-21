@@ -34,13 +34,18 @@ export class EmailAgent extends EventEmitter {
 
   constructor() {
     super();
-    
-    if (!process.env.SMTP_HOST || !process.env.SMTP_PORT || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+
+    if (
+      !process.env.SMTP_HOST ||
+      !process.env.SMTP_PORT ||
+      !process.env.SMTP_USER ||
+      !process.env.SMTP_PASS
+    ) {
       throw new Error('SMTP configuration is required');
     }
-    
+
     this.fromEmail = process.env.FROM_EMAIL || 'no-reply@footballsquares.app';
-    
+
     this.transporter = nodemailer.createTransporter({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT),
@@ -107,7 +112,7 @@ View on Solscan: https://solscan.io/tx/{{transactionId}}
 Thank you for playing Football Squares!
 
 To unsubscribe from future notifications, visit: {{unsubscribeUrl}}
-      `
+      `,
     });
 
     // Game update template
@@ -147,7 +152,7 @@ Quarter {{quarter}} • {{timeRemaining}} remaining
 Stay tuned for the final results!
 
 To unsubscribe from future updates, visit: {{unsubscribeUrl}}
-      `
+      `,
     });
 
     // Board creation confirmation template
@@ -202,11 +207,13 @@ View your board: {{boardUrl}}
 Good luck with your squares!
 
 To unsubscribe from future notifications, visit: {{unsubscribeUrl}}
-      `
+      `,
     });
   }
 
-  async sendWinnerNotification(notification: WinnerNotification): Promise<boolean> {
+  async sendWinnerNotification(
+    notification: WinnerNotification,
+  ): Promise<boolean> {
     try {
       const template = this.templates.get('winner-notification');
       if (!template) {
@@ -231,26 +238,30 @@ To unsubscribe from future notifications, visit: {{unsubscribeUrl}}
         text,
       });
 
-      this.emit('emailSent', { 
-        type: 'winner-notification', 
+      this.emit('emailSent', {
+        type: 'winner-notification',
         recipient: notification.recipient,
-        gameId: notification.gameId 
+        gameId: notification.gameId,
       });
 
-      console.log(`Winner notification sent to ${notification.recipient} for game ${notification.gameId}`);
+      console.log(
+        `Winner notification sent to ${notification.recipient} for game ${notification.gameId}`,
+      );
       return true;
     } catch (error) {
       console.error('Error sending winner notification:', error);
-      this.emit('emailError', { 
-        type: 'winner-notification', 
+      this.emit('emailError', {
+        type: 'winner-notification',
         recipient: notification.recipient,
-        error 
+        error,
       });
       return false;
     }
   }
 
-  async sendGameUpdates(update: GameUpdate): Promise<{ sent: number; failed: number }> {
+  async sendGameUpdates(
+    update: GameUpdate,
+  ): Promise<{ sent: number; failed: number }> {
     const template = this.templates.get('game-update');
     if (!template) {
       throw new Error('Game update template not found');
@@ -261,14 +272,17 @@ To unsubscribe from future notifications, visit: {{unsubscribeUrl}}
 
     const sendPromises = update.recipients.map(async (recipient) => {
       try {
-        const { html, text, subject } = this.replaceTemplateVariables(template, {
-          gameId: update.gameId.toString(),
-          homeScore: update.currentScore.home.toString(),
-          awayScore: update.currentScore.away.toString(),
-          quarter: update.currentScore.quarter.toString(),
-          timeRemaining: update.timeRemaining,
-          unsubscribeUrl: this.generateUnsubscribeUrl(recipient),
-        });
+        const { html, text, subject } = this.replaceTemplateVariables(
+          template,
+          {
+            gameId: update.gameId.toString(),
+            homeScore: update.currentScore.home.toString(),
+            awayScore: update.currentScore.away.toString(),
+            quarter: update.currentScore.quarter.toString(),
+            timeRemaining: update.timeRemaining,
+            unsubscribeUrl: this.generateUnsubscribeUrl(recipient),
+          },
+        );
 
         await this.transporter.sendMail({
           from: `"Football Squares" <${this.fromEmail}>`,
@@ -287,18 +301,24 @@ To unsubscribe from future notifications, visit: {{unsubscribeUrl}}
 
     await Promise.all(sendPromises);
 
-    this.emit('bulkEmailSent', { 
-      type: 'game-update', 
+    this.emit('bulkEmailSent', {
+      type: 'game-update',
       gameId: update.gameId,
       sent,
-      failed 
+      failed,
     });
 
-    console.log(`Game update sent: ${sent} successful, ${failed} failed for game ${update.gameId}`);
+    console.log(
+      `Game update sent: ${sent} successful, ${failed} failed for game ${update.gameId}`,
+    );
     return { sent, failed };
   }
 
-  async sendBoardCreatedNotification(gameId: number, recipient: string, boardUrl: string): Promise<boolean> {
+  async sendBoardCreatedNotification(
+    gameId: number,
+    recipient: string,
+    boardUrl: string,
+  ): Promise<boolean> {
     try {
       const template = this.templates.get('board-created');
       if (!template) {
@@ -319,26 +339,31 @@ To unsubscribe from future notifications, visit: {{unsubscribeUrl}}
         text,
       });
 
-      this.emit('emailSent', { 
-        type: 'board-created', 
+      this.emit('emailSent', {
+        type: 'board-created',
         recipient,
-        gameId 
+        gameId,
       });
 
-      console.log(`Board created notification sent to ${recipient} for game ${gameId}`);
+      console.log(
+        `Board created notification sent to ${recipient} for game ${gameId}`,
+      );
       return true;
     } catch (error) {
       console.error('Error sending board created notification:', error);
-      this.emit('emailError', { 
-        type: 'board-created', 
+      this.emit('emailError', {
+        type: 'board-created',
         recipient,
-        error 
+        error,
       });
       return false;
     }
   }
 
-  private replaceTemplateVariables(template: EmailTemplate, variables: Record<string, string>): EmailTemplate {
+  private replaceTemplateVariables(
+    template: EmailTemplate,
+    variables: Record<string, string>,
+  ): EmailTemplate {
     let html = template.html;
     let text = template.text;
     let subject = template.subject;

@@ -41,16 +41,20 @@ export class OrchestratorAgent extends EventEmitter {
   private taskQueue: Array<any> = [];
   private isProcessing: boolean = false;
 
-  constructor(connection: Connection, provider: AnchorProvider, program: Program) {
+  constructor(
+    connection: Connection,
+    provider: AnchorProvider,
+    program: Program,
+  ) {
     super();
     this.connection = connection;
     this.provider = provider;
     this.program = program;
-    
+
     if (!process.env.ANTHROPIC_API_KEY) {
       throw new Error('ANTHROPIC_API_KEY is required');
     }
-    
+
     this.anthropic = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
@@ -61,7 +65,7 @@ export class OrchestratorAgent extends EventEmitter {
 
   async planTasks(gameId: number): Promise<TaskPlan> {
     const context = await this.fetchGameContext(gameId);
-    
+
     const prompt = `
 You are the OrchestratorAgent for a Football Squares dApp. Analyze the current game context and create a task plan.
 
@@ -125,7 +129,7 @@ Respond with a JSON object containing:
 
   private generateFallbackPlan(context: GameContext): TaskPlan {
     const tasks = [];
-    
+
     switch (context.gameState) {
       case 'created':
         tasks.push({
@@ -133,7 +137,7 @@ Respond with a JSON object containing:
           action: 'request_randomization',
           args: { boardPda: context.boardPda.toString() },
           priority: 10,
-          dependencies: []
+          dependencies: [],
         });
         break;
       case 'randomized':
@@ -142,7 +146,7 @@ Respond with a JSON object containing:
           action: 'poll_game_status',
           args: { gameId: context.gameId },
           priority: 8,
-          dependencies: []
+          dependencies: [],
         });
         break;
       case 'started':
@@ -151,7 +155,7 @@ Respond with a JSON object containing:
           action: 'fetch_scores',
           args: { gameId: context.gameId },
           priority: 9,
-          dependencies: []
+          dependencies: [],
         });
         break;
       case 'ended':
@@ -160,26 +164,29 @@ Respond with a JSON object containing:
           action: 'settle_winner',
           args: { boardPda: context.boardPda.toString() },
           priority: 10,
-          dependencies: []
+          dependencies: [],
         });
         break;
     }
 
     return {
       tasks,
-      reasoning: 'Fallback task plan based on game state'
+      reasoning: 'Fallback task plan based on game state',
     };
   }
 
   async executeTaskPlan(taskPlan: TaskPlan): Promise<void> {
     // Sort tasks by priority
     const sortedTasks = taskPlan.tasks.sort((a, b) => b.priority - a.priority);
-    
+
     for (const task of sortedTasks) {
       try {
         await this.executeTask(task);
       } catch (error) {
-        console.error(`Error executing task ${task.agent}:${task.action}:`, error);
+        console.error(
+          `Error executing task ${task.agent}:${task.action}:`,
+          error,
+        );
         this.emit('taskError', { task, error });
       }
     }
@@ -187,7 +194,7 @@ Respond with a JSON object containing:
 
   private async executeTask(task: any): Promise<void> {
     console.log(`Executing task: ${task.agent}:${task.action}`);
-    
+
     switch (task.agent) {
       case 'BoardAgent':
         await this.executeBoardTask(task);
@@ -210,8 +217,12 @@ Respond with a JSON object containing:
   }
 
   private async executeBoardTask(task: any): Promise<void> {
-    const boardAgent = new BoardAgent(this.connection, this.provider, this.program);
-    
+    const boardAgent = new BoardAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
+
     switch (task.action) {
       case 'create_board':
         await boardAgent.createBoard(task.args.gameId);
@@ -225,8 +236,12 @@ Respond with a JSON object containing:
   }
 
   private async executeRandomizerTask(task: any): Promise<void> {
-    const randomizerAgent = new RandomizerAgent(this.connection, this.provider, this.program);
-    
+    const randomizerAgent = new RandomizerAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
+
     switch (task.action) {
       case 'request_randomization':
         await randomizerAgent.requestRandomization(task.args.boardPda);
@@ -240,8 +255,12 @@ Respond with a JSON object containing:
   }
 
   private async executeOracleTask(task: any): Promise<void> {
-    const oracleAgent = new OracleAgent(this.connection, this.provider, this.program);
-    
+    const oracleAgent = new OracleAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
+
     switch (task.action) {
       case 'fetch_scores':
         await oracleAgent.fetchScores(task.args.gameId);
@@ -255,8 +274,12 @@ Respond with a JSON object containing:
   }
 
   private async executeWinnerTask(task: any): Promise<void> {
-    const winnerAgent = new WinnerAgent(this.connection, this.provider, this.program);
-    
+    const winnerAgent = new WinnerAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
+
     switch (task.action) {
       case 'settle_winner':
         await winnerAgent.settleWinner(task.args.boardPda);
@@ -271,7 +294,7 @@ Respond with a JSON object containing:
 
   private async executeEmailTask(task: any): Promise<void> {
     const emailAgent = new EmailAgent();
-    
+
     switch (task.action) {
       case 'send_winner_notification':
         await emailAgent.sendWinnerNotification({
@@ -300,13 +323,13 @@ Respond with a JSON object containing:
     try {
       const [boardPda] = PublicKey.findProgramAddressSync(
         [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
-        this.program.programId
+        this.program.programId,
       );
 
       const boardAccount = await this.program.account.board.fetch(boardPda);
-      
+
       const gameState = this.determineGameState(boardAccount);
-      
+
       return {
         gameId,
         boardPda,
@@ -314,10 +337,12 @@ Respond with a JSON object containing:
         currentScore: {
           home: boardAccount.homeScore,
           away: boardAccount.awayScore,
-          quarter: boardAccount.quarter
+          quarter: boardAccount.quarter,
         },
         totalPot: boardAccount.totalPot.toNumber(),
-        playersCount: boardAccount.squares.filter(s => !s.equals(PublicKey.default)).length
+        playersCount: boardAccount.squares.filter(
+          (s) => !s.equals(PublicKey.default),
+        ).length,
       };
     } catch (error) {
       console.error('Error fetching game context:', error);
@@ -325,7 +350,9 @@ Respond with a JSON object containing:
     }
   }
 
-  private determineGameState(boardAccount: any): 'created' | 'randomized' | 'started' | 'ended' | 'settled' {
+  private determineGameState(
+    boardAccount: any,
+  ): 'created' | 'randomized' | 'started' | 'ended' | 'settled' {
     if (!boardAccount.winner.equals(PublicKey.default)) {
       return 'settled';
     }
@@ -355,7 +382,7 @@ Respond with a JSON object containing:
   private startProcessingLoop(): void {
     setInterval(async () => {
       if (this.isProcessing) return;
-      
+
       this.isProcessing = true;
       try {
         for (const [gameId, context] of this.activeGames) {
@@ -376,14 +403,14 @@ Respond with a JSON object containing:
     try {
       // Check connection to Solana
       await this.connection.getLatestBlockhash();
-      
+
       // Check Anthropic API
       await this.anthropic.messages.create({
         model: 'claude-3-5-sonnet-20241022',
         max_tokens: 10,
         messages: [{ role: 'user', content: 'health check' }],
       });
-      
+
       return true;
     } catch (error) {
       console.error('Health check failed:', error);

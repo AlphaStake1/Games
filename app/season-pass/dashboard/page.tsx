@@ -8,11 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Crown, 
-  Trophy, 
-  Star, 
-  Zap, 
+import {
+  Crown,
+  Trophy,
+  Star,
+  Zap,
   TrendingUp,
   Calendar,
   Users,
@@ -29,7 +29,7 @@ import {
   Shield,
   Medal,
   Award,
-  Flame
+  Flame,
 } from 'lucide-react';
 
 interface PlayerStats {
@@ -71,7 +71,9 @@ interface ConferenceStanding {
 
 const SeasonPassDashboard = () => {
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState<'season-pass' | 'weekly-cash' | 'free-play'>('season-pass');
+  const [selectedTab, setSelectedTab] = useState<
+    'season-pass' | 'weekly-cash' | 'free-play'
+  >('season-pass');
 
   // Mock player stats
   const playerStats: PlayerStats = {
@@ -82,7 +84,7 @@ const SeasonPassDashboard = () => {
     gamesPlayed: 140,
     currentStreak: 7,
     bestStreak: 12,
-    playoffMultiplier: 1.5
+    playoffMultiplier: 1.5,
   };
 
   // Mock recent hits with different game types
@@ -101,7 +103,7 @@ const SeasonPassDashboard = () => {
       points: 15, // 10 base * 1.5 playoff multiplier
       timestamp: '2024-01-14T18:30:00Z',
       isPlayoff: true,
-      gameType: 'season-pass'
+      gameType: 'season-pass',
     },
     {
       id: '2',
@@ -117,7 +119,7 @@ const SeasonPassDashboard = () => {
       points: 3,
       timestamp: '2024-01-07T20:45:00Z',
       isPlayoff: false,
-      gameType: 'weekly-cash'
+      gameType: 'weekly-cash',
     },
     {
       id: '3',
@@ -133,53 +135,94 @@ const SeasonPassDashboard = () => {
       points: 5,
       timestamp: '2024-12-31T16:25:00Z',
       isPlayoff: false,
-      gameType: 'free-play'
-    }
+      gameType: 'free-play',
+    },
   ];
 
   // Mock conference standings
   const conferenceStandings: ConferenceStanding[] = [
-    { rank: 1, walletAddress: '7xKW...9mPq', displayName: 'CryptoKing', points: 2456, hits: 142, isCurrentUser: false },
-    { rank: 2, walletAddress: '9jR3...8nLx', displayName: 'SquaresMaster', points: 2301, hits: 138, isCurrentUser: false },
-    { rank: 3, walletAddress: '4mS7...2qTv', displayName: 'NFLOracle', points: 2178, hits: 129, isCurrentUser: false },
-    { rank: 12, walletAddress: '8tY5...3wEr', displayName: 'You', points: 1847, hits: 94, isCurrentUser: true },
-    { rank: 13, walletAddress: '6pL9...7kMn', displayName: 'GridGrinder', points: 1832, hits: 91, isCurrentUser: false },
+    {
+      rank: 1,
+      walletAddress: '7xKW...9mPq',
+      displayName: 'CryptoKing',
+      points: 2456,
+      hits: 142,
+      isCurrentUser: false,
+    },
+    {
+      rank: 2,
+      walletAddress: '9jR3...8nLx',
+      displayName: 'SquaresMaster',
+      points: 2301,
+      hits: 138,
+      isCurrentUser: false,
+    },
+    {
+      rank: 3,
+      walletAddress: '4mS7...2qTv',
+      displayName: 'NFLOracle',
+      points: 2178,
+      hits: 129,
+      isCurrentUser: false,
+    },
+    {
+      rank: 12,
+      walletAddress: '8tY5...3wEr',
+      displayName: 'You',
+      points: 1847,
+      hits: 94,
+      isCurrentUser: true,
+    },
+    {
+      rank: 13,
+      walletAddress: '6pL9...7kMn',
+      displayName: 'GridGrinder',
+      points: 1832,
+      hits: 91,
+      isCurrentUser: false,
+    },
   ];
 
   const getGameTypeConfig = (gameType: string) => {
     switch (gameType) {
       case 'season-pass':
-        return { 
-          color: 'bg-gradient-to-r from-yellow-400 to-orange-500', 
+        return {
+          color: 'bg-gradient-to-r from-yellow-400 to-orange-500',
           textColor: 'text-yellow-400',
           label: 'Season-Pass',
-          icon: <Crown className="w-4 h-4" />
+          icon: <Crown className="w-4 h-4" />,
         };
       case 'weekly-cash':
-        return { 
-          color: 'bg-gradient-to-r from-green-400 to-emerald-500', 
+        return {
+          color: 'bg-gradient-to-r from-green-400 to-emerald-500',
           textColor: 'text-green-400',
           label: 'Weekly Cash',
-          icon: <DollarSign className="w-4 h-4" />
+          icon: <DollarSign className="w-4 h-4" />,
         };
       case 'free-play':
-        return { 
-          color: 'bg-gradient-to-r from-blue-400 to-cyan-500', 
+        return {
+          color: 'bg-gradient-to-r from-blue-400 to-cyan-500',
           textColor: 'text-blue-400',
           label: 'Free Play',
-          icon: <Play className="w-4 h-4" />
+          icon: <Play className="w-4 h-4" />,
         };
       default:
-        return { 
-          color: 'bg-gray-500', 
+        return {
+          color: 'bg-gray-500',
           textColor: 'text-gray-400',
           label: 'Unknown',
-          icon: <Shield className="w-4 h-4" />
+          icon: <Shield className="w-4 h-4" />,
         };
     }
   };
 
-  const StatCard = ({ icon, title, value, subtitle, trend }: {
+  const StatCard = ({
+    icon,
+    title,
+    value,
+    subtitle,
+    trend,
+  }: {
     icon: React.ReactNode;
     title: string;
     value: string | number;
@@ -190,9 +233,7 @@ const SeasonPassDashboard = () => {
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="text-yellow-400">
-              {icon}
-            </div>
+            <div className="text-yellow-400">{icon}</div>
             <div>
               <p className="text-sm text-gray-400">{title}</p>
               <p className="text-2xl font-bold">{value}</p>
@@ -200,10 +241,15 @@ const SeasonPassDashboard = () => {
             </div>
           </div>
           {trend && (
-            <div className={`flex items-center gap-1 ${
-              trend === 'up' ? 'text-green-400' : 
-              trend === 'down' ? 'text-red-400' : 'text-gray-400'
-            }`}>
+            <div
+              className={`flex items-center gap-1 ${
+                trend === 'up'
+                  ? 'text-green-400'
+                  : trend === 'down'
+                    ? 'text-red-400'
+                    : 'text-gray-400'
+              }`}
+            >
               {trend === 'up' && <ArrowUp className="w-4 h-4" />}
               {trend === 'down' && <ArrowDown className="w-4 h-4" />}
             </div>
@@ -215,7 +261,7 @@ const SeasonPassDashboard = () => {
 
   const HitCard = ({ hit }: { hit: GameHit }) => {
     const config = getGameTypeConfig(hit.gameType);
-    
+
     return (
       <Card className="bg-gray-800/30 border-gray-700 hover:bg-gray-800/50 transition-colors">
         <CardContent className="p-4">
@@ -236,25 +282,28 @@ const SeasonPassDashboard = () => {
               <span className="text-xs text-gray-500 ml-1">pts</span>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-4">
               <span className="text-gray-300">
                 {hit.quarter} • {hit.scoreType}
               </span>
-              <span className="text-gray-400">
-                {hit.hitPattern}
-              </span>
+              <span className="text-gray-400">{hit.hitPattern}</span>
               <span className="text-gray-400">
                 {hit.homeScore}-{hit.awayScore}
               </span>
             </div>
-            
+
             <div className="flex items-center gap-2">
               {hit.isPlayoff && (
-                <Badge variant="outline" className="text-purple-400 border-purple-400">
+                <Badge
+                  variant="outline"
+                  className="text-purple-400 border-purple-400"
+                >
                   <Zap className="w-3 h-3 mr-1" />
-                  {hit.gameType === 'season-pass' ? `${playerStats.playoffMultiplier}x` : 'Playoff'}
+                  {hit.gameType === 'season-pass'
+                    ? `${playerStats.playoffMultiplier}x`
+                    : 'Playoff'}
                 </Badge>
               )}
               <span className="text-xs text-gray-500">
@@ -268,37 +317,52 @@ const SeasonPassDashboard = () => {
   };
 
   const LeaderboardRow = ({ standing }: { standing: ConferenceStanding }) => (
-    <div className={`flex items-center justify-between p-3 rounded-lg transition-colors ${
-      standing.isCurrentUser 
-        ? 'bg-yellow-900/30 border border-yellow-700' 
-        : 'bg-gray-800/30 hover:bg-gray-800/50'
-    }`}>
+    <div
+      className={`flex items-center justify-between p-3 rounded-lg transition-colors ${
+        standing.isCurrentUser
+          ? 'bg-yellow-900/30 border border-yellow-700'
+          : 'bg-gray-800/30 hover:bg-gray-800/50'
+      }`}
+    >
       <div className="flex items-center gap-4">
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-          standing.rank === 1 ? 'bg-yellow-500 text-black' :
-          standing.rank === 2 ? 'bg-gray-400 text-black' :
-          standing.rank === 3 ? 'bg-orange-500 text-black' :
-          'bg-gray-700 text-white'
-        }`}>
+        <div
+          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+            standing.rank === 1
+              ? 'bg-yellow-500 text-black'
+              : standing.rank === 2
+                ? 'bg-gray-400 text-black'
+                : standing.rank === 3
+                  ? 'bg-orange-500 text-black'
+                  : 'bg-gray-700 text-white'
+          }`}
+        >
           {standing.rank <= 3 ? (
-            standing.rank === 1 ? <Trophy className="w-4 h-4" /> :
-            standing.rank === 2 ? <Medal className="w-4 h-4" /> :
-            <Award className="w-4 h-4" />
+            standing.rank === 1 ? (
+              <Trophy className="w-4 h-4" />
+            ) : standing.rank === 2 ? (
+              <Medal className="w-4 h-4" />
+            ) : (
+              <Award className="w-4 h-4" />
+            )
           ) : (
             standing.rank
           )}
         </div>
-        
+
         <div>
-          <p className={`font-semibold ${standing.isCurrentUser ? 'text-yellow-400' : 'text-white'}`}>
+          <p
+            className={`font-semibold ${standing.isCurrentUser ? 'text-yellow-400' : 'text-white'}`}
+          >
             {standing.displayName}
           </p>
           <p className="text-xs text-gray-400">{standing.walletAddress}</p>
         </div>
       </div>
-      
+
       <div className="text-right">
-        <p className="text-lg font-bold text-green-400">{standing.points.toLocaleString()}</p>
+        <p className="text-lg font-bold text-green-400">
+          {standing.points.toLocaleString()}
+        </p>
         <p className="text-xs text-gray-500">{standing.hits} hits</p>
       </div>
     </div>
@@ -306,11 +370,11 @@ const SeasonPassDashboard = () => {
 
   const filterHitsByGameType = (hits: GameHit[]) => {
     if (selectedTab === 'season-pass') {
-      return hits.filter(hit => hit.gameType === 'season-pass');
+      return hits.filter((hit) => hit.gameType === 'season-pass');
     } else if (selectedTab === 'weekly-cash') {
-      return hits.filter(hit => hit.gameType === 'weekly-cash');
+      return hits.filter((hit) => hit.gameType === 'weekly-cash');
     } else if (selectedTab === 'free-play') {
-      return hits.filter(hit => hit.gameType === 'free-play');
+      return hits.filter((hit) => hit.gameType === 'free-play');
     }
     return hits;
   };
@@ -318,11 +382,11 @@ const SeasonPassDashboard = () => {
   const getFilteredStats = () => {
     const filteredHits = filterHitsByGameType(recentHits);
     const totalPoints = filteredHits.reduce((sum, hit) => sum + hit.points, 0);
-    
+
     return {
       totalPoints,
       totalHits: filteredHits.length,
-      recentHits: filteredHits
+      recentHits: filteredHits,
     };
   };
 
@@ -339,9 +403,11 @@ const SeasonPassDashboard = () => {
                 <Crown className="w-8 h-8 text-yellow-400" />
                 Season-Pass Dashboard
               </h1>
-              <p className="text-gray-400 mt-2">Track your progress across all game types</p>
+              <p className="text-gray-400 mt-2">
+                Track your progress across all game types
+              </p>
             </div>
-            
+
             <div className="flex items-center gap-4">
               <Button
                 variant="outline"
@@ -365,23 +431,27 @@ const SeasonPassDashboard = () => {
 
       <div className="max-w-7xl mx-auto p-6">
         {/* Game Type Tabs */}
-        <Tabs value={selectedTab} onValueChange={(value) => setSelectedTab(value as typeof selectedTab)} className="mb-8">
+        <Tabs
+          value={selectedTab}
+          onValueChange={(value) => setSelectedTab(value as typeof selectedTab)}
+          className="mb-8"
+        >
           <TabsList className="grid w-full grid-cols-3 bg-gray-800 border border-gray-700">
-            <TabsTrigger 
-              value="season-pass" 
+            <TabsTrigger
+              value="season-pass"
               className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-400 data-[state=active]:to-orange-500 data-[state=active]:text-black"
             >
               <Crown className="w-4 h-4" />
               Season-Pass
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="weekly-cash"
               className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-400 data-[state=active]:to-emerald-500 data-[state=active]:text-black"
             >
               <DollarSign className="w-4 h-4" />
               Weekly Cash
             </TabsTrigger>
-            <TabsTrigger 
+            <TabsTrigger
               value="free-play"
               className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-400 data-[state=active]:to-cyan-500 data-[state=active]:text-black"
             >
@@ -493,7 +563,9 @@ const SeasonPassDashboard = () => {
 
             <Card className="bg-gray-800/50 border-gray-700">
               <CardHeader>
-                <CardTitle className="text-green-400">Weekly Cash Games</CardTitle>
+                <CardTitle className="text-green-400">
+                  Weekly Cash Games
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-400 text-center py-8">
@@ -549,8 +621,11 @@ const SeasonPassDashboard = () => {
               <Zap className="w-5 h-5" />
               Recent Activity
               <Badge variant="outline" className="ml-2">
-                {selectedTab === 'season-pass' ? 'Season-Pass' : 
-                 selectedTab === 'weekly-cash' ? 'Weekly Cash' : 'Free Play'}
+                {selectedTab === 'season-pass'
+                  ? 'Season-Pass'
+                  : selectedTab === 'weekly-cash'
+                    ? 'Weekly Cash'
+                    : 'Free Play'}
               </Badge>
             </CardTitle>
           </CardHeader>
@@ -563,8 +638,15 @@ const SeasonPassDashboard = () => {
               ) : (
                 <div className="text-center py-8 text-gray-400">
                   <Target className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>No recent activity in {selectedTab === 'season-pass' ? 'Season-Pass' : 
-                     selectedTab === 'weekly-cash' ? 'Weekly Cash' : 'Free Play'} games</p>
+                  <p>
+                    No recent activity in{' '}
+                    {selectedTab === 'season-pass'
+                      ? 'Season-Pass'
+                      : selectedTab === 'weekly-cash'
+                        ? 'Weekly Cash'
+                        : 'Free Play'}{' '}
+                    games
+                  </p>
                 </div>
               )}
             </div>

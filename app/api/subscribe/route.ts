@@ -8,24 +8,24 @@ import { getEmailService } from '@/lib/emailService';
 const subscriptionSchema = z.object({
   email: z.string().email('Invalid email format'),
   walletAddress: z.string().optional(),
-  source: z.string().default('unknown')
+  source: z.string().default('unknown'),
 });
 
 export async function POST(request: NextRequest) {
   try {
     // Parse the request body
     const body = await request.json();
-    
+
     // Validate the request data
     const validationResult = subscriptionSchema.safeParse(body);
-    
+
     if (!validationResult.success) {
       return NextResponse.json(
-        { 
-          error: 'Invalid request data', 
-          details: validationResult.error.errors 
+        {
+          error: 'Invalid request data',
+          details: validationResult.error.errors,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     if (await emailExists(email)) {
       return NextResponse.json(
         { error: 'Email already subscribed' },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       email,
       walletAddress: walletAddress || null,
       source,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
 
     // Save the subscription
@@ -64,25 +64,21 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message: 'Successfully subscribed to email updates',
-        subscriptionId: subscription.id
+        subscriptionId: subscription.id,
       },
-      { status: 201 }
+      { status: 201 },
     );
-
   } catch (error) {
     console.error('Error processing subscription:', error);
-    
+
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 // Handle unsupported methods
 export async function GET() {
-  return NextResponse.json(
-    { error: 'Method not allowed' },
-    { status: 405 }
-  );
+  return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
 }

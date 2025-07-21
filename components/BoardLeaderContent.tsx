@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -9,8 +9,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { CheckCircle, DollarSign, Users, Trophy, Star } from "lucide-react";
+} from '@/components/ui/table';
+import { CheckCircle, DollarSign, Users, Trophy, Star } from 'lucide-react';
 
 const BoardLeaderContent = () => {
   return (
@@ -21,14 +21,18 @@ const BoardLeaderContent = () => {
           Community Board Leaders (CBLs)
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
-          Join our exclusive Community Board Leader program and earn revenue from hosting your own Football Squares boards.
-          Build your community, set your own rules, and profit from every game.
+          Join our exclusive Community Board Leader program and earn revenue
+          from hosting your own Football Squares boards. Build your community,
+          set your own rules, and profit from every game.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold transition-colors duration-200">
             Become a CBL - $9.99
           </Button>
-          <Button variant="outline" className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-3 text-lg">
+          <Button
+            variant="outline"
+            className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-3 text-lg"
+          >
             Learn More
           </Button>
         </div>
@@ -39,9 +43,12 @@ const BoardLeaderContent = () => {
         <Card className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm">
           <CardContent className="p-6 text-center">
             <DollarSign className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Earn 3% Revenue</h3>
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+              Earn 3% Revenue
+            </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Get 3% of every fully-sold board you host, while 2% goes to the House
+              Get 3% of every fully-sold board you host, while 2% goes to the
+              House
             </p>
           </CardContent>
         </Card>
@@ -49,7 +56,9 @@ const BoardLeaderContent = () => {
         <Card className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm">
           <CardContent className="p-6 text-center">
             <Trophy className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">NFT Commissions</h3>
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+              NFT Commissions
+            </h3>
             <p className="text-gray-600 dark:text-gray-400">
               Earn 30% of all NFTs minted on your boards
             </p>
@@ -59,9 +68,12 @@ const BoardLeaderContent = () => {
         <Card className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm">
           <CardContent className="p-6 text-center">
             <Users className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Build Community</h3>
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+              Build Community
+            </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Create your own football squares community with custom pricing and rules
+              Create your own football squares community with custom pricing and
+              rules
             </p>
           </CardContent>
         </Card>
@@ -78,7 +90,9 @@ const BoardLeaderContent = () => {
         <CardContent className="space-y-6">
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Requirements</h3>
+              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                Requirements
+              </h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
@@ -89,19 +103,23 @@ const BoardLeaderContent = () => {
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                   <span className="text-gray-600 dark:text-gray-400">
-                    Pay one-time $9.99 origination fee (refundable via milestones)
+                    Pay one-time $9.99 origination fee (refundable via
+                    milestones)
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                   <span className="text-gray-600 dark:text-gray-400">
-                    Commit to hosting community boards for the current NFL season
+                    Commit to hosting community boards for the current NFL
+                    season
                   </span>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Benefits</h3>
+              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                Benefits
+              </h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
@@ -138,30 +156,62 @@ const BoardLeaderContent = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-gray-900 dark:text-white">Season Period</TableHead>
-                <TableHead className="text-gray-900 dark:text-white">Board Limit</TableHead>
-                <TableHead className="text-gray-900 dark:text-white">Price Range</TableHead>
-                <TableHead className="text-gray-900 dark:text-white">Special Rules</TableHead>
+                <TableHead className="text-gray-900 dark:text-white">
+                  Season Period
+                </TableHead>
+                <TableHead className="text-gray-900 dark:text-white">
+                  Board Limit
+                </TableHead>
+                <TableHead className="text-gray-900 dark:text-white">
+                  Price Range
+                </TableHead>
+                <TableHead className="text-gray-900 dark:text-white">
+                  Special Rules
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell className="font-medium text-gray-900 dark:text-white">Regular Season</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">Unlimited weekly boards + Bye-Week boards</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">$5–$100 per square</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">Full creative control</TableCell>
+                <TableCell className="font-medium text-gray-900 dark:text-white">
+                  Regular Season
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  Unlimited weekly boards + Bye-Week boards
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  $5–$100 per square
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  Full creative control
+                </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium text-gray-900 dark:text-white">Playoffs</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">1 board per round</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">$25 per square minimum</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">Higher stakes, limited slots</TableCell>
+                <TableCell className="font-medium text-gray-900 dark:text-white">
+                  Playoffs
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  1 board per round
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  $25 per square minimum
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  Higher stakes, limited slots
+                </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium text-gray-900 dark:text-white">Super Bowl</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">1 board maximum</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">$50 per square minimum</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">Premium event pricing</TableCell>
+                <TableCell className="font-medium text-gray-900 dark:text-white">
+                  Super Bowl
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  1 board maximum
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  $50 per square minimum
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  Premium event pricing
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -215,20 +265,32 @@ const BoardLeaderContent = () => {
         <CardContent className="space-y-6">
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-[#002244] dark:text-white">Community Standards</h3>
+              <h3 className="text-lg font-semibold mb-4 text-[#002244] dark:text-white">
+                Community Standards
+              </h3>
               <ul className="space-y-2 text-[#708090] dark:text-[#96abdc]">
-                <li>• Maintain respectful and inclusive community environment</li>
+                <li>
+                  • Maintain respectful and inclusive community environment
+                </li>
                 <li>• Respond to community questions within 24 hours</li>
                 <li>• Follow all platform terms of service</li>
                 <li>• Promote fair play and transparency</li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-[#002244] dark:text-white">Board Management</h3>
+              <h3 className="text-lg font-semibold mb-4 text-[#002244] dark:text-white">
+                Board Management
+              </h3>
               <ul className="space-y-2 text-[#708090] dark:text-[#96abdc]">
-                <li>• Set clear board rules and communicate them effectively</li>
-                <li>• Ensure boards are properly marketed to fill completely</li>
-                <li>• Handle disputes fairly and according to platform guidelines</li>
+                <li>
+                  • Set clear board rules and communicate them effectively
+                </li>
+                <li>
+                  • Ensure boards are properly marketed to fill completely
+                </li>
+                <li>
+                  • Handle disputes fairly and according to platform guidelines
+                </li>
                 <li>• Maintain accurate records of all board activities</li>
               </ul>
             </div>
@@ -249,31 +311,46 @@ const BoardLeaderContent = () => {
               <div className="w-16 h-16 bg-[#ed5925] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 JM
               </div>
-              <h4 className="font-semibold text-[#002244] dark:text-white mb-2">John M.</h4>
+              <h4 className="font-semibold text-[#002244] dark:text-white mb-2">
+                John M.
+              </h4>
               <p className="text-sm text-[#708090] dark:text-[#96abdc] mb-2">
-                "Earned over $2,500 in my first season as a CBL. The community love the custom boards!"
+                "Earned over $2,500 in my first season as a CBL. The community
+                love the custom boards!"
               </p>
-              <div className="text-xs text-[#ed5925] font-medium">45 Boards Hosted</div>
+              <div className="text-xs text-[#ed5925] font-medium">
+                45 Boards Hosted
+              </div>
             </div>
             <div className="text-center p-4">
               <div className="w-16 h-16 bg-[#96abdc] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 SK
               </div>
-              <h4 className="font-semibold text-[#002244] dark:text-white mb-2">Sarah K.</h4>
+              <h4 className="font-semibold text-[#002244] dark:text-white mb-2">
+                Sarah K.
+              </h4>
               <p className="text-sm text-[#708090] dark:text-[#96abdc] mb-2">
-                "Built a community of 200+ regular players. NFT commissions are amazing!"
+                "Built a community of 200+ regular players. NFT commissions are
+                amazing!"
               </p>
-              <div className="text-xs text-[#ed5925] font-medium">78 NFT Mints</div>
+              <div className="text-xs text-[#ed5925] font-medium">
+                78 NFT Mints
+              </div>
             </div>
             <div className="text-center p-4">
               <div className="w-16 h-16 bg-[#004953] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 RL
               </div>
-              <h4 className="font-semibold text-[#002244] dark:text-white mb-2">Robert L.</h4>
+              <h4 className="font-semibold text-[#002244] dark:text-white mb-2">
+                Robert L.
+              </h4>
               <p className="text-sm text-[#708090] dark:text-[#96abdc] mb-2">
-                "Paid back my fee in the first month. Now it's pure profit every week!"
+                "Paid back my fee in the first month. Now it's pure profit every
+                week!"
               </p>
-              <div className="text-xs text-[#ed5925] font-medium">12 Weeks Active</div>
+              <div className="text-xs text-[#ed5925] font-medium">
+                12 Weeks Active
+              </div>
             </div>
           </div>
         </CardContent>
@@ -281,7 +358,9 @@ const BoardLeaderContent = () => {
 
       {/* Call to Action */}
       <div className="text-center bg-gradient-to-r from-[#002244] to-[#004953] rounded-lg p-8 text-white">
-        <h3 className="text-2xl font-bold mb-4">Ready to Become a Community Board Leader?</h3>
+        <h3 className="text-2xl font-bold mb-4">
+          Ready to Become a Community Board Leader?
+        </h3>
         <p className="text-lg mb-6 opacity-90">
           Start earning revenue from your own Football Squares community today
         </p>
@@ -289,12 +368,16 @@ const BoardLeaderContent = () => {
           <Button className="bg-[#ed5925] hover:bg-[#d14513] text-white px-8 py-3 text-lg font-semibold transition-colors duration-200">
             Apply Now - $9.99
           </Button>
-          <Button variant="outline" className="border-white text-white hover:bg-white hover:text-[#002244] px-8 py-3 text-lg">
+          <Button
+            variant="outline"
+            className="border-white text-white hover:bg-white hover:text-[#002244] px-8 py-3 text-lg"
+          >
             Contact Support
           </Button>
         </div>
         <p className="text-sm mt-4 opacity-75">
-          * CBL status lasts for the current NFL season. Fee is refundable via achievement milestones.
+          * CBL status lasts for the current NFL season. Fee is refundable via
+          achievement milestones.
         </p>
       </div>
     </div>

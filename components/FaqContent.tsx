@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 const FaqContent = () => {
   return (
@@ -15,30 +15,30 @@ const FaqContent = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
             mainEntity: [
               {
-                "@type": "Question",
-                name: "What exactly is a Football Squares board?",
+                '@type': 'Question',
+                name: 'What exactly is a Football Squares board?',
                 acceptedAnswer: {
-                  "@type": "Answer",
+                  '@type': 'Answer',
                   text: "A 10 × 10 grid (100 'squares'). Each axis is numbered 0-9 after a random shuffle, locking in once the board is full. Your square's row/column numbers must match the last digit of each team's score at the end of a quarter (or OT) for you to win.",
                 },
               },
               {
-                "@type": "Question",
-                name: "How much does one square cost?",
+                '@type': 'Question',
+                name: 'How much does one square cost?',
                 acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Public House boards: $1–$25 per square (default $10). Community boards: creator sets the price ($5–$100). Playoff & SB boards have higher minimums.",
+                  '@type': 'Answer',
+                  text: 'Public House boards: $1–$25 per square (default $10). Community boards: creator sets the price ($5–$100). Playoff & SB boards have higher minimums.',
                 },
               },
               {
-                "@type": "Question",
-                name: "Do NFTs affect my chance of winning?",
+                '@type': 'Question',
+                name: 'Do NFTs affect my chance of winning?',
                 acceptedAnswer: {
-                  "@type": "Answer",
+                  '@type': 'Answer',
                   text: "No—your square's placement is what matters. NFTs are optional flex & collectible flair.",
                 },
               },

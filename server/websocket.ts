@@ -34,14 +34,19 @@ export class WebSocketGameServer extends EventEmitter {
   private program: Program;
   private heartbeatInterval: NodeJS.Timeout;
 
-  constructor(port: number, connection: Connection, provider: AnchorProvider, program: Program) {
+  constructor(
+    port: number,
+    connection: Connection,
+    provider: AnchorProvider,
+    program: Program,
+  ) {
     super();
     this.connection = connection;
     this.provider = provider;
     this.program = program;
-    
+
     this.wss = new WebSocketServer({ port });
-    
+
     this.wss.on('connection', (ws, req) => {
       this.handleConnection(ws, req);
     });
@@ -64,7 +69,7 @@ export class WebSocketGameServer extends EventEmitter {
     };
 
     this.clients.set(clientId, client);
-    
+
     console.log(`Client connected: ${clientId}`);
 
     ws.on('message', (data: Buffer) => {
@@ -92,7 +97,7 @@ export class WebSocketGameServer extends EventEmitter {
     try {
       const message = JSON.parse(data.toString());
       const client = this.clients.get(clientId);
-      
+
       if (!client) {
         console.warn(`Message from unknown client: ${clientId}`);
         return;
@@ -133,7 +138,7 @@ export class WebSocketGameServer extends EventEmitter {
     };
 
     client.subscriptions.push(subscription);
-    
+
     console.log(`Client ${clientId} subscribed to:`, subscription);
 
     // Send confirmation
@@ -149,15 +154,20 @@ export class WebSocketGameServer extends EventEmitter {
     }
   }
 
-  private handleUnsubscription(clientId: string, unsubscriptionData: any): void {
+  private handleUnsubscription(
+    clientId: string,
+    unsubscriptionData: any,
+  ): void {
     const client = this.clients.get(clientId);
     if (!client) return;
 
-    client.subscriptions = client.subscriptions.filter(sub => 
-      sub.gameId !== unsubscriptionData.gameId
+    client.subscriptions = client.subscriptions.filter(
+      (sub) => sub.gameId !== unsubscriptionData.gameId,
     );
 
-    console.log(`Client ${clientId} unsubscribed from game ${unsubscriptionData.gameId}`);
+    console.log(
+      `Client ${clientId} unsubscribed from game ${unsubscriptionData.gameId}`,
+    );
 
     this.sendToClient(clientId, {
       type: 'unsubscribed',
@@ -171,7 +181,7 @@ export class WebSocketGameServer extends EventEmitter {
     if (!client) return;
 
     client.lastPing = Date.now();
-    
+
     this.sendToClient(clientId, {
       type: 'pong',
       data: { timestamp: Date.now() },
@@ -179,7 +189,10 @@ export class WebSocketGameServer extends EventEmitter {
     });
   }
 
-  private async handleBoardStateRequest(clientId: string, requestData: any): Promise<void> {
+  private async handleBoardStateRequest(
+    clientId: string,
+    requestData: any,
+  ): Promise<void> {
     try {
       const gameId = requestData.gameId;
       if (!gameId) {
@@ -226,15 +239,18 @@ export class WebSocketGameServer extends EventEmitter {
     }
   }
 
-  private async sendBoardState(clientId: string, gameId: number): Promise<void> {
+  private async sendBoardState(
+    clientId: string,
+    gameId: number,
+  ): Promise<void> {
     try {
       const [boardPda] = PublicKey.findProgramAddressSync(
         [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
-        this.program.programId
+        this.program.programId,
       );
 
       const boardAccount = await this.program.account.board.fetch(boardPda);
-      
+
       const boardState = {
         gameId: boardAccount.gameId.toNumber(),
         authority: boardAccount.authority.toString(),
@@ -310,21 +326,26 @@ export class WebSocketGameServer extends EventEmitter {
     this.broadcastToSubscribers(gameId, message);
   }
 
-  private broadcastToSubscribers(gameId: number, message: WebSocketMessage): void {
+  private broadcastToSubscribers(
+    gameId: number,
+    message: WebSocketMessage,
+  ): void {
     let sentCount = 0;
-    
+
     for (const [clientId, client] of this.clients) {
-      const isSubscribed = client.subscriptions.some(sub => 
-        sub.gameId === gameId || sub.events.includes('all')
+      const isSubscribed = client.subscriptions.some(
+        (sub) => sub.gameId === gameId || sub.events.includes('all'),
       );
-      
+
       if (isSubscribed) {
         this.sendToClient(clientId, message);
         sentCount++;
       }
     }
-    
-    console.log(`Broadcast ${message.type} to ${sentCount} clients for game ${gameId}`);
+
+    console.log(
+      `Broadcast ${message.type} to ${sentCount} clients for game ${gameId}`,
+    );
   }
 
   private sendToClient(clientId: string, message: WebSocketMessage): void {
@@ -374,9 +395,11 @@ export class WebSocketGameServer extends EventEmitter {
     totalSubscriptions: number;
     activeGames: number;
   } {
-    const totalSubscriptions = Array.from(this.clients.values())
-      .reduce((sum, client) => sum + client.subscriptions.length, 0);
-    
+    const totalSubscriptions = Array.from(this.clients.values()).reduce(
+      (sum, client) => sum + client.subscriptions.length,
+      0,
+    );
+
     const activeGames = new Set();
     for (const client of this.clients.values()) {
       for (const sub of client.subscriptions) {
@@ -397,7 +420,7 @@ export class WebSocketGameServer extends EventEmitter {
     if (this.heartbeatInterval) {
       clearInterval(this.heartbeatInterval);
     }
-    
+
     this.wss.close();
     console.log('WebSocket server closed');
   }
@@ -406,13 +429,20 @@ export class WebSocketGameServer extends EventEmitter {
 // Start the WebSocket server if this file is run directly
 if (require.main === module) {
   const port = parseInt(process.env.WS_PORT || '8080');
-  
+
   // Initialize Solana connection and program
-  const connection = new Connection(process.env.RPC_ENDPOINT || 'https://api.devnet.solana.com');
+  const connection = new Connection(
+    process.env.RPC_ENDPOINT || 'https://api.devnet.solana.com',
+  );
   // Note: In real implementation, you'd properly initialize the provider and program
-  
-  const server = new WebSocketGameServer(port, connection, null as any, null as any);
-  
+
+  const server = new WebSocketGameServer(
+    port,
+    connection,
+    null as any,
+    null as any,
+  );
+
   process.on('SIGINT', () => {
     console.log('Shutting down WebSocket server...');
     server.close();

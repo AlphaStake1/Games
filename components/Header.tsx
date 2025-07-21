@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { ThemeToggle } from "./ui/theme-toggle";
+import { ThemeToggle } from './ui/theme-toggle';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,12 +17,12 @@ const Header = () => {
   };
 
   const menuItems = [
-    { label: "How To Play", href: "/how-to-play" },
-    { label: "Rules", href: "/rules" },
-    { label: "Fantasy", href: "/fantasy" },
-    { label: "My NFTs", href: "/my-nfts" },
-    { label: "What are NFTs?", href: "/what-are-nfts" },
-    { label: "FAQ", href: "/faq" },
+    { label: 'How To Play', href: '/how-to-play' },
+    { label: 'Rules', href: '/rules' },
+    { label: 'Fantasy', href: '/fantasy' },
+    { label: 'My NFTs', href: '/my-nfts' },
+    { label: 'What are NFTs?', href: '/what-are-nfts' },
+    { label: 'FAQ', href: '/faq' },
   ];
 
   return (

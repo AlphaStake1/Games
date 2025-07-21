@@ -3,7 +3,11 @@
 import React from 'react';
 import EnhancedBoardGrid from '@/components/EnhancedBoardGrid';
 import PricingPanel from '@/components/PricingPanel';
-import { BoardConfiguration, SquareSelection, BOARD_TIERS } from '@/lib/boardTypes';
+import {
+  BoardConfiguration,
+  SquareSelection,
+  BOARD_TIERS,
+} from '@/lib/boardTypes';
 import { NFL_TEAMS } from '@/lib/nflTeams';
 
 // Demo board configuration
@@ -14,22 +18,23 @@ const demoBoard: BoardConfiguration = {
   game: {
     gameId: 'demo-game',
     week: 15,
-    homeTeam: NFL_TEAMS.find(t => t.name === 'Chiefs') || NFL_TEAMS[0],
-    awayTeam: NFL_TEAMS.find(t => t.name === 'Bills') || NFL_TEAMS[1],
+    homeTeam: NFL_TEAMS.find((t) => t.name === 'Chiefs') || NFL_TEAMS[0],
+    awayTeam: NFL_TEAMS.find((t) => t.name === 'Bills') || NFL_TEAMS[1],
     gameDate: new Date('2024-12-15T20:00:00'),
     isPlayoffs: false,
-    gameType: 'regular'
+    gameType: 'regular',
   },
   maxSquaresPerUser: 5,
   availableSquares: 55,
   totalSquaresSold: 45,
   isActive: true,
   createdAt: new Date(),
-  gameStartTime: new Date('2024-12-15T20:00:00')
+  gameStartTime: new Date('2024-12-15T20:00:00'),
 };
 
 export default function DemoPage() {
-  const [currentSelection, setCurrentSelection] = React.useState<SquareSelection>();
+  const [currentSelection, setCurrentSelection] =
+    React.useState<SquareSelection>();
 
   const handleSelectionChange = (selection: SquareSelection) => {
     setCurrentSelection(selection);
@@ -65,7 +70,9 @@ export default function DemoPage() {
               selections={currentSelection ? [currentSelection] : []}
               onPurchaseConfirm={() => {
                 console.log('Demo purchase confirmed');
-                alert('Demo: Purchase confirmed! In real app, this would process payment.');
+                alert(
+                  'Demo: Purchase confirmed! In real app, this would process payment.',
+                );
               }}
               onClearSelections={() => {
                 setCurrentSelection(undefined);

@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { Wallet, Shield, Zap } from "lucide-react";
+import { Wallet, Shield, Zap } from 'lucide-react';
 
 const CryptoPayments = () => {
   const features = [
     {
       icon: Shield,
-      title: "Secure & Transparent",
+      title: 'Secure & Transparent',
       description:
-        "All transactions are recorded on the blockchain for complete transparency and security.",
+        'All transactions are recorded on the blockchain for complete transparency and security.',
     },
     {
       icon: Zap,
-      title: "Instant Payouts",
+      title: 'Instant Payouts',
       description:
-        "Winners receive their crypto payouts instantly when the game concludes.",
+        'Winners receive their crypto payouts instantly when the game concludes.',
     },
     {
       icon: Wallet,
-      title: "Easy Setup",
+      title: 'Easy Setup',
       description:
-        "Connect your wallet in seconds and start playing with your favorite cryptocurrency.",
+        'Connect your wallet in seconds and start playing with your favorite cryptocurrency.',
     },
   ];
 

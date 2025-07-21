@@ -1,5 +1,5 @@
 # docker/deploy.yaml - Akash Network Deployment Configuration
-version: "2.0"
+version: '2.0'
 
 services:
   app:
@@ -136,7 +136,7 @@ profiles:
         host: akash
       signedBy:
         anyOf:
-          - "akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63"
+          - 'akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63'
       pricing:
         app:
           denom: uakt

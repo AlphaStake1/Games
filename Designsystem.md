@@ -1,11 +1,13 @@
 # Football Squares Website Style Guide & Implementation Plan
 
 ## 🎯 Design Vision
+
 Transform your Football Squares website into a "photocopied whiteboard" experience with hand-drawn aesthetics, minimal text, and buttery-smooth performance across all devices.
 
 ## 📋 Core Design Principles
 
 ### Visual Identity
+
 - **Monochrome Foundation**: Pure white (#fff) and near-black (#111) as primary colors
 - **Xerox Copy Aesthetic**: Faded, slightly imperfect lines mimicking photocopied documents
 - **Hand-Drawn Elements**: Scribbly borders, sketch-style icons, and organic shapes
@@ -21,21 +23,21 @@ Transform your Football Squares website into a "photocopied whiteboard" experien
   --ink: #111111;
   --paper: #ffffff;
   --paper-off: #fafafa;
-  
+
   /* Notion-inspired Accents (10-20% opacity) */
   --accent-blue: hsla(222, 33%, 70%, 0.16);
   --accent-violet: hsla(269, 27%, 78%, 0.14);
   --accent-green: hsla(142, 33%, 70%, 0.12);
-  
+
   /* Team Colors (semi-transparent) */
-  --team-1: rgba(0, 78, 54, 0.1);   /* Eagles Green */
-  --team-2: rgba(0, 34, 68, 0.1);   /* Cowboys Blue */
-  
+  --team-1: rgba(0, 78, 54, 0.1); /* Eagles Green */
+  --team-2: rgba(0, 34, 68, 0.1); /* Cowboys Blue */
+
   /* Functional Colors */
   --success: #28a745;
   --error: #dc3545;
   --warning: #ffc107;
-  
+
   /* Borders & Surfaces */
   --border-light: #e0e0e0;
   --surface: #f5f5f5;
@@ -49,7 +51,7 @@ Transform your Football Squares website into a "photocopied whiteboard" experien
     --paper: #000000;
     --paper-off: #0a0a0a;
     --accent-blue: hsla(222, 33%, 60%, 0.22);
-    --accent-violet: hsla(269, 27%, 68%, 0.20);
+    --accent-violet: hsla(269, 27%, 68%, 0.2);
     --accent-green: hsla(142, 33%, 60%, 0.18);
     --team-1: rgba(0, 78, 54, 0.3);
     --team-2: rgba(0, 34, 68, 0.3);
@@ -63,24 +65,31 @@ Transform your Football Squares website into a "photocopied whiteboard" experien
 ## 🔤 Typography Strategy
 
 ### Font Implementation
+
 Use **KaTeX** for dynamic font rendering and **Recursive Mono Casual** as fallback:
 
 ```css
 /* Typography System */
 .font-primary {
   font-family: 'Recursive', monospace;
-  font-variation-settings: "MONO" 0.5, "CASL" 0.8;
+  font-variation-settings:
+    'MONO' 0.5,
+    'CASL' 0.8;
 }
 
 .font-handwritten {
   font-family: 'Recursive', monospace;
-  font-variation-settings: "MONO" 0.2, "CASL" 1.0;
+  font-variation-settings:
+    'MONO' 0.2,
+    'CASL' 1;
   font-weight: 400;
 }
 
 .font-board-numbers {
   font-family: 'Recursive', monospace;
-  font-variation-settings: "MONO" 0.8, "CASL" 0.3;
+  font-variation-settings:
+    'MONO' 0.8,
+    'CASL' 0.3;
   font-weight: 500;
 }
 
@@ -90,16 +99,25 @@ body {
   line-height: 1.6;
 }
 
-h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); }
-h2 { font-size: clamp(1.5rem, 4vw, 2rem); }
-h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
+h1 {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+}
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+h3 {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
 ```
 
 ## 🏗️ Layout Structure
 
 ### HTML Foundation
+
 ```html
-<body class="grid h-screen grid-rows-[auto_1fr_auto] font-primary bg-paper text-ink">
+<body
+  class="grid h-screen grid-rows-[auto_1fr_auto] font-primary bg-paper text-ink"
+>
   <header class="header-doodle">
     <h1 class="logo-doodle">Football Squares</h1>
     <nav class="nav-doodle">
@@ -146,6 +164,7 @@ h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
 ## 🎨 CSS Component Classes
 
 ### Hand-Drawn Elements
+
 ```css
 /* Scribbled Borders */
 .border-doodle {
@@ -180,7 +199,9 @@ h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
 .logo-doodle {
   font-size: 1.8rem;
   font-weight: 600;
-  font-variation-settings: "MONO" 0.3, "CASL" 0.9;
+  font-variation-settings:
+    'MONO' 0.3,
+    'CASL' 0.9;
 }
 
 /* Navigation Links */
@@ -226,13 +247,19 @@ h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
   border-image: url('/assets/scribble-border.svg') 4 stretch;
 }
 
-.team-1-bg { background: var(--team-1); }
-.team-2-bg { background: var(--team-2); }
+.team-1-bg {
+  background: var(--team-1);
+}
+.team-2-bg {
+  background: var(--team-2);
+}
 
 .team-name {
   font-size: 1.3rem;
   font-weight: 600;
-  font-variation-settings: "MONO" 0.4, "CASL" 0.8;
+  font-variation-settings:
+    'MONO' 0.4,
+    'CASL' 0.8;
 }
 
 /* Football Squares Grid */
@@ -265,7 +292,9 @@ h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
-  font-variation-settings: "MONO" 0.8, "CASL" 0.5;
+  font-variation-settings:
+    'MONO' 0.8,
+    'CASL' 0.5;
 }
 
 .square:hover {
@@ -285,14 +314,20 @@ h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 ```
 
 ## 📱 Mobile Optimization
 
 ### Responsive Design
+
 ```css
 /* Mobile-First Grid */
 @media (max-width: 768px) {
@@ -301,13 +336,13 @@ h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
     gap: 1px;
     padding: 0.5rem;
   }
-  
+
   .team-headers {
     grid-template-columns: 1fr;
     gap: 1rem;
     margin: 1rem 0;
   }
-  
+
   .header-doodle {
     padding: 0.5rem 1rem;
   }
@@ -353,6 +388,7 @@ h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
 ## ✨ Interactive Elements
 
 ### Football Cursor Trail
+
 ```javascript
 // cursor-football.js
 class FootballCursor {
@@ -388,7 +424,7 @@ class FootballCursor {
 
   updateTrail(x, y) {
     this.trail.push({ x, y, time: Date.now() });
-    
+
     if (this.trail.length > this.maxTrailLength) {
       this.trail.shift();
     }
@@ -398,7 +434,7 @@ class FootballCursor {
 
   renderTrail() {
     // Remove old trail elements
-    document.querySelectorAll('.trail-dot').forEach(dot => dot.remove());
+    document.querySelectorAll('.trail-dot').forEach((dot) => dot.remove());
 
     // Create new trail
     this.trail.forEach((point, index) => {
@@ -448,7 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const style = document.createElement('style');
   style.textContent = cursorStyles;
   document.head.appendChild(style);
-  
+
   new FootballCursor();
 });
 ```
@@ -456,6 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ## 🎭 Hand-Drawn SVG Assets
 
 ### Required SVG Files
+
 Create these SVG files in your `/assets` folder:
 
 1. **scribble-border.svg** - Hand-drawn border pattern
@@ -464,12 +501,13 @@ Create these SVG files in your `/assets` folder:
 4. **x-o-pattern.svg** - Background X's and O's pattern
 
 ### Example Scribble Border SVG
+
 ```svg
 <svg width="100" height="20" viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
-  <path d="M2,10 Q25,5 50,10 T98,10" 
-        stroke="currentColor" 
-        stroke-width="2" 
-        fill="none" 
+  <path d="M2,10 Q25,5 50,10 T98,10"
+        stroke="currentColor"
+        stroke-width="2"
+        fill="none"
         stroke-linecap="round"/>
 </svg>
 ```
@@ -477,6 +515,7 @@ Create these SVG files in your `/assets` folder:
 ## 🚀 Performance Optimizations
 
 ### Critical Performance Checklist
+
 - [ ] Single CSS file < 35KB after purification
 - [ ] Inline critical SVGs to avoid extra requests
 - [ ] Lazy load animations and non-critical assets
@@ -486,6 +525,7 @@ Create these SVG files in your `/assets` folder:
 - [ ] Optimize font loading with `font-display: swap`
 
 ### JavaScript Bundle Strategy
+
 ```javascript
 // Main bundle (critical)
 import './styles/main.css';
@@ -494,7 +534,7 @@ import { SquareGrid } from './square-grid.js';
 
 // Lazy load animations
 const loadAnimations = () => {
-  import('./animations/lottie-loader.js').then(module => {
+  import('./animations/lottie-loader.js').then((module) => {
     module.initializeAnimations();
   });
 };
@@ -506,30 +546,35 @@ document.addEventListener('click', loadAnimations, { once: true });
 ## 📋 Implementation Steps
 
 ### Phase 1: Foundation (Week 1)
+
 1. Set up CSS variables and color system
 2. Implement responsive grid layout
 3. Create hand-drawn SVG assets
 4. Add basic typography system
 
 ### Phase 2: Interactive Elements (Week 2)
+
 1. Implement football cursor trail
 2. Add square selection functionality
 3. Create mobile navigation
 4. Add hover effects and micro-interactions
 
 ### Phase 3: Polish & Performance (Week 3)
+
 1. Optimize asset loading
 2. Add animations and transitions
 3. Implement dark mode toggle
 4. Performance testing and optimization
 
 ### Phase 4: Testing & Launch (Week 4)
+
 1. Cross-browser testing
 2. Mobile device testing
 3. Accessibility audit
 4. Final performance optimization
 
 ## 🎯 Success Metrics
+
 - **Load Time**: < 1 second on 3G
 - **Lighthouse Score**: 90+ across all categories
 - **Mobile Usability**: 100% score
@@ -537,6 +582,7 @@ document.addEventListener('click', loadAnimations, { once: true });
 - **User Engagement**: Increased time on site
 
 ## 📚 Resources & References
+
 - [Notion Color Palette](https://matthiasfrank.de/notion-colors/)
 - [Lindy.ai Design System](https://lindy.ai)
 - [LottieFiles Animations](https://lottiefiles.com/)

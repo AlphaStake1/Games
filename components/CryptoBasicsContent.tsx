@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function CryptoBasicsContent() {
   return (
@@ -57,7 +57,7 @@ export default function CryptoBasicsContent() {
       </ul>
 
       <p>
-        <strong>Non-custodial wallets</strong> (or <strong>self-custody</strong>{" "}
+        <strong>Non-custodial wallets</strong> (or <strong>self-custody</strong>{' '}
         wallets) put <strong>you</strong> in complete control. "Not your keys,
         not your coins" is the guiding principle.
       </p>
@@ -125,7 +125,7 @@ export default function CryptoBasicsContent() {
         etc.) as carefully as you would secure the wallet itself. Hardware
         wallets are recommended once you start holding larger amounts of crypto
         that you want to protect long-term. Many people use a combination: a
-        mobile wallet for small, daily-use funds, and a hardware wallet to{" "}
+        mobile wallet for small, daily-use funds, and a hardware wallet to{' '}
         <strong>hold savings or high-value assets in cold storage</strong>.
       </p>
 
@@ -140,26 +140,26 @@ export default function CryptoBasicsContent() {
       </p>
 
       <p>
-        Keeping your crypto safe requires good security habits. Here are some{" "}
+        Keeping your crypto safe requires good security habits. Here are some{' '}
         <strong>DOs and DON'Ts</strong> for wallet security:
       </p>
 
       <ul>
         <li>
-          <strong>DO:</strong>{" "}
-          <strong>Safeguard your Secret Recovery Phrase (seed phrase)</strong>{" "}
+          <strong>DO:</strong>{' '}
+          <strong>Safeguard your Secret Recovery Phrase (seed phrase)</strong>{' '}
           offline. Upon creating a non-custodial wallet, you'll get a 12- or
           24-word recovery phrase – write it down on paper (or engrave it on
-          metal) and store it in a secure place. It's wise to keep{" "}
+          metal) and store it in a secure place. It's wise to keep{' '}
           <strong>multiple copies</strong> in separate safe locations (e.g. one
           at home and one in a bank deposit box) in case of fire or loss. This
           phrase is the master key to your wallet.
         </li>
         <li>
-          <strong>DON'T:</strong>{" "}
+          <strong>DON'T:</strong>{' '}
           <strong>Never share your recovery phrase or private keys</strong> with
           anyone – no one from support will ever need it. If someone asks for
-          your seed phrase (via email, Discord, Telegram, etc.),{" "}
+          your seed phrase (via email, Discord, Telegram, etc.),{' '}
           <strong>they are trying to scam you</strong>. Anyone who has those
           words can immediately access and spend <em>all</em> of your funds.
           Keep it secret and offline.
@@ -173,7 +173,7 @@ export default function CryptoBasicsContent() {
           SMS for better security.
         </li>
         <li>
-          <strong>DON'T:</strong>{" "}
+          <strong>DON'T:</strong>{' '}
           <strong>Avoid saving your seed phrase digitally</strong>. Do not take
           screenshots, photos, or store the phrase in cloud storage or email
           drafts. If it's on any online device, it's vulnerable to malware. Keep
@@ -181,27 +181,27 @@ export default function CryptoBasicsContent() {
           only enter it into the official wallet app when restoring a wallet.
         </li>
         <li>
-          <strong>DO:</strong>{" "}
+          <strong>DO:</strong>{' '}
           <strong>Keep your apps and devices updated.</strong> Software updates
           often include critical security patches. Always install the latest
           version of your wallet app and updates for your phone/OS to patch
-          vulnerabilities. Only download wallet apps or browser extensions from{" "}
+          vulnerabilities. Only download wallet apps or browser extensions from{' '}
           <strong>official sources</strong> (the project's website or official
           app store listings) to avoid fake apps.
         </li>
         <li>
-          <strong>DO:</strong>{" "}
+          <strong>DO:</strong>{' '}
           <strong>Double-check addresses and transactions.</strong> When sending
           crypto, <strong>always verify the recipient address</strong>, the
           amount, and the correct network before confirming. Crypto transactions
           are irreversible – a typo in the address can send funds to the wrong
-          place permanently. It helps to{" "}
+          place permanently. It helps to{' '}
           <strong>send a small test transaction</strong> first if you're sending
           a large amount to a new address. Many wallets let you use QR code
           scanning or copying to avoid manual typing errors.
         </li>
         <li>
-          <strong>DON'T:</strong>{" "}
+          <strong>DON'T:</strong>{' '}
           <strong>Don't rush or act on panic prompts.</strong> Be wary of any
           pop-ups or messages urging you to "urgently" do something with your
           wallet (e.g. "Your account is compromised, give us your keys!" – this
@@ -210,7 +210,7 @@ export default function CryptoBasicsContent() {
           attempts.
         </li>
         <li>
-          <strong>DON'T:</strong>{" "}
+          <strong>DON'T:</strong>{' '}
           <strong>Don't leave your wallet unlocked or unattended.</strong> If
           you're using a browser extension like MetaMask, make sure to log out
           or lock it when not in use, especially on a shared or public computer.
@@ -218,7 +218,7 @@ export default function CryptoBasicsContent() {
           you wouldn't leave your wallet open on a cafe table.
         </li>
         <li>
-          <strong>DO:</strong>{" "}
+          <strong>DO:</strong>{' '}
           <strong>Consider a hardware wallet for large holdings.</strong> For
           significant amounts of crypto, use a reputable hardware wallet
           (Ledger, Trezor, etc.) to store your funds offline. You can still use
@@ -227,8 +227,8 @@ export default function CryptoBasicsContent() {
           risk of a single hack draining everything.
         </li>
         <li>
-          <strong>DON'T:</strong>{" "}
-          <strong>Don't keep all funds on exchanges or in one device.</strong>{" "}
+          <strong>DON'T:</strong>{' '}
+          <strong>Don't keep all funds on exchanges or in one device.</strong>{' '}
           Spread out risk. Holding coins on an exchange (custodial) means you're
           trusting that platform's security. If you're not actively trading,
           it's generally safer to withdraw assets to your own wallet. Similarly,

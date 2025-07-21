@@ -1,11 +1,11 @@
-import CryptoBasicsContent from "../../components/CryptoBasicsContent";
-import { Metadata } from "next";
-import Footer from "../../components/Footer";
+import CryptoBasicsContent from '../../components/CryptoBasicsContent';
+import { Metadata } from 'next';
+import Footer from '../../components/Footer';
 
 export const metadata: Metadata = {
-  title: "Crypto Basics - Football Squares",
+  title: 'Crypto Basics - Football Squares',
   description:
-    "Learn the fundamentals of cryptocurrency, wallets, and transactions with Football Squares Crypto Basics guide.",
+    'Learn the fundamentals of cryptocurrency, wallets, and transactions with Football Squares Crypto Basics guide.',
 };
 
 export default function CryptoBasicsPage() {

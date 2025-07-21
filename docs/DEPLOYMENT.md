@@ -22,12 +22,14 @@ This guide provides comprehensive instructions for deploying the Football Square
 ### System Requirements
 
 **Minimum Requirements:**
+
 - 4 CPU cores
 - 8GB RAM
 - 100GB SSD storage
 - 100 Mbps network connection
 
 **Recommended Requirements:**
+
 - 8 CPU cores
 - 16GB RAM
 - 500GB SSD storage
@@ -36,17 +38,20 @@ This guide provides comprehensive instructions for deploying the Football Square
 ### Software Dependencies
 
 **Core Dependencies:**
-- Node.js 18+ 
+
+- Node.js 18+
 - Docker 24+
 - Docker Compose 2.20+
 - Git 2.40+
 
 **Blockchain Dependencies:**
+
 - Solana CLI 1.18+
 - Anchor CLI 0.30+
 - Rust 1.75+
 
 **Optional Dependencies:**
+
 - Akash CLI (for Akash deployment)
 - kubectl (for Kubernetes deployment)
 - Terraform (for infrastructure as code)
@@ -143,6 +148,7 @@ HEALTH_CHECK_INTERVAL=30000
 ### Network Configuration
 
 **Firewall Rules:**
+
 ```bash
 # Allow HTTP/HTTPS traffic
 sudo ufw allow 80/tcp
@@ -159,6 +165,7 @@ sudo ufw enable
 ```
 
 **Nginx Configuration** (optional reverse proxy):
+
 ```nginx
 server {
     listen 80;
@@ -288,6 +295,7 @@ docker-compose logs -f
 For high availability, deploy across multiple servers:
 
 **Load Balancer Server:**
+
 ```yaml
 # docker-compose.lb.yml
 version: '3.8'
@@ -295,19 +303,20 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./ssl:/etc/ssl/certs
 ```
 
 **Application Servers:**
+
 ```bash
 # Server 1
 SERVER_ID=1 docker-compose up -d
 
-# Server 2  
+# Server 2
 SERVER_ID=2 docker-compose up -d
 
 # Server 3
@@ -355,7 +364,7 @@ akash tx cert create client --from wallet --chain-id akashnet-2
 Update [`docker/deploy.yaml`](../docker/deploy.yaml):
 
 ```yaml
-version: "2.0"
+version: '2.0'
 
 services:
   app:
@@ -368,7 +377,7 @@ services:
         as: 80
         to:
           - global: true
-    
+
   websocket:
     image: football-squares-ws:latest
     expose:
@@ -446,6 +455,7 @@ akash tx deployment close --deployment-id <DEPLOYMENT_ID> --from wallet
 ### AWS Deployment
 
 **1. EC2 Instance Setup:**
+
 ```bash
 # Launch EC2 instance (t3.large recommended)
 aws ec2 run-instances \
@@ -460,6 +470,7 @@ ssh -i your-key.pem ubuntu@your-instance-ip
 ```
 
 **2. Application Deployment:**
+
 ```bash
 # Clone repository
 git clone https://github.com/your-repo/football-squares.git
@@ -485,6 +496,7 @@ pm2 startup
 ### Google Cloud Platform
 
 **1. Compute Engine Setup:**
+
 ```bash
 # Create instance
 gcloud compute instances create football-squares \
@@ -495,6 +507,7 @@ gcloud compute instances create football-squares \
 ```
 
 **2. Container Deployment:**
+
 ```bash
 # Build and push to Container Registry
 docker build -t gcr.io/your-project/football-squares .
@@ -511,6 +524,7 @@ gcloud run deploy football-squares \
 ### DigitalOcean
 
 **1. Droplet Setup:**
+
 ```bash
 # Create droplet via CLI
 doctl compute droplet create football-squares \
@@ -520,24 +534,25 @@ doctl compute droplet create football-squares \
 ```
 
 **2. App Platform Deployment:**
+
 ```yaml
 # .do/app.yaml
 name: football-squares
 services:
-- name: web
-  source_dir: /
-  github:
-    repo: your-username/football-squares
-    branch: main
-  run_command: npm start
-  environment_slug: node-js
-  instance_count: 3
-  instance_size_slug: basic-xxs
-  envs:
-  - key: NODE_ENV
-    value: production
-  - key: RPC_ENDPOINT
-    value: https://api.mainnet-beta.solana.com
+  - name: web
+    source_dir: /
+    github:
+      repo: your-username/football-squares
+      branch: main
+    run_command: npm start
+    environment_slug: node-js
+    instance_count: 3
+    instance_size_slug: basic-xxs
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: RPC_ENDPOINT
+        value: https://api.mainnet-beta.solana.com
 ```
 
 ## CI/CD Pipeline
@@ -596,6 +611,7 @@ npm run deploy:status
 ### Health Monitoring
 
 **Application Health Checks:**
+
 ```bash
 # Check all services
 npm run health
@@ -607,6 +623,7 @@ npm run health:single agents
 ```
 
 **Automated Monitoring Setup:**
+
 ```bash
 # Set up cron job for health checks
 echo "*/5 * * * * cd /path/to/app && npm run health >> /var/log/health.log" | crontab -
@@ -627,12 +644,14 @@ EOF
 ### Performance Monitoring
 
 **Metrics Collection:**
+
 - Application performance metrics
 - Database query performance
 - WebSocket connection metrics
 - Blockchain transaction metrics
 
 **Alerting Rules:**
+
 - High error rates (>5%)
 - Slow response times (>2s)
 - High memory usage (>90%)
@@ -641,6 +660,7 @@ EOF
 ### Backup and Recovery
 
 **Database Backups:**
+
 ```bash
 # Backup Ceramic data
 npm run backup:ceramic
@@ -653,6 +673,7 @@ solana account <PROGRAM_ID> --output json > program-backup-$(date +%Y%m%d).json
 ```
 
 **Recovery Procedures:**
+
 ```bash
 # Restore from backup
 npm run restore:ceramic backup-file.tar.gz
@@ -669,6 +690,7 @@ npm run health
 ### Network Security
 
 **Firewall Configuration:**
+
 ```bash
 # Allow only necessary ports
 sudo ufw deny incoming
@@ -681,6 +703,7 @@ sudo ufw enable
 ```
 
 **SSL/TLS Configuration:**
+
 ```bash
 # Install Let's Encrypt certificate
 sudo apt install certbot python3-certbot-nginx
@@ -694,12 +717,14 @@ sudo crontab -e
 ### Application Security
 
 **Environment Security:**
+
 - Use strong, unique passwords
 - Rotate API keys regularly
 - Implement proper access controls
 - Enable audit logging
 
 **Container Security:**
+
 ```bash
 # Scan images for vulnerabilities
 docker scan football-squares:latest
@@ -714,6 +739,7 @@ docker run --memory=4g --cpus=2 football-squares:latest
 ### Smart Contract Security
 
 **Deployment Security:**
+
 - Use hardware wallet for mainnet deployment
 - Verify program bytecode
 - Implement upgrade authorities carefully
@@ -789,6 +815,7 @@ docker-compose restart agents
 ### Log Analysis
 
 **Application Logs:**
+
 ```bash
 # View real-time logs
 docker-compose logs -f
@@ -801,6 +828,7 @@ docker-compose logs | grep ERROR
 ```
 
 **System Logs:**
+
 ```bash
 # System messages
 sudo tail -f /var/log/syslog
@@ -815,16 +843,19 @@ tail -f /var/log/football-squares/app.log
 ### Performance Optimization
 
 **Database Optimization:**
+
 - Index frequently queried fields
 - Implement connection pooling
 - Use read replicas for analytics
 
 **Frontend Optimization:**
+
 - Enable gzip compression
 - Implement CDN caching
 - Optimize bundle sizes
 
 **Infrastructure Optimization:**
+
 - Use load balancers
 - Implement auto-scaling
 - Monitor resource usage
@@ -832,18 +863,21 @@ tail -f /var/log/football-squares/app.log
 ## Maintenance Schedule
 
 ### Daily Tasks
+
 - [ ] Monitor system health
 - [ ] Check error logs
 - [ ] Verify backup completion
 - [ ] Review security alerts
 
 ### Weekly Tasks
+
 - [ ] Update dependencies
 - [ ] Review performance metrics
 - [ ] Test disaster recovery
 - [ ] Security patch updates
 
 ### Monthly Tasks
+
 - [ ] Capacity planning review
 - [ ] Security audit
 - [ ] Cost optimization review
@@ -852,18 +886,20 @@ tail -f /var/log/football-squares/app.log
 ## Support and Escalation
 
 ### Support Channels
+
 - **Technical Issues**: GitHub Issues
 - **Security Issues**: security@footballsquares.dev
 - **Infrastructure**: DevOps team
 - **Emergency**: On-call rotation
 
 ### Escalation Matrix
+
 1. **Level 1**: Application errors, minor performance issues
 2. **Level 2**: Service outages, security incidents
 3. **Level 3**: Data loss, major security breaches
 
 ---
 
-*Last updated: January 2025*
+_Last updated: January 2025_
 
 For deployment support, contact: deployments@footballsquares.dev

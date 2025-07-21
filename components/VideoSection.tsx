@@ -17,7 +17,10 @@ const VideoSection = () => {
             Watch expert fantasy football analysis and insights
           </p>
         </div>
-        <div className="relative w-full group" style={{ paddingBottom: '56.25%' }}>
+        <div
+          className="relative w-full group"
+          style={{ paddingBottom: '56.25%' }}
+        >
           <iframe
             className="absolute top-0 left-0 w-full h-full rounded-xl shadow-2xl border-4 border-gray-200 dark:border-gray-700 transition-all duration-300 group-hover:shadow-3xl group-hover:scale-[1.02]"
             src="https://www.youtube.com/embed/lGv6YRlZUv4?si=T4jltJLO-Z5KgrKw&amp;clip=Ugkxj8cFVerEPTbvWsrAAqwgjZtD1UsYdZ2o&amp;clipt=EAAY6Wg&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=lGv6YRlZUv4"

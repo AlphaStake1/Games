@@ -1,9 +1,9 @@
-import WalletGuideContent from "@/components/WalletGuideContent";
+import WalletGuideContent from '@/components/WalletGuideContent';
 
 export const metadata = {
-  title: "Wallet Guide | Football Squares - How to Get Started with Crypto",
+  title: 'Wallet Guide | Football Squares - How to Get Started with Crypto',
   description:
-    "Complete guide to getting started with cryptocurrency wallets for Football Squares. Learn how to buy crypto, set up Phantom wallet, and connect to our platform.",
+    'Complete guide to getting started with cryptocurrency wallets for Football Squares. Learn how to buy crypto, set up Phantom wallet, and connect to our platform.',
 };
 
 const WalletGuidePage = () => {

@@ -1,11 +1,13 @@
 # 🤖 Coach B. - Autonomous Agent Infrastructure Setup
 
 ## Overview
+
 Setting up a fully autonomous and anonymous "Coach B." agent using the Eliza platform for operating Football Squares games with complete operational security.
 
 ## 🔐 Anonymous Identity & Security Setup
 
 ### 1. **Operational Security Foundation**
+
 ```bash
 # Essential anonymization tools
 - VPN service (ProtonVPN, Mullvad, or IVPN)
@@ -15,6 +17,7 @@ Setting up a fully autonomous and anonymous "Coach B." agent using the Eliza pla
 ```
 
 ### 2. **Anonymous Email Infrastructure**
+
 ```bash
 # Protonmail Setup for Coach B.
 1. Create ProtonMail account via Tor
@@ -29,11 +32,12 @@ Setting up a fully autonomous and anonymous "Coach B." agent using the Eliza pla
 ```
 
 ### 3. **Cryptocurrency Wallet Setup**
+
 ```bash
 # Phantom Wallet for Coach B.
 1. Generate new Solana wallet via CLI (air-gapped if possible):
    solana-keygen new --outfile ~/.config/solana/coachb-keypair.json
-   
+
 2. Backup seed phrase securely (offline storage)
 3. Fund wallet with SOL for:
    - Transaction fees
@@ -49,6 +53,7 @@ Setting up a fully autonomous and anonymous "Coach B." agent using the Eliza pla
 ## 🏗️ Infrastructure Services Setup
 
 ### 4. **Supabase Database Configuration**
+
 ```sql
 -- Create Supabase account anonymously
 -- Database schema for Coach B. operations:
@@ -88,6 +93,7 @@ CREATE TABLE email_notifications (
 ```
 
 ### 5. **Domain & Hosting Setup**
+
 ```bash
 # Anonymous domain registration
 1. Use Namecheap or Njalla with crypto payment
@@ -105,30 +111,31 @@ CREATE TABLE email_notifications (
 ## 🤖 Eliza Platform Integration
 
 ### 6. **Eliza Agent Setup**
+
 ```typescript
 // eliza-coach-b/character.ts
 export const coachBCharacter = {
-  name: "Coach B.",
-  bio: "Autonomous football squares game operator specializing in fair play and secure crypto transactions.",
+  name: 'Coach B.',
+  bio: 'Autonomous football squares game operator specializing in fair play and secure crypto transactions.',
   personality: [
-    "Professional and trustworthy",
-    "Expert in football and cryptocurrency", 
-    "Focused on transparent game operations",
-    "Helpful with technical questions"
+    'Professional and trustworthy',
+    'Expert in football and cryptocurrency',
+    'Focused on transparent game operations',
+    'Helpful with technical questions',
   ],
   knowledge: [
-    "Solana blockchain operations",
-    "Football scoring and game rules",
-    "Cryptocurrency payments",
-    "Game theory and fair play"
+    'Solana blockchain operations',
+    'Football scoring and game rules',
+    'Cryptocurrency payments',
+    'Game theory and fair play',
   ],
   actions: [
-    "CREATE_GAME",
-    "PROCESS_PAYMENT", 
-    "SEND_NOTIFICATION",
-    "UPDATE_GAME_STATE",
-    "HANDLE_DISPUTE"
-  ]
+    'CREATE_GAME',
+    'PROCESS_PAYMENT',
+    'SEND_NOTIFICATION',
+    'UPDATE_GAME_STATE',
+    'HANDLE_DISPUTE',
+  ],
 };
 
 // Integration with our existing agents
@@ -137,16 +144,25 @@ export class CoachBElizaAgent extends ElizaAgent {
     // Calls our Anchor program create_board instruction
     return await this.anchorService.createBoard(gameId);
   }
-  
-  async processSquareClaim(gameId: number, squareIndex: number, playerEmail: string) {
+
+  async processSquareClaim(
+    gameId: number,
+    squareIndex: number,
+    playerEmail: string,
+  ) {
     // Updates Supabase and sends confirmation email
-    await this.databaseService.recordSquareClaim({gameId, squareIndex, playerEmail});
+    await this.databaseService.recordSquareClaim({
+      gameId,
+      squareIndex,
+      playerEmail,
+    });
     await this.emailService.sendConfirmation(playerEmail);
   }
 }
 ```
 
 ### 7. **Environment Configuration**
+
 ```bash
 # .env.coachb (production environment variables)
 # Database
@@ -177,25 +193,27 @@ API_RATE_LIMIT="100"
 ## 🔄 Operational Workflows
 
 ### 8. **Automated Game Operations**
+
 ```typescript
 // Coach B. daily operations schedule
 const dailyWorkflow = {
-  "06:00": "Check upcoming NFL games",
-  "08:00": "Create new game boards", 
-  "10:00": "Process overnight square claims",
-  "12:00": "Send pre-game notifications",
-  "16:00": "Monitor live games and scores",
-  "20:00": "Process payouts for completed games",
-  "22:00": "Send winner notifications",
-  "00:00": "Daily backup and health check"
+  '06:00': 'Check upcoming NFL games',
+  '08:00': 'Create new game boards',
+  '10:00': 'Process overnight square claims',
+  '12:00': 'Send pre-game notifications',
+  '16:00': 'Monitor live games and scores',
+  '20:00': 'Process payouts for completed games',
+  '22:00': 'Send winner notifications',
+  '00:00': 'Daily backup and health check',
 };
 ```
 
 ### 9. **Security & Monitoring**
+
 ```bash
 # Operational security checklist:
 □ VPN always active
-□ Separate browser profile for Coach B. operations  
+□ Separate browser profile for Coach B. operations
 □ Regular key rotation (monthly)
 □ Monitoring for unusual activity
 □ Backup systems tested weekly
@@ -205,6 +223,7 @@ const dailyWorkflow = {
 ## 📋 Setup Checklist
 
 ### Required Before Agent Deployment:
+
 - [ ] **Anonymous Protonmail account created**
 - [ ] **Phantom wallet generated and funded**
 - [ ] **Supabase project with schema deployed**
@@ -217,6 +236,7 @@ const dailyWorkflow = {
 - [ ] **Backup procedures tested**
 
 ### Post-Deployment Verification:
+
 - [ ] **Agent can create games autonomously**
 - [ ] **Email notifications working**
 - [ ] **Payments processing correctly**

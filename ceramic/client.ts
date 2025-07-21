@@ -42,9 +42,10 @@ export class CeramicLogger {
 
   constructor() {
     // Connect to Ceramic node
-    const ceramicUrl = process.env.CERAMIC_URL || 'https://ceramic-clay.3boxlabs.com';
+    const ceramicUrl =
+      process.env.CERAMIC_URL || 'https://ceramic-clay.3boxlabs.com';
     this.ceramic = new CeramicClient(ceramicUrl);
-    
+
     this.initializeDID();
   }
 
@@ -58,12 +59,12 @@ export class CeramicLogger {
 
       const key = fromString(seed, 'base16');
       const provider = new Ed25519Provider(key);
-      
+
       this.did = new DID({ provider, resolver: getResolver() });
       await this.did.authenticate();
-      
+
       this.ceramic.did = this.did;
-      
+
       console.log('Ceramic DID initialized:', this.did.id);
     } catch (error) {
       console.error('Error initializing DID:', error);
@@ -102,19 +103,19 @@ export class CeramicLogger {
                     gameId: { type: 'number' },
                     timestamp: { type: 'number' },
                     data: { type: 'object' },
-                    signature: { type: 'string' }
+                    signature: { type: 'string' },
                   },
-                  required: ['eventType', 'gameId', 'timestamp', 'data']
-                }
-              }
-            }
+                  required: ['eventType', 'gameId', 'timestamp', 'data'],
+                },
+              },
+            },
           },
-          events: []
+          events: [],
         },
         {
           controllers: [this.did.id],
-          family: 'football-squares-events'
-        }
+          family: 'football-squares-events',
+        },
       );
       this.gameEventsStreamId = gameEventsDoc.id.toString();
 
@@ -136,19 +137,19 @@ export class CeramicLogger {
                     userId: { type: 'string' },
                     gameId: { type: 'number' },
                     timestamp: { type: 'number' },
-                    data: { type: 'object' }
+                    data: { type: 'object' },
                   },
-                  required: ['actionType', 'userId', 'timestamp', 'data']
-                }
-              }
-            }
+                  required: ['actionType', 'userId', 'timestamp', 'data'],
+                },
+              },
+            },
           },
-          actions: []
+          actions: [],
         },
         {
           controllers: [this.did.id],
-          family: 'football-squares-users'
-        }
+          family: 'football-squares-users',
+        },
       );
       this.userActionsStreamId = userActionsDoc.id.toString();
 
@@ -166,23 +167,26 @@ export class CeramicLogger {
                 items: {
                   type: 'object',
                   properties: {
-                    logLevel: { type: 'string', enum: ['info', 'warn', 'error', 'debug'] },
+                    logLevel: {
+                      type: 'string',
+                      enum: ['info', 'warn', 'error', 'debug'],
+                    },
                     component: { type: 'string' },
                     message: { type: 'string' },
                     timestamp: { type: 'number' },
-                    metadata: { type: 'object' }
+                    metadata: { type: 'object' },
                   },
-                  required: ['logLevel', 'component', 'message', 'timestamp']
-                }
-              }
-            }
+                  required: ['logLevel', 'component', 'message', 'timestamp'],
+                },
+              },
+            },
           },
-          logs: []
+          logs: [],
         },
         {
           controllers: [this.did.id],
-          family: 'football-squares-system'
-        }
+          family: 'football-squares-system',
+        },
       );
       this.systemLogsStreamId = systemLogsDoc.id.toString();
 
@@ -202,18 +206,23 @@ export class CeramicLogger {
         throw new Error('Game events stream not initialized');
       }
 
-      const doc = await TileDocument.load(this.ceramic, this.gameEventsStreamId);
+      const doc = await TileDocument.load(
+        this.ceramic,
+        this.gameEventsStreamId,
+      );
       const currentData = doc.content as any;
-      
+
       const updatedEvents = [...(currentData.events || []), event];
-      
+
       await doc.update({
         ...currentData,
         events: updatedEvents,
-        lastUpdated: Date.now()
+        lastUpdated: Date.now(),
       });
 
-      console.log(`Game event logged: ${event.eventType} for game ${event.gameId}`);
+      console.log(
+        `Game event logged: ${event.eventType} for game ${event.gameId}`,
+      );
     } catch (error) {
       console.error('Error logging game event:', error);
       throw error;
@@ -226,18 +235,23 @@ export class CeramicLogger {
         throw new Error('User actions stream not initialized');
       }
 
-      const doc = await TileDocument.load(this.ceramic, this.userActionsStreamId);
+      const doc = await TileDocument.load(
+        this.ceramic,
+        this.userActionsStreamId,
+      );
       const currentData = doc.content as any;
-      
+
       const updatedActions = [...(currentData.actions || []), action];
-      
+
       await doc.update({
         ...currentData,
         actions: updatedActions,
-        lastUpdated: Date.now()
+        lastUpdated: Date.now(),
       });
 
-      console.log(`User action logged: ${action.actionType} by ${action.userId}`);
+      console.log(
+        `User action logged: ${action.actionType} by ${action.userId}`,
+      );
     } catch (error) {
       console.error('Error logging user action:', error);
       throw error;
@@ -250,18 +264,21 @@ export class CeramicLogger {
         throw new Error('System logs stream not initialized');
       }
 
-      const doc = await TileDocument.load(this.ceramic, this.systemLogsStreamId);
+      const doc = await TileDocument.load(
+        this.ceramic,
+        this.systemLogsStreamId,
+      );
       const currentData = doc.content as any;
-      
+
       const updatedLogs = [...(currentData.logs || []), log];
-      
+
       // Keep only the last 1000 logs to prevent excessive growth
       const trimmedLogs = updatedLogs.slice(-1000);
-      
+
       await doc.update({
         ...currentData,
         logs: trimmedLogs,
-        lastUpdated: Date.now()
+        lastUpdated: Date.now(),
       });
 
       console.log(`System log recorded: ${log.logLevel} - ${log.message}`);
@@ -271,21 +288,27 @@ export class CeramicLogger {
     }
   }
 
-  async getGameEvents(gameId?: number, limit: number = 100): Promise<GameEvent[]> {
+  async getGameEvents(
+    gameId?: number,
+    limit: number = 100,
+  ): Promise<GameEvent[]> {
     try {
       if (!this.gameEventsStreamId) {
         throw new Error('Game events stream not initialized');
       }
 
-      const doc = await TileDocument.load(this.ceramic, this.gameEventsStreamId);
+      const doc = await TileDocument.load(
+        this.ceramic,
+        this.gameEventsStreamId,
+      );
       const data = doc.content as any;
-      
+
       let events = data.events || [];
-      
+
       if (gameId !== undefined) {
         events = events.filter((event: GameEvent) => event.gameId === gameId);
       }
-      
+
       return events
         .sort((a: GameEvent, b: GameEvent) => b.timestamp - a.timestamp)
         .slice(0, limit);
@@ -295,25 +318,36 @@ export class CeramicLogger {
     }
   }
 
-  async getUserActions(userId?: string, gameId?: number, limit: number = 100): Promise<UserAction[]> {
+  async getUserActions(
+    userId?: string,
+    gameId?: number,
+    limit: number = 100,
+  ): Promise<UserAction[]> {
     try {
       if (!this.userActionsStreamId) {
         throw new Error('User actions stream not initialized');
       }
 
-      const doc = await TileDocument.load(this.ceramic, this.userActionsStreamId);
+      const doc = await TileDocument.load(
+        this.ceramic,
+        this.userActionsStreamId,
+      );
       const data = doc.content as any;
-      
+
       let actions = data.actions || [];
-      
+
       if (userId) {
-        actions = actions.filter((action: UserAction) => action.userId === userId);
+        actions = actions.filter(
+          (action: UserAction) => action.userId === userId,
+        );
       }
-      
+
       if (gameId !== undefined) {
-        actions = actions.filter((action: UserAction) => action.gameId === gameId);
+        actions = actions.filter(
+          (action: UserAction) => action.gameId === gameId,
+        );
       }
-      
+
       return actions
         .sort((a: UserAction, b: UserAction) => b.timestamp - a.timestamp)
         .slice(0, limit);
@@ -323,25 +357,32 @@ export class CeramicLogger {
     }
   }
 
-  async getSystemLogs(component?: string, logLevel?: string, limit: number = 100): Promise<SystemLog[]> {
+  async getSystemLogs(
+    component?: string,
+    logLevel?: string,
+    limit: number = 100,
+  ): Promise<SystemLog[]> {
     try {
       if (!this.systemLogsStreamId) {
         throw new Error('System logs stream not initialized');
       }
 
-      const doc = await TileDocument.load(this.ceramic, this.systemLogsStreamId);
+      const doc = await TileDocument.load(
+        this.ceramic,
+        this.systemLogsStreamId,
+      );
       const data = doc.content as any;
-      
+
       let logs = data.logs || [];
-      
+
       if (component) {
         logs = logs.filter((log: SystemLog) => log.component === component);
       }
-      
+
       if (logLevel) {
         logs = logs.filter((log: SystemLog) => log.logLevel === logLevel);
       }
-      
+
       return logs
         .sort((a: SystemLog, b: SystemLog) => b.timestamp - a.timestamp)
         .slice(0, limit);
@@ -354,7 +395,9 @@ export class CeramicLogger {
   async getAnalytics(gameId?: number): Promise<any> {
     try {
       const events = await this.getGameEvents(gameId, 1000);
-      const actions = gameId ? await this.getUserActions(undefined, gameId, 1000) : [];
+      const actions = gameId
+        ? await this.getUserActions(undefined, gameId, 1000)
+        : [];
 
       const analytics = {
         totalEvents: events.length,
@@ -362,21 +405,25 @@ export class CeramicLogger {
         eventTypes: {},
         actionTypes: {},
         timeline: [],
-        gameStats: gameId ? this.calculateGameStats(events, actions) : null
+        gameStats: gameId ? this.calculateGameStats(events, actions) : null,
       };
 
       // Count event types
-      events.forEach(event => {
-        analytics.eventTypes[event.eventType] = (analytics.eventTypes[event.eventType] || 0) + 1;
+      events.forEach((event) => {
+        analytics.eventTypes[event.eventType] =
+          (analytics.eventTypes[event.eventType] || 0) + 1;
       });
 
       // Count action types
-      actions.forEach(action => {
-        analytics.actionTypes[action.actionType] = (analytics.actionTypes[action.actionType] || 0) + 1;
+      actions.forEach((action) => {
+        analytics.actionTypes[action.actionType] =
+          (analytics.actionTypes[action.actionType] || 0) + 1;
       });
 
       // Create timeline
-      const allItems = [...events, ...actions].sort((a, b) => a.timestamp - b.timestamp);
+      const allItems = [...events, ...actions].sort(
+        (a, b) => a.timestamp - b.timestamp,
+      );
       analytics.timeline = allItems.slice(-50); // Last 50 items
 
       return analytics;
@@ -396,10 +443,10 @@ export class CeramicLogger {
       uniquePlayers: new Set(),
       scoreUpdates: 0,
       winnerSettled: false,
-      payoutCompleted: false
+      payoutCompleted: false,
     };
 
-    events.forEach(event => {
+    events.forEach((event) => {
       switch (event.eventType) {
         case 'board_created':
           stats.boardCreated = true;
@@ -433,7 +480,7 @@ export class CeramicLogger {
 
     return {
       ...stats,
-      uniquePlayers: stats.uniquePlayers.size
+      uniquePlayers: stats.uniquePlayers.size,
     };
   }
 
@@ -441,7 +488,7 @@ export class CeramicLogger {
     try {
       // Test ceramic connection
       const nodeInfo = await this.ceramic.getSupportedChains();
-      
+
       // Test DID authentication
       if (!this.did.authenticated) {
         await this.did.authenticate();
@@ -459,11 +506,15 @@ export class CeramicLogger {
     }
   }
 
-  getStreamIds(): { gameEvents: string | null; userActions: string | null; systemLogs: string | null } {
+  getStreamIds(): {
+    gameEvents: string | null;
+    userActions: string | null;
+    systemLogs: string | null;
+  } {
     return {
       gameEvents: this.gameEventsStreamId,
       userActions: this.userActionsStreamId,
-      systemLogs: this.systemLogsStreamId
+      systemLogs: this.systemLogsStreamId,
     };
   }
 }

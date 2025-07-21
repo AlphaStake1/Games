@@ -1,56 +1,56 @@
-"use client";
+'use client';
 
-import { ExternalLink } from "lucide-react";
+import { ExternalLink } from 'lucide-react';
 
 const FantasyLinksGrid = () => {
   const fantasyLinks = [
     {
-      name: "ESPN Fantasy",
-      url: "https://www.espn.com/fantasy/football/",
+      name: 'ESPN Fantasy',
+      url: 'https://www.espn.com/fantasy/football/',
       description:
-        "The most popular fantasy platform with comprehensive stats, expert analysis, and social features.",
-      color: "bg-[#ed5925]",
-      logo: "ESPN",
+        'The most popular fantasy platform with comprehensive stats, expert analysis, and social features.',
+      color: 'bg-[#ed5925]',
+      logo: 'ESPN',
     },
     {
-      name: "NFL Fantasy",
-      url: "https://fantasy.nfl.com/",
+      name: 'NFL Fantasy',
+      url: 'https://fantasy.nfl.com/',
       description:
-        "Official NFL fantasy football with real-time scoring and exclusive NFL content and insights.",
-      color: "bg-[#002244]",
-      logo: "NFL",
+        'Official NFL fantasy football with real-time scoring and exclusive NFL content and insights.',
+      color: 'bg-[#002244]',
+      logo: 'NFL',
     },
     {
-      name: "Yahoo Fantasy",
-      url: "https://football.fantasysports.yahoo.com/",
+      name: 'Yahoo Fantasy',
+      url: 'https://football.fantasysports.yahoo.com/',
       description:
-        "User-friendly interface with great mobile app and innovative features for fantasy football.",
-      color: "bg-[#96abdc]",
-      logo: "YAHOO",
+        'User-friendly interface with great mobile app and innovative features for fantasy football.',
+      color: 'bg-[#96abdc]',
+      logo: 'YAHOO',
     },
     {
-      name: "Sleeper",
-      url: "https://sleeper.com/",
+      name: 'Sleeper',
+      url: 'https://sleeper.com/',
       description:
-        "Modern fantasy platform with social features, custom scoring, and dynasty league support.",
-      color: "bg-[#004953]",
-      logo: "SLEEPER",
+        'Modern fantasy platform with social features, custom scoring, and dynasty league support.',
+      color: 'bg-[#004953]',
+      logo: 'SLEEPER',
     },
     {
-      name: "CBS Sports Fantasy",
-      url: "https://www.cbssports.com/fantasy/football/",
+      name: 'CBS Sports Fantasy',
+      url: 'https://www.cbssports.com/fantasy/football/',
       description:
-        "Comprehensive fantasy platform with expert advice, rankings, and detailed player analysis.",
-      color: "bg-[#8d594d]",
-      logo: "CBS",
+        'Comprehensive fantasy platform with expert advice, rankings, and detailed player analysis.',
+      color: 'bg-[#8d594d]',
+      logo: 'CBS',
     },
     {
-      name: "DraftSharks",
-      url: "https://www.draftsharks.com/",
+      name: 'DraftSharks',
+      url: 'https://www.draftsharks.com/',
       description:
-        "Advanced fantasy tools with draft kits, rankings, and expert analysis for serious players.",
-      color: "bg-[#708090]",
-      logo: "SHARKS",
+        'Advanced fantasy tools with draft kits, rankings, and expert analysis for serious players.',
+      color: 'bg-[#708090]',
+      logo: 'SHARKS',
     },
   ];
 

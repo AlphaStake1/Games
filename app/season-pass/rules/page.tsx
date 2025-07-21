@@ -7,12 +7,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { 
-  Crown, 
-  Trophy, 
-  Star, 
-  Zap, 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import {
+  Crown,
+  Trophy,
+  Star,
+  Zap,
   Target,
   Users,
   Calendar,
@@ -34,19 +39,19 @@ import {
   Timer,
   Medal,
   Flame,
-  PlayCircle
+  PlayCircle,
 } from 'lucide-react';
 
 const SeasonPassRulesPage = () => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('overview');
 
-  const HitPatternExample = ({ 
-    homeScore, 
-    awayScore, 
-    pattern, 
-    points, 
-    description 
+  const HitPatternExample = ({
+    homeScore,
+    awayScore,
+    pattern,
+    points,
+    description,
   }: {
     homeScore: number;
     awayScore: number;
@@ -60,7 +65,10 @@ const SeasonPassRulesPage = () => {
           <div className="text-2xl font-bold text-white">
             {homeScore} - {awayScore}
           </div>
-          <Badge variant="outline" className="text-yellow-400 border-yellow-400">
+          <Badge
+            variant="outline"
+            className="text-yellow-400 border-yellow-400"
+          >
             {pattern}
           </Badge>
         </div>
@@ -73,11 +81,11 @@ const SeasonPassRulesPage = () => {
     </div>
   );
 
-  const StepCard = ({ 
-    step, 
-    title, 
-    description, 
-    icon 
+  const StepCard = ({
+    step,
+    title,
+    description,
+    icon,
   }: {
     step: number;
     title: string;
@@ -114,22 +122,35 @@ const SeasonPassRulesPage = () => {
       <div className="space-y-3">
         <div className="text-center mb-4">
           <h3 className="text-lg font-semibold text-green-400">
-            ${conferencePrice} Conference = ${prizePool.toLocaleString()} Prize Pool
+            ${conferencePrice} Conference = ${prizePool.toLocaleString()} Prize
+            Pool
           </h3>
         </div>
         {prizes.map((prize, index) => (
-          <div key={index} className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg">
+          <div
+            key={index}
+            className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg"
+          >
             <div className="flex items-center gap-3">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                index === 0 ? 'bg-yellow-500 text-black' :
-                index === 1 ? 'bg-gray-400 text-black' :
-                index === 2 ? 'bg-orange-500 text-black' :
-                'bg-gray-700 text-white'
-              }`}>
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                  index === 0
+                    ? 'bg-yellow-500 text-black'
+                    : index === 1
+                      ? 'bg-gray-400 text-black'
+                      : index === 2
+                        ? 'bg-orange-500 text-black'
+                        : 'bg-gray-700 text-white'
+                }`}
+              >
                 {index < 3 ? (
-                  index === 0 ? <Trophy className="w-4 h-4" /> :
-                  index === 1 ? <Medal className="w-4 h-4" /> :
-                  <Award className="w-4 h-4" />
+                  index === 0 ? (
+                    <Trophy className="w-4 h-4" />
+                  ) : index === 1 ? (
+                    <Medal className="w-4 h-4" />
+                  ) : (
+                    <Award className="w-4 h-4" />
+                  )
                 ) : (
                   prize.place.replace(/\D/g, '')
                 )}
@@ -161,7 +182,7 @@ const SeasonPassRulesPage = () => {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Season Pass
           </Button>
-          
+
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold flex items-center gap-3">
@@ -169,10 +190,11 @@ const SeasonPassRulesPage = () => {
                 Season-Pass Rules & Onboarding
               </h1>
               <p className="text-gray-400 mt-2">
-                Complete guide to the Season-Pass NFT system and points accumulation
+                Complete guide to the Season-Pass NFT system and points
+                accumulation
               </p>
             </div>
-            
+
             <Button
               onClick={() => router.push('/season-pass/conferences')}
               className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold"
@@ -205,15 +227,19 @@ const SeasonPassRulesPage = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-gray-300">
-                  Season-Pass NFT is a comprehensive NFL squares competition system where players mint 
-                  a single non-transferable NFT that grants access to every NFL game throughout the season 
-                  and playoffs. Unlike traditional weekly games, your Season-Pass accumulates points across 
-                  the entire season, creating a long-term competitive experience.
+                  Season-Pass NFT is a comprehensive NFL squares competition
+                  system where players mint a single non-transferable NFT that
+                  grants access to every NFL game throughout the season and
+                  playoffs. Unlike traditional weekly games, your Season-Pass
+                  accumulates points across the entire season, creating a
+                  long-term competitive experience.
                 </p>
-                
+
                 <div className="grid md:grid-cols-2 gap-6 mt-6">
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-yellow-400">Key Features</h3>
+                    <h3 className="text-lg font-semibold text-yellow-400">
+                      Key Features
+                    </h3>
                     <ul className="space-y-2">
                       <li className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-green-400" />
@@ -237,9 +263,11 @@ const SeasonPassRulesPage = () => {
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-yellow-400">Season Structure</h3>
+                    <h3 className="text-lg font-semibold text-yellow-400">
+                      Season Structure
+                    </h3>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
                         <span>Regular Season</span>
@@ -277,7 +305,9 @@ const SeasonPassRulesPage = () => {
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-green-400">Full-Season Pass</h3>
+                    <h3 className="text-lg font-semibold text-green-400">
+                      Full-Season Pass
+                    </h3>
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-center gap-2">
                         <Star className="w-4 h-4 text-yellow-400" />
@@ -297,9 +327,11 @@ const SeasonPassRulesPage = () => {
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-purple-400">Half-Season Pass</h3>
+                    <h3 className="text-lg font-semibold text-purple-400">
+                      Half-Season Pass
+                    </h3>
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-center gap-2">
                         <Clock className="w-4 h-4 text-purple-400" />
@@ -341,35 +373,35 @@ const SeasonPassRulesPage = () => {
                     description="Connect a Solana wallet (Phantom, Solflare, etc.) with sufficient USDC for your chosen conference tier."
                     icon={<Shield className="w-5 h-5" />}
                   />
-                  
+
                   <StepCard
                     step={2}
                     title="Choose Your Conference"
                     description="Select from 5 conference tiers ($100-$500) based on your preferred competition level and prize pool size."
                     icon={<Users className="w-5 h-5" />}
                   />
-                  
+
                   <StepCard
                     step={3}
                     title="Select Pass Type"
                     description="Choose between Full-Season (18 weeks + playoffs) or Half-Season (Week 10 + playoffs) participation."
                     icon={<Calendar className="w-5 h-5" />}
                   />
-                  
+
                   <StepCard
                     step={4}
                     title="Mint Your NFT"
                     description="Complete USDC payment to mint your soulbound Season-Pass NFT. This grants automatic access to all games."
                     icon={<Crown className="w-5 h-5" />}
                   />
-                  
+
                   <StepCard
                     step={5}
                     title="Auto-Assignment Begins"
                     description="Before each NFL game, your NFT is automatically assigned to a random square. No manual actions required!"
                     icon={<Grid3X3 className="w-5 h-5" />}
                   />
-                  
+
                   <StepCard
                     step={6}
                     title="Track Your Progress"
@@ -392,33 +424,42 @@ const SeasonPassRulesPage = () => {
                   <div className="p-4 bg-yellow-900/20 rounded-lg border border-yellow-700">
                     <div className="flex items-center gap-2 mb-2">
                       <Info className="w-4 h-4 text-yellow-400" />
-                      <span className="font-semibold text-yellow-400">Soulbound NFTs</span>
+                      <span className="font-semibold text-yellow-400">
+                        Soulbound NFTs
+                      </span>
                     </div>
                     <p className="text-sm text-yellow-100">
-                      Season-Pass NFTs are non-transferable and permanently bound to your wallet. 
-                      They cannot be sold, traded, or moved to another address.
+                      Season-Pass NFTs are non-transferable and permanently
+                      bound to your wallet. They cannot be sold, traded, or
+                      moved to another address.
                     </p>
                   </div>
-                  
+
                   <div className="p-4 bg-blue-900/20 rounded-lg border border-blue-700">
                     <div className="flex items-center gap-2 mb-2">
                       <Clock className="w-4 h-4 text-blue-400" />
-                      <span className="font-semibold text-blue-400">Auto-Assignment Timing</span>
+                      <span className="font-semibold text-blue-400">
+                        Auto-Assignment Timing
+                      </span>
                     </div>
                     <p className="text-sm text-blue-100">
-                      Square assignments happen automatically before each game kickoff. 
-                      You don't need to manually select or claim squares.
+                      Square assignments happen automatically before each game
+                      kickoff. You don't need to manually select or claim
+                      squares.
                     </p>
                   </div>
-                  
+
                   <div className="p-4 bg-purple-900/20 rounded-lg border border-purple-700">
                     <div className="flex items-center gap-2 mb-2">
                       <DollarSign className="w-4 h-4 text-purple-400" />
-                      <span className="font-semibold text-purple-400">USDC Payments</span>
+                      <span className="font-semibold text-purple-400">
+                        USDC Payments
+                      </span>
                     </div>
                     <p className="text-sm text-purple-100">
-                      All payments are processed in USDC on the Solana network. 
-                      Ensure your wallet has sufficient USDC plus a small amount of SOL for transaction fees.
+                      All payments are processed in USDC on the Solana network.
+                      Ensure your wallet has sufficient USDC plus a small amount
+                      of SOL for transaction fees.
                     </p>
                   </div>
                 </div>
@@ -438,13 +479,17 @@ const SeasonPassRulesPage = () => {
               <CardContent>
                 <div className="space-y-6">
                   <p className="text-gray-300">
-                    Points are earned when the last digit of each team's score matches your assigned square 
-                    according to these hit patterns. All patterns are checked after every scoring event.
+                    Points are earned when the last digit of each team's score
+                    matches your assigned square according to these hit
+                    patterns. All patterns are checked after every scoring
+                    event.
                   </p>
-                  
+
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-yellow-400">Hit Pattern Examples</h3>
+                      <h3 className="text-lg font-semibold text-yellow-400">
+                        Hit Pattern Examples
+                      </h3>
                       <div className="space-y-3">
                         <HitPatternExample
                           homeScore={7}
@@ -476,35 +521,45 @@ const SeasonPassRulesPage = () => {
                         />
                       </div>
                     </div>
-                    
+
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-yellow-400">Point Values</h3>
+                      <h3 className="text-lg font-semibold text-yellow-400">
+                        Point Values
+                      </h3>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <div>
                             <span className="font-semibold">Forward</span>
-                            <p className="text-xs text-gray-400">Exact match (Home, Away)</p>
+                            <p className="text-xs text-gray-400">
+                              Exact match (Home, Away)
+                            </p>
                           </div>
                           <Badge className="bg-green-600">10 pts</Badge>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <div>
                             <span className="font-semibold">Backward</span>
-                            <p className="text-xs text-gray-400">Reverse match (Away, Home)</p>
+                            <p className="text-xs text-gray-400">
+                              Reverse match (Away, Home)
+                            </p>
                           </div>
                           <Badge className="bg-blue-600">7 pts</Badge>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <div>
                             <span className="font-semibold">Forward+5</span>
-                            <p className="text-xs text-gray-400">Shifted forward pattern</p>
+                            <p className="text-xs text-gray-400">
+                              Shifted forward pattern
+                            </p>
                           </div>
                           <Badge className="bg-purple-600">5 pts</Badge>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <div>
                             <span className="font-semibold">Backward+5</span>
-                            <p className="text-xs text-gray-400">Shifted backward pattern</p>
+                            <p className="text-xs text-gray-400">
+                              Shifted backward pattern
+                            </p>
                           </div>
                           <Badge className="bg-orange-600">3 pts</Badge>
                         </div>
@@ -525,35 +580,52 @@ const SeasonPassRulesPage = () => {
               <CardContent>
                 <div className="space-y-4">
                   <p className="text-gray-300">
-                    During playoff rounds, all hit points are multiplied by increasing factors to 
-                    amplify the excitement and stakes of post-season competition.
+                    During playoff rounds, all hit points are multiplied by
+                    increasing factors to amplify the excitement and stakes of
+                    post-season competition.
                   </p>
-                  
+
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-3">
-                      <h3 className="text-lg font-semibold text-purple-400">Multiplier Schedule</h3>
+                      <h3 className="text-lg font-semibold text-purple-400">
+                        Multiplier Schedule
+                      </h3>
                       <div className="space-y-2">
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <span className="font-semibold">Wild Card Round</span>
-                          <Badge className="bg-purple-600 font-bold">× 1.5</Badge>
+                          <Badge className="bg-purple-600 font-bold">
+                            × 1.5
+                          </Badge>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
-                          <span className="font-semibold">Divisional Round</span>
-                          <Badge className="bg-purple-600 font-bold">× 2.0</Badge>
+                          <span className="font-semibold">
+                            Divisional Round
+                          </span>
+                          <Badge className="bg-purple-600 font-bold">
+                            × 2.0
+                          </Badge>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
-                          <span className="font-semibold">Conference Championship</span>
-                          <Badge className="bg-purple-600 font-bold">× 2.5</Badge>
+                          <span className="font-semibold">
+                            Conference Championship
+                          </span>
+                          <Badge className="bg-purple-600 font-bold">
+                            × 2.5
+                          </Badge>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <span className="font-semibold">Super Bowl</span>
-                          <Badge className="bg-purple-600 font-bold">× 3.0</Badge>
+                          <Badge className="bg-purple-600 font-bold">
+                            × 3.0
+                          </Badge>
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-3">
-                      <h3 className="text-lg font-semibold text-purple-400">Example Calculation</h3>
+                      <h3 className="text-lg font-semibold text-purple-400">
+                        Example Calculation
+                      </h3>
                       <div className="p-4 bg-purple-900/20 rounded-lg border border-purple-700">
                         <p className="text-sm mb-3">Super Bowl Forward Hit:</p>
                         <div className="space-y-1 text-sm">
@@ -589,12 +661,15 @@ const SeasonPassRulesPage = () => {
                 <div className="p-4 bg-blue-900/20 rounded-lg border border-blue-700">
                   <div className="flex items-center gap-2 mb-2">
                     <Flame className="w-4 h-4 text-blue-400" />
-                    <span className="font-semibold text-blue-400">Full Overtime Scoring</span>
+                    <span className="font-semibold text-blue-400">
+                      Full Overtime Scoring
+                    </span>
                   </div>
                   <p className="text-sm text-blue-100">
-                    All scoring events in overtime periods earn full point values with no reduction. 
-                    Playoff multipliers apply normally to overtime scoring, making extended games 
-                    extremely valuable for Season-Pass holders.
+                    All scoring events in overtime periods earn full point
+                    values with no reduction. Playoff multipliers apply normally
+                    to overtime scoring, making extended games extremely
+                    valuable for Season-Pass holders.
                   </p>
                 </div>
               </CardContent>
@@ -613,14 +688,17 @@ const SeasonPassRulesPage = () => {
               <CardContent>
                 <div className="space-y-6">
                   <p className="text-gray-300">
-                    Each conference accommodates exactly 100 players and operates as an independent 
-                    competitive pool. Higher-tier conferences have larger prize pools and attract 
-                    more experienced players.
+                    Each conference accommodates exactly 100 players and
+                    operates as an independent competitive pool. Higher-tier
+                    conferences have larger prize pools and attract more
+                    experienced players.
                   </p>
-                  
+
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-yellow-400">Conference Tiers</h3>
+                      <h3 className="text-lg font-semibold text-yellow-400">
+                        Conference Tiers
+                      </h3>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <div className="flex items-center gap-2">
@@ -659,9 +737,11 @@ const SeasonPassRulesPage = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-yellow-400">Conference Rules</h3>
+                      <h3 className="text-lg font-semibold text-yellow-400">
+                        Conference Rules
+                      </h3>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400" />
@@ -677,7 +757,9 @@ const SeasonPassRulesPage = () => {
                         </li>
                         <li className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span>Each tier cycles through all 5 price levels</span>
+                          <span>
+                            Each tier cycles through all 5 price levels
+                          </span>
                         </li>
                         <li className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400" />
@@ -700,10 +782,11 @@ const SeasonPassRulesPage = () => {
               <CardContent>
                 <div className="space-y-6">
                   <p className="text-gray-300">
-                    Each conference distributes prizes to the top 7 finishers using a fixed 
-                    percentage structure that scales with the conference's total prize pool.
+                    Each conference distributes prizes to the top 7 finishers
+                    using a fixed percentage structure that scales with the
+                    conference's total prize pool.
                   </p>
-                  
+
                   <Tabs defaultValue="100" className="w-full">
                     <TabsList className="grid w-full grid-cols-5">
                       <TabsTrigger value="100">$100</TabsTrigger>
@@ -712,7 +795,7 @@ const SeasonPassRulesPage = () => {
                       <TabsTrigger value="400">$400</TabsTrigger>
                       <TabsTrigger value="500">$500</TabsTrigger>
                     </TabsList>
-                    
+
                     <TabsContent value="100">
                       <PrizeStructure conferencePrice={100} />
                     </TabsContent>
@@ -746,73 +829,98 @@ const SeasonPassRulesPage = () => {
               <CardContent>
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="item-1">
-                    <AccordionTrigger>What happens if I miss minting before the season starts?</AccordionTrigger>
+                    <AccordionTrigger>
+                      What happens if I miss minting before the season starts?
+                    </AccordionTrigger>
                     <AccordionContent>
-                      If you miss the Full-Season deadline, you can still participate in Half-Season passes 
-                      starting from Week 10. Half-Season passes allow up to 5 NFTs per wallet with scaling 
-                      prices and separate competitive pools.
+                      If you miss the Full-Season deadline, you can still
+                      participate in Half-Season passes starting from Week 10.
+                      Half-Season passes allow up to 5 NFTs per wallet with
+                      scaling prices and separate competitive pools.
                     </AccordionContent>
                   </AccordionItem>
-                  
+
                   <AccordionItem value="item-2">
-                    <AccordionTrigger>How are squares assigned to my NFT?</AccordionTrigger>
+                    <AccordionTrigger>
+                      How are squares assigned to my NFT?
+                    </AccordionTrigger>
                     <AccordionContent>
-                      Before each NFL game, the system automatically assigns your Season-Pass NFT to a 
-                      random square (0-9 for both home and away teams). This happens automatically without 
-                      any action required from you.
+                      Before each NFL game, the system automatically assigns
+                      your Season-Pass NFT to a random square (0-9 for both home
+                      and away teams). This happens automatically without any
+                      action required from you.
                     </AccordionContent>
                   </AccordionItem>
-                  
+
                   <AccordionItem value="item-3">
-                    <AccordionTrigger>Can I trade or sell my Season-Pass NFT?</AccordionTrigger>
+                    <AccordionTrigger>
+                      Can I trade or sell my Season-Pass NFT?
+                    </AccordionTrigger>
                     <AccordionContent>
-                      No, Season-Pass NFTs are soulbound and non-transferable. They are permanently tied 
-                      to your wallet address and cannot be sold, traded, or moved to another wallet.
+                      No, Season-Pass NFTs are soulbound and non-transferable.
+                      They are permanently tied to your wallet address and
+                      cannot be sold, traded, or moved to another wallet.
                     </AccordionContent>
                   </AccordionItem>
-                  
+
                   <AccordionItem value="item-4">
-                    <AccordionTrigger>What if my conference doesn't fill up?</AccordionTrigger>
+                    <AccordionTrigger>
+                      What if my conference doesn't fill up?
+                    </AccordionTrigger>
                     <AccordionContent>
-                      Conferences must reach exactly 100 players to activate. If a conference doesn't fill 
-                      by the season start, participants are automatically moved to the next available 
-                      conference of the same tier, and any price difference is refunded.
+                      Conferences must reach exactly 100 players to activate. If
+                      a conference doesn't fill by the season start,
+                      participants are automatically moved to the next available
+                      conference of the same tier, and any price difference is
+                      refunded.
                     </AccordionContent>
                   </AccordionItem>
-                  
+
                   <AccordionItem value="item-5">
-                    <AccordionTrigger>How are playoff multipliers applied?</AccordionTrigger>
+                    <AccordionTrigger>
+                      How are playoff multipliers applied?
+                    </AccordionTrigger>
                     <AccordionContent>
-                      Playoff multipliers are applied to all hit points earned during playoff games. 
-                      The multiplier increases with each round: Wild Card (1.5x), Divisional (2x), 
-                      Conference Championship (2.5x), and Super Bowl (3x).
+                      Playoff multipliers are applied to all hit points earned
+                      during playoff games. The multiplier increases with each
+                      round: Wild Card (1.5x), Divisional (2x), Conference
+                      Championship (2.5x), and Super Bowl (3x).
                     </AccordionContent>
                   </AccordionItem>
-                  
+
                   <AccordionItem value="item-6">
-                    <AccordionTrigger>What happens to points in overtime?</AccordionTrigger>
+                    <AccordionTrigger>
+                      What happens to points in overtime?
+                    </AccordionTrigger>
                     <AccordionContent>
-                      Overtime scoring events earn full point values with no reduction. If the game is 
-                      during playoffs, playoff multipliers apply normally to overtime hits, making 
+                      Overtime scoring events earn full point values with no
+                      reduction. If the game is during playoffs, playoff
+                      multipliers apply normally to overtime hits, making
                       extended games extremely valuable.
                     </AccordionContent>
                   </AccordionItem>
-                  
+
                   <AccordionItem value="item-7">
-                    <AccordionTrigger>When and how are prizes distributed?</AccordionTrigger>
+                    <AccordionTrigger>
+                      When and how are prizes distributed?
+                    </AccordionTrigger>
                     <AccordionContent>
-                      Prizes are distributed in USDC to the top 7 finishers in each conference after 
-                      the Super Bowl concludes. Distribution happens automatically through smart contracts 
+                      Prizes are distributed in USDC to the top 7 finishers in
+                      each conference after the Super Bowl concludes.
+                      Distribution happens automatically through smart contracts
                       within 48 hours of the final game.
                     </AccordionContent>
                   </AccordionItem>
-                  
+
                   <AccordionItem value="item-8">
-                    <AccordionTrigger>Can I participate in multiple conferences?</AccordionTrigger>
+                    <AccordionTrigger>
+                      Can I participate in multiple conferences?
+                    </AccordionTrigger>
                     <AccordionContent>
-                      For Full-Season passes, you can only mint one NFT per wallet. However, Half-Season 
-                      passes allow up to 5 NFTs per wallet within the same conference, with scaling prices 
-                      for each additional pass.
+                      For Full-Season passes, you can only mint one NFT per
+                      wallet. However, Half-Season passes allow up to 5 NFTs per
+                      wallet within the same conference, with scaling prices for
+                      each additional pass.
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>

@@ -6,23 +6,27 @@ const USER_PREFERENCES_KEY = 'football-squares-user-prefs';
 // Default to Dallas Cowboys if no team is selected (as specified in requirements)
 const DEFAULT_TEAM_ID = 'dal';
 
-export const getUserPreferences = (walletAddress: string): UserBoardPreferences | null => {
+export const getUserPreferences = (
+  walletAddress: string,
+): UserBoardPreferences | null => {
   if (typeof window === 'undefined') return null;
-  
+
   try {
-    const stored = localStorage.getItem(`${USER_PREFERENCES_KEY}-${walletAddress}`);
+    const stored = localStorage.getItem(
+      `${USER_PREFERENCES_KEY}-${walletAddress}`,
+    );
     if (!stored) return null;
-    
+
     const parsed = JSON.parse(stored);
-    
+
     // Validate and reconstruct the team object
     const team = getTeamById(parsed.favoriteTeam?.id);
     if (!team) return null;
-    
+
     return {
       ...parsed,
       favoriteTeam: team,
-      lastUpdated: parsed.lastUpdated || Date.now()
+      lastUpdated: parsed.lastUpdated || Date.now(),
     };
   } catch (error) {
     console.error('Error loading user preferences:', error);
@@ -30,106 +34,130 @@ export const getUserPreferences = (walletAddress: string): UserBoardPreferences 
   }
 };
 
-export const saveUserPreferences = (preferences: UserBoardPreferences): void => {
+export const saveUserPreferences = (
+  preferences: UserBoardPreferences,
+): void => {
   if (typeof window === 'undefined') return;
-  
+
   try {
     const toStore = {
       ...preferences,
-      lastUpdated: Date.now()
+      lastUpdated: Date.now(),
     };
-    
+
     localStorage.setItem(
       `${USER_PREFERENCES_KEY}-${preferences.walletAddress}`,
-      JSON.stringify(toStore)
+      JSON.stringify(toStore),
     );
   } catch (error) {
     console.error('Error saving user preferences:', error);
   }
 };
 
-export const createDefaultUserPreferences = (walletAddress: string): UserBoardPreferences => {
+export const createDefaultUserPreferences = (
+  walletAddress: string,
+): UserBoardPreferences => {
   const defaultTeam = getTeamById(DEFAULT_TEAM_ID);
   if (!defaultTeam) {
     throw new Error('Default team not found');
   }
-  
+
   return {
     walletAddress,
     favoriteTeam: defaultTeam,
     isVIP: false,
     selectedBoards: [],
     activeSelections: [],
-    lastUpdated: Date.now()
+    lastUpdated: Date.now(),
   };
 };
 
-export const updateFavoriteTeam = (walletAddress: string, team: NFLTeam): void => {
+export const updateFavoriteTeam = (
+  walletAddress: string,
+  team: NFLTeam,
+): void => {
   const existing = getUserPreferences(walletAddress);
   if (existing) {
     saveUserPreferences({
       ...existing,
-      favoriteTeam: team
+      favoriteTeam: team,
     });
   } else {
     saveUserPreferences({
       ...createDefaultUserPreferences(walletAddress),
-      favoriteTeam: team
+      favoriteTeam: team,
     });
   }
 };
 
-export const updateVIPStatus = (walletAddress: string, isVIP: boolean): void => {
+export const updateVIPStatus = (
+  walletAddress: string,
+  isVIP: boolean,
+): void => {
   const existing = getUserPreferences(walletAddress);
   if (existing) {
     saveUserPreferences({
       ...existing,
-      isVIP
+      isVIP,
     });
   }
 };
 
-export const addSquareSelection = (walletAddress: string, selection: SquareSelection): void => {
+export const addSquareSelection = (
+  walletAddress: string,
+  selection: SquareSelection,
+): void => {
   const existing = getUserPreferences(walletAddress);
   if (existing) {
     const updatedSelections = existing.activeSelections.filter(
-      sel => sel.boardId !== selection.boardId
+      (sel) => sel.boardId !== selection.boardId,
     );
     updatedSelections.push(selection);
-    
+
     saveUserPreferences({
       ...existing,
-      activeSelections: updatedSelections
+      activeSelections: updatedSelections,
     });
   }
 };
 
-export const removeSquareSelection = (walletAddress: string, boardId: string): void => {
+export const removeSquareSelection = (
+  walletAddress: string,
+  boardId: string,
+): void => {
   const existing = getUserPreferences(walletAddress);
   if (existing) {
     saveUserPreferences({
       ...existing,
-      activeSelections: existing.activeSelections.filter(sel => sel.boardId !== boardId)
+      activeSelections: existing.activeSelections.filter(
+        (sel) => sel.boardId !== boardId,
+      ),
     });
   }
 };
 
-export const addSelectedBoard = (walletAddress: string, boardId: string): void => {
+export const addSelectedBoard = (
+  walletAddress: string,
+  boardId: string,
+): void => {
   const existing = getUserPreferences(walletAddress);
   if (existing && !existing.selectedBoards.includes(boardId)) {
     saveUserPreferences({
       ...existing,
-      selectedBoards: [...existing.selectedBoards, boardId]
+      selectedBoards: [...existing.selectedBoards, boardId],
     });
   }
 };
 
-export const removeSelectedBoard = (walletAddress: string, boardId: string): void => {
+export const removeSelectedBoard = (
+  walletAddress: string,
+  boardId: string,
+): void => {
   const existing = getUserPreferences(walletAddress);
   if (existing) {
     saveUserPreferences({
       ...existing,
-      selectedBoards: existing.selectedBoards.filter(id => id !== boardId)
+      selectedBoards: existing.selectedBoards.filter((id) => id !== boardId),
     });
   }
 };
@@ -142,7 +170,9 @@ export const isFirstTimeUser = (walletAddress: string): boolean => {
 import { useState, useEffect } from 'react';
 
 export const useUserPreferences = (walletAddress: string | null) => {
-  const [preferences, setPreferences] = useState<UserBoardPreferences | null>(null);
+  const [preferences, setPreferences] = useState<UserBoardPreferences | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [isFirstTime, setIsFirstTime] = useState(false);
 
@@ -157,7 +187,7 @@ export const useUserPreferences = (walletAddress: string | null) => {
     const loadPreferences = () => {
       setIsLoading(true);
       const stored = getUserPreferences(walletAddress);
-      
+
       if (!stored) {
         setIsFirstTime(true);
         const defaultPrefs = createDefaultUserPreferences(walletAddress);
@@ -166,7 +196,7 @@ export const useUserPreferences = (walletAddress: string | null) => {
         setIsFirstTime(false);
         setPreferences(stored);
       }
-      
+
       setIsLoading(false);
     };
 
@@ -175,7 +205,7 @@ export const useUserPreferences = (walletAddress: string | null) => {
 
   const updatePreferences = (updates: Partial<UserBoardPreferences>) => {
     if (!preferences) return;
-    
+
     const updated = { ...preferences, ...updates };
     setPreferences(updated);
     saveUserPreferences(updated);
@@ -193,6 +223,6 @@ export const useUserPreferences = (walletAddress: string | null) => {
     setVIPStatus: (isVIP: boolean) => {
       updateVIPStatus(walletAddress || '', isVIP);
       updatePreferences({ isVIP });
-    }
+    },
   };
 };

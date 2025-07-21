@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import {
   Palette,
   Sparkles,
@@ -27,154 +27,159 @@ import {
   Gift,
   Flame,
   PenTool,
-} from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 const MyNFTsContent = () => {
   const [selectedNFT, setSelectedNFT] = useState<number | null>(null);
-  const [selectedColor, setSelectedColor] = useState("#ed5925");
-  const [signatureText, setSignatureText] = useState("");
+  const [selectedColor, setSelectedColor] = useState('#ed5925');
+  const [signatureText, setSignatureText] = useState('');
   const [activeCreationType, setActiveCreationType] = useState<string | null>(
     null,
   );
-  const [activeTab, setActiveTab] = useState("collection");
+  const [activeTab, setActiveTab] = useState('collection');
 
   // Sample NFTs data - showing how they appear on squares
   const sampleNFTs = [
     {
       id: 1,
-      name: "Golden Signature",
+      name: 'Golden Signature',
       image:
-        "https://images.pexels.com/photos/1111597/pexels-photo-1111597.jpeg?auto=compress&cs=tinysrgb&w=400",
-      type: "Signature NFT",
+        'https://images.pexels.com/photos/1111597/pexels-photo-1111597.jpeg?auto=compress&cs=tinysrgb&w=400',
+      type: 'Signature NFT',
       usedInGames: 3,
       totalSquares: 12,
-      lastUsed: "Cowboys vs Eagles",
-      rarity: "Personal",
-      mintDate: "2024-01-15",
-      cost: "$3",
+      lastUsed: 'Cowboys vs Eagles',
+      rarity: 'Personal',
+      mintDate: '2024-01-15',
+      cost: '$3',
     },
     {
       id: 2,
-      name: "Championship Trophy",
+      name: 'Championship Trophy',
       image:
-        "https://images.pexels.com/photos/1374295/pexels-photo-1374295.jpeg?auto=compress&cs=tinysrgb&w=400",
-      type: "House NFT",
+        'https://images.pexels.com/photos/1374295/pexels-photo-1374295.jpeg?auto=compress&cs=tinysrgb&w=400',
+      type: 'House NFT',
       usedInGames: 1,
       totalSquares: 4,
-      lastUsed: "Lions vs Packers",
-      rarity: "Won in Free Game",
-      mintDate: "2024-01-22",
-      cost: "Free",
+      lastUsed: 'Lions vs Packers',
+      rarity: 'Won in Free Game',
+      mintDate: '2024-01-22',
+      cost: 'Free',
     },
     {
       id: 3,
-      name: "Custom Artwork",
+      name: 'Custom Artwork',
       image:
-        "https://images.pexels.com/photos/1618200/pexels-photo-1618200.jpeg?auto=compress&cs=tinysrgb&w=400",
-      type: "Custom NFT",
+        'https://images.pexels.com/photos/1618200/pexels-photo-1618200.jpeg?auto=compress&cs=tinysrgb&w=400',
+      type: 'Custom NFT',
       usedInGames: 2,
       totalSquares: 8,
-      lastUsed: "Chiefs vs Bills",
-      rarity: "Unique",
-      mintDate: "2024-01-30",
-      cost: "$14",
+      lastUsed: 'Chiefs vs Bills',
+      rarity: 'Unique',
+      mintDate: '2024-01-30',
+      cost: '$14',
     },
   ];
 
   // NFT Creation Tiers
   const creationTiers = [
     {
-      id: "default-signature",
-      name: "Default Signature",
-      price: "$0",
+      id: 'default-signature',
+      name: 'Default Signature',
+      price: '$0',
       icon: Brush,
-      description: "Plain black, handwritten 'First Name + Last Initial' the system grants every player automatically.",
+      description:
+        "Plain black, handwritten 'First Name + Last Initial' the system grants every player automatically.",
       features: [
-        "Standard black signature",
-        "Default for all players",
-        "No cost, always available",
-        "Non-transferable",
+        'Standard black signature',
+        'Default for all players',
+        'No cost, always available',
+        'Non-transferable',
       ],
-      color: "from-gray-400 to-gray-600",
+      color: 'from-gray-400 to-gray-600',
     },
     {
-      id: "custom-signature",
-      name: "Custom Signature",
-      price: "$3",
+      id: 'custom-signature',
+      name: 'Custom Signature',
+      price: '$3',
       icon: Brush,
-      description: "Same handwritten look, but in any color.",
+      description: 'Same handwritten look, but in any color.',
       features: [
-        "Your signature in custom colored ink",
-        "Personalized marker",
-        "Use on any square you purchase",
-        "Transferable to any wallet",
+        'Your signature in custom colored ink',
+        'Personalized marker',
+        'Use on any square you purchase',
+        'Transferable to any wallet',
       ],
-      color: "from-green-500 to-emerald-600",
+      color: 'from-green-500 to-emerald-600',
     },
     {
-      id: "custom-hand-drawn-symbol",
-      name: "Custom Hand-Drawn Symbol",
-      price: "$3",
+      id: 'custom-hand-drawn-symbol',
+      name: 'Custom Hand-Drawn Symbol',
+      price: '$3',
       icon: PenTool,
-      description: "Draw your own simple symbol or doodle directly on the website using our whiteboard tool.",
+      description:
+        'Draw your own simple symbol or doodle directly on the website using our whiteboard tool.',
       features: [
-        "Draw your symbol or doodle on the site",
-        "Hand-drawn using the web whiteboard",
-        "Unique personal marker",
-        "Use on any square you purchase",
+        'Draw your symbol or doodle on the site',
+        'Hand-drawn using the web whiteboard',
+        'Unique personal marker',
+        'Use on any square you purchase',
       ],
-      color: "from-[#96abdc] to-[#7a95d1]",
+      color: 'from-[#96abdc] to-[#7a95d1]',
     },
     {
-      id: "house-generated-artwork",
-      name: "House-Generated Artwork",
-      price: "$7",
+      id: 'house-generated-artwork',
+      name: 'House-Generated Artwork',
+      price: '$7',
       icon: ImageIcon,
-      description: "Static full-color art produced by the Football Squares design team.",
+      description:
+        'Static full-color art produced by the Football Squares design team.',
       features: [
-        "Pre-designed professional art",
-        "Win in free games or redeem from winnings",
-        "High-quality display on game boards",
-        "Cost deducted from winnings ($7)",
+        'Pre-designed professional art',
+        'Win in free games or redeem from winnings',
+        'High-quality display on game boards',
+        'Cost deducted from winnings ($7)',
       ],
-      color: "from-orange-500 to-orange-600",
+      color: 'from-orange-500 to-orange-600',
     },
     {
-      id: "ai-generated-artwork",
-      name: "AI-Generated Artwork",
-      price: "$14",
+      id: 'ai-generated-artwork',
+      name: 'AI-Generated Artwork',
+      price: '$14',
       icon: Play,
-      description: "AI image created from the player’s text prompt or transformed from their uploaded art.",
+      description:
+        'AI image created from the player’s text prompt or transformed from their uploaded art.',
       features: [
-        "AI-generated from your prompt or art",
-        "Unique, one-of-a-kind marker",
-        "Professional formatting for squares",
-        "High-quality display on game boards",
+        'AI-generated from your prompt or art',
+        'Unique, one-of-a-kind marker',
+        'Professional formatting for squares',
+        'High-quality display on game boards',
       ],
-      color: "from-[#8d594d] to-[#6b4238]",
+      color: 'from-[#8d594d] to-[#6b4238]',
     },
     {
-      id: "premium-animated",
-      name: "Premium (VIP) Animated",
-      price: "$21",
+      id: 'premium-animated',
+      name: 'Premium (VIP) Animated',
+      price: '$21',
       icon: Star,
-      description: "Custom or uploaded art that we convert to an animated NFT; VIP-only access.",
+      description:
+        'Custom or uploaded art that we convert to an animated NFT; VIP-only access.',
       features: [
-        "Custom animated artwork",
-        "Eye-catching movement on game boards",
-        "Premium square marker",
-        "Exclusive animated features",
+        'Custom animated artwork',
+        'Eye-catching movement on game boards',
+        'Premium square marker',
+        'Exclusive animated features',
       ],
-      color: "from-yellow-400 to-amber-600",
+      color: 'from-yellow-400 to-amber-600',
     },
   ];
 
@@ -182,74 +187,74 @@ const MyNFTsContent = () => {
   const houseNFTs = [
     {
       id: 1,
-      name: "Golden Trophy",
+      name: 'Golden Trophy',
       image:
-        "https://images.pexels.com/photos/1111597/pexels-photo-1111597.jpeg?auto=compress&cs=tinysrgb&w=300",
-      theme: "Victory",
-      availability: "Win in free games or redeem for $7",
+        'https://images.pexels.com/photos/1111597/pexels-photo-1111597.jpeg?auto=compress&cs=tinysrgb&w=300',
+      theme: 'Victory',
+      availability: 'Win in free games or redeem for $7',
     },
     {
       id: 2,
-      name: "Football Field",
+      name: 'Football Field',
       image:
-        "https://images.pexels.com/photos/1374295/pexels-photo-1374295.jpeg?auto=compress&cs=tinysrgb&w=300",
-      theme: "Classic",
-      availability: "Win in free games or redeem for $7",
+        'https://images.pexels.com/photos/1374295/pexels-photo-1374295.jpeg?auto=compress&cs=tinysrgb&w=300',
+      theme: 'Classic',
+      availability: 'Win in free games or redeem for $7',
     },
     {
       id: 3,
-      name: "Team Spirit",
+      name: 'Team Spirit',
       image:
-        "https://images.pexels.com/photos/1618200/pexels-photo-1618200.jpeg?auto=compress&cs=tinysrgb&w=300",
-      theme: "Modern",
-      availability: "Win in free games or redeem for $7",
+        'https://images.pexels.com/photos/1618200/pexels-photo-1618200.jpeg?auto=compress&cs=tinysrgb&w=300',
+      theme: 'Modern',
+      availability: 'Win in free games or redeem for $7',
     },
     {
       id: 4,
-      name: "Championship",
+      name: 'Championship',
       image:
-        "https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=300",
-      theme: "Elite",
-      availability: "Win in free games or redeem for $7",
+        'https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=300',
+      theme: 'Elite',
+      availability: 'Win in free games or redeem for $7',
     },
   ];
 
   // Color options for signature NFTs
   const colorOptions = [
-    { name: "Orange", value: "#ed5925" },
-    { name: "Blue", value: "#96abdc" },
-    { name: "Teal", value: "#004953" },
-    { name: "Navy", value: "#002244" },
-    { name: "Brown", value: "#8d594d" },
-    { name: "Purple", value: "#6b46c1" },
-    { name: "Green", value: "#059669" },
-    { name: "Red", value: "#dc2626" },
+    { name: 'Orange', value: '#ed5925' },
+    { name: 'Blue', value: '#96abdc' },
+    { name: 'Teal', value: '#004953' },
+    { name: 'Navy', value: '#002244' },
+    { name: 'Brown', value: '#8d594d' },
+    { name: 'Purple', value: '#6b46c1' },
+    { name: 'Green', value: '#059669' },
+    { name: 'Red', value: '#dc2626' },
   ];
 
   // NFT Education FAQ
   const nftFAQ = [
     {
-      q: "How do NFTs work in Football Squares?",
-      a: "NFTs serve as personalized markers for squares you purchase. Instead of seeing a standard black signature (first name and last initial) that all players get by default, your custom NFT image will be displayed on any square you buy in future games.",
+      q: 'How do NFTs work in Football Squares?',
+      a: 'NFTs serve as personalized markers for squares you purchase. Instead of seeing a standard black signature (first name and last initial) that all players get by default, your custom NFT image will be displayed on any square you buy in future games.',
     },
     {
       q: "What's the difference between NFT types?",
-      a: "Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is custom or uploaded art with animation, available to VIPs.",
+      a: 'Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is custom or uploaded art with animation, available to VIPs.',
     },
     {
-      q: "How can I get House NFTs for free?",
-      a: "House NFTs can be won as prizes in free games. You can also choose to redeem them during cash game payouts - the $7 cost will be deducted from your winnings.",
+      q: 'How can I get House NFTs for free?',
+      a: 'House NFTs can be won as prizes in free games. You can also choose to redeem them during cash game payouts - the $7 cost will be deducted from your winnings.',
     },
     {
-      q: "Can I use the same NFT on multiple squares?",
-      a: "Yes! Once you own an NFT, you can use it as your marker on any square you purchase in any game. It replaces the standard black signature with your personalized design.",
+      q: 'Can I use the same NFT on multiple squares?',
+      a: 'Yes! Once you own an NFT, you can use it as your marker on any square you purchase in any game. It replaces the standard black signature with your personalized design.',
     },
     {
-      q: "Do I own the NFT forever?",
-      a: "Yes, you own the NFT and can transfer it to other wallets, sell it, or keep using it as your square marker. The blockchain ensures permanent ownership verification.",
+      q: 'Do I own the NFT forever?',
+      a: 'Yes, you own the NFT and can transfer it to other wallets, sell it, or keep using it as your square marker. The blockchain ensures permanent ownership verification.',
     },
     {
-      q: "What happens if I sell my NFT?",
+      q: 'What happens if I sell my NFT?',
       a: "If you sell or transfer your NFT, you'll no longer be able to use it as your square marker. You'll need to create a new NFT or use the standard black signature for future square purchases.",
     },
   ];
@@ -269,9 +274,7 @@ const MyNFTsContent = () => {
           </p>
           <div className="flex justify-center gap-4">
             <Link href="/create-nft/custom-signature">
-              <Button
-                className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-3 rounded-full font-bold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2"
-              >
+              <Button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-3 rounded-full font-bold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2">
                 <Plus className="w-5 h-5" />
                 Create New Marker
               </Button>
@@ -370,7 +373,7 @@ const MyNFTsContent = () => {
                       <div className="w-16 h-16 bg-gray-100 border-2 border-gray-300 rounded mx-auto flex items-center justify-center">
                         <span
                           className="text-black text-xs font-medium"
-                          style={{ fontFamily: "cursive" }}
+                          style={{ fontFamily: 'cursive' }}
                         >
                           John D.
                         </span>
@@ -390,7 +393,7 @@ const MyNFTsContent = () => {
                       <div className="w-16 h-16 bg-gradient-to-br from-[#ed5925] to-[#96abdc] rounded mx-auto flex items-center justify-center">
                         <span
                           className="text-white text-xs font-bold"
-                          style={{ fontFamily: "cursive" }}
+                          style={{ fontFamily: 'cursive' }}
                         >
                           John D.
                         </span>
@@ -410,23 +413,23 @@ const MyNFTsContent = () => {
               {[
                 {
                   step: 1,
-                  title: "Create Your NFT",
-                  description: "Design your personalized square marker",
+                  title: 'Create Your NFT',
+                  description: 'Design your personalized square marker',
                 },
                 {
                   step: 2,
-                  title: "Purchase Squares",
-                  description: "Buy squares in any Football Squares game",
+                  title: 'Purchase Squares',
+                  description: 'Buy squares in any Football Squares game',
                 },
                 {
                   step: 3,
-                  title: "Your Marker Appears",
-                  description: "Your NFT replaces the standard black signature",
+                  title: 'Your Marker Appears',
+                  description: 'Your NFT replaces the standard black signature',
                 },
                 {
                   step: 4,
-                  title: "Use Forever",
-                  description: "Reuse your NFT marker on all future squares",
+                  title: 'Use Forever',
+                  description: 'Reuse your NFT marker on all future squares',
                 },
               ].map((step) => (
                 <div key={step.step} className="flex items-start gap-4">
@@ -515,11 +518,11 @@ const MyNFTsContent = () => {
                         <div className="absolute top-4 right-4">
                           <span
                             className={`px-3 py-1 rounded-full text-xs font-bold text-white ${
-                              nft.rarity === "Unique"
-                                ? "bg-gradient-to-r from-yellow-400 to-orange-500"
-                                : nft.rarity === "Won in Free Game"
-                                  ? "bg-gradient-to-r from-green-500 to-teal-500"
-                                  : "bg-gradient-to-r from-blue-500 to-purple-500"
+                              nft.rarity === 'Unique'
+                                ? 'bg-gradient-to-r from-yellow-400 to-orange-500'
+                                : nft.rarity === 'Won in Free Game'
+                                  ? 'bg-gradient-to-r from-green-500 to-teal-500'
+                                  : 'bg-gradient-to-r from-blue-500 to-purple-500'
                             }`}
                           >
                             {nft.rarity}
@@ -614,7 +617,7 @@ const MyNFTsContent = () => {
                                   <span className="text-[#002244] dark:text-white font-mono transition-colors duration-300">
                                     {(
                                       nft.totalSquares / nft.usedInGames
-                                    ).toFixed(1)}{" "}
+                                    ).toFixed(1)}{' '}
                                     squares
                                   </span>
                                 </div>
@@ -656,15 +659,20 @@ const MyNFTsContent = () => {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {creationTiers
-                    .filter((tier) => tier.id !== "default-signature")
+                    .filter((tier) => tier.id !== 'default-signature')
                     .map((tier) => {
                       // Map tier.id to the correct route
-                      let href = "#";
-                      if (tier.id === "custom-signature") href = "/create-nft/custom-signature";
-                      if (tier.id === "custom-hand-drawn-symbol") href = "/create-nft/custom-hand-drawn-symbol";
-                      if (tier.id === "house-generated-artwork") href = "/create-nft/house-generated-artwork";
-                      if (tier.id === "ai-generated-artwork") href = "/create-nft/ai-generated-artwork";
-                      if (tier.id === "premium-animated") href = "/create-nft/premium-animated";
+                      let href = '#';
+                      if (tier.id === 'custom-signature')
+                        href = '/create-nft/custom-signature';
+                      if (tier.id === 'custom-hand-drawn-symbol')
+                        href = '/create-nft/custom-hand-drawn-symbol';
+                      if (tier.id === 'house-generated-artwork')
+                        href = '/create-nft/house-generated-artwork';
+                      if (tier.id === 'ai-generated-artwork')
+                        href = '/create-nft/ai-generated-artwork';
+                      if (tier.id === 'premium-animated')
+                        href = '/create-nft/premium-animated';
                       return (
                         <Card
                           key={tier.id}
@@ -699,9 +707,7 @@ const MyNFTsContent = () => {
                               ))}
                             </ul>
                             <a href={href}>
-                              <Button
-                                className="w-full mt-4 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-100 hover:bg-[#ed5925] hover:text-white dark:hover:bg-[#ed5925] dark:hover:text-white transition-all duration-200"
-                              >
+                              <Button className="w-full mt-4 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-100 hover:bg-[#ed5925] hover:text-white dark:hover:bg-[#ed5925] dark:hover:text-white transition-all duration-200">
                                 Select Type
                               </Button>
                             </a>
@@ -749,7 +755,6 @@ const MyNFTsContent = () => {
                   </div>
                 </div>
               </div>
-
             </div>
           </TabsContent>
 

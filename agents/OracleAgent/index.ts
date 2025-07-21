@@ -31,20 +31,24 @@ export class OracleAgent extends EventEmitter {
   private scoreFeed: PublicKey;
   private monitoringInterval: NodeJS.Timeout | null = null;
 
-  constructor(connection: Connection, provider: AnchorProvider, program: Program) {
+  constructor(
+    connection: Connection,
+    provider: AnchorProvider,
+    program: Program,
+  ) {
     super();
     this.connection = connection;
     this.provider = provider;
     this.program = program;
-    
+
     if (!process.env.OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY is required');
     }
-    
+
     if (!process.env.SWITCHBOARD_SCORE_FEED) {
       throw new Error('SWITCHBOARD_SCORE_FEED is required');
     }
-    
+
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
@@ -61,14 +65,17 @@ export class OracleAgent extends EventEmitter {
       // In real implementation, this would query Switchboard oracle
       // For now, we'll simulate score fetching
       const score = await this.simulateScoreFetch(gameId);
-      
+
       // Update on-chain score if game is in progress
-      if (score.gameStatus === 'in_progress' || score.gameStatus === 'finished') {
+      if (
+        score.gameStatus === 'in_progress' ||
+        score.gameStatus === 'finished'
+      ) {
         await this.recordScore(gameId, score);
       }
 
       this.emit('scoresUpdated', { gameId, score });
-      
+
       return score;
     } catch (error) {
       console.error('Error fetching scores:', error);
@@ -81,11 +88,22 @@ export class OracleAgent extends EventEmitter {
     const quarter = Math.floor(Math.random() * 4) + 1;
     const homeScore = Math.floor(Math.random() * 35);
     const awayScore = Math.floor(Math.random() * 35);
-    
-    const gameStatuses = ['scheduled', 'in_progress', 'halftime', 'finished'] as const;
-    const gameStatus = gameStatuses[Math.floor(Math.random() * gameStatuses.length)];
-    
-    const timeRemaining = quarter < 4 ? `${Math.floor(Math.random() * 15)}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}` : '00:00';
+
+    const gameStatuses = [
+      'scheduled',
+      'in_progress',
+      'halftime',
+      'finished',
+    ] as const;
+    const gameStatus =
+      gameStatuses[Math.floor(Math.random() * gameStatuses.length)];
+
+    const timeRemaining =
+      quarter < 4
+        ? `${Math.floor(Math.random() * 15)}:${Math.floor(Math.random() * 60)
+            .toString()
+            .padStart(2, '0')}`
+        : '00:00';
 
     return {
       homeScore,
@@ -101,7 +119,7 @@ export class OracleAgent extends EventEmitter {
     try {
       const [boardPda] = PublicKey.findProgramAddressSync(
         [Buffer.from('board'), new BN(gameId).toArrayLike(Buffer, 'le', 8)],
-        this.program.programId
+        this.program.programId,
       );
 
       const tx = await this.program.methods
@@ -113,9 +131,11 @@ export class OracleAgent extends EventEmitter {
         .rpc();
 
       this.emit('scoreRecorded', { gameId, score, signature: tx });
-      
-      console.log(`Score recorded for game ${gameId}: ${score.homeScore}-${score.awayScore} Q${score.quarter}`);
-      
+
+      console.log(
+        `Score recorded for game ${gameId}: ${score.homeScore}-${score.awayScore} Q${score.quarter}`,
+      );
+
       return tx;
     } catch (error) {
       console.error('Error recording score:', error);
@@ -125,13 +145,13 @@ export class OracleAgent extends EventEmitter {
 
   async pollGameStatus(gameId: number): Promise<void> {
     console.log(`Starting game status polling for game ${gameId}`);
-    
+
     const pollInterval = parseInt(process.env.SCORE_POLL_INTERVAL || '30000');
-    
+
     this.monitoringInterval = setInterval(async () => {
       try {
         const score = await this.fetchScores(gameId);
-        
+
         if (score.gameStatus === 'finished') {
           console.log(`Game ${gameId} finished, stopping polling`);
           this.stopPolling();
@@ -152,12 +172,15 @@ export class OracleAgent extends EventEmitter {
     }
   }
 
-  async analyzeGameTrends(gameId: number, historicalScores: GameScore[]): Promise<string> {
+  async analyzeGameTrends(
+    gameId: number,
+    historicalScores: GameScore[],
+  ): Promise<string> {
     const prompt = `
 Analyze these historical scores for NFL game ${gameId} and provide insights:
 
 Historical Scores:
-${historicalScores.map(s => `Q${s.quarter}: ${s.homeScore}-${s.awayScore} (${s.timeRemaining})`).join('\n')}
+${historicalScores.map((s) => `Q${s.quarter}: ${s.homeScore}-${s.awayScore} (${s.timeRemaining})`).join('\n')}
 
 Current Status: ${historicalScores[historicalScores.length - 1]?.gameStatus || 'unknown'}
 
@@ -189,7 +212,7 @@ Keep response under 200 words.
   async getOracleData(feedAddress: PublicKey): Promise<OracleData | null> {
     try {
       const accountInfo = await this.connection.getAccountInfo(feedAddress);
-      
+
       if (!accountInfo) {
         return null;
       }
@@ -228,9 +251,11 @@ Keep response under 200 words.
     return true;
   }
 
-  async getMultipleGameScores(gameIds: number[]): Promise<Map<number, GameScore>> {
+  async getMultipleGameScores(
+    gameIds: number[],
+  ): Promise<Map<number, GameScore>> {
     const scores = new Map<number, GameScore>();
-    
+
     const fetchPromises = gameIds.map(async (gameId) => {
       try {
         const score = await this.fetchScores(gameId);
@@ -241,42 +266,42 @@ Keep response under 200 words.
     });
 
     await Promise.all(fetchPromises);
-    
+
     return scores;
   }
 
   async setupGameNotifications(gameId: number): Promise<void> {
     console.log(`Setting up notifications for game ${gameId}`);
-    
+
     // Listen for significant score changes
     this.on('scoresUpdated', (data) => {
       if (data.gameId === gameId) {
         const score = data.score;
-        
+
         // Notify on touchdowns (7-point increments)
         if (score.homeScore % 7 === 0 || score.awayScore % 7 === 0) {
           this.emit('significantScore', {
             gameId,
             score,
-            type: 'touchdown'
+            type: 'touchdown',
           });
         }
-        
+
         // Notify on field goals (3-point increments)
         if (score.homeScore % 3 === 0 || score.awayScore % 3 === 0) {
           this.emit('significantScore', {
             gameId,
             score,
-            type: 'field_goal'
+            type: 'field_goal',
           });
         }
-        
+
         // Notify on quarter changes
         if (score.quarter > 1) {
           this.emit('quarterChange', {
             gameId,
             score,
-            quarter: score.quarter
+            quarter: score.quarter,
           });
         }
       }
@@ -324,17 +349,17 @@ Keep response under 200 words.
     try {
       // Check connection to Solana
       await this.connection.getLatestBlockhash();
-      
+
       // Check OpenAI API
       await this.openai.chat.completions.create({
         model: 'gpt-4',
         messages: [{ role: 'user', content: 'health check' }],
         max_tokens: 5,
       });
-      
+
       // Check Oracle health
       const oracleHealth = await this.getOracleHealthStatus();
-      
+
       return oracleHealth.feedActive && oracleHealth.confidence > 0.8;
     } catch (error) {
       console.error('OracleAgent health check failed:', error);

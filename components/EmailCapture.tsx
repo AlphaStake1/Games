@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Mail, CheckCircle } from "lucide-react";
+import { useState } from 'react';
+import { Mail, CheckCircle } from 'lucide-react';
 
 const EmailCapture = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,21 +15,21 @@ const EmailCapture = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError('');
 
     if (!email) {
-      setError("Email is required");
+      setError('Email is required');
       return;
     }
 
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address");
+      setError('Please enter a valid email address');
       return;
     }
 
     // Simulate submission
     setIsSubmitted(true);
-    setEmail("");
+    setEmail('');
   };
 
   if (isSubmitted) {
@@ -85,10 +85,10 @@ const EmailCapture = () => {
                 placeholder="Enter your email address"
                 className={`w-full px-4 py-3 border-2 rounded-lg text-[#002244] placeholder-[#708090] focus:outline-none focus:ring-2 focus:ring-[#004953] transition-colors duration-200 ${
                   error
-                    ? "border-red-500"
-                    : "border-gray-300 focus:border-[#004953]"
+                    ? 'border-red-500'
+                    : 'border-gray-300 focus:border-[#004953]'
                 }`}
-                aria-describedby={error ? "email-error" : undefined}
+                aria-describedby={error ? 'email-error' : undefined}
               />
               {error && (
                 <p

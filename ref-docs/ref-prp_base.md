@@ -140,7 +140,7 @@ async def new_feature(param: str) -> Result:
 ```yaml
 DATABASE:
   - migration: "Add column 'feature_enabled' to users table"
-  - index: "CREATE INDEX idx_feature_lookup ON users(feature_id)"
+  - index: 'CREATE INDEX idx_feature_lookup ON users(feature_id)'
 
 CONFIG:
   - add to: config/settings.py

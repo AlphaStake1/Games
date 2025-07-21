@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { 
-  Crown, 
-  Trophy, 
-  Star, 
-  Zap, 
-  Shield, 
-  Users, 
+import {
+  Crown,
+  Trophy,
+  Star,
+  Zap,
+  Shield,
+  Users,
   TrendingUp,
   Clock,
   DollarSign,
@@ -20,7 +20,7 @@ import {
   Gift,
   ChevronRight,
   CheckCircle,
-  Info
+  Info,
 } from 'lucide-react';
 
 interface Conference {
@@ -34,14 +34,40 @@ interface Conference {
 
 const SeasonPassLandingPage = () => {
   const router = useRouter();
-  const [selectedPassType, setSelectedPassType] = useState<'full' | 'half'>('full');
+  const [selectedPassType, setSelectedPassType] = useState<'full' | 'half'>(
+    'full',
+  );
 
   // Mock data for conferences
   const conferences: Conference[] = [
-    { id: 1, name: 'Northern Conference', price: 100, filled: 87, capacity: 100 },
-    { id: 2, name: 'Southern Conference', price: 200, filled: 65, capacity: 100 },
-    { id: 3, name: 'Eastern Conference', price: 300, filled: 43, capacity: 100 },
-    { id: 4, name: 'Western Conference', price: 400, filled: 22, capacity: 100 },
+    {
+      id: 1,
+      name: 'Northern Conference',
+      price: 100,
+      filled: 87,
+      capacity: 100,
+    },
+    {
+      id: 2,
+      name: 'Southern Conference',
+      price: 200,
+      filled: 65,
+      capacity: 100,
+    },
+    {
+      id: 3,
+      name: 'Eastern Conference',
+      price: 300,
+      filled: 43,
+      capacity: 100,
+    },
+    {
+      id: 4,
+      name: 'Western Conference',
+      price: 400,
+      filled: 22,
+      capacity: 100,
+    },
   ];
 
   const featuredConference: Conference = {
@@ -50,7 +76,7 @@ const SeasonPassLandingPage = () => {
     price: 500,
     filled: 8,
     capacity: 100,
-    featured: true
+    featured: true,
   };
 
   const handleMintPass = () => {
@@ -63,15 +89,17 @@ const SeasonPassLandingPage = () => {
     const isFull = fillPercentage >= 100;
 
     const cardClasses = conference.featured
-      ? "relative transition-all duration-300 hover:shadow-lg bg-gradient-to-br from-indigo-100 to-purple-100 border-indigo-300 dark:from-indigo-900/80 dark:to-purple-900/80 dark:border-indigo-400/50 shadow-lg"
-      : "relative transition-all duration-300 hover:shadow-lg bg-white/70 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg";
+      ? 'relative transition-all duration-300 hover:shadow-lg bg-gradient-to-br from-indigo-100 to-purple-100 border-indigo-300 dark:from-indigo-900/80 dark:to-purple-900/80 dark:border-indigo-400/50 shadow-lg'
+      : 'relative transition-all duration-300 hover:shadow-lg bg-white/70 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg';
 
     return (
       <Card className={`${cardClasses} ${isFull ? 'opacity-60' : ''}`}>
         <CardHeader className="pb-3">
           <div className="flex justify-between items-start">
             <div>
-              <CardTitle className={`text-lg ${conference.featured ? 'text-indigo-800 dark:text-indigo-100' : 'text-gray-900 dark:text-white'}`}>
+              <CardTitle
+                className={`text-lg ${conference.featured ? 'text-indigo-800 dark:text-indigo-100' : 'text-gray-900 dark:text-white'}`}
+              >
                 {conference.name}
               </CardTitle>
               {conference.featured && (
@@ -81,10 +109,14 @@ const SeasonPassLandingPage = () => {
               )}
             </div>
             <div className="text-right">
-              <p className={`text-2xl font-bold ${conference.featured ? 'text-indigo-700 dark:text-indigo-200' : 'text-green-600 dark:text-green-400'}`}>
+              <p
+                className={`text-2xl font-bold ${conference.featured ? 'text-indigo-700 dark:text-indigo-200' : 'text-green-600 dark:text-green-400'}`}
+              >
                 ${conference.price}
               </p>
-              <p className={`text-xs ${conference.featured ? 'text-indigo-600 dark:text-indigo-300' : 'text-gray-500 dark:text-gray-400'}`}>
+              <p
+                className={`text-xs ${conference.featured ? 'text-indigo-600 dark:text-indigo-300' : 'text-gray-500 dark:text-gray-400'}`}
+              >
                 per pass
               </p>
             </div>
@@ -94,8 +126,18 @@ const SeasonPassLandingPage = () => {
           <div className="space-y-3">
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className={conference.featured ? 'text-indigo-700 dark:text-indigo-200' : 'text-gray-700 dark:text-gray-300'}>Capacity</span>
-                <span className={`font-medium ${conference.featured ? 'text-indigo-800 dark:text-indigo-100' : 'text-gray-900 dark:text-white'}`}>
+                <span
+                  className={
+                    conference.featured
+                      ? 'text-indigo-700 dark:text-indigo-200'
+                      : 'text-gray-700 dark:text-gray-300'
+                  }
+                >
+                  Capacity
+                </span>
+                <span
+                  className={`font-medium ${conference.featured ? 'text-indigo-800 dark:text-indigo-100' : 'text-gray-900 dark:text-white'}`}
+                >
                   {conference.filled}/100
                 </span>
               </div>
@@ -103,15 +145,15 @@ const SeasonPassLandingPage = () => {
               {isAlmostFull && !isFull && (
                 <p className="text-xs text-orange-600 mt-1">🔥 Almost full!</p>
               )}
-              {isFull && (
-                <p className="text-xs text-red-600 mt-1">❌ Full</p>
-              )}
+              {isFull && <p className="text-xs text-red-600 mt-1">❌ Full</p>}
             </div>
-            
+
             <Button
               className={`w-full ${conference.featured ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white' : ''}`}
               disabled={isFull}
-              onClick={() => router.push(`/season-pass/conferences?id=${conference.id}`)}
+              onClick={() =>
+                router.push(`/season-pass/conferences?id=${conference.id}`)
+              }
             >
               {isFull ? 'Conference Full' : 'Select Conference'}
             </Button>
@@ -131,60 +173,74 @@ const SeasonPassLandingPage = () => {
               🏆 SEASON-PASS NFT
             </Badge>
           </div>
-          
+
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
             Lock-in a Season-Pass NFT & Chase the Board All Year
           </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto">
-          Mint once, play every game. Score on every NFL game and compete for a share of $10K--$50K prize pools.
-        </p>
-        
-        <Button
-          onClick={handleMintPass}
-          className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold px-8 py-4 text-lg rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
-        >
-          <Crown className="w-6 h-6 mr-2" />
-          Mint My Season Pass
-        </Button>
-      </div>
-    </section>
 
-    {/* How It Works Section */}
-    <section className="py-16 px-4 bg-blue-50/50 dark:bg-black/20">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">How It Works</h2>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            {
-              icon: <Zap className="w-8 h-8" />,
-              title: "Mint Once, Play Every Game",
-              description: "A one time crypto payment mints a non-transferable Season-Pass NFT that auto-drops your wallet into the next open 100-square Conference."
-            },
-            {
-              icon: <Target className="w-8 h-8" />,
-              title: "Random Square, Every Kickoff",
-              description: "Before each matchup your NFT is assigned to one random square, then 0-9 digits are randomly rolled across the Home and Away axes."
-            },
-            {
-              icon: <TrendingUp className="w-8 h-8" />,
-              title: "Score What the Teams Score",
-              description: "Hit patterns (Forward, Backward, ±5 transforms) earn points every quarter, continuing through all overtime periods."
-            },
-            {
-              icon: <Trophy className="w-8 h-8" />,
-              title: "Climb the Conference Leaderboard",
-              description: "Points accumulate across the entire season plus playoffs, with post-season rounds multiplying your hits."
-            }
-          ].map((step, index) => (
-            <Card key={index} className="bg-white/70 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 hover:bg-white/90 dark:hover:bg-gray-800/70 transition-all duration-300 shadow-lg">
-              <CardContent className="p-6 text-center">
-                <div className="text-yellow-500 dark:text-yellow-400 mb-4 flex justify-center">
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto">
+            Mint once, play every game. Score on every NFL game and compete for
+            a share of $10K--$50K prize pools.
+          </p>
+
+          <Button
+            onClick={handleMintPass}
+            className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold px-8 py-4 text-lg rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
+          >
+            <Crown className="w-6 h-6 mr-2" />
+            Mint My Season Pass
+          </Button>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-16 px-4 bg-blue-50/50 dark:bg-black/20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+            How It Works
+          </h2>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: <Zap className="w-8 h-8" />,
+                title: 'Mint Once, Play Every Game',
+                description:
+                  'A one time crypto payment mints a non-transferable Season-Pass NFT that auto-drops your wallet into the next open 100-square Conference.',
+              },
+              {
+                icon: <Target className="w-8 h-8" />,
+                title: 'Random Square, Every Kickoff',
+                description:
+                  'Before each matchup your NFT is assigned to one random square, then 0-9 digits are randomly rolled across the Home and Away axes.',
+              },
+              {
+                icon: <TrendingUp className="w-8 h-8" />,
+                title: 'Score What the Teams Score',
+                description:
+                  'Hit patterns (Forward, Backward, ±5 transforms) earn points every quarter, continuing through all overtime periods.',
+              },
+              {
+                icon: <Trophy className="w-8 h-8" />,
+                title: 'Climb the Conference Leaderboard',
+                description:
+                  'Points accumulate across the entire season plus playoffs, with post-season rounds multiplying your hits.',
+              },
+            ].map((step, index) => (
+              <Card
+                key={index}
+                className="bg-white/70 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 hover:bg-white/90 dark:hover:bg-gray-800/70 transition-all duration-300 shadow-lg"
+              >
+                <CardContent className="p-6 text-center">
+                  <div className="text-yellow-500 dark:text-yellow-400 mb-4 flex justify-center">
                     {step.icon}
                   </div>
-                  <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">{step.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">{step.description}</p>
+                  <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                    {step.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -195,8 +251,10 @@ const SeasonPassLandingPage = () => {
       {/* Choose Your Season-Pass Section */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">Choose Your Season-Pass</h2>
-          
+          <h2 className="text-4xl font-bold text-center mb-12">
+            Choose Your Season-Pass
+          </h2>
+
           {/* Pass Type Selection */}
           <div className="flex justify-center mb-12">
             <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg">
@@ -233,7 +291,9 @@ const SeasonPassLandingPage = () => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <Star className="w-6 h-6 text-yellow-500 dark:text-yellow-400" />
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Full-Season Pass</h3>
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                        Full-Season Pass
+                      </h3>
                     </div>
                     <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                       <li className="flex items-center gap-2 font-semibold">
@@ -258,7 +318,9 @@ const SeasonPassLandingPage = () => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <Crown className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Half-Season Pass</h3>
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                        Half-Season Pass
+                      </h3>
                     </div>
                     <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                       <li className="flex items-center gap-2 font-semibold">
@@ -275,7 +337,10 @@ const SeasonPassLandingPage = () => {
                       </li>
                       <li className="flex items-center gap-2 font-semibold">
                         <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
-                        <span>Separate leaderboard from Full Season players for fair competition</span>
+                        <span>
+                          Separate leaderboard from Full Season players for fair
+                          competition
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -286,15 +351,17 @@ const SeasonPassLandingPage = () => {
 
           {/* Available Conferences */}
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">Available Conferences</h3>
-            
+            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+              Available Conferences
+            </h3>
+
             {/* Regular conferences grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {conferences.map((conference) => (
                 <ConferenceCard key={conference.id} conference={conference} />
               ))}
             </div>
-            
+
             {/* Featured conference - full width */}
             <div className="max-w-2xl mx-auto">
               <ConferenceCard conference={featuredConference} />
@@ -306,8 +373,10 @@ const SeasonPassLandingPage = () => {
       {/* Payout Structure */}
       <section className="py-16 px-4 bg-gray-50 dark:bg-black/20">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">Season-Long Payout Ladder</h2>
-          
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+            Season-Long Payout Ladder
+          </h2>
+
           <Card className="bg-white/80 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg">
             <CardHeader>
               <CardTitle className="text-center text-gray-900 dark:text-white">
@@ -325,28 +394,37 @@ const SeasonPassLandingPage = () => {
                   { place: '6th', payout: '$2,500', percentage: '5%' },
                   { place: '7th', payout: '$2,500', percentage: '5%' },
                 ].map((tier, index) => (
-                  <div key={index} className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+                  <div
+                    key={index}
+                    className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0"
+                  >
                     <div className="flex items-center gap-4">
                       <Badge variant={index === 0 ? 'default' : 'secondary'}>
                         {tier.place}
                       </Badge>
-                      <span className="text-lg font-semibold text-gray-900 dark:text-white">{tier.payout}</span>
+                      <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                        {tier.payout}
+                      </span>
                     </div>
-                    <span className="text-gray-600 dark:text-gray-400">{tier.percentage}</span>
+                    <span className="text-gray-600 dark:text-gray-400">
+                      {tier.percentage}
+                    </span>
                   </div>
                 ))}
               </div>
-              
+
               <div className="mt-6 p-4 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-700">
                 <p className="text-sm text-center text-yellow-800 dark:text-yellow-300">
                   <Info className="w-4 h-4 inline mr-1" />
-                  All Season-Pass game payouts are distributed in Solana-based USDC.
+                  All Season-Pass game payouts are distributed in Solana-based
+                  USDC.
                 </p>
               </div>
               <div className="mt-3 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">
                 <p className="text-sm text-center text-blue-800 dark:text-blue-300">
-                  <Info className="w-4 h-4 inline mr-1" />
-                  A matching ladder (scaled to pool size) will be published for every Half-Season Conference after it fills.
+                  <Info className="w-4 h-4 inline mr-1" />A matching ladder
+                  (scaled to pool size) will be published for every Half-Season
+                  Conference after it fills.
                 </p>
               </div>
             </CardContent>
@@ -357,27 +435,60 @@ const SeasonPassLandingPage = () => {
       {/* Scoring Engine */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">Scoring Engine</h2>
-          
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+            Scoring Engine
+          </h2>
+
           <div className="grid md:grid-cols-2 gap-8">
             {/* Hit Patterns */}
             <Card className="bg-white/80 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg">
               <CardHeader>
-                <CardTitle className="text-gray-900 dark:text-white">Hit Patterns</CardTitle>
+                <CardTitle className="text-gray-900 dark:text-white">
+                  Hit Patterns
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {[
-                    { type: 'Forward', pattern: '(Home, Away)', example: '(7, 4)', points: '10' },
-                    { type: 'Backward', pattern: '(Away, Home)', example: '(4, 7)', points: '7' },
-                    { type: 'Forward + 5', pattern: '((H+5) mod 10, (A+5) mod 10)', example: '(2, 9)', points: '5' },
-                    { type: 'Backward + 5', pattern: 'reverse of F+5', example: '(9, 2)', points: '3' },
+                    {
+                      type: 'Forward',
+                      pattern: '(Home, Away)',
+                      example: '(7, 4)',
+                      points: '10',
+                    },
+                    {
+                      type: 'Backward',
+                      pattern: '(Away, Home)',
+                      example: '(4, 7)',
+                      points: '7',
+                    },
+                    {
+                      type: 'Forward + 5',
+                      pattern: '((H+5) mod 10, (A+5) mod 10)',
+                      example: '(2, 9)',
+                      points: '5',
+                    },
+                    {
+                      type: 'Backward + 5',
+                      pattern: 'reverse of F+5',
+                      example: '(9, 2)',
+                      points: '3',
+                    },
                   ].map((pattern, index) => (
-                    <div key={index} className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+                    <div
+                      key={index}
+                      className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700 last:border-b-0"
+                    >
                       <div>
-                        <p className="font-semibold text-gray-900 dark:text-white">{pattern.type}</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{pattern.pattern}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-500">Example: {pattern.example}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">
+                          {pattern.type}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          {pattern.pattern}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-500">
+                          Example: {pattern.example}
+                        </p>
                       </div>
                       <Badge className="bg-green-600 text-white">
                         {pattern.points} pts
@@ -391,7 +502,9 @@ const SeasonPassLandingPage = () => {
             {/* Playoff Multipliers */}
             <Card className="bg-white/80 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg">
               <CardHeader>
-                <CardTitle className="text-gray-900 dark:text-white">Playoff Multipliers</CardTitle>
+                <CardTitle className="text-gray-900 dark:text-white">
+                  Playoff Multipliers
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -401,19 +514,25 @@ const SeasonPassLandingPage = () => {
                     { round: 'Conference Champ', multiplier: '× 2.5' },
                     { round: 'Super Bowl', multiplier: '× 3' },
                   ].map((playoff, index) => (
-                    <div key={index} className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
-                      <span className="font-semibold text-gray-900 dark:text-white">{playoff.round}</span>
+                    <div
+                      key={index}
+                      className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0"
+                    >
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        {playoff.round}
+                      </span>
                       <Badge className="bg-purple-600 text-white font-bold">
                         {playoff.multiplier}
                       </Badge>
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="mt-4 p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-700">
                   <p className="text-sm text-yellow-800 dark:text-yellow-300">
                     <Zap className="w-4 h-4 inline mr-1" />
-                    All hits in overtime inherit the period's normal value; no point drop-off after 60 minutes.
+                    All hits in overtime inherit the period's normal value; no
+                    point drop-off after 60 minutes.
                   </p>
                 </div>
               </CardContent>
@@ -436,7 +555,11 @@ const SeasonPassLandingPage = () => {
             Mint & Play
           </Button>
           <p className="mt-8 text-black text-sm opacity-80 max-w-2xl mx-auto">
-            All purchases are final and non-refundable. The only exception is if the Conference board does not achieve full subscription. In such an event, the original cryptocurrency amount tendered at the time of purchase will be returned to all square purchasers, unadjusted for any changes in its market value.
+            All purchases are final and non-refundable. The only exception is if
+            the Conference board does not achieve full subscription. In such an
+            event, the original cryptocurrency amount tendered at the time of
+            purchase will be returned to all square purchasers, unadjusted for
+            any changes in its market value.
           </p>
         </div>
       </section>

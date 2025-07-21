@@ -1,4 +1,4 @@
-import { Target, Square, Trophy } from "lucide-react";
+import { Target, Square, Trophy } from 'lucide-react';
 
 const HowItWorks = () => {
   const steps: {
@@ -9,24 +9,24 @@ const HowItWorks = () => {
   }[] = [
     {
       icon: Target,
-      title: "Pick a Board",
+      title: 'Pick a Board',
       description:
-        "Choose from available NFL game boards and find your perfect match.",
-      color: "bg-[#002244]",
+        'Choose from available NFL game boards and find your perfect match.',
+      color: 'bg-[#002244]',
     },
     {
       icon: Square,
-      title: "Claim Your Square",
+      title: 'Claim Your Square',
       description:
-        "Select your lucky square on the 10x10 grid and make it yours.",
-      color: "bg-[#8d594d]",
+        'Select your lucky square on the 10x10 grid and make it yours.',
+      color: 'bg-[#8d594d]',
     },
     {
       icon: Trophy,
-      title: "Watch & Win",
+      title: 'Watch & Win',
       description:
-        "Cheer for your numbers as the game unfolds and collect your prizes.",
-      color: "bg-[#004953]",
+        'Cheer for your numbers as the game unfolds and collect your prizes.',
+      color: 'bg-[#004953]',
     },
   ];
 

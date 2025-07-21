@@ -2,7 +2,10 @@
 
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/sonner';
-import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import {
+  ConnectionProvider,
+  WalletProvider,
+} from '@solana/wallet-adapter-react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { clusterApiUrl } from '@solana/web3.js';
@@ -27,11 +30,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   // Network can be set to 'devnet', 'testnet', or 'mainnet-beta'
   const network = WalletAdapterNetwork.Devnet;
-  
+
   // RPC endpoint
-  const endpoint = useMemo(() => 
-    process.env.NEXT_PUBLIC_RPC_ENDPOINT || clusterApiUrl(network), 
-    [network]
+  const endpoint = useMemo(
+    () => process.env.NEXT_PUBLIC_RPC_ENDPOINT || clusterApiUrl(network),
+    [network],
   );
 
   // Configure wallet adapters
@@ -41,7 +44,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       new SolflareWalletAdapter(),
       new TorusWalletAdapter(),
     ],
-    [network]
+    [network],
   );
 
   return (

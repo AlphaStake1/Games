@@ -1,4 +1,5 @@
-# Phase 1 — Research & Skeleton Implementation  
+# Phase 1 — Research & Skeleton Implementation
+
 > Football Squares (Solana) · July 2025
 
 ---
@@ -7,12 +8,12 @@
 
 A trust-minimised **Football-Squares dApp** that:
 
-* stores board and payout logic in an **Anchor** program,  
-* automates game-day tasks via **Clockwork** + LLM agents,  
-* delivers real-time UI in **Next 13 static-export + Tailwind**,  
-* emails winners through **Proton Mail + Bridge**,  
-* logs mutable history in **Ceramic**,  
-* all infra deployed on **Akash** / IPFS.
+- stores board and payout logic in an **Anchor** program,
+- automates game-day tasks via **Clockwork** + LLM agents,
+- delivers real-time UI in **Next 13 static-export + Tailwind**,
+- emails winners through **Proton Mail + Bridge**,
+- logs mutable history in **Ceramic**,
+- all infra deployed on **Akash** / IPFS.
 
 Phase-1 focuses on **research + scaffolding**. No production logic—just stubs, docs, and tests that prove the tool-chain works.
 
@@ -20,23 +21,23 @@ Phase-1 focuses on **research + scaffolding**. No production logic—just stubs,
 
 ## 1 · Key Technologies to Research
 
-| Domain                | Primary Docs to Scrape (≈10–15 pages each)                |
-|-----------------------|-----------------------------------------------------------|
-| **Solana Runtime**    | https://docs.solana.com/                                  |
-| **Anchor Framework**  | https://www.anchor-lang.com/docs                          |
-| **Switchboard Oracle**| https://docs.switchboard.xyz/ (VRF & price feeds)         |
-| **Clockwork**         | https://clockworkxyz.notion.site/ (use latest fork)       |
-| **Proton Mail Bridge**| https://proton.me/mail/bridge                             |
-| **Ceramic**           | https://developers.ceramic.network/                       |
-| **Akash**             | https://docs.akash.network/                               |
-| **OpenAI API**        | https://platform.openai.com/docs/                         |
-| **Anthropic API**     | https://docs.anthropic.com/                               |
-| **Jina Reader/Search**| https://jina.ai/reader/                                   |
-| **Recursive Font**    | https://www.recursive.design/ (variable font system)      |
-| **KaTeX Math**        | https://katex.org/docs/ (font rendering)                  |
-| **Tailwind CSS**      | https://tailwindcss.com/docs (hand-drawn utilities)       |
+| Domain                 | Primary Docs to Scrape (≈10–15 pages each)           |
+| ---------------------- | ---------------------------------------------------- |
+| **Solana Runtime**     | https://docs.solana.com/                             |
+| **Anchor Framework**   | https://www.anchor-lang.com/docs                     |
+| **Switchboard Oracle** | https://docs.switchboard.xyz/ (VRF & price feeds)    |
+| **Clockwork**          | https://clockworkxyz.notion.site/ (use latest fork)  |
+| **Proton Mail Bridge** | https://proton.me/mail/bridge                        |
+| **Ceramic**            | https://developers.ceramic.network/                  |
+| **Akash**              | https://docs.akash.network/                          |
+| **OpenAI API**         | https://platform.openai.com/docs/                    |
+| **Anthropic API**      | https://docs.anthropic.com/                          |
+| **Jina Reader/Search** | https://jina.ai/reader/                              |
+| **Recursive Font**     | https://www.recursive.design/ (variable font system) |
+| **KaTeX Math**         | https://katex.org/docs/ (font rendering)             |
+| **Tailwind CSS**       | https://tailwindcss.com/docs (hand-drawn utilities)  |
 
-*All scrapes land in `/research/<tech>/<page>.md`.*
+_All scrapes land in `/research/<tech>/<page>.md`._
 
 ---
 
@@ -135,40 +136,40 @@ SMTP_PASS=bridge_pass
 
 ## 5 · Phase-1 Deliverables
 
-| # | Deliverable         | Acceptance Criteria                                                           |
-| - | ------------------- | ----------------------------------------------------------------------------- |
-| 1 | **Research corpus** | `research/` contains ≥ 100 pages total, organised by tech.                    |
-| 2 | **Anchor skeleton** | `anchor build` succeeds; unit test creates a board.                           |
-| 3 | **Next.js shell**   | `npm run build && npm run start` serves static site showing placeholder grid. |
-| 4 | **Design system**   | `app/globals.css` contains monochrome ink/paper CSS variables.                |
-| 5 | **SVG assets**      | `public/assets/` contains scribble-border.svg and paper-texture.svg.          |
-| 6 | **Agent stubs**     | TypeScript classes compile; Orchestrator prints planned tasks.                |
-| 7 | **CLI stubs**       | `pnpm ts-node scripts/init_board.ts` prints "TODO".                           |
-| 8 | **CI bootstrap**    | GitHub Action: lint + clippy + anchor build pass.                             |
-| 9 | **Docs**            | `docs/architecture.md` explains Phase-1 skeleton & research flow.             |
+| #   | Deliverable         | Acceptance Criteria                                                           |
+| --- | ------------------- | ----------------------------------------------------------------------------- |
+| 1   | **Research corpus** | `research/` contains ≥ 100 pages total, organised by tech.                    |
+| 2   | **Anchor skeleton** | `anchor build` succeeds; unit test creates a board.                           |
+| 3   | **Next.js shell**   | `npm run build && npm run start` serves static site showing placeholder grid. |
+| 4   | **Design system**   | `app/globals.css` contains monochrome ink/paper CSS variables.                |
+| 5   | **SVG assets**      | `public/assets/` contains scribble-border.svg and paper-texture.svg.          |
+| 6   | **Agent stubs**     | TypeScript classes compile; Orchestrator prints planned tasks.                |
+| 7   | **CLI stubs**       | `pnpm ts-node scripts/init_board.ts` prints "TODO".                           |
+| 8   | **CI bootstrap**    | GitHub Action: lint + clippy + anchor build pass.                             |
+| 9   | **Docs**            | `docs/architecture.md` explains Phase-1 skeleton & research flow.             |
 
 ---
 
 ## 6 · Phase-1 Task Checklist
 
-* [ ] **Scrape docs** with Jina & store in `/research`.
-* [ ] Scaffold **programs/squares/src/lib.rs** with account structs + placeholder ixs.
-* [ ] Scaffold **app/** with shadcn/ui layout & dummy board.
-* [ ] Create **agents/** folder with empty class stubs & JSON schema.
-* [ ] Provide **scripts/** that print usage / TODO.
-* [ ] Add `.env.example` & update `README` setup section.
-* [ ] Configure **pnpm**, Prettier, ESLint, rustfmt, clippy.
-* [ ] Add **GitHub Action**: `pnpm lint && tsc --noEmit && cargo clippy && anchor build`.
+- [ ] **Scrape docs** with Jina & store in `/research`.
+- [ ] Scaffold **programs/squares/src/lib.rs** with account structs + placeholder ixs.
+- [ ] Scaffold **app/** with shadcn/ui layout & dummy board.
+- [ ] Create **agents/** folder with empty class stubs & JSON schema.
+- [ ] Provide **scripts/** that print usage / TODO.
+- [ ] Add `.env.example` & update `README` setup section.
+- [ ] Configure **pnpm**, Prettier, ESLint, rustfmt, clippy.
+- [ ] Add **GitHub Action**: `pnpm lint && tsc --noEmit && cargo clippy && anchor build`.
 
 ---
 
-## 7 · What Phase-1 *Intentionally* Excludes
+## 7 · What Phase-1 _Intentionally_ Excludes
 
-* No real VRF requests or oracle polling.
-* No email sends.
-* No payout logic / signer seeds.
-* No production UI—just a placeholder grid.
-* Security, gas audits, and performance tuning moved to Phase-2.
+- No real VRF requests or oracle polling.
+- No email sends.
+- No payout logic / signer seeds.
+- No production UI—just a placeholder grid.
+- Security, gas audits, and performance tuning moved to Phase-2.
 
 ---
 

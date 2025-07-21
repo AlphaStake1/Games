@@ -152,7 +152,7 @@ pub fn randomize_board(ctx: Context<Randomize>) -> Result<()> {
 
 ```yaml
 Clockwork:
-  - thread: "pre-game-{game_id}"
+  - thread: 'pre-game-{game_id}'
   - ix: randomize_board
 
 React UI:

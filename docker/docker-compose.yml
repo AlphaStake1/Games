@@ -1,5 +1,5 @@
 # docker/docker-compose.yml
-version: "3.9"
+version: '3.9'
 
 services:
   # Solana Test Validator (for local development)
@@ -19,13 +19,14 @@ services:
       --enable-rpc-transaction-history
       --enable-extended-tx-metadata-storage
     ports:
-      - "8899:8899"  # RPC
-      - "8900:8900"  # WebSocket
-      - "9900:9900"  # Faucet
+      - '8899:8899' # RPC
+      - '8900:8900' # WebSocket
+      - '9900:9900' # Faucet
     networks:
       - football-squares
     healthcheck:
-      test: ["CMD", "solana", "cluster-version", "--url", "http://localhost:8899"]
+      test:
+        ['CMD', 'solana', 'cluster-version', '--url', 'http://localhost:8899']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -41,8 +42,8 @@ services:
       - PROTON_USERNAME=${PROTON_USERNAME}
       - PROTON_PASSWORD=${PROTON_PASSWORD}
     ports:
-      - "1025:1025"  # SMTP
-      - "1143:1143"  # IMAP
+      - '1025:1025' # SMTP
+      - '1143:1143' # IMAP
     networks:
       - football-squares
     volumes:
@@ -74,8 +75,8 @@ services:
       - CERAMIC_DID_SEED=${CERAMIC_DID_SEED}
       - CLOCKWORK_THREAD_ID=${CLOCKWORK_THREAD_ID}
     ports:
-      - "3000:3000"  # Next.js app
-      - "8080:8080"  # WebSocket server
+      - '3000:3000' # Next.js app
+      - '8080:8080' # WebSocket server
     networks:
       - football-squares
     volumes:
@@ -116,34 +117,35 @@ services:
       - CERAMIC_NETWORK=testnet-clay
       - NODE_ENV=production
     ports:
-      - "7007:7007"  # Ceramic API
+      - '7007:7007' # Ceramic API
     networks:
       - football-squares
     volumes:
       - ceramic-data:/app/ceramic-data
     restart: unless-stopped
-    command: ["ceramic", "daemon", "--config", "/app/ceramic-data/daemon.config.json"]
+    command:
+      ['ceramic', 'daemon', '--config', '/app/ceramic-data/daemon.config.json']
 
   # Redis (for caching and session management)
   redis:
     image: redis:7-alpine
     container_name: redis
     ports:
-      - "6379:6379"
+      - '6379:6379'
     networks:
       - football-squares
     volumes:
       - redis-data:/data
     restart: unless-stopped
-    command: ["redis-server", "--appendonly", "yes"]
+    command: ['redis-server', '--appendonly', 'yes']
 
   # Nginx (reverse proxy and load balancer)
   nginx:
     image: nginx:alpine
     container_name: nginx
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     networks:
       - football-squares
     volumes:
@@ -158,7 +160,7 @@ services:
     image: prom/prometheus:latest
     container_name: prometheus
     ports:
-      - "9090:9090"
+      - '9090:9090'
     networks:
       - football-squares
     volumes:
@@ -176,7 +178,7 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     ports:
-      - "3001:3000"
+      - '3001:3000'
     networks:
       - football-squares
     volumes:

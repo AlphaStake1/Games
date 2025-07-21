@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer";
-import RulesContent from "@/components/RulesContent";
+import Footer from '@/components/Footer';
+import RulesContent from '@/components/RulesContent';
 
 const RulesPage = () => {
   return (

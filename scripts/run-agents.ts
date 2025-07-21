@@ -42,7 +42,7 @@ class AgentRunner {
 
   constructor() {
     this.connection = new Connection(
-      process.env.RPC_ENDPOINT || 'https://api.devnet.solana.com'
+      process.env.RPC_ENDPOINT || 'https://api.devnet.solana.com',
     );
 
     const walletKeypair = this.loadWallet();
@@ -56,24 +56,51 @@ class AgentRunner {
     this.program = new Program(idl, PROGRAM_ID, this.provider);
 
     // Initialize agents
-    this.orchestrator = new OrchestratorAgent(this.connection, this.provider, this.program);
-    this.boardAgent = new BoardAgent(this.connection, this.provider, this.program);
-    this.randomizerAgent = new RandomizerAgent(this.connection, this.provider, this.program);
-    this.oracleAgent = new OracleAgent(this.connection, this.provider, this.program);
-    this.winnerAgent = new WinnerAgent(this.connection, this.provider, this.program);
+    this.orchestrator = new OrchestratorAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
+    this.boardAgent = new BoardAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
+    this.randomizerAgent = new RandomizerAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
+    this.oracleAgent = new OracleAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
+    this.winnerAgent = new WinnerAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
     this.emailAgent = new EmailAgent();
     this.clockworkManager = new ClockworkThreadManager();
 
     // Initialize WebSocket server
     const wsPort = parseInt(process.env.WS_PORT || '8080');
-    this.wsServer = new WebSocketGameServer(wsPort, this.connection, this.provider, this.program);
+    this.wsServer = new WebSocketGameServer(
+      wsPort,
+      this.connection,
+      this.provider,
+      this.program,
+    );
 
     this.setupEventListeners();
     console.log('AgentRunner initialized');
   }
 
   private loadWallet(): Keypair {
-    const walletPath = process.env.KEYPAIR_PATH || path.join(process.env.HOME!, '.config/solana/id.json');
+    const walletPath =
+      process.env.KEYPAIR_PATH ||
+      path.join(process.env.HOME!, '.config/solana/id.json');
     const walletData = JSON.parse(fs.readFileSync(walletPath, 'utf8'));
     return Keypair.fromSecretKey(new Uint8Array(walletData));
   }
@@ -102,7 +129,10 @@ class AgentRunner {
     // Board agent events
     this.boardAgent.on('boardCreated', (data) => {
       console.log('Board created:', data);
-      this.wsServer.broadcastBoardUpdate(data.gameId, { type: 'board_created', ...data });
+      this.wsServer.broadcastBoardUpdate(data.gameId, {
+        type: 'board_created',
+        ...data,
+      });
     });
 
     this.boardAgent.on('squarePurchased', (data) => {
@@ -113,7 +143,10 @@ class AgentRunner {
     // Randomizer agent events
     this.randomizerAgent.on('vrfFulfilled', (data) => {
       console.log('VRF fulfilled:', data);
-      this.wsServer.broadcastBoardUpdate(data.gameId, { type: 'randomized', ...data });
+      this.wsServer.broadcastBoardUpdate(data.gameId, {
+        type: 'randomized',
+        ...data,
+      });
     });
 
     // Oracle agent events
@@ -136,7 +169,10 @@ class AgentRunner {
 
     this.winnerAgent.on('payoutCompleted', (data) => {
       console.log('Payout completed:', data);
-      this.wsServer.broadcastBoardUpdate(data.gameId, { type: 'payout_completed', ...data });
+      this.wsServer.broadcastBoardUpdate(data.gameId, {
+        type: 'payout_completed',
+        ...data,
+      });
     });
 
     // Email agent events
@@ -197,16 +233,26 @@ class AgentRunner {
     try {
       // Create the board
       const { boardPda } = await this.boardAgent.createBoard(gameConfig.gameId);
-      console.log(`Board created for game ${gameConfig.gameId}: ${boardPda.toString()}`);
+      console.log(
+        `Board created for game ${gameConfig.gameId}: ${boardPda.toString()}`,
+      );
 
       // Add to orchestrator
       await this.orchestrator.addGame(gameConfig.gameId);
 
       // Create Clockwork threads
       if (gameConfig.monitoringEnabled) {
-        await this.clockworkManager.createGameMonitoringThread(gameConfig.gameId);
-        await this.clockworkManager.createRandomizationThread(gameConfig.gameId, gameConfig.startTime);
-        await this.clockworkManager.createWinnerSettlementThread(gameConfig.gameId, gameConfig.endTime);
+        await this.clockworkManager.createGameMonitoringThread(
+          gameConfig.gameId,
+        );
+        await this.clockworkManager.createRandomizationThread(
+          gameConfig.gameId,
+          gameConfig.startTime,
+        );
+        await this.clockworkManager.createWinnerSettlementThread(
+          gameConfig.gameId,
+          gameConfig.endTime,
+        );
       }
 
       // Start Oracle polling
@@ -256,7 +302,10 @@ class AgentRunner {
     const healthChecks = [
       { name: 'Orchestrator', check: () => this.orchestrator.healthCheck() },
       { name: 'BoardAgent', check: () => this.boardAgent.healthCheck() },
-      { name: 'RandomizerAgent', check: () => this.randomizerAgent.healthCheck() },
+      {
+        name: 'RandomizerAgent',
+        check: () => this.randomizerAgent.healthCheck(),
+      },
       { name: 'OracleAgent', check: () => this.oracleAgent.healthCheck() },
       { name: 'WinnerAgent', check: () => this.winnerAgent.healthCheck() },
       { name: 'EmailAgent', check: () => this.emailAgent.healthCheck() },
@@ -298,13 +347,19 @@ class AgentRunner {
 
   private async handleTaskError(data: any): Promise<void> {
     console.error('Handling task error:', data);
-    
+
     // Implement retry logic or error notification
-    if (data.task.agent === 'EmailAgent' && data.task.action === 'send_winner_notification') {
+    if (
+      data.task.agent === 'EmailAgent' &&
+      data.task.action === 'send_winner_notification'
+    ) {
       // Retry email sending
       setTimeout(async () => {
         try {
-          await this.orchestrator.executeTaskPlan({ tasks: [data.task], reasoning: 'Retry after error' });
+          await this.orchestrator.executeTaskPlan({
+            tasks: [data.task],
+            reasoning: 'Retry after error',
+          });
         } catch (error) {
           console.error('Retry failed:', error);
         }
@@ -312,14 +367,17 @@ class AgentRunner {
     }
   }
 
-  private async handleGameFinished(gameId: number, finalScore: any): Promise<void> {
+  private async handleGameFinished(
+    gameId: number,
+    finalScore: any,
+  ): Promise<void> {
     console.log(`Game ${gameId} finished with score:`, finalScore);
-    
+
     // Trigger winner settlement
     try {
       const boardPda = PublicKey.findProgramAddressSync(
         [Buffer.from('board'), Buffer.from(gameId.toString())],
-        PROGRAM_ID
+        PROGRAM_ID,
       )[0];
 
       await this.winnerAgent.settleWinner(boardPda);
@@ -328,9 +386,12 @@ class AgentRunner {
     }
   }
 
-  private async handleWinnerSettled(gameId: number, winnerInfo: any): Promise<void> {
+  private async handleWinnerSettled(
+    gameId: number,
+    winnerInfo: any,
+  ): Promise<void> {
     const gameConfig = this.activeGames.get(gameId);
-    
+
     if (gameConfig?.emailNotifications) {
       try {
         await this.emailAgent.sendWinnerNotification({
@@ -338,7 +399,10 @@ class AgentRunner {
           gameId,
           amount: winnerInfo.payoutAmount,
           transactionId: 'placeholder-tx-id',
-          finalScore: { home: winnerInfo.homeScore, away: winnerInfo.awayScore },
+          finalScore: {
+            home: winnerInfo.homeScore,
+            away: winnerInfo.awayScore,
+          },
           squareIndex: winnerInfo.squareIndex,
         });
       } catch (error) {
@@ -374,13 +438,15 @@ async function main() {
 
     case 'create-game':
       if (args.length < 4) {
-        console.error('Usage: npm run dev:agents create-game <gameId> <startTime> <endTime>');
+        console.error(
+          'Usage: npm run dev:agents create-game <gameId> <startTime> <endTime>',
+        );
         process.exit(1);
       }
       const gameId = parseInt(args[1]);
       const startTime = new Date(args[2]);
       const endTime = new Date(args[3]);
-      
+
       await runner.createGame({
         gameId,
         startTime,
@@ -410,17 +476,17 @@ async function main() {
       console.log('  create-game <gameId> <startTime> <endTime>');
       console.log('  end-game <gameId>');
       console.log('  stats');
-      
+
       // Start by default
       await runner.start();
-      
+
       // Keep running until Ctrl+C
       process.on('SIGINT', async () => {
         console.log('\nShutting down...');
         await runner.stop();
         process.exit(0);
       });
-      
+
       break;
   }
 }

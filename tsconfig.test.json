@@ -24,11 +24,7 @@
     "ceramic/**/*",
     "lib/**/*"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "target"
-  ],
+  "exclude": ["node_modules", "dist", "target"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs",

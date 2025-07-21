@@ -40,17 +40,20 @@ Arweave is a permanent storage network that allows developers to store data perm
 The main developer portal provides:
 
 #### Getting Started Path:
+
 1. **Discover** - Learn about Arweave capabilities
 2. **Use** - Start using existing applications
 3. **Build** - Develop your own applications
 4. **Get Funded** - Access funding opportunities
 
 #### Three Main Building Blocks:
+
 - **Upload your first data** - Simple file uploads and permanent storage
 - **Build a fully decentralized app** - Complete application development
 - **Use Arweave as a database** - Permanent data storage and querying
 
 #### Deep Dive Resources:
+
 - **Arweave+SmartWeave App Development Workshop** - Video tutorials
 - **Explore the cookbook** - Detailed documentation
 - **Understand the protocol** - Technical protocol details
@@ -63,11 +66,13 @@ The comprehensive developer guide organized into:
 #### Documentation Structure:
 
 **Getting Started**
+
 - Welcome and introduction
 - Hello World tutorials (No Code and CLI)
 - Contributing guidelines
 
 **Core Concepts** - Foundations of Arweave and Permaweb
+
 - Posting Transactions
 - Metadata and Tags
 - Querying and Fetching Data
@@ -90,6 +95,7 @@ The comprehensive developer guide organized into:
 ## Technical Architecture
 
 ### Arweave File System (ArFS)
+
 - **Data Model**: Structured data organization
 - **Entity Types**: Different data entities and formats
 - **Content Types**: Various supported content formats
@@ -97,6 +103,7 @@ The comprehensive developer guide organized into:
 - **Schema Diagrams**: Visual data structure representation
 
 ### Transaction System
+
 - **Posting Transactions**: How to submit data to Arweave
 - **Metadata (Tags)**: Tagging system for data organization
 - **Querying**: Advanced search and retrieval capabilities
@@ -104,6 +111,7 @@ The comprehensive developer guide organized into:
 - **Path Manifests**: File path organization systems
 
 ### Gateway Services
+
 - **Access Points**: Multiple entry points to the network
 - **Bundling Services**: Transaction optimization utilities
 - **Browser Integration**: Web browser compatibility
@@ -112,18 +120,21 @@ The comprehensive developer guide organized into:
 ## Development Workflows
 
 ### For Beginners
+
 1. Start with "Hello World (No Code)" tutorial
 2. Progress to CLI-based interactions
 3. Explore simple data uploading
 4. Learn about permanent storage concepts
 
 ### For Experienced Developers
+
 1. Review Core Concepts documentation
 2. Explore the comprehensive guides
 3. Use starter kits for rapid development
 4. Integrate with existing development workflows
 
 ### For Advanced Users
+
 1. Understand the underlying protocol
 2. Contribute to the open source ecosystem
 3. Build complex decentralized applications
@@ -132,18 +143,21 @@ The comprehensive developer guide organized into:
 ## Key Development Tools
 
 ### APIs and SDKs
+
 - **REST API**: Standard HTTP API access
 - **JavaScript SDK**: Client-side development
 - **CLI Tools**: Command line interface
 - **Gateway APIs**: Network access points
 
 ### Development Frameworks
+
 - **Starter Kits**: Pre-built templates
 - **Frontend Frameworks**: React, Vue, Angular support
 - **Backend Integration**: Various backend compatibility
 - **Database Integration**: Permanent database functionality
 
 ### Developer Support
+
 - **Comprehensive Documentation**: Detailed guides and references
 - **Community Support**: Active developer community
 - **Open Source**: All tools and libraries are open source
@@ -152,18 +166,21 @@ The comprehensive developer guide organized into:
 ## Use Cases
 
 ### Web Applications
+
 - **Permanent Websites**: Host websites that never go down
 - **Decentralized Apps**: Build truly decentralized applications
 - **Content Management**: Permanent content storage and management
 - **Static Site Hosting**: Host static websites permanently
 
 ### Data Storage
+
 - **Document Storage**: Permanent document archives
 - **Media Storage**: Images, videos, and audio files
 - **Database Backup**: Permanent database backups
 - **Log Storage**: Permanent log storage and analysis
 
 ### Enterprise Applications
+
 - **Compliance**: Permanent record keeping
 - **Audit Trails**: Immutable audit logs
 - **Data Archiving**: Long-term data preservation
@@ -172,24 +189,28 @@ The comprehensive developer guide organized into:
 ## Getting Started Checklist
 
 ### Phase 1: Learning
+
 - [ ] Review Arweave concepts and architecture
 - [ ] Complete "Hello World" tutorials
 - [ ] Understand permanent storage principles
 - [ ] Explore the cookbook documentation
 
 ### Phase 2: Development
+
 - [ ] Set up development environment
 - [ ] Choose appropriate starter kit
 - [ ] Build simple data upload application
 - [ ] Implement querying and retrieval
 
 ### Phase 3: Deployment
+
 - [ ] Deploy application to Permaweb
 - [ ] Test permanent storage functionality
 - [ ] Implement proper error handling
 - [ ] Monitor application performance
 
 ### Phase 4: Advanced Features
+
 - [ ] Integrate with AO compute platform
 - [ ] Implement advanced privacy features
 - [ ] Contribute to open source ecosystem
@@ -198,18 +219,21 @@ The comprehensive developer guide organized into:
 ## Community and Ecosystem
 
 ### Contributing
+
 - **Open Source**: All tools and documentation are open source
 - **Issue Tracking**: GitHub-based issue management
 - **Documentation**: Community-driven documentation updates
 - **Code Contributions**: Direct code contributions welcome
 
 ### Resources
+
 - **GitHub**: https://github.com/arweave-project
 - **Official Website**: https://arweave.org
 - **Cookbook**: https://cookbook.arweave.net
 - **Community Forums**: Active developer discussions
 
 ### Support
+
 - **Documentation**: Comprehensive guides and references
 - **Community**: Active developer community
 - **Tutorials**: Video and written tutorials
@@ -231,4 +255,4 @@ The combination of permanent storage, decentralized hosting, and comprehensive d
 
 ---
 
-*This research document provides a comprehensive overview of Arweave development resources and capabilities. For the most up-to-date information, always refer to the official documentation and community resources.*
+_This research document provides a comprehensive overview of Arweave development resources and capabilities. For the most up-to-date information, always refer to the official documentation and community resources._
