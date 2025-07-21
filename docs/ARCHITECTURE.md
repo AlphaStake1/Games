@@ -254,6 +254,12 @@ pub struct GameScore {
   - Decentralized data storage
   - Cross-platform compatibility
 
+#### Solana Name Service (SNS) Integration
+- **Documentation**: [`docs/external-references/sns-documentation-reference.md`](external-references/sns-documentation-reference.md)
+- **Complete Docs**: [`docs/external-references/sns-complete-documentation.md`](external-references/sns-complete-documentation.md)
+- **Purpose**: Potential integration with Solana Name Service for domain resolution
+- **Note**: **All agents must review SNS documentation before developing backend infrastructure**
+
 #### Proton Mail Bridge
 - **File**: [`agents/EmailAgent/index.ts`](../agents/EmailAgent/index.ts)
 - **Purpose**: Secure email notifications
