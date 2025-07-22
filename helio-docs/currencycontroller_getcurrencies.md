@@ -1,0 +1,1 @@
+The `currencycontroller_getcurrencies` endpoint, accessible via `GET https://api.hel.io/v1/currency`, returns a list of fiat and SOL currencies supported by Helio, including their IDs. This information can be used to retrieve currency IDs when creating pay links.
