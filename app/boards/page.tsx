@@ -21,9 +21,11 @@ import BoardSelector from '@/components/BoardSelector';
 import EnhancedBoardGrid from '@/components/EnhancedBoardGrid';
 import PricingPanel from '@/components/PricingPanel';
 import VipUpgradeModal from '@/components/VipUpgradeModal';
+import CBLCallToActionCard from '@/components/CBLCallToActionCard';
 
 import { useUserPreferences } from '@/lib/userPreferences';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/lib/auth';
 import { NFLTeam } from '@/lib/nflTeams';
 import { BoardConfiguration, SquareSelection } from '@/lib/boardTypes';
 import {
@@ -40,6 +42,7 @@ const BoardsPage: React.FC = () => {
   const { connected, publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const { toast } = useToast();
+  const { user } = useAuth();
   const searchParams = useSearchParams();
   const demoMode = searchParams.get('demo') === 'true';
   const walletAddress =
@@ -369,25 +372,37 @@ const BoardsPage: React.FC = () => {
 
         {viewMode === 'selection' ? (
           /* Board Selection Mode */
-          <BoardSelector
-            userTeam={
-              preferences?.favoriteTeam || {
-                id: 'dal',
-                name: 'Cowboys',
-                city: 'Dallas',
-                abbreviation: 'DAL',
-                conference: 'NFC',
-                division: 'East',
-                primaryColor: '#041E42',
-                secondaryColor: '#869397',
-                logoUrl: '/assets/teams/dal.png',
-              }
-            }
-            isVIP={preferences?.isVIP || false}
-            onBoardSelect={handleBoardSelect}
-            onVIPUpgrade={() => setShowVipUpgrade(true)}
-            selectedBoards={preferences?.selectedBoards || []}
-          />
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Board Selector - Takes up 3 columns */}
+            <div className="lg:col-span-3">
+              <BoardSelector
+                userTeam={
+                  preferences?.favoriteTeam || {
+                    id: 'dal',
+                    name: 'Cowboys',
+                    city: 'Dallas',
+                    abbreviation: 'DAL',
+                    conference: 'NFC',
+                    division: 'East',
+                    primaryColor: '#041E42',
+                    secondaryColor: '#869397',
+                    logoUrl: '/assets/teams/dal.png',
+                  }
+                }
+                isVIP={preferences?.isVIP || false}
+                onBoardSelect={handleBoardSelect}
+                onVIPUpgrade={() => setShowVipUpgrade(true)}
+                selectedBoards={preferences?.selectedBoards || []}
+              />
+            </div>
+            
+            {/* Right Column - CBL CTA */}
+            <div className="lg:col-span-1">
+              {(!user || !user.isCBL) && (
+                <CBLCallToActionCard className="sticky top-8" />
+              )}
+            </div>
+          </div>
         ) : (
           /* Board Grid Mode */
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

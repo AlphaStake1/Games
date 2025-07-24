@@ -1,16 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Crown } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { ThemeToggle } from './ui/theme-toggle';
+import { useAuth } from '@/lib/auth';
+import { Badge } from '@/components/ui/badge';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { user } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -24,6 +27,11 @@ const Header = () => {
     { label: 'What are NFTs?', href: '/what-are-nfts' },
     { label: 'FAQ', href: '/faq' },
   ];
+
+  // Show CBL CTA on home, play, and rules pages for non-CBL users
+  const showCBLBadge = ['/play', '/', '/rules'].includes(pathname) &&
+                       !pathname.startsWith('/cbl') &&
+                       (!user || !user.isCBL);
 
   return (
     <header className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
@@ -49,7 +57,7 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden md:flex space-x-8 flex-1 justify-center">
+          <nav className="hidden md:flex space-x-8 flex-1 justify-center items-center">
             {menuItems.map((item) => (
               <Link
                 key={item.label}
@@ -60,6 +68,19 @@ const Header = () => {
                 {item.label}
               </Link>
             ))}
+            
+            {/* CBL Badge */}
+            {showCBLBadge && (
+              <Link href="/cbl/overview" className="ml-4">
+                <Badge
+                  variant="secondary"
+                  className="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 border-yellow-300 transition-colors duration-200 cursor-pointer"
+                >
+                  <Crown className="w-3 h-3 mr-1" />
+                  Host a Board
+                </Badge>
+              </Link>
+            )}
           </nav>
 
           {/* Desktop Actions */}
@@ -126,6 +147,21 @@ const Header = () => {
             </Link>
 
             <WalletMultiButton className="!w-full !mt-2 !bg-blue-600 hover:!bg-blue-700 !text-white !px-6 !py-3 !rounded-lg !font-semibold !transition-colors !duration-200 !border-0 wallet-adapter-button-trigger" />
+            
+            {/* CBL CTA for Mobile */}
+            {showCBLBadge && (
+              <>
+                <div className="border-t border-gray-200 dark:border-gray-700 my-4"></div>
+                <Link
+                  href="/cbl/overview"
+                  className="w-full bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-6 py-3 rounded-lg font-medium transition-colors duration-200 text-center block flex items-center justify-center"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Crown className="w-4 h-4 mr-2" />
+                  🏆 Host a Board
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
