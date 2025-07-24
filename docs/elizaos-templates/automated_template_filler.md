@@ -8,15 +8,17 @@ Visit **snapperai.io** for more ElizaOS tutorials | YouTube: **youtube.com/@snap
 ---
 
 ## Instructions
+
 Use this prompt to have Claude automatically fill out the Character Creation Template for you based on any character or concept. This saves time if you want to create agents based on well-known characters or personality types.
 
 ---
 
 ## Automation Prompt to Send to Claude:
 
-Please fill out the ElizaOS Character Creation Template based on [CHARACTER/CONCEPT NAME]. 
+Please fill out the ElizaOS Character Creation Template based on [CHARACTER/CONCEPT NAME].
 
 **Important Instructions:**
+
 - Only provide the completed template in the exact format shown below
 - Do NOT generate the actual character.ts file
 - Do NOT write TypeScript code
@@ -39,19 +41,21 @@ Please fill out the ElizaOS Character Creation Template based on [CHARACTER/CONC
 Perfect! Now please create an ElizaOS character configuration for my AI agent with these specifications:
 
 **Agent Overview:**
+
 - **Name**: [AGENT_NAME]
 - **Primary Purpose**: [MAIN_FUNCTION]
 - **Target Audience**: [WHO_USES_IT]
 - **Personality Type**: [DESIRED_PERSONALITY]
 
-*Examples for Primary Purpose: "customer support for SaaS company", "trading bot for crypto", "creative writing assistant"*
+_Examples for Primary Purpose: "customer support for SaaS company", "trading bot for crypto", "creative writing assistant"_
 
-*Examples for Target Audience: "new developers", "experienced traders", "content creators"*
+_Examples for Target Audience: "new developers", "experienced traders", "content creators"_
 
 **Personality Type Options:**
 Choose from options below, combine multiple, or write your own:
+
 - "Analytical and detail-oriented"
-- "Enthusiastic and optimistic" 
+- "Enthusiastic and optimistic"
 - "Calm and wise"
 - "Witty and intelligent"
 - "Confident and decisive"
@@ -64,17 +68,19 @@ Choose from options below, combine multiple, or write your own:
 - "Thoughtful and philosophical"
 
 **Specific Requirements:**
+
 - **Expertise Areas**: [MAIN_TOPICS]
 - **Communication Style**: [PREFERRED_TONE]
 - **Unique Traits**: [SPECIAL_CHARACTERISTICS]
 - **Platform Focus**: [WHERE_IT_WILL_BE_USED]
 
-*Examples for Expertise Areas: "JavaScript, React, web development", "DeFi, trading strategies, market analysis"*
+_Examples for Expertise Areas: "JavaScript, React, web development", "DeFi, trading strategies, market analysis"_
 
-*Examples for Platform Focus: "mainly Discord community", "Twitter and web interface", "all platforms equally"*
+_Examples for Platform Focus: "mainly Discord community", "Twitter and web interface", "all platforms equally"_
 
 **Communication Style Options:**
 Select from options below or describe your own:
+
 - "Direct and to-the-point"
 - "Warm and conversational"
 - "Professional with subtle humor"
@@ -90,6 +96,7 @@ Select from options below or describe your own:
 
 **Unique Traits Options:**
 Pick from options below, mix and match, or create your own:
+
 - "Uses analogies and metaphors to explain ideas"
 - "Has strong opinions and isn't afraid to share them"
 - "Genuinely celebrates others' successes"
@@ -106,4 +113,4 @@ Pick from options below, mix and match, or create your own:
 **Character Backstory/Context** (Optional):
 [BACKGROUND_INFO]
 
-*© 2025 SnapperAI - ElizaOS Character Creation System*
+_© 2025 SnapperAI - ElizaOS Character Creation System_

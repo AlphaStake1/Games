@@ -14,26 +14,33 @@ Your ElizaOS agent needs to adapt its communication style based on context while
 ## The Complete Character Framework
 
 ### System Prompt: The Foundation
+
 The system prompt serves as your agent's core behavioral framework - the fundamental instructions that guide all decision-making and responses. Think of it as the agent's "operating principles."
 
 ### Bio Array: The Personality
+
 8-15 entries that define who your agent is - personality traits, background, quirks, and characteristics that make them unique and memorable.
 
 ### Style Object: The Adaptation Engine
+
 Three context-aware communication patterns that show how the same personality expresses itself differently based on the situation.
 
 ### Topics Array: The Expertise
+
 8-10 areas where your agent can demonstrate knowledge and engage meaningfully with users.
 
 ### Message Examples: The Training Data
+
 3-4 conversation scenarios that demonstrate how all these elements work together in real interactions.
 
 ## The Three Style Contexts Explained
 
 ### all - Universal Guidelines
+
 These apply everywhere your agent communicates. Think of these as your agent's core personality traits that never change.
 
 **What to Include:**
+
 - Core personality characteristics that define the agent
 - Fundamental communication principles and values
 - Universal behavioral patterns and approaches
@@ -41,17 +48,20 @@ These apply everywhere your agent communicates. Think of these as your agent's c
 - Problem-solving methodology and thinking style
 
 **Example Guidelines:**
+
 ```typescript
 all: [
-  "speaks with genuine enthusiasm and warmth",
-  "shows authentic curiosity about user needs and goals"
-]
+  'speaks with genuine enthusiasm and warmth',
+  'shows authentic curiosity about user needs and goals',
+];
 ```
 
 ### chat - Casual Conversation Style
+
 For informal interactions, direct messages, community chats, and friendly conversations.
 
 **What to Include:**
+
 - Emoji usage patterns and informal expressions
 - Casual language preferences and slang comfort level
 - Enthusiasm expression methods and celebration style
@@ -59,17 +69,20 @@ For informal interactions, direct messages, community chats, and friendly conver
 - Conversational flow and engagement tactics
 
 **Example Guidelines:**
+
 ```typescript
 chat: [
-  "loves using encouraging phrases and celebration language",
-  "asks follow-up questions to show genuine interest"
-]
+  'loves using encouraging phrases and celebration language',
+  'asks follow-up questions to show genuine interest',
+];
 ```
 
 ### post - Professional/Public Style
+
 For formal communications, documentation, public posts, and structured guidance.
 
 **What to Include:**
+
 - Professional communication standards and formality level
 - Information organization methods and structure preferences
 - Authority and expertise demonstration techniques
@@ -77,11 +90,12 @@ For formal communications, documentation, public posts, and structured guidance.
 - Public-facing voice and brand consistency
 
 **Example Guidelines:**
+
 ```typescript
 post: [
-  "maintains expertise while being approachable",
-  "ends with encouragement and clear calls to action"
-]
+  'maintains expertise while being approachable',
+  'ends with encouragement and clear calls to action',
+];
 ```
 
 ## Style Adaptation Examples
@@ -93,6 +107,7 @@ post: [
 **User Question:** "I'm struggling with this bug and feeling frustrated"
 
 **Chat Style Response:**
+
 ```
 "Oh no! 🐛 Bug hunting can be super frustrating, but you've got this! 💪
 
@@ -105,6 +120,7 @@ We'll figure this out together! Sometimes the sneakiest bugs teach us the most. 
 ```
 
 **Post Style Response:**
+
 ```
 "Debugging frustration is a common experience for developers at all levels. Here's a systematic approach to resolve your issue:
 
@@ -116,3 +132,4 @@ We'll figure this out together! Sometimes the sneakiest bugs teach us the most. 
 **Step 2: Systematic Investigation**
 - Isolate the problem area
 *© 2025 SnapperAI - ElizaOS Character Creation System*
+```
