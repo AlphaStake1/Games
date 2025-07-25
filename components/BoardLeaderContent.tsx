@@ -27,17 +27,19 @@ const BoardLeaderContent = () => {
           Community Board Leaders (CBLs)
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
-          Lead the ultimate sports lounge for your friends and fans. Host Football Squares boards, control the rules, and earn rewards all season.
+          Lead the ultimate sports lounge for your friends and fans. Host
+          Football Squares boards, control the rules, and earn rewards all
+          season.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
-            onClick={() => window.location.href = '/cbl/learn-more'}
+            onClick={() => (window.location.href = '/cbl/learn-more')}
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold transition-colors duration-200"
           >
             Become a CBL – $9.99
           </Button>
           <Button
-            onClick={() => window.location.href = '/cbl/learn-more'}
+            onClick={() => (window.location.href = '/cbl/learn-more')}
             variant="outline"
             className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-3 text-lg"
           >
@@ -55,7 +57,8 @@ const BoardLeaderContent = () => {
               Earn 3% Revenue
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Unlock a 3% commission on every fully sold board once you qualify (see milestones below).
+              Unlock a 3% commission on every fully sold board once you qualify
+              (see milestones below).
             </p>
           </CardContent>
         </Card>
@@ -79,7 +82,8 @@ const BoardLeaderContent = () => {
               Build Community
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Create the ultimate sports lounge with custom pricing, themes, and house rules.
+              Create the ultimate sports lounge with custom pricing, themes, and
+              house rules.
             </p>
           </CardContent>
         </Card>
@@ -153,7 +157,10 @@ const BoardLeaderContent = () => {
 
       {/* CBL Levels & Season Milestones */}
       <Accordion type="single" collapsible className="mb-12">
-        <AccordionItem value="cbl-levels" className="border border-gray-200 dark:border-gray-800 rounded-lg">
+        <AccordionItem
+          value="cbl-levels"
+          className="border border-gray-200 dark:border-gray-800 rounded-lg"
+        >
           <AccordionTrigger className="px-6 py-4 text-left">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">
               CBL Levels & Season Milestones
@@ -191,7 +198,8 @@ const BoardLeaderContent = () => {
                     <strong>Season Earner</strong>
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
-                    Fill <strong>3 boards in any 7 day window</strong> (each $7+ squares)
+                    Fill <strong>3 boards in any 7 day window</strong> (each $7+
+                    squares)
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
                     3% rake share • Blue Point accrual
@@ -202,10 +210,12 @@ const BoardLeaderContent = () => {
                     <strong>All Star Leader</strong>
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
-                    50 filled boards in season <strong>OR</strong> 4,000 squares sold
+                    50 filled boards in season <strong>OR</strong> 4,000 squares
+                    sold
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
-                    3% rake + 1.5× Blue Point multiplier • merch • Hall of Fame listing
+                    3% rake + 1.5× Blue Point multiplier • merch • Hall of Fame
+                    listing
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -224,41 +234,75 @@ const BoardLeaderContent = () => {
         <CardContent>
           <Table>
             <TableHeader>
-                <TableRow>
-                  <TableHead className="text-gray-900 dark:text-white">CBL Level</TableHead>
-                  <TableHead className="text-gray-900 dark:text-white">Regular‑Season Price Cap</TableHead>
-                  <TableHead className="text-gray-900 dark:text-white">Playoffs Cap</TableHead>
-                  <TableHead className="text-gray-900 dark:text-white">Super Bowl Cap</TableHead>
-                  <TableHead className="text-gray-900 dark:text-white">Rewards</TableHead>
-                </TableRow>
+              <TableRow>
+                <TableHead className="text-gray-900 dark:text-white">
+                  CBL Level
+                </TableHead>
+                <TableHead className="text-gray-900 dark:text-white">
+                  Regular‑Season Price Cap
+                </TableHead>
+                <TableHead className="text-gray-900 dark:text-white">
+                  Playoffs Cap
+                </TableHead>
+                <TableHead className="text-gray-900 dark:text-white">
+                  Super Bowl Cap
+                </TableHead>
+                <TableHead className="text-gray-900 dark:text-white">
+                  Rewards
+                </TableHead>
+              </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
                 <TableCell className="font-medium text-gray-900 dark:text-white">
                   First Stream CBL
                 </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">$1 – $100</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">up to $200</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">$300</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">Skins • dashboard</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  $1 – $100
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  up to $200
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  $300
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  Skins • dashboard
+                </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium text-gray-900 dark:text-white">
                   Drive Maker CBL
                 </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">$1 – $250</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">up to $400</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">$500</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">3 % rake • Blue‑Points</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  $1 – $250
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  up to $400
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  $500
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  3 % rake • Blue‑Points
+                </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium text-gray-900 dark:text-white">
                   Franchise CBL
                 </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">$1 – $500</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">up to $1 000</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">No limit</TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">1.5× Blue‑Points • merch</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  $1 – $500
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  up to $1 000
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  No limit
+                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">
+                  1.5× Blue‑Points • merch
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -392,8 +436,8 @@ const BoardLeaderContent = () => {
                 Robert L.
               </h4>
               <p className="text-sm text-[#708090] dark:text-[#96abdc] mb-2">
-                "Paid back my fee in the first month. Now it's pure profit every
-                week!"
+                "Paid back my fee in the first month. Now it&apos;s pure profit
+                every week!"
               </p>
               <div className="text-xs text-[#ed5925] font-medium">
                 12 Weeks Active
@@ -413,7 +457,7 @@ const BoardLeaderContent = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
-            onClick={() => window.location.href = '/cbl/learn-more'}
+            onClick={() => (window.location.href = '/cbl/learn-more')}
             className="bg-[#ed5925] hover:bg-[#d14513] text-white px-8 py-3 text-lg font-semibold transition-colors duration-200"
           >
             Become a CBL – $9.99

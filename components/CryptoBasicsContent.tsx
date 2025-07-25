@@ -3,18 +3,18 @@ import React from 'react';
 export default function CryptoBasicsContent() {
   return (
     <div className="prose dark:prose-invert max-w-none">
-      <h1>Crypto Basics: Your Beginner's Guide</h1>
+      <h1>Crypto Basics: Your Beginner&apos;s Guide</h1>
 
       <p>
         <em>Last updated: 5 July 2025</em>
       </p>
 
       <p>
-        Welcome to Football Squares' comprehensive Crypto Basics guide! This
-        resource is designed for absolute beginners looking to understand
+        Welcome to Football Squares&apos; comprehensive Crypto Basics guide!
+        This resource is designed for absolute beginners looking to understand
         cryptocurrency wallets, how to acquire crypto, transfer digital assets
-        securely, and avoid common scams. Whether you're new to crypto or just
-        need a refresher, this guide will help you navigate the Web3 world
+        securely, and avoid common scams. Whether you&apos;re new to crypto or
+        just need a refresher, this guide will help you navigate the Web3 world
         safely.
       </p>
 
@@ -131,26 +131,26 @@ export default function CryptoBasicsContent() {
 
       <hr className="my-8" />
 
-      <h2 className="mt-12">Wallet Security: DOs and DON'Ts</h2>
+      <h2 className="mt-12">Wallet Security: DOs and DON&apos;Ts</h2>
       <p className="text-lg text-muted-foreground">
         <strong>Why this matters:</strong> In crypto, you are your own bank.
-        Unlike traditional finance, there's often no one to call if you lose
-        access to your funds or get scammed. Following these security best
+        Unlike traditional finance, there&apos;s often no one to call if you
+        lose access to your funds or get scammed. Following these security best
         practices is non-negotiable for keeping your assets safe.
       </p>
 
       <p>
         Keeping your crypto safe requires good security habits. Here are some{' '}
-        <strong>DOs and DON'Ts</strong> for wallet security:
+        <strong>DOs and DON&apos;Ts</strong> for wallet security:
       </p>
 
       <ul>
         <li>
           <strong>DO:</strong>{' '}
           <strong>Safeguard your Secret Recovery Phrase (seed phrase)</strong>{' '}
-          offline. Upon creating a non-custodial wallet, you'll get a 12- or
-          24-word recovery phrase – write it down on paper (or engrave it on
-          metal) and store it in a secure place. It's wise to keep{' '}
+          offline. Upon creating a non-custodial wallet, you&apos;ll get a 12-
+          or 24-word recovery phrase – write it down on paper (or engrave it on
+          metal) and store it in a secure place. It&apos;s wise to keep{' '}
           <strong>multiple copies</strong> in separate safe locations (e.g. one
           at home and one in a bank deposit box) in case of fire or loss. This
           phrase is the master key to your wallet.
@@ -176,9 +176,10 @@ export default function CryptoBasicsContent() {
           <strong>DON'T:</strong>{' '}
           <strong>Avoid saving your seed phrase digitally</strong>. Do not take
           screenshots, photos, or store the phrase in cloud storage or email
-          drafts. If it's on any online device, it's vulnerable to malware. Keep
-          it in physical form only. Likewise, don't copy-paste it on websites –
-          only enter it into the official wallet app when restoring a wallet.
+          drafts. If it&apos;s on any online device, it&apos;s vulnerable to
+          malware. Keep it in physical form only. Likewise, don&apos;t
+          copy-paste it on websites – only enter it into the official wallet app
+          when restoring a wallet.
         </li>
         <li>
           <strong>DO:</strong>{' '}
@@ -186,8 +187,8 @@ export default function CryptoBasicsContent() {
           often include critical security patches. Always install the latest
           version of your wallet app and updates for your phone/OS to patch
           vulnerabilities. Only download wallet apps or browser extensions from{' '}
-          <strong>official sources</strong> (the project's website or official
-          app store listings) to avoid fake apps.
+          <strong>official sources</strong> (the project&apos;s website or
+          official app store listings) to avoid fake apps.
         </li>
         <li>
           <strong>DO:</strong>{' '}
@@ -196,26 +197,26 @@ export default function CryptoBasicsContent() {
           amount, and the correct network before confirming. Crypto transactions
           are irreversible – a typo in the address can send funds to the wrong
           place permanently. It helps to{' '}
-          <strong>send a small test transaction</strong> first if you're sending
-          a large amount to a new address. Many wallets let you use QR code
-          scanning or copying to avoid manual typing errors.
+          <strong>send a small test transaction</strong> first if you&apos;re
+          sending a large amount to a new address. Many wallets let you use QR
+          code scanning or copying to avoid manual typing errors.
         </li>
         <li>
           <strong>DON'T:</strong>{' '}
-          <strong>Don't rush or act on panic prompts.</strong> Be wary of any
-          pop-ups or messages urging you to "urgently" do something with your
-          wallet (e.g. "Your account is compromised, give us your keys!" – this
-          is fake). <strong>Never click random links</strong> that claim you won
-          crypto or need to "verify" your wallet – these are often phishing
-          attempts.
+          <strong>Don&apos;t rush or act on panic prompts.</strong> Be wary of
+          any pop-ups or messages urging you to "urgently" do something with
+          your wallet (e.g. "Your account is compromised, give us your keys!" –
+          this is fake). <strong>Never click random links</strong> that claim
+          you won crypto or need to "verify" your wallet – these are often
+          phishing attempts.
         </li>
         <li>
           <strong>DON'T:</strong>{' '}
-          <strong>Don't leave your wallet unlocked or unattended.</strong> If
-          you're using a browser extension like MetaMask, make sure to log out
-          or lock it when not in use, especially on a shared or public computer.
-          On mobile, have a strong lock screen. Treat your crypto like cash –
-          you wouldn't leave your wallet open on a cafe table.
+          <strong>Don&apos;t leave your wallet unlocked or unattended.</strong>{' '}
+          If you&apos;re using a browser extension like MetaMask, make sure to
+          log out or lock it when not in use, especially on a shared or public
+          computer. On mobile, have a strong lock screen. Treat your crypto like
+          cash – you wouldn&apos;t leave your wallet open on a cafe table.
         </li>
         <li>
           <strong>DO:</strong>{' '}
@@ -228,12 +229,15 @@ export default function CryptoBasicsContent() {
         </li>
         <li>
           <strong>DON'T:</strong>{' '}
-          <strong>Don't keep all funds on exchanges or in one device.</strong>{' '}
-          Spread out risk. Holding coins on an exchange (custodial) means you're
-          trusting that platform's security. If you're not actively trading,
-          it's generally safer to withdraw assets to your own wallet. Similarly,
-          try not to load a mobile wallet with more value than you're willing to
-          carry — just like you wouldn't carry all your savings in cash on you.
+          <strong>
+            Don&apos;t keep all funds on exchanges or in one device.
+          </strong>{' '}
+          Spread out risk. Holding coins on an exchange (custodial) means
+          you&apos;re trusting that platform&apos;s security. If you&apos;re not
+          actively trading, it&apos;s generally safer to withdraw assets to your
+          own wallet. Similarly, try not to load a mobile wallet with more value
+          than you&apos;re willing to carry — just like you wouldn&apos;t carry
+          all your savings in cash on you.
         </li>
       </ul>
 
@@ -280,7 +284,7 @@ export default function CryptoBasicsContent() {
         </li>
         <li>
           <strong>Note on Withdrawals:</strong> To send crypto to your own
-          non-custodial wallet, you must use Robinhood's "Crypto Wallets"
+          non-custodial wallet, you must use Robinhood&apos;s "Crypto Wallets"
           feature and enable transfers, which may require additional identity
           verification.
         </li>
@@ -309,7 +313,7 @@ export default function CryptoBasicsContent() {
         </li>
         <li>
           <strong>Send to a Wallet:</strong> To withdraw, tap the paper airplane
-          icon (Send). You can scan a wallet's QR code or paste the address
+          icon (Send). You can scan a wallet&apos;s QR code or paste the address
           manually. Always double-check the address!
         </li>
       </ol>
@@ -395,8 +399,8 @@ export default function CryptoBasicsContent() {
         </li>
         <li>
           <strong>Enter Purchase Details:</strong> Select the crypto you want to
-          buy and the currency you're paying with. Enter the amount and click to
-          review.
+          buy and the currency you&apos;re paying with. Enter the amount and
+          click to review.
         </li>
         <li>
           <strong>Confirm and Withdraw:</strong> After purchase, go back to
@@ -416,15 +420,16 @@ export default function CryptoBasicsContent() {
           complete identity verification.
         </li>
         <li>
-          <strong>Link a Payment Method:</strong> Set up a bank transfer to fund your account.
+          <strong>Link a Payment Method:</strong> Set up a bank transfer to fund
+          your account.
         </li>
         <li>
           <strong>Buy Crypto:</strong> Tap the "Trade" button on the home
           screen, then "Buy." Select the cryptocurrency you want.
         </li>
         <li>
-          <strong>Add Payment Source:</strong> Choose your wallet
-          and confirm the purchase.
+          <strong>Add Payment Source:</strong> Choose your wallet and confirm
+          the purchase.
         </li>
         <li>
           <strong>Transfer to External Wallet:</strong> Go to your "Crypto
@@ -445,10 +450,11 @@ export default function CryptoBasicsContent() {
           identity.
         </li>
         <li>
-          <strong>Fund Your Account:</strong> Add funds using a bank account or other supported methods.
+          <strong>Fund Your Account:</strong> Add funds using a bank account or
+          other supported methods.
         </li>
         <li>
-          <strong>Go to "Transact":</strong> This is Uphold's main trading
+          <strong>Go to "Transact":</strong> This is Uphold&apos;s main trading
           interface.
         </li>
         <li>
@@ -473,7 +479,7 @@ export default function CryptoBasicsContent() {
         <strong>Sources:</strong> Custodial vs. Non-custodial definitions and
         examples; Wallet security best practices from MetaMask and community
         guides; Mobile wallet usage from official help docs; Scam avoidance tips
-        from Trust Wallet's security guide and MetaMask warnings.
+        from Trust Wallet&apos;s security guide and MetaMask warnings.
       </p>
     </div>
   );

@@ -218,7 +218,7 @@ function CBLDashboard() {
             <div className="flex items-center space-x-3 text-sm">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <span className="text-muted-foreground">2 hours ago</span>
-              <span>New player joined "Monday Night Special"</span>
+              <span>New player joined &ldquo;Monday Night Special&rdquo;</span>
             </div>
             <div className="flex items-center space-x-3 text-sm">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>

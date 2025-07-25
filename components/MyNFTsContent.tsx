@@ -98,7 +98,7 @@ const MyNFTsContent = () => {
       price: '$0',
       icon: Brush,
       description:
-        "Plain black, handwritten 'First Name + Last Initial' the system grants every player automatically.",
+        'Plain black, handwritten &apos;First Name + Last Initial&apos; the system grants every player automatically.',
       features: [
         'Standard black signature',
         'Default for all players',
@@ -157,7 +157,7 @@ const MyNFTsContent = () => {
       price: '$14',
       icon: Play,
       description:
-        'AI image created from the player\'s text prompt or transformed from their user-generated or user-uploaded art.',
+        'AI image created from the player&apos;s text prompt or transformed from their user-generated or user-uploaded art.',
       features: [
         'AI-generated from your prompt or art',
         'Unique, one-of-a-kind marker',

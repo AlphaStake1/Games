@@ -34,7 +34,7 @@ const LearnMorePage = () => {
         <Card className="mb-12 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm">
           <CardHeader>
             <CardTitle className="text-2xl text-gray-900 dark:text-white">
-              What You'll Get
+              What You&apos;ll Get
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -42,7 +42,9 @@ const LearnMorePage = () => {
               <div className="flex items-start gap-3">
                 <DollarSign className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Revenue</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                    Revenue
+                  </h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     3% commission once you fill 3 boards in 7 days.
                   </p>
@@ -51,7 +53,9 @@ const LearnMorePage = () => {
               <div className="flex items-start gap-3">
                 <Palette className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Creative Control</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                    Creative Control
+                  </h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Price squares ($7–$100), set payouts, theme your board.
                   </p>
@@ -60,7 +64,9 @@ const LearnMorePage = () => {
               <div className="flex items-start gap-3">
                 <Star className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Blue Points</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                    Blue Points
+                  </h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Earn loyalty points toward our upcoming token air drop.
                   </p>
@@ -69,7 +75,9 @@ const LearnMorePage = () => {
               <div className="flex items-start gap-3">
                 <Trophy className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">NFT Commissions</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
+                    NFT Commissions
+                  </h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     30% share on any commemorative NFTs minted via your boards.
                   </p>
@@ -101,7 +109,8 @@ const LearnMorePage = () => {
                   2
                 </div>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Pass a short rules quiz with Offensive Coordinator Phil (OC-Phil).
+                  Pass a short rules quiz with Offensive Coordinator Phil
+                  (OC-Phil).
                 </p>
               </div>
               <div className="flex items-start gap-3">
@@ -109,13 +118,15 @@ const LearnMorePage = () => {
                   3
                 </div>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Fill 3 full boards (each $7+ squares) within any rolling 7 day window.
+                  Fill 3 full boards (each $7+ squares) within any rolling 7 day
+                  window.
                 </p>
               </div>
             </div>
             <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
               <p className="text-green-800 dark:text-green-200 font-medium">
-                Congrats – Phil upgrades you to Season Earner and 3% kicks in for the rest of the season!
+                Congrats – Phil upgrades you to Season Earner and 3% kicks in
+                for the rest of the season!
               </p>
             </div>
           </CardContent>
@@ -198,10 +209,12 @@ const LearnMorePage = () => {
         {/* Footer Note */}
         <div className="text-center text-sm text-gray-500 dark:text-gray-400">
           <p className="mb-2">
-            CBL status lasts for the current NFL season. Blue points last forever.
+            CBL status lasts for the current NFL season. Blue points last
+            forever.
           </p>
           <p>
-            <strong>Refundable milestones:</strong> fill 9 boards • 9 NFT mints • 1 Super Bowl board @ $50+, whichever comes first.
+            <strong>Refundable milestones:</strong> fill 9 boards • 9 NFT mints
+            • 1 Super Bowl board @ $50+, whichever comes first.
           </p>
         </div>
       </div>

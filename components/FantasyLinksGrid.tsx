@@ -89,12 +89,19 @@ const FantasyLinksGrid = () => {
                   className="inline-flex items-center gap-2 bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-6 py-3 rounded-lg font-semibold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 group-hover:scale-105 transform"
                   aria-label={`Open ${link.name} in new tab`}
                 >
-                  {link.name === 'ESPN Fantasy' ? 'Go For It' :
-                   link.name === 'NFL Fantasy' ? 'Blitz' :
-                   link.name === 'Yahoo Fantasy' ? 'Tush-Push It' :
-                   link.name === 'Sleeper' ? 'Hail Mary' :
-                   link.name === 'CBS Sports Fantasy' ? 'Fumble Recovery' :
-                   link.name === 'DraftSharks' ? 'Sack It' : 'Play Now'}
+                  {link.name === 'ESPN Fantasy'
+                    ? 'Go For It'
+                    : link.name === 'NFL Fantasy'
+                      ? 'Blitz'
+                      : link.name === 'Yahoo Fantasy'
+                        ? 'Tush-Push It'
+                        : link.name === 'Sleeper'
+                          ? 'Hail Mary'
+                          : link.name === 'CBS Sports Fantasy'
+                            ? 'Fumble Recovery'
+                            : link.name === 'DraftSharks'
+                              ? 'Sack It'
+                              : 'Play Now'}
                   <ExternalLink className="w-4 h-4" />
                 </a>
               </div>

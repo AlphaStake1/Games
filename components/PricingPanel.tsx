@@ -244,7 +244,10 @@ const PricingPanel: React.FC<PricingPanelProps> = ({
               <div className="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
                 <Info className="w-4 h-4 text-blue-600 mt-0.5" />
                 <div className="text-xs text-blue-800 dark:text-blue-200">
-                  <p>Winners are paid automatically via smart contract 5 minutes after official game end</p>
+                  <p>
+                    Winners are paid automatically via smart contract 5 minutes
+                    after official game end
+                  </p>
                 </div>
               </div>
             </div>

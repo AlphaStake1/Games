@@ -44,7 +44,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       new SolflareWalletAdapter(),
       new TorusWalletAdapter(),
     ],
-    [network],
+    [],
   );
 
   return (

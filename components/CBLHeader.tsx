@@ -44,7 +44,8 @@ const CBLHeader = () => {
                 Community Board Leader Portal
               </h1>
               <p className="text-blue-100 text-sm">
-                Manage your community boards with Offensive Coordinator Phil (OC-Phil)
+                Manage your community boards with Offensive Coordinator Phil
+                (OC-Phil)
               </p>
             </div>
           </div>

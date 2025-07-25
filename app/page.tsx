@@ -141,7 +141,8 @@ export default function Home() {
                         💰 Weekly Cash Games
                       </CardTitle>
                       <CardDescription className="text-gray-600 dark:text-gray-400">
-                        Join individual games with payouts 5 minutes after game end
+                        Join individual games with payouts 5 minutes after game
+                        end
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -151,7 +152,10 @@ export default function Home() {
                         </p>
                         <ul className="text-sm space-y-1 text-gray-600 dark:text-gray-400">
                           <li>• Choose your own squares (up to 5 per board)</li>
-                          <li>• Payouts initiated 5 minutes after official game end</li>
+                          <li>
+                            • Payouts initiated 5 minutes after official game
+                            end
+                          </li>
                           <li>• No long-term commitment required</li>
                         </ul>
                       </div>
@@ -619,7 +623,7 @@ export default function Home() {
                           ))}
                         </div>
                         <p className="text-gray-700 dark:text-gray-300 mb-4 italic">
-                          "{testimonial.quote}"
+                          &ldquo;{testimonial.quote}&rdquo;
                         </p>
                         <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
                           <p className="font-semibold text-gray-900 dark:text-white">

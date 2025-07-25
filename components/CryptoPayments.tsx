@@ -32,9 +32,9 @@ const CryptoPayments = () => {
             100% Crypto Payins & Payouts
           </h2>
           <p className="text-xl text-[#96abdc] max-w-3xl mx-auto mb-8">
-            All games are powered by cryptocurrency for secure and
-            transparent transactions. Experience the future of gaming with
-            blockchain technology.
+            All games are powered by cryptocurrency for secure and transparent
+            transactions. Experience the future of gaming with blockchain
+            technology.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

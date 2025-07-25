@@ -121,7 +121,7 @@ const ConferencesPage = () => {
         setSelectedConference(conference);
       }
     }
-  }, [searchParams]);
+  }, [searchParams, conferences]);
 
   // Calculate pricing for half-season passes
   const calculateHalfSeasonPricing = (basePrice: number): PassPricing[] => {

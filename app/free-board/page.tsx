@@ -50,7 +50,7 @@ const upgradeOptions = [
     id: 'ai-generated-artwork',
     label: 'AI-Generated Artwork',
     description:
-      'AI image created from the player\'s text prompt or transformed from their user-generated or user-uploaded art.',
+      "AI image created from the player's text prompt or transformed from their user-generated or user-uploaded art.",
     icon: Play,
     price: '$14',
   },
@@ -174,8 +174,8 @@ export default function FreeBoardPage() {
                   <p>
                     Pick squares on the 10x10 grid. Numbers are randomly
                     assigned after all squares are claimed. Winners are
-                    determined by the last digit of each team's score at the end
-                    of each quarter.
+                    determined by the last digit of each team&apos;s score at
+                    the end of each quarter.
                   </p>
                 </div>
               </div>
@@ -410,7 +410,7 @@ export default function FreeBoardPage() {
                     • Numbers 0-9 are randomly assigned to rows and columns
                   </li>
                   <li>
-                    • Winners determined by last digit of each team's score
+                    • Winners determined by last digit of each team&apos;s score
                   </li>
                   <li>• Points awarded at the end of each quarter</li>
                 </ul>

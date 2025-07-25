@@ -67,12 +67,12 @@ export default function CommunityGuidelinesContent() {
       examples: {
         good: [
           'Great strategy! I never thought of that approach.',
-          "I disagree with this approach, but here's why...",
+          'I disagree with this approach, but here&apos;s why...',
           'Welcome to the community! Happy to help you get started.',
         ],
         bad: [
-          "That's the dumbest thing I've ever heard",
-          "You're obviously new here and don't know anything",
+          'That&apos;s the dumbest thing I&apos;ve ever heard',
+          'You&apos;re obviously new here and don&apos;t know anything',
           'STOP BEING SO STUPID!!!',
         ],
       },
@@ -83,15 +83,15 @@ export default function CommunityGuidelinesContent() {
       rules: [
         'Keep content relevant to Football Squares and related topics',
         'No explicit, offensive, or inappropriate material',
-        "Respect intellectual property and don't share copyrighted content",
+        'Respect intellectual property and don&apos;t share copyrighted content',
         'No spam, self-promotion, or commercial advertising without permission',
         'Use spoiler tags for major game results in discussion threads',
       ],
       examples: {
         good: [
-          "Here's a strategy that worked well for me last season",
+          'Here&apos;s a strategy that worked well for me last season',
           'Check out this interesting article about square probability',
-          "Congratulations to all the winners in last night's game!",
+          'Congratulations to all the winners in last night&apos;s game!',
         ],
         bad: [
           'Buy my gambling system for guaranteed wins!',
@@ -158,7 +158,7 @@ export default function CommunityGuidelinesContent() {
       title: 'Submit Report',
       description: 'Use the appropriate reporting channel',
       details: [
-        "In-platform: Use the 'Report' button on posts or profiles",
+        'In-platform: Use the &apos;Report&apos; button on posts or profiles',
         'Email: Send detailed report to moderation@footballsquares.com',
         'Emergency: For immediate threats, contact support immediately',
         'Include all gathered evidence and clear description of violation',
@@ -231,7 +231,7 @@ export default function CommunityGuidelinesContent() {
       category: 'Personal Information',
       tips: [
         'Never share personal details like full name, address, or phone number',
-        "Use a unique username that doesn't reveal your identity",
+        'Use a unique username that doesn&apos;t reveal your identity',
         'Be cautious about sharing photos that could identify you or your location',
         'Keep financial information private and secure',
       ],
@@ -241,7 +241,7 @@ export default function CommunityGuidelinesContent() {
       tips: [
         'Be skeptical of users asking for personal information or meetings',
         'Report any inappropriate private messages immediately',
-        "Don't click suspicious links or download files from unknown users",
+        'Don&apos;t click suspicious links or download files from unknown users',
         'Trust your instincts - if something feels wrong, report it',
       ],
     },
@@ -356,9 +356,9 @@ export default function CommunityGuidelinesContent() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div>
                     <p className="text-[#708090] dark:text-[#96abdc] text-lg leading-relaxed mb-6 transition-colors duration-300">
-                      Football Squares is more than just a platform - it's a
-                      community of passionate football fans who come together to
-                      enjoy the game, share strategies, and build lasting
+                      Football Squares is more than just a platform - it&apos;s
+                      a community of passionate football fans who come together
+                      to enjoy the game, share strategies, and build lasting
                       connections.
                     </p>
                     <h3 className="text-xl font-bold text-[#002244] dark:text-white mb-4 transition-colors duration-300">

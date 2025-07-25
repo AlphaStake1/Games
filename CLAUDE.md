@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 > Guidance & ground-rules for Claude Code (and other LLMs) when working in this repo.
 
 ---

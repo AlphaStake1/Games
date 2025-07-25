@@ -42,7 +42,7 @@ export default function CBLOverviewPage() {
           <CardContent>
             <p className="text-gray-600 dark:text-gray-300">
               Create and manage multiple game boards with custom rules that fit
-              your community's needs.
+              your community&apos;s needs.
             </p>
           </CardContent>
         </Card>

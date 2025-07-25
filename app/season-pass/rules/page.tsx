@@ -444,7 +444,7 @@ const SeasonPassRulesPage = () => {
                     </div>
                     <p className="text-sm text-blue-100">
                       Square assignments happen automatically before each game
-                      kickoff. You don't need to manually select or claim
+                      kickoff. You don&apos;t need to manually select or claim
                       squares.
                     </p>
                   </div>
@@ -479,8 +479,8 @@ const SeasonPassRulesPage = () => {
               <CardContent>
                 <div className="space-y-6">
                   <p className="text-gray-300">
-                    Points are earned when the last digit of each team's score
-                    matches your assigned square according to these hit
+                    Points are earned when the last digit of each team&apos;s
+                    score matches your assigned square according to these hit
                     patterns. All patterns are checked after every scoring
                     event.
                   </p>
@@ -784,7 +784,7 @@ const SeasonPassRulesPage = () => {
                   <p className="text-gray-300">
                     Each conference distributes prizes to the top 7 finishers
                     using a fixed percentage structure that scales with the
-                    conference's total prize pool.
+                    conference&apos;s total prize pool.
                   </p>
 
                   <Tabs defaultValue="100" className="w-full">
@@ -865,11 +865,11 @@ const SeasonPassRulesPage = () => {
 
                   <AccordionItem value="item-4">
                     <AccordionTrigger>
-                      What if my conference doesn't fill up?
+                      What if my conference doesn&apos;t fill up?
                     </AccordionTrigger>
                     <AccordionContent>
                       Conferences must reach exactly 100 players to activate. If
-                      a conference doesn't fill by the season start,
+                      a conference doesn&apos;t fill by the season start,
                       participants are automatically moved to the next available
                       conference of the same tier, and any price difference is
                       refunded.

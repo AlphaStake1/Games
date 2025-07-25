@@ -174,7 +174,7 @@ export function WhatAreNftsContent() {
       icon: Unlock,
       title: 'Transferable',
       description:
-        "Send, sell, or trade your NFTs to other wallets - they're truly yours forever.",
+        'Send, sell, or trade your NFTs to other wallets - they&apos;re truly yours forever.',
     },
   ];
 
@@ -824,7 +824,7 @@ export function WhatAreNftsContent() {
                       </div>
                       <p className="text-white/90 text-sm">
                         Burning is permanent and cannot be undone. Only burn
-                        NFTs you're certain you no longer want.
+                        NFTs you&apos;re certain you no longer want.
                       </p>
                     </div>
                   </div>
@@ -850,7 +850,7 @@ export function WhatAreNftsContent() {
               {[
                 {
                   q: 'How do NFTs work as square markers in Football Squares?',
-                  a: "When you purchase a square in any Football Squares game, your NFT appears as the visual marker instead of the standard black signature text. For example, instead of seeing 'John D.' in plain text, other players see your custom NFT design - whether it's a colorful signature, professional artwork, or animated graphics.",
+                  a: 'When you purchase a square in any Football Squares game, your NFT appears as the visual marker instead of the standard black signature text. For example, instead of seeing &apos;John D.&apos; in plain text, other players see your custom NFT design - whether it&apos;s a colorful signature, professional artwork, or animated graphics.',
                 },
                 {
                   q: "What's the difference between the six NFT types?",
@@ -862,7 +862,7 @@ export function WhatAreNftsContent() {
                 },
                 {
                   q: 'How do I get House Collection NFTs for free?',
-                  a: "House Collection NFTs can be won as prizes in free Football Squares games. You can also choose to redeem them when you win cash games - the $7 cost gets deducted from your payout, so you're essentially using your winnings to get the NFT.",
+                  a: 'House Collection NFTs can be won as prizes in free Football Squares games. You can also choose to redeem them when you win cash games - the $7 cost gets deducted from your payout, so you&apos;re essentially using your winnings to get the NFT.',
                 },
                 {
                   q: 'Where can I view my NFT collection?',
