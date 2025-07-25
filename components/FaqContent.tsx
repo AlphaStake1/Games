@@ -273,7 +273,7 @@ const FaqContent = () => {
               To operate your own board, apply to become a <strong>Community Board Leader (CBL)</strong>:
               <br />• Pay a one-time $9.99 season fee (refundable via milestone achievements).
               <br />• Unlock custom board creation, skins, and a path to revenue share and perks.
-              <br />• Get trained and supported by our on-site assistant <strong>OC Phil</strong>.
+              <br />• Get trained and supported by our on-site assistant <strong>Offensive Coordinator Phil (OC-Phil)</strong>.
               <br />• Manage board pricing, rules, and player engagement.
               <br />
               <a

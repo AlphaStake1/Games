@@ -58,7 +58,7 @@ const getOCPhilResponse = (userMessage: string): KnowledgeResponse => {
   ) {
     return {
       response:
-        "**Rolling-7-Day Tracker** 📅:\n\n```\n┌────── 7-Day Window (auto-slides daily) ──────┐\n Sun  Mon  Tue  Wed  Thu  Fri  Sat\n 🟦     🟦     🟦     🟦                    = 4 boards\n  ^Window Start            ^Today\n Unlock ≥ 3  boards  → 3% Rake Active\n└──────────────────────────────────────────────┘\n```\n\n**Mid-field now** — fill 3 qualifying boards in 7 days and that **3% rake goes live all season**! 🔥",
+        '**Rolling-7-Day Tracker** 📅:\n\n```\n┌────── 7-Day Window (auto-slides daily) ──────┐\n Sun  Mon  Tue  Wed  Thu  Fri  Sat\n 🟦     🟦     🟦     🟦                    = 4 boards\n  ^Window Start            ^Today\n Unlock ≥ 3  boards  → 3% Rake Active\n└──────────────────────────────────────────────┘\n```\n\n**Mid-field now** — fill 3 qualifying boards in 7 days and that **3% rake goes live all season**! 🔥',
       relatedTopics: ['rake unlock', 'board goals', 'season rewards'],
     };
   }
@@ -72,7 +72,7 @@ const getOCPhilResponse = (userMessage: string): KnowledgeResponse => {
   ) {
     return {
       response:
-        "**Wallet Cap Guardrail** 🛡️:\n\n```\n Squares per Wallet (max 10)\n [■■■■■■■■■■] 10 / 10   ← cap reached → \"Buy\" button disabled\n```\n\n**Max 10 squares per wallet** — spread the glory among your crew! No exceptions on this one, QB! 1st-and-Goal, keep driving!",
+        '**Wallet Cap Guardrail** 🛡️:\n\n```\n Squares per Wallet (max 10)\n [■■■■■■■■■■] 10 / 10   ← cap reached → "Buy" button disabled\n```\n\n**Max 10 squares per wallet** — spread the glory among your crew! No exceptions on this one, QB! 1st-and-Goal, keep driving!',
       relatedTopics: ['square limits', 'wallet restrictions', 'fair play'],
     };
   }
@@ -86,7 +86,7 @@ const getOCPhilResponse = (userMessage: string): KnowledgeResponse => {
   ) {
     return {
       response:
-        "**Board Lifecycle Flow** 🏈:\n\n```\nCreate Board → Share Link → Squares Purchased → 100/100?\n       │                                    │\n       └──────────No ────────────┐          │\n                                 ▼          │\n                           Update % Filled  │\n                                            ▼\n                                   Yes → Contract Locks →\n                                            ▼\n                               Mark FILLED → Stats + Blue-Points → OC-Phil Celebrates\n```\n\n**Touchdown!** Board locked, stats updated! 🕺",
+        '**Board Lifecycle Flow** 🏈:\n\n```\nCreate Board → Share Link → Squares Purchased → 100/100?\n       │                                    │\n       └──────────No ────────────┐          │\n                                 ▼          │\n                           Update % Filled  │\n                                            ▼\n                                   Yes → Contract Locks →\n                                            ▼\n                               Mark FILLED → Stats + Blue-Points → OC-Phil Celebrates\n```\n\n**Touchdown!** Board locked, stats updated! 🕺',
       relatedTopics: ['board completion', 'contract locking', 'celebration'],
     };
   }
@@ -164,7 +164,7 @@ const getOCPhilResponse = (userMessage: string): KnowledgeResponse => {
   // Default welcome response
   return {
     response:
-      "Alright rookie, you're **1st-and-10** on your own 20 — let's drive this board to the end-zone! 🚀\n\nI'm **OC-Phil**, your Offensive Coordinator for CBL success! I've got your playbook for:\n\n🏈 Board creation & pricing strategy\n📊 Blue-Points & milestone tracking\n💰 Rake splits & 7-day windows\n🎯 All-Star achievement paths\n\nWhat play are we calling first, QB?",
+      "Alright rookie, you're **1st-and-10** on your own 20 — let's drive this board to the end-zone! 🚀\n\nI'm **Offensive Coordinator Phil**, your OC for CBL success! I've got your playbook for:\n\n🏈 Board creation & pricing strategy\n📊 Blue-Points & milestone tracking\n💰 Rake splits & 7-day windows\n🎯 All-Star achievement paths\n\nWhat play are we calling first, QB?",
     relatedTopics: [
       'board creation',
       'milestone tracking',
@@ -178,11 +178,11 @@ const ocPhilConfig: ChatbotConfig = {
   name: 'OC-Phil',
   title: 'Offensive Coordinator',
   description: 'CBL Offensive Coordinator',
-  avatarSrc: '/assets/oc-phil-avatar.png',
+  avatarSrc: '/Assets/Coach B with football and thumbs up.png',
   avatarAlt: 'OC-Phil Avatar',
   fallbackInitial: 'OP',
   initialMessage:
-    "Alright rookie, you're **1st-and-10** on your own 20 — let's drive this board to the end-zone! 🚀\n\nI'm **OC-Phil**, your Offensive Coordinator for CBL success! Got your playbook ready for board creation, Blue-Points tracking, rake splits, and All-Star achievement paths.\n\nWhat play are we calling first, QB?",
+    "Alright rookie, you're **1st-and-10** on your own 20 — let's drive this board to the end-zone! 🚀\n\nI'm **Offensive Coordinator Phil** (OC-Phil), your OC for CBL success! Got your playbook ready for board creation, Blue-Points tracking, rake splits, and All-Star achievement paths.\n\nWhat play are we calling first, QB?",
   gradientFrom: 'from-purple-600',
   gradientTo: 'to-blue-600',
   getResponse: getOCPhilResponse,

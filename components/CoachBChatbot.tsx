@@ -64,12 +64,7 @@ const getCoachBResponse = (userMessage: string): KnowledgeResponse => {
     return {
       response:
         "Football Squares is awesome! 🏈 Here's how it works:\n\n• Buy squares on a 10x10 grid (100 total)\n• Each square gets random numbers 0-9 for each team\n• Winners are determined by the last digit of each team's score\n• Payouts happen after each quarter!\n\nWe use blockchain for verifiable randomness and automatic payouts. Check our 'How To Play' and 'Rules' pages for full details!",
-      relatedTopics: [
-        'game rules',
-        'payouts',
-        'randomness',
-        'buying squares',
-      ],
+      relatedTopics: ['game rules', 'payouts', 'randomness', 'buying squares'],
     };
   }
 
@@ -151,7 +146,7 @@ const coachBConfig: ChatbotConfig = {
   name: 'Coach B',
   title: 'Football Squares Assistant',
   description: 'Football Squares Assistant',
-  avatarSrc: '/Assets/Coach B with football and thumbs up.png',
+  avatarSrc: '/Assets/Coach B with light red shirt.png',
   avatarAlt: 'Coach B',
   fallbackInitial: 'B',
   initialMessage:

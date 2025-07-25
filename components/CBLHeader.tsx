@@ -11,8 +11,8 @@ const CBLHeader = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}
         <nav className="flex items-center space-x-2 py-2 text-sm">
-          <Link 
-            href="/play" 
+          <Link
+            href="/play"
             className="flex items-center hover:text-blue-200 transition-colors duration-200"
           >
             <Home className="w-4 h-4 mr-1" />
@@ -21,14 +21,14 @@ const CBLHeader = () => {
           <ChevronRight className="w-4 h-4 text-blue-200" />
           <span className="text-blue-200">CBL Portal</span>
         </nav>
-        
+
         {/* Main Header Content */}
         <div className="flex items-center justify-between py-4">
           <div className="flex items-center space-x-4">
             {/* OC-Phil Avatar */}
             <div className="relative">
               <Image
-                src="/assets/oc-phil-avatar.png"
+                src="/Assets/Coach B with football and thumbs up.png"
                 alt="OC-Phil Avatar"
                 width={60}
                 height={60}
@@ -37,14 +37,18 @@ const CBLHeader = () => {
               />
               <div className="absolute -bottom-1 -right-1 bg-green-400 border-2 border-white rounded-full w-4 h-4"></div>
             </div>
-            
+
             {/* Header Text */}
             <div>
-              <h1 className="text-2xl font-bold">Community Board Leader Portal</h1>
-              <p className="text-blue-100 text-sm">Manage your community boards with OC-Phil</p>
+              <h1 className="text-2xl font-bold">
+                Community Board Leader Portal
+              </h1>
+              <p className="text-blue-100 text-sm">
+                Manage your community boards with Offensive Coordinator Phil (OC-Phil)
+              </p>
             </div>
           </div>
-          
+
           {/* User Info */}
           <div className="hidden md:flex items-center space-x-3">
             <div className="text-right">
