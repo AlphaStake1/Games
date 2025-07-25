@@ -121,11 +121,9 @@ const FaqContent = () => {
               How much does one square cost?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              • Public House boards: $1–$25 per square (default $10).
+              The House boards are from $5–$100 during the regular season, with increases during Playoff and Superbowl (based on demand).
               <br />
-              • Community boards: creator sets the price ($5–$100).
-              <br />• Playoff & SB boards have higher minimums (see Community
-              section).
+              Community boards: creator sets the price from $1–$500. CBLs decide post-season increases.
             </AccordionContent>
           </AccordionItem>
 
@@ -137,9 +135,8 @@ const FaqContent = () => {
               How are winnings distributed?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              95% of the pot pays out; 5% is the platform rake. Payout schedule:
-              1st Q 20%, 2nd Q 20%, 3rd Q 20%, 4th Q + OT 40% (split rules
-              below).
+              Payouts are distributed to each period's winners, 1st Quarter 15%, 2nd Quarter 25%, 3rd Quarter 15%, 4th Quarter 45% (unless Over Time with 50/50 split with 4th Quarter winner).
+              All payouts initiate 5 minutes post official game end time, please allow time for blockchain verification and finalization.
             </AccordionContent>
           </AccordionItem>
 
@@ -152,7 +149,7 @@ const FaqContent = () => {
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
               If the game goes to OT, the 4th-quarter prize is split 50/50 with
-              the final OT score winner(s).
+              the final OT score winner(s). Only the final overtime score wins, not each OT period.
             </AccordionContent>
           </AccordionItem>
         </div>
@@ -177,9 +174,6 @@ const FaqContent = () => {
                   <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold">
                     Artwork Source
                   </th>
-                  <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold">
-                    Perk
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -193,9 +187,6 @@ const FaqContent = () => {
                   <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
                     Colored signature overlay
                   </td>
-                  <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                    Entry-level bragging rights
-                  </td>
                 </tr>
                 <tr className="bg-gray-50 dark:bg-gray-900">
                   <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 font-medium">
@@ -207,9 +198,6 @@ const FaqContent = () => {
                   <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
                     House-generated image
                   </td>
-                  <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                    Auto-enter monthly art raffle
-                  </td>
                 </tr>
                 <tr>
                   <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 font-medium">
@@ -219,10 +207,7 @@ const FaqContent = () => {
                     $14
                   </td>
                   <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                    User-uploaded image
-                  </td>
-                  <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                    1-click social share + rarity badge
+                    User-generated or user-uploaded image
                   </td>
                 </tr>
                 <tr className="bg-gray-50 dark:bg-gray-900">
@@ -233,10 +218,7 @@ const FaqContent = () => {
                     $21
                   </td>
                   <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                    Animated user upload
-                  </td>
-                  <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                    Spotlight in Hall-of-Fame gallery
+                    Animated image from generation or upload
                   </td>
                 </tr>
               </tbody>
@@ -264,8 +246,10 @@ const FaqContent = () => {
               Can I upgrade later?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Yes. Pay the price difference, burn the old token, mint the new
-              level.
+              Yes — each NFT tier is a separate, stand-alone purchase.
+              You can hold multiple tiers at once.
+              Simply mint the NFT you want when you're ready.
+              You can place various NFT markers on different boards you're playing.
             </AccordionContent>
           </AccordionItem>
         </div>
@@ -276,6 +260,32 @@ const FaqContent = () => {
             👥 Community Board Leaders (CBLs)
           </h2>
 
+          {/* Move operate board to first */}
+          <AccordionItem
+            value="item-operate-board"
+            className="border-b border-gray-200 dark:border-gray-700"
+            id="operate-board"
+          >
+            <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
+              How do I operate my own board?
+            </AccordionTrigger>
+            <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              To operate your own board, apply to become a <strong>Community Board Leader (CBL)</strong>:
+              <br />• Pay a one-time $9.99 season fee (refundable via milestone achievements).
+              <br />• Unlock custom board creation, skins, and a path to revenue share and perks.
+              <br />• Get trained and supported by our on-site assistant <strong>OC Phil</strong>.
+              <br />• Manage board pricing, rules, and player engagement.
+              <br />
+              <a
+                href="/cbl/overview"
+                className="text-[#ed5925] hover:text-[#d14513] font-medium inline-flex items-center gap-1 mt-2"
+              >
+                Learn more ➜
+              </a>
+            </AccordionContent>
+          </AccordionItem>
+
+
           <AccordionItem
             value="item-9"
             className="border-b border-gray-200 dark:border-gray-700"
@@ -284,8 +294,46 @@ const FaqContent = () => {
               Who can become a CBL?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Any verified user who pays a one-time $9.99 origination fee
-              (refundable via milestones).
+              Any verified user who pays a one-time $9.99 origination fee (refundable via milestones).
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem
+            value="item-cbl-levels"
+            className="border-b border-gray-200 dark:border-gray-700"
+          >
+            <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
+              What are the Levels of CBL?
+            </AccordionTrigger>
+            <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse border border-gray-300 dark:border-gray-600 text-sm mb-4">
+                  <thead>
+                    <tr className="bg-gray-100 dark:bg-gray-700">
+                      <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold">Level</th>
+                      <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold">How to Reach</th>
+                      <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left font-semibold">Active Perks</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 font-medium">First Stream CBL</td>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">Register + pass quick rules quiz</td>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">Board skins, custom rules, dashboard</td>
+                    </tr>
+                    <tr className="bg-gray-50 dark:bg-gray-900">
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 font-medium">Drive Maker CBL</td>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">Fill 3 boards in any 7‑day window (each $7+ squares)</td>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">3 % rake share • Blue‑Point accrual</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 font-medium">Franchise CBL</td>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">50 filled boards in season OR 4 000 squares sold</td>
+                      <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">3 % rake + 1.5× Blue‑Point multiplier • merch • Hall‑of‑Fame listing</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </AccordionContent>
           </AccordionItem>
 
@@ -297,10 +345,14 @@ const FaqContent = () => {
               What do I earn as a CBL?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              • <strong>3%</strong> of every fully-sold board you host (2% goes
-              to the House).
-              <br />• <strong>30%</strong> of all NFTs minted on your boards.
-              <br />• Status lasts the current NFL season.
+              As a CBL, your earnings and perks depend on your level:
+              <br /><br />
+              <strong>First Stream CBL</strong>: Skins, dashboard, custom boards.<br />
+              <strong>Drive Maker CBL</strong>: 3% rake on boards, Blue Points accrual.<br />
+              <strong>Franchise CBL</strong>: 1.5× Blue Points, merch, Future development mastermind.<br /><br />
+              <strong>Blue Points</strong> are earned for board activity and can be redeemed for NFTs and, in the future, token airdrops.<br />
+              <strong>30%</strong> commission on all NFTs minted on your boards.<br />
+              Status lasts for the current NFL season.
             </AccordionContent>
           </AccordionItem>
 
@@ -312,11 +364,10 @@ const FaqContent = () => {
               Board limits for CBLs?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              • Regular season: price $5–$100 / square, unlimited weekly boards
-              + Bye-Week boards.
-              <br />
-              • Playoffs: 1 board per round, $25 / square minimum.
-              <br />• Super Bowl: 1 board, $50 / square minimum.
+              <strong>First Stream CBL</strong>: Regular season price cap $1–$100, Playoffs up to $200, Super Bowl $300.<br />
+              <strong>Drive Maker CBL</strong>: Regular season $1–$250, Playoffs up to $400, Super Bowl $500.<br />
+              <strong>Franchise CBL</strong>: Regular season $1–$500, Playoffs up to $1,000, Super Bowl no limit.<br />
+              Board creation and pricing limits scale with your CBL level.<br />
             </AccordionContent>
           </AccordionItem>
 
@@ -328,8 +379,7 @@ const FaqContent = () => {
               How do I earn back the $9.99 fee?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Fill 9 boards, or see 9 NFT mints, or fill one $50+ SB
-              board—whichever comes first.
+              Fill 9 boards, or see 9 NFT mints, or fill one $50+ SB board—whichever comes first.
             </AccordionContent>
           </AccordionItem>
         </div>
@@ -374,7 +424,7 @@ const FaqContent = () => {
         {/* Payments, Rake & Security */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
           <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
-            💸 Payments, Rake & Security
+            💸 Payments
           </h2>
 
           <AccordionItem
@@ -385,22 +435,10 @@ const FaqContent = () => {
               What payment methods do you accept?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Credit/debit, major wallets, and selected stablecoins.
+              We accept major crypto coins and selected stablecoins.
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem
-            value="item-16"
-            className="border-b border-gray-200 dark:border-gray-700"
-          >
-            <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
-              Is the 5% rake negotiable?
-            </AccordionTrigger>
-            <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              House boards are fixed at 5%. CBL boards share 2% with the House,
-              effectively leaving 3% to the CBL.
-            </AccordionContent>
-          </AccordionItem>
 
           <AccordionItem
             value="item-17"
@@ -410,8 +448,7 @@ const FaqContent = () => {
               How are funds held?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Escrow smart contract. Immediately after each quarter, winnings
-              auto-disburse to connected wallets.
+              Escrow smart contract. 5 minutes after official game end, winnings will auto-disburse to winners' wallets, just allow time for blockchain transactions to verify and finalize.
             </AccordionContent>
           </AccordionItem>
         </div>
@@ -463,8 +500,7 @@ const FaqContent = () => {
               Do I need a crypto wallet?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Not to play—fiat onboarding is built-in. But to mint or trade NFTs
-              you'll connect MetaMask, Phantom, or WalletConnect.
+              Yes, to play, mint NFTs, or earn points, connect the Phantom or any wallet option that appears when you click on 'Connect Wallet'. No wallet is required to browse the site.
             </AccordionContent>
           </AccordionItem>
 
@@ -476,84 +512,12 @@ const FaqContent = () => {
               Gas fees?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Covered by the House for all standard board actions. NFT mints
-              include gas in the listed price.
+              A small gas fee for board square purchaes will appear in your wallet before you sign and verify the transaction.
+              We chose Solana because it has the most minimal gas fees of all blockchains. Each minting of NFTs and board square purchase will incur a negilble gas fee.
             </AccordionContent>
           </AccordionItem>
         </div>
 
-        {/* Fantasy Football Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
-            🏆 Fantasy Football Section
-          </h2>
-
-          <AccordionItem
-            value="item-22"
-            className="border-b border-gray-200 dark:border-gray-700"
-          >
-            <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
-              When does your Fantasy draft open?
-            </AccordionTrigger>
-            <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Typically mid-August after preseason Week 2; we'll post the exact
-              date on the Dashboard and email reminders.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem
-            value="item-23"
-            className="border-b border-gray-200 dark:border-gray-700"
-          >
-            <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
-              Is your fantasy league platform-agnostic?
-            </AccordionTrigger>
-            <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Yes. Our beginner guides map rules to the big three hosts (ESPN,
-              Yahoo, Sleeper) so you can follow along anywhere.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem
-            value="item-24"
-            className="border-b border-gray-200 dark:border-gray-700"
-          >
-            <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
-              Any special scoring twists?
-            </AccordionTrigger>
-            <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              We run standard PPR plus a <strong>"Squares Bonus"</strong>: if
-              your fantasy QB's real-life team wins you a Squares payout the
-              same week, you get +2 fantasy points.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem
-            value="item-25"
-            className="border-b border-gray-200 dark:border-gray-700"
-          >
-            <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
-              Can I integrate my Squares wallet with my fantasy entry fee?
-            </AccordionTrigger>
-            <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Absolutely—one click lets you fund fantasy buy-ins from your
-              Squares balance.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem
-            value="item-26"
-            className="border-b border-gray-200 dark:border-gray-700"
-          >
-            <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
-              Do NFTs tie into Fantasy?
-            </AccordionTrigger>
-            <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Select "Rare" NFTs unlock an alternate jersey avatar for your
-              fantasy lineup and bump your weekly free-agent budget by 5%.
-            </AccordionContent>
-          </AccordionItem>
-        </div>
 
         {/* Troubleshooting & Support */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
@@ -582,9 +546,7 @@ const FaqContent = () => {
               I can't mint—what gives?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Check that your wallet holds enough for the mint cost plus ~0.003
-              ETH buffer for gas. Still stuck? Open a ticket—24-hour response
-              max.
+              Ensure your Solana wallet has sufficient funds for the mint. If you're experiencing issues, ask Coach B for immediate resolution.
             </AccordionContent>
           </AccordionItem>
 
@@ -596,8 +558,7 @@ const FaqContent = () => {
               Refund policy?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Squares: refundable anytime before the board fills. NFTs:
-              non-refundable after mint (blockchains are forever, darling).
+              All sales are final. The only exception: if a board does not fill before the deadline, all purchased squares will automatically refund in-kind to the original purchase wallet.
             </AccordionContent>
           </AccordionItem>
 
@@ -609,9 +570,7 @@ const FaqContent = () => {
               How do I contact support?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Email us at support@footballsquares.com or use the live chat
-              feature on any page. We aim to respond within 24 hours, usually
-              much faster during game days.
+              Get instant help from Coach B, our AI support specialist, available 24/7 through the chat feature on any page. For complex blockchain issues, Coach B will seamlessly connect you with Doc Patch, our technical specialist, all within the same conversation—no tickets, no delays.
             </AccordionContent>
           </AccordionItem>
 
@@ -656,13 +615,10 @@ const FaqContent = () => {
             className="border-b border-gray-200 dark:border-gray-700"
           >
             <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
-              Are there "better" numbers to have?
+              Are some numbers "better" to have?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Historically, combinations involving 0, 3, and 7 tend to win more
-              often due to common football scoring patterns (field goals = 3
-              points, touchdowns = 7 points). However, since numbers are
-              assigned randomly after the board fills, it's purely luck-based.
+              Statistically, pairs that include 0, 3, or 7 show up most often because field goals are worth 3 points and touchdowns (with the extra point) total 7. Still, numbers are assigned completely at random, so every square— even those "unfavorable" digits— can come through on any given Sunday, Thursday night, or Monday Night matchup. Want to tilt the odds a bit further in your favor? Grab additional squares or join our season-long and half-season boards, where more games mean more opportunities for your numbers to hit.
             </AccordionContent>
           </AccordionItem>
 
@@ -674,9 +630,7 @@ const FaqContent = () => {
               Can I buy multiple squares on the same board?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Yes! You can purchase as many squares as you want on any single
-              board, increasing your chances of winning. Each square is treated
-              as a separate entry.
+              You can buy up to 5 squares on any House board or Free Game. For Community boards, CBLs can set the limit up to 10 squares per wallet. With each purchase, you increase your odds and chances of winning!
             </AccordionContent>
           </AccordionItem>
 
@@ -690,8 +644,7 @@ const FaqContent = () => {
             <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
               Winners are automatically determined at the end of each quarter.
               You'll receive an email notification and see the win reflected in
-              your dashboard. Payouts are processed automatically via smart
-              contract.
+              your dashboard. You can also check your wallet 5-30 minutes after the official end of game, payouts are processed automatically via smart contract straight to your wallet.
             </AccordionContent>
           </AccordionItem>
         </div>
