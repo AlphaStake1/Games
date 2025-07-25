@@ -12,7 +12,7 @@ const CBLHeader = () => {
         {/* Breadcrumb Navigation */}
         <nav className="flex items-center space-x-2 py-2 text-sm">
           <Link
-            href="/play"
+            href="/"
             className="flex items-center hover:text-blue-200 transition-colors duration-200"
           >
             <Home className="w-4 h-4 mr-1" />
