@@ -395,7 +395,7 @@ const BoardsPage: React.FC = () => {
                 selectedBoards={preferences?.selectedBoards || []}
               />
             </div>
-            
+
             {/* Right Column - CBL CTA */}
             <div className="lg:col-span-1">
               {(!user || !user.isCBL) && (

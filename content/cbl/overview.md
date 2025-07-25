@@ -17,15 +17,19 @@ A Community Board Leader is a trusted member of our platform who:
 ## Why Become a CBL?
 
 ### 🎯 **Lead Your Community**
+
 Take charge of your gaming experience and create the perfect environment for your friends, family, or online community.
 
 ### 💰 **Earn Leadership Rewards**
+
 Get a percentage of platform fees from games you organize, plus bonuses for active communities.
 
 ### 🚀 **Priority Access**
+
 Be first to try new features, get priority customer support, and influence product development.
 
 ### 📈 **Build Your Network**
+
 Grow your player base and create lasting connections in the football squares community.
 
 ## How It Works
@@ -42,5 +46,5 @@ Join the elite group of Community Board Leaders who are shaping the future of de
 
 ---
 
-*Current CBL Program Status: Applications Open*
-*Processing Time: 3-5 Business Days*
+_Current CBL Program Status: Applications Open_
+_Processing Time: 3-5 Business Days_

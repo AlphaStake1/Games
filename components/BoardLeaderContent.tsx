@@ -10,6 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { CheckCircle, DollarSign, Users, Trophy, Star } from 'lucide-react';
 
 const BoardLeaderContent = () => {
@@ -21,15 +27,17 @@ const BoardLeaderContent = () => {
           Community Board Leaders (CBLs)
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
-          Join our exclusive Community Board Leader program and earn revenue
-          from hosting your own Football Squares boards. Build your community,
-          set your own rules, and profit from every game.
+          Lead the ultimate sports lounge for your friends and fans. Host Football Squares boards, control the rules, and earn rewards all season.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold transition-colors duration-200">
-            Become a CBL - $9.99
+          <Button
+            onClick={() => window.location.href = '/cbl/learn-more'}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold transition-colors duration-200"
+          >
+            Become a CBL – $9.99
           </Button>
           <Button
+            onClick={() => window.location.href = '/cbl/learn-more'}
             variant="outline"
             className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-3 text-lg"
           >
@@ -47,8 +55,7 @@ const BoardLeaderContent = () => {
               Earn 3% Revenue
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Get 3% of every fully-sold board you host, while 2% goes to the
-              House
+              Unlock a 3% commission on every fully sold board once you qualify (see milestones below).
             </p>
           </CardContent>
         </Card>
@@ -72,8 +79,7 @@ const BoardLeaderContent = () => {
               Build Community
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Create your own football squares community with custom pricing and
-              rules
+              Create the ultimate sports lounge with custom pricing, themes, and house rules.
             </p>
           </CardContent>
         </Card>
@@ -124,7 +130,7 @@ const BoardLeaderContent = () => {
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                   <span className="text-gray-600 dark:text-gray-400">
-                    3% revenue share on all fully-sold boards
+                    Customize boards with your design
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -145,6 +151,69 @@ const BoardLeaderContent = () => {
         </CardContent>
       </Card>
 
+      {/* CBL Levels & Season Milestones */}
+      <Accordion type="single" collapsible className="mb-12">
+        <AccordionItem value="cbl-levels" className="border border-gray-200 dark:border-gray-800 rounded-lg">
+          <AccordionTrigger className="px-6 py-4 text-left">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              CBL Levels & Season Milestones
+            </h3>
+          </AccordionTrigger>
+          <AccordionContent className="px-6 pb-6">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-gray-900 dark:text-white font-semibold">
+                    Tier
+                  </TableHead>
+                  <TableHead className="text-gray-900 dark:text-white font-semibold">
+                    How to Reach
+                  </TableHead>
+                  <TableHead className="text-gray-900 dark:text-white font-semibold">
+                    Active Perks
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium text-gray-900 dark:text-white">
+                    <strong>Casual Leader</strong>
+                  </TableCell>
+                  <TableCell className="text-gray-600 dark:text-gray-400">
+                    Register + pass quick rules quiz
+                  </TableCell>
+                  <TableCell className="text-gray-600 dark:text-gray-400">
+                    Board skins, custom rules, dashboard
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium text-gray-900 dark:text-white">
+                    <strong>Season Earner</strong>
+                  </TableCell>
+                  <TableCell className="text-gray-600 dark:text-gray-400">
+                    Fill <strong>3 boards in any 7 day window</strong> (each $7+ squares)
+                  </TableCell>
+                  <TableCell className="text-gray-600 dark:text-gray-400">
+                    3% rake share • Blue Point accrual
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium text-gray-900 dark:text-white">
+                    <strong>All Star Leader</strong>
+                  </TableCell>
+                  <TableCell className="text-gray-600 dark:text-gray-400">
+                    50 filled boards in season <strong>OR</strong> 4,000 squares sold
+                  </TableCell>
+                  <TableCell className="text-gray-600 dark:text-gray-400">
+                    3% rake + 1.5× Blue Point multiplier • merch • Hall of Fame listing
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
       {/* Board Limits & Pricing */}
       <Card className="mb-12 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm">
         <CardHeader>
@@ -155,63 +224,41 @@ const BoardLeaderContent = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="text-gray-900 dark:text-white">
-                  Season Period
-                </TableHead>
-                <TableHead className="text-gray-900 dark:text-white">
-                  Board Limit
-                </TableHead>
-                <TableHead className="text-gray-900 dark:text-white">
-                  Price Range
-                </TableHead>
-                <TableHead className="text-gray-900 dark:text-white">
-                  Special Rules
-                </TableHead>
-              </TableRow>
+                <TableRow>
+                  <TableHead className="text-gray-900 dark:text-white">CBL Level</TableHead>
+                  <TableHead className="text-gray-900 dark:text-white">Regular‑Season Price Cap</TableHead>
+                  <TableHead className="text-gray-900 dark:text-white">Playoffs Cap</TableHead>
+                  <TableHead className="text-gray-900 dark:text-white">Super Bowl Cap</TableHead>
+                  <TableHead className="text-gray-900 dark:text-white">Rewards</TableHead>
+                </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
                 <TableCell className="font-medium text-gray-900 dark:text-white">
-                  Regular Season
+                  First Stream CBL
                 </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">
-                  Unlimited weekly boards + Bye-Week boards
-                </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">
-                  $5–$100 per square
-                </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">
-                  Full creative control
-                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">$1 – $100</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">up to $200</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">$300</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">Skins • dashboard</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium text-gray-900 dark:text-white">
-                  Playoffs
+                  Drive Maker CBL
                 </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">
-                  1 board per round
-                </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">
-                  $25 per square minimum
-                </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">
-                  Higher stakes, limited slots
-                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">$1 – $250</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">up to $400</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">$500</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">3 % rake • Blue‑Points</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium text-gray-900 dark:text-white">
-                  Super Bowl
+                  Franchise CBL
                 </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">
-                  1 board maximum
-                </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">
-                  $50 per square minimum
-                </TableCell>
-                <TableCell className="text-gray-600 dark:text-gray-400">
-                  Premium event pricing
-                </TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">$1 – $500</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">up to $1 000</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">No limit</TableCell>
+                <TableCell className="text-gray-600 dark:text-gray-400">1.5× Blue‑Points • merch</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -365,8 +412,11 @@ const BoardLeaderContent = () => {
           Start earning revenue from your own Football Squares community today
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button className="bg-[#ed5925] hover:bg-[#d14513] text-white px-8 py-3 text-lg font-semibold transition-colors duration-200">
-            Apply Now - $9.99
+          <Button
+            onClick={() => window.location.href = '/cbl/learn-more'}
+            className="bg-[#ed5925] hover:bg-[#d14513] text-white px-8 py-3 text-lg font-semibold transition-colors duration-200"
+          >
+            Become a CBL – $9.99
           </Button>
           <Button
             variant="outline"

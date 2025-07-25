@@ -7,12 +7,14 @@ Your dashboard provides everything you need to manage your football squares comm
 ## Quick Stats
 
 ### This Season
+
 - **Active Boards**: 12
 - **Total Players**: 247
 - **Revenue Generated**: $3,450
 - **Leadership Rewards**: $345
 
 ### Recent Activity
+
 - 3 new players joined this week
 - 2 boards completed successfully
 - 1 board currently in progress
@@ -21,12 +23,14 @@ Your dashboard provides everything you need to manage your football squares comm
 ## Active Boards
 
 ### NFL Week 15 - Championship Board
+
 - **Players**: 89/100
 - **Entry Fee**: $50
 - **Status**: Active - Game in Progress
 - **Prize Pool**: $4,500
 
 ### Monday Night Special
+
 - **Players**: 34/50
 - **Entry Fee**: $25
 - **Status**: Filling
@@ -35,12 +39,14 @@ Your dashboard provides everything you need to manage your football squares comm
 ## Community Management
 
 ### Player Engagement
+
 - Send weekly newsletters
 - Manage player communications
 - Handle disputes and questions
 - Process rewards and payouts
 
 ### Board Creation
+
 - Create new game boards
 - Set custom rules and entry fees
 - Configure payout structures
@@ -49,12 +55,14 @@ Your dashboard provides everything you need to manage your football squares comm
 ## Tools & Resources
 
 ### Analytics
+
 - Track community growth
 - Monitor engagement metrics
 - Analyze revenue trends
 - Export detailed reports
 
 ### Support Center
+
 - Access CBL documentation
 - Contact priority support
 - Submit feature requests
@@ -69,4 +77,4 @@ Your dashboard provides everything you need to manage your football squares comm
 
 ---
 
-*Need help? Contact CBL Support for priority assistance.*
+_Need help? Contact CBL Support for priority assistance._

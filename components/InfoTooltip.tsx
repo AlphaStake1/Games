@@ -20,7 +20,7 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({
   title,
   description,
   playbookLink,
-  linkText = 'Learn more in OC-Phil\'s Playbook'
+  linkText = "Learn more in OC-Phil's Playbook",
 }) => {
   return (
     <HoverCard>
@@ -34,9 +34,7 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({
         <div className="space-y-3">
           <div>
             <h4 className="text-sm font-semibold">{title}</h4>
-            <p className="text-sm text-muted-foreground mt-1">
-              {description}
-            </p>
+            <p className="text-sm text-muted-foreground mt-1">{description}</p>
           </div>
           <div className="pt-2 border-t">
             <Link

@@ -10,10 +10,10 @@ interface ChatbotProviderProps {
 
 const ChatbotProvider = ({ children }: ChatbotProviderProps) => {
   const pathname = usePathname();
-  
+
   // Determine which chatbot to show based on the current route
   const isCBLRoute = pathname.startsWith('/cbl');
-  
+
   return (
     <>
       {children}

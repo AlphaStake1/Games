@@ -10,5 +10,6 @@ Delete a pay link webhook by its ID to stop receiving transaction events.
 Bearer JWT
 
 **Base URL Note:**
-*   For mainnet, use `https://api.hel.io` as your Base URL.
-*   For testnet, use `https://api.dev.hel.io` as your Base URL.
+
+- For mainnet, use `https://api.hel.io` as your Base URL.
+- For testnet, use `https://api.dev.hel.io` as your Base URL.

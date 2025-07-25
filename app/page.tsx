@@ -141,7 +141,7 @@ export default function Home() {
                         💰 Weekly Cash Games
                       </CardTitle>
                       <CardDescription className="text-gray-600 dark:text-gray-400">
-                        Join individual games with instant payouts every quarter
+                        Join individual games with payouts 5 minutes after game end
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -151,7 +151,7 @@ export default function Home() {
                         </p>
                         <ul className="text-sm space-y-1 text-gray-600 dark:text-gray-400">
                           <li>• Choose your own squares (up to 5 per board)</li>
-                          <li>• Instant payouts after each quarter</li>
+                          <li>• Payouts initiated 5 minutes after official game end</li>
                           <li>• No long-term commitment required</li>
                         </ul>
                       </div>
@@ -424,9 +424,9 @@ export default function Home() {
                     },
                     {
                       icon: '⚡',
-                      title: 'Automated Payouts',
+                      title: 'Secure Payouts',
                       description:
-                        'Winners are paid automatically via smart contract',
+                        'Winners are paid automatically via smart contract 5 minutes after official game end',
                     },
                     {
                       icon: '📊',
@@ -588,7 +588,7 @@ export default function Home() {
                       name: 'Sarah M.',
                       role: 'Season Pass Holder',
                       quote:
-                        "I've been playing football squares for years, but this platform makes it so much easier. The automated payouts are a game-changer!",
+                        "I've been playing football squares for years, but this platform makes it so much easier. The secure blockchain payouts are a game-changer!",
                       rating: 5,
                     },
                     {

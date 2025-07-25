@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import FantasyLinksGrid from './FantasyLinksGrid';
 import {
   Trophy,
   Users,
@@ -27,6 +26,7 @@ import {
   Crown,
   Medal,
   Flame,
+  ExternalLink,
 } from 'lucide-react';
 
 const FantasyFootballContent = () => {
@@ -45,6 +45,8 @@ const FantasyFootballContent = () => {
       name: 'ESPN Fantasy',
       logo: '🏈',
       color: 'from-red-600 to-red-800',
+      url: 'https://www.espn.com/fantasy/football/',
+      buttonText: 'Go For It',
       strengths:
         'Huge public-league pool, robust mobile app, free advanced live scoring (FantasyCast)',
       unique:
@@ -62,6 +64,8 @@ const FantasyFootballContent = () => {
       name: 'NFL Fantasy',
       logo: '🏆',
       color: 'from-blue-600 to-blue-800',
+      url: 'https://fantasy.nfl.com/',
+      buttonText: 'Blitz',
       strengths:
         'Official league flavor with exclusive video highlights and Next Gen Stats overlays',
       unique:
@@ -79,6 +83,8 @@ const FantasyFootballContent = () => {
       name: 'Yahoo Fantasy',
       logo: '⚡',
       color: 'from-purple-600 to-purple-800',
+      url: 'https://football.fantasysports.yahoo.com/',
+      buttonText: 'Tush-Push It',
       strengths:
         'All-rounder with premium upsells. 24/7 mock drafts, integrated research tabs during drafts',
       unique:
@@ -96,6 +102,8 @@ const FantasyFootballContent = () => {
       name: 'Sleeper',
       logo: '💤',
       color: 'from-green-600 to-green-800',
+      url: 'https://sleeper.com/',
+      buttonText: 'Hail Mary',
       strengths:
         'Social-first & ad-free. Built-in league chat with read receipts and meme GIFs',
       unique:
@@ -113,6 +121,8 @@ const FantasyFootballContent = () => {
       name: 'CBS Sports Fantasy',
       logo: '📊',
       color: 'from-orange-600 to-orange-800',
+      url: 'https://www.cbssports.com/fantasy/football/',
+      buttonText: 'Fumble Recovery',
       strengths:
         'Max-flexibility for custom leagues. Hundreds of scoring categories, IDP support',
       unique:
@@ -130,6 +140,8 @@ const FantasyFootballContent = () => {
       name: 'DraftSharks',
       logo: '🦈',
       color: 'from-gray-600 to-gray-800',
+      url: 'https://www.draftsharks.com/',
+      buttonText: 'Sack It',
       strengths:
         'Not a host—an analytics toolkit. Offers Draft War Room, real-time injury predictor',
       unique:
@@ -532,7 +544,7 @@ const FantasyFootballContent = () => {
                 {platforms.map((platform) => (
                   <div
                     key={platform.id}
-                    className={`bg-white dark:bg-[#002244] border-2 rounded-xl p-6 cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 border-gray-200 dark:border-[#004953] hover:border-[#ed5925]`}
+                    className={`bg-white dark:bg-[#002244] border-2 rounded-xl p-6 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 border-gray-200 dark:border-[#004953] hover:border-[#ed5925]`}
                   >
                     <div className="text-center mb-4">
                       <div
@@ -545,7 +557,7 @@ const FantasyFootballContent = () => {
                       </h3>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-3 mb-6">
                       <div>
                         <h4 className="font-semibold text-[#ed5925] text-sm mb-1">
                           Best For:
@@ -564,6 +576,17 @@ const FantasyFootballContent = () => {
                         </p>
                       </div>
                     </div>
+
+                    <a
+                      href={platform.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-6 py-3 rounded-lg font-semibold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 transform hover:scale-105 w-full justify-center"
+                      aria-label={`Open ${platform.name} in new tab`}
+                    >
+                      {platform.buttonText}
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
                   </div>
                 ))}
               </div>
@@ -882,8 +905,6 @@ const FantasyFootballContent = () => {
             </div>
           )}
         </div>
-
-        <FantasyLinksGrid />
       </div>
     </main>
   );

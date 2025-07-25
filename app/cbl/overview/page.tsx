@@ -14,7 +14,7 @@ export default function CBLOverviewPage() {
         <div className="mb-8">
           <MarkdownRenderer content={content} />
         </div>
-        
+
         {/* Call to Action */}
         <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
           <Button size="lg" className="w-full sm:w-auto">
@@ -41,7 +41,8 @@ export default function CBLOverviewPage() {
           </CardHeader>
           <CardContent>
             <p className="text-gray-600 dark:text-gray-300">
-              Create and manage multiple game boards with custom rules that fit your community's needs.
+              Create and manage multiple game boards with custom rules that fit
+              your community's needs.
             </p>
           </CardContent>
         </Card>
@@ -55,7 +56,8 @@ export default function CBLOverviewPage() {
           </CardHeader>
           <CardContent>
             <p className="text-gray-600 dark:text-gray-300">
-              Get a percentage of platform fees plus bonuses for active community engagement and growth.
+              Get a percentage of platform fees plus bonuses for active
+              community engagement and growth.
             </p>
           </CardContent>
         </Card>
@@ -69,7 +71,8 @@ export default function CBLOverviewPage() {
           </CardHeader>
           <CardContent>
             <p className="text-gray-600 dark:text-gray-300">
-              Get priority customer support, early access to features, and influence on platform development.
+              Get priority customer support, early access to features, and
+              influence on platform development.
             </p>
           </CardContent>
         </Card>

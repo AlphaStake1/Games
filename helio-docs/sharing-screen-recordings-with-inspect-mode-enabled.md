@@ -12,18 +12,18 @@ To effectively help the Helio support team diagnose and resolve issues, you may 
 
 ### For PC Users:
 
-*   **Open DevTools:**
-    *   **Chrome/Edge:** `Ctrl + Shift + I`
-    *   **Firefox:** `Ctrl + Shift + K`
-    *   Or, right-click on the page and select "Inspect."
-*   **Capture Screenshot:** Use the `PrtScn` key or `Windows + Shift + S`.
-*   **Capture Video:** Use a tool like OBS Studio, Loom, or the built-in Xbox Game Bar (`Windows + G`).
+- **Open DevTools:**
+  - **Chrome/Edge:** `Ctrl + Shift + I`
+  - **Firefox:** `Ctrl + Shift + K`
+  - Or, right-click on the page and select "Inspect."
+- **Capture Screenshot:** Use the `PrtScn` key or `Windows + Shift + S`.
+- **Capture Video:** Use a tool like OBS Studio, Loom, or the built-in Xbox Game Bar (`Windows + G`).
 
 ### For Mac Users:
 
-*   **Open DevTools:**
-    *   **Chrome/Safari:** `Cmd + Option + I`
-    *   **Firefox:** `Cmd + Option + K`
-    *   Or, right-click on the page and select "Inspect."
-*   **Capture Screenshot:** Use `Cmd + Shift + 4`.
-*   **Capture Video:** Use the built-in QuickTime Player (`Cmd + Shift + 5`) or a third-party app like Loom.
+- **Open DevTools:**
+  - **Chrome/Safari:** `Cmd + Option + I`
+  - **Firefox:** `Cmd + Option + K`
+  - Or, right-click on the page and select "Inspect."
+- **Capture Screenshot:** Use `Cmd + Shift + 4`.
+- **Capture Video:** Use the built-in QuickTime Player (`Cmd + Shift + 5`) or a third-party app like Loom.

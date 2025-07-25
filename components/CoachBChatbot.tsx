@@ -144,8 +144,8 @@ const getCoachBResponse = (userMessage: string): KnowledgeResponse => {
 
 const coachBConfig: ChatbotConfig = {
   name: 'Coach B',
-  title: 'Football Squares Assistant',
-  description: 'Football Squares Assistant',
+  title: 'Football Squares Maestro',
+  description: 'Football Squares Maestro',
   avatarSrc: '/Assets/Coach B with light red shirt.png',
   avatarAlt: 'Coach B',
   fallbackInitial: 'B',

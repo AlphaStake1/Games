@@ -16,7 +16,7 @@ import {
   Calendar,
   Settings,
   Plus,
-  BarChart3
+  BarChart3,
 } from 'lucide-react';
 
 function CBLDashboard() {
@@ -27,7 +27,7 @@ function CBLDashboard() {
     revenueGenerated: 3450,
     leadershipRewards: 345,
     weeklyGrowth: 12.5,
-    boardFillRate: 94
+    boardFillRate: 94,
   };
 
   const activeBoards = [
@@ -38,7 +38,7 @@ function CBLDashboard() {
       maxPlayers: 100,
       entryFee: 50,
       status: 'active',
-      prizePool: 4500
+      prizePool: 4500,
     },
     {
       id: 2,
@@ -47,8 +47,8 @@ function CBLDashboard() {
       maxPlayers: 50,
       entryFee: 25,
       status: 'filling',
-      prizePool: 850
-    }
+      prizePool: 850,
+    },
   ];
 
   return (
@@ -61,10 +61,10 @@ function CBLDashboard() {
             <Trophy className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{dashboardStats.activeBoards}</div>
-            <p className="text-xs text-muted-foreground">
-              +2 from last week
-            </p>
+            <div className="text-2xl font-bold">
+              {dashboardStats.activeBoards}
+            </div>
+            <p className="text-xs text-muted-foreground">+2 from last week</p>
           </CardContent>
         </Card>
 
@@ -74,7 +74,9 @@ function CBLDashboard() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{dashboardStats.totalPlayers}</div>
+            <div className="text-2xl font-bold">
+              {dashboardStats.totalPlayers}
+            </div>
             <p className="text-xs text-muted-foreground">
               +{dashboardStats.weeklyGrowth}% from last week
             </p>
@@ -84,7 +86,9 @@ function CBLDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <div className="flex items-center">
-              <CardTitle className="text-sm font-medium">Revenue Generated</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Revenue Generated
+              </CardTitle>
               <InfoTooltip
                 title="Price Floor Strategy"
                 description="Setting optimal entry fees maximizes both participation and revenue. The price floor represents the minimum viable entry fee that maintains player engagement while ensuring profitability."
@@ -94,17 +98,19 @@ function CBLDashboard() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${dashboardStats.revenueGenerated.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
-              This season
-            </p>
+            <div className="text-2xl font-bold">
+              ${dashboardStats.revenueGenerated.toLocaleString()}
+            </div>
+            <p className="text-xs text-muted-foreground">This season</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <div className="flex items-center">
-              <CardTitle className="text-sm font-medium">Leadership Rewards</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Leadership Rewards
+              </CardTitle>
               <InfoTooltip
                 title="Wallet Cap Management"
                 description="Your reward earnings are subject to wallet capacity limits based on your CBL tier and community performance. Managing your wallet cap effectively ensures maximum reward collection and optimal cash flow."
@@ -114,10 +120,10 @@ function CBLDashboard() {
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${dashboardStats.leadershipRewards}</div>
-            <p className="text-xs text-muted-foreground">
-              10% of revenue
-            </p>
+            <div className="text-2xl font-bold">
+              ${dashboardStats.leadershipRewards}
+            </div>
+            <p className="text-xs text-muted-foreground">10% of revenue</p>
           </CardContent>
         </Card>
       </div>
@@ -141,21 +147,30 @@ function CBLDashboard() {
         <CardContent>
           <div className="space-y-4">
             {activeBoards.map((board) => (
-              <div key={board.id} className="flex items-center justify-between p-4 border rounded-lg">
+              <div
+                key={board.id}
+                className="flex items-center justify-between p-4 border rounded-lg"
+              >
                 <div className="space-y-2">
                   <div className="flex items-center space-x-2">
                     <h4 className="font-medium">{board.name}</h4>
-                    <Badge variant={board.status === 'active' ? 'default' : 'secondary'}>
+                    <Badge
+                      variant={
+                        board.status === 'active' ? 'default' : 'secondary'
+                      }
+                    >
                       {board.status}
                     </Badge>
                   </div>
                   <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                    <span>{board.players}/{board.maxPlayers} players</span>
+                    <span>
+                      {board.players}/{board.maxPlayers} players
+                    </span>
                     <span>${board.entryFee} entry</span>
                     <span>${board.prizePool.toLocaleString()} prize pool</span>
                   </div>
-                  <Progress 
-                    value={(board.players / board.maxPlayers) * 100} 
+                  <Progress
+                    value={(board.players / board.maxPlayers) * 100}
                     className="w-48"
                   />
                 </div>

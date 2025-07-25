@@ -12,9 +12,9 @@ const CryptoPayments = () => {
     },
     {
       icon: Zap,
-      title: 'Instant Payouts',
+      title: 'Secure Payouts',
       description:
-        'Winners receive their crypto payouts instantly when the game concludes.',
+        'Winners receive their crypto payouts 5 minutes after official game end, allowing time for blockchain verification.',
     },
     {
       icon: Wallet,
@@ -32,7 +32,7 @@ const CryptoPayments = () => {
             100% Crypto Payins & Payouts
           </h2>
           <p className="text-xl text-[#96abdc] max-w-3xl mx-auto mb-8">
-            All games are powered by cryptocurrency for secure, instant, and
+            All games are powered by cryptocurrency for secure and
             transparent transactions. Experience the future of gaming with
             blockchain technology.
           </p>

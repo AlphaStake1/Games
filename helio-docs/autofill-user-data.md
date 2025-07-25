@@ -11,17 +11,17 @@ Simply append parameters and their values to the standard Pay Link URL in the fo
 
 **Available Parameters and Values:**
 
-| Parameter       | Value/Description                                                              |
-| :-------------- | :----------------------------------------------------------------------------- |
-| `email`         | A valid email address                                                          |
-| `twitterUsername` | Standard Twitter name required with `@`                                        |
-| `fullName`      | Real name of a customer                                                        |
-| `streetNumber`  | Street number of a property                                                    |
-| `street`        | Street Name                                                                    |
-| `deliveryAddress` | Optional Street Name                                                           |
-| `city`          | City Name                                                                      |
-| `state`         | State or Region Name                                                           |
-| `areaCode`      | Area or Postal Code                                                            |
-| `phoneNumber`   | Phone Number in local format                                                   |
-| `productValue`  | Set using 'Additional Information' setting in pay link setup to capture custom data like shoe size |
-| `network`       | Customer Blockchain of choice                                                  |
+| Parameter         | Value/Description                                                                                  |
+| :---------------- | :------------------------------------------------------------------------------------------------- |
+| `email`           | A valid email address                                                                              |
+| `twitterUsername` | Standard Twitter name required with `@`                                                            |
+| `fullName`        | Real name of a customer                                                                            |
+| `streetNumber`    | Street number of a property                                                                        |
+| `street`          | Street Name                                                                                        |
+| `deliveryAddress` | Optional Street Name                                                                               |
+| `city`            | City Name                                                                                          |
+| `state`           | State or Region Name                                                                               |
+| `areaCode`        | Area or Postal Code                                                                                |
+| `phoneNumber`     | Phone Number in local format                                                                       |
+| `productValue`    | Set using 'Additional Information' setting in pay link setup to capture custom data like shoe size |
+| `network`         | Customer Blockchain of choice                                                                      |

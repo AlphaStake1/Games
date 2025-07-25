@@ -10,5 +10,6 @@ This endpoint allows you to retrieve all transactions associated with a specific
 Bearer Token or JWT
 
 **Base URL Note:**
-*   For Mainnet: `https://api.hel.io` (generate API keys from `app.hel.io`)
-*   For Testnet: `https://api.dev.hel.io` (generate API keys from `app.dev.hel.io`)
+
+- For Mainnet: `https://api.hel.io` (generate API keys from `app.hel.io`)
+- For Testnet: `https://api.dev.hel.io` (generate API keys from `app.dev.hel.io`)

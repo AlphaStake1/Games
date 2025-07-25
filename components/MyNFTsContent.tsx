@@ -157,7 +157,7 @@ const MyNFTsContent = () => {
       price: '$14',
       icon: Play,
       description:
-        'AI image created from the player’s text prompt or transformed from their uploaded art.',
+        'AI image created from the player\'s text prompt or transformed from their user-generated or user-uploaded art.',
       features: [
         'AI-generated from your prompt or art',
         'Unique, one-of-a-kind marker',
@@ -172,7 +172,7 @@ const MyNFTsContent = () => {
       price: '$21',
       icon: Star,
       description:
-        'Custom or uploaded art that we convert to an animated NFT; VIP-only access.',
+        'User-generated or user-uploaded art that we convert to an animated NFT; VIP-only access.',
       features: [
         'Custom animated artwork',
         'Eye-catching movement on game boards',
@@ -239,7 +239,7 @@ const MyNFTsContent = () => {
     },
     {
       q: "What's the difference between NFT types?",
-      a: 'Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is custom or uploaded art with animation, available to VIPs.',
+      a: 'Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is user-generated or user-uploaded art with animation, available to VIPs.',
     },
     {
       q: 'How can I get House NFTs for free?',

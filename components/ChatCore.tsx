@@ -122,7 +122,9 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                   onError={() => setImageError(true)}
                 />
               ) : (
-                <div className={`w-14 h-14 bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} rounded-full flex items-center justify-center text-white font-bold text-2xl group-hover:scale-110 transition-transform duration-300`}>
+                <div
+                  className={`w-14 h-14 bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} rounded-full flex items-center justify-center text-white font-bold text-2xl group-hover:scale-110 transition-transform duration-300`}
+                >
                   {config.fallbackInitial}
                 </div>
               )}
@@ -168,7 +170,9 @@ const ChatCore = ({ config }: ChatCoreProps) => {
       <Card
         className={`w-96 bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 ${isMinimized ? 'h-16' : 'h-96'}`}
       >
-        <CardHeader className={`bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} text-white p-3 rounded-t-lg`}>
+        <CardHeader
+          className={`bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} text-white p-3 rounded-t-lg`}
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {!imageError ? (
@@ -181,15 +185,15 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                   onError={() => setImageError(true)}
                 />
               ) : (
-                <div className={`w-12 h-12 bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} rounded-full flex items-center justify-center text-white font-bold text-xl`}>
+                <div
+                  className={`w-12 h-12 bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} rounded-full flex items-center justify-center text-white font-bold text-xl`}
+                >
                   {config.fallbackInitial}
                 </div>
               )}
               <div>
                 <CardTitle className="text-lg">{config.name}</CardTitle>
-                <div className="text-xs opacity-90">
-                  {config.description}
-                </div>
+                <div className="text-xs opacity-90">{config.description}</div>
               </div>
             </div>
             <div className="flex items-center gap-2">

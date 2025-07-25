@@ -116,7 +116,7 @@ export function WhatAreNftsContent() {
       price: '$14',
       icon: Play,
       description:
-        'AI image created from the player’s text prompt or transformed from their uploaded art.',
+        'AI image created from the player’s text prompt or transformed from their user-generated or user-uploaded art.',
       buttonText: 'Custom NFT',
       features: [
         'AI-generated from your prompt or art',
@@ -136,7 +136,7 @@ export function WhatAreNftsContent() {
       price: '$21',
       icon: Star,
       description:
-        'Custom or uploaded art that we convert to an animated NFT; VIP-only access.',
+        'User-generated or user-uploaded art that we convert to an animated NFT; VIP-only access.',
       buttonText: 'Animate NFT',
       features: [
         'Custom animated artwork',
@@ -147,7 +147,7 @@ export function WhatAreNftsContent() {
       gradient: 'from-amber-400 to-yellow-500',
       bgColor: 'bg-gradient-to-br from-amber-400/10 to-yellow-500/10',
       borderColor: 'border-amber-400/20',
-      example: 'Animated custom or uploaded art',
+      example: 'Animated user-generated or user-uploaded art',
     },
   ];
 
@@ -854,7 +854,7 @@ export function WhatAreNftsContent() {
                 },
                 {
                   q: "What's the difference between the six NFT types?",
-                  a: 'Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is custom or uploaded art with animation, available to VIPs.',
+                  a: 'Default Signature ($0) is the standard black signature. Custom Signature ($3) lets you choose any color for your signature. Custom Hand-Drawn Symbol ($3) allows you to upload a simple doodle or icon. House-Generated Artwork ($7) is professional art from the Football Squares team. AI-Generated Artwork ($14) is created from your prompt or art. Premium (VIP) Animated ($21) is user-generated or user-uploaded art with animation, available to VIPs.',
                 },
                 {
                   q: 'Can I use the same NFT on multiple squares?',

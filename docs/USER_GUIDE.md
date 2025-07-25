@@ -54,7 +54,7 @@ Football Squares is simple:
 1. Buy squares on a 10x10 grid (100 squares total)
 2. After all squares are sold, random numbers (0-9) are assigned to rows and columns
 3. Winners are determined by the last digit of each team's score each quarter
-4. Payouts are automatic and instant!
+4. Winners are notified immediately at quarter end, with payouts initiated 5 minutes after official game end!
 
 ### Step-by-Step Guide
 
@@ -96,9 +96,9 @@ Football Squares is simple:
 
 #### Step 6: Collect Winnings
 
-1. If you win, payouts are automatic
-2. SOL is sent directly to your wallet
-3. Check your wallet balance for winnings
+1. If you win, you'll be notified immediately at quarter end
+2. Payouts are initiated 5 minutes after official game end
+3. SOL is sent directly to your wallet after verification
 4. Transaction confirmations appear on-screen
 
 ## Game Rules
@@ -313,11 +313,9 @@ Before the game starts:
 
 ### Automatic Payouts
 
-Winnings are processed automatically:
-
-1. **Quarter ends** → Scores recorded → Winner calculated
-2. **Smart contract** processes payout instantly
-3. **SOL sent** directly to winner's wallet
+1. **Quarter ends** → Scores recorded → Winner calculated → Notification sent
+2. **5 minutes post-game** → Smart contract processes payout
+3. **SOL sent** directly to winner's wallet after blockchain verification
 4. **Confirmation** appears on screen and in wallet
 
 ### Checking Winnings
@@ -336,8 +334,9 @@ Winnings are processed automatically:
 
 ### Payout Timeline
 
-- **Immediate**: Payouts process within 30 seconds
-- **Confirmation**: 1-2 minutes for full confirmation
+- **Notification**: Winners notified immediately at quarter end
+- **Payout**: Initiated 5 minutes after official game end
+- **Confirmation**: 1-2 minutes for blockchain verification and finalization
 - **Display**: Board updates show payout status
 
 ### Tax Considerations
@@ -469,7 +468,7 @@ A: Only standard Solana network fees (~0.000005 SOL per transaction).
 A: Total pot is divided equally among the four quarters (25% each).
 
 **Q: When do I receive winnings?**
-A: Immediately after each quarter ends, payouts are processed automatically.
+A: Winners are notified immediately at quarter end, but payouts are initiated 5 minutes after official game end for blockchain verification.
 
 **Q: Are winnings taxable?**
 A: Potentially yes, depending on your jurisdiction. Consult a tax professional.

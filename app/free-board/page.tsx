@@ -19,7 +19,7 @@ const upgradeOptions = [
     id: 'default-signature',
     label: 'Default Signature',
     description:
-      'Plain black, handwritten “First Name + Last Initial” the system grants every player automatically.',
+      'Plain black, handwritten "First Name + Last Initial" the system grants every player automatically.',
     icon: PenTool,
     price: '$0',
   },
@@ -50,7 +50,7 @@ const upgradeOptions = [
     id: 'ai-generated-artwork',
     label: 'AI-Generated Artwork',
     description:
-      'AI image created from the player’s text prompt or transformed from their uploaded art.',
+      'AI image created from the player\'s text prompt or transformed from their user-generated or user-uploaded art.',
     icon: Play,
     price: '$14',
   },
@@ -58,7 +58,7 @@ const upgradeOptions = [
     id: 'premium-animated',
     label: 'Premium (VIP) Animated',
     description:
-      'Custom or uploaded art that we convert to an animated NFT; VIP-only access.',
+      'User-generated or user-uploaded art that we convert to an animated NFT; VIP-only access.',
     icon: Star,
     price: '$21',
   },

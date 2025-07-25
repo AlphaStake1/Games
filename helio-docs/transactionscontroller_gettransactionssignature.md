@@ -7,5 +7,6 @@ The content describes how to "Get a Transaction by Signature" from the Hel.io AP
 This endpoint allows you to retrieve the details of a transaction using its blockchain signature.
 
 **Base URL Note:**
-*   For Mainnet: `https://api.hel.io` as your Base URL.
-*   For Testnet: `https://api.dev.hel.io` as your Base URL.
+
+- For Mainnet: `https://api.hel.io` as your Base URL.
+- For Testnet: `https://api.dev.hel.io` as your Base URL.

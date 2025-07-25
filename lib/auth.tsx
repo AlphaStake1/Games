@@ -29,7 +29,7 @@ const LoadingSpinner = () => (
 
 export function withAuth<P extends object>(
   Component: React.ComponentType<P>,
-  requiredRole: string
+  requiredRole: string,
 ): React.ComponentType<P> {
   return function WithAuth(props: P) {
     const router = useRouter();

@@ -32,95 +32,95 @@ API
 CURRENCY
 
  * Get Solana-Supported Currenciesget
-   
+
  * Get All Currenciesget
-   
+
 
 
 PAY LINKS
 
  * Overview
  * Create a Pay Linkpost
-   
+
  * Get a Pay Links Transactions by IDget
-   
+
  * Update a Pay Linkpatch
-   
+
  * Disable a Pay Linkpatch
-   
+
 
 
 TRANSACTIONS
 
  * Get Transactions by Pay Link IDget
-   
+
  * Get a Transaction by Signatureget
-   
+
 
 
 SUBSCRIPTIONS
 
  * Overview
  * Get All Subscriptionsget
-   
+
  * Get a Subscription by IDget
-   
+
 
 
 CHARGES
 
  * Overview
  * Create a Chargepost
-   
+
  * Get a Charge by IDget
-   
+
 
 
 WEBHOOKS
 
  * Overview
  * Create a Webhookpost
-   
+
  * Pay Links
    * Create a Pay Link Webhookpost
-     
+
    * Get Webhooks for a Pay Linkget
-     
+
    * Get a Pay Link Webhook by IDget
-     
+
    * Delete a Pay Link Webhookdelete
-     
+
  * Subscriptions
    * Create a Subscription Webhookpost
-     
+
    * Get Webhooks for a Subscriptionget
-     
+
    * Get a Subscription Webhook by IDget
-     
+
    * Delete a Subscription Webhookdelete
-     
+
  * Shopify Webhooks
 
 
 ALLOWLIST
 
  * Add to a Wallet Allowlistpatch
-   
+
 
 
 MERCHANT ACCOUNT
 
  * Overview
  * Creating a Merchant Accountpost
-   
+
  * Signing In to a Merchant Accountpost
-   
+
 
 
 EXPORTS
 
  * Export All Transactions From Your Accountget
-   
+
 
 Powered by 
 

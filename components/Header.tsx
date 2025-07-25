@@ -29,9 +29,10 @@ const Header = () => {
   ];
 
   // Show CBL CTA on home, play, and rules pages for non-CBL users
-  const showCBLBadge = ['/play', '/', '/rules'].includes(pathname) &&
-                       !pathname.startsWith('/cbl') &&
-                       (!user || !user.isCBL);
+  const showCBLBadge =
+    ['/play', '/', '/rules'].includes(pathname) &&
+    !pathname.startsWith('/cbl') &&
+    (!user || !user.isCBL);
 
   return (
     <header className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
@@ -68,7 +69,7 @@ const Header = () => {
                 {item.label}
               </Link>
             ))}
-            
+
             {/* CBL Badge */}
             {showCBLBadge && (
               <Link href="/cbl/overview" className="ml-4">
@@ -147,7 +148,7 @@ const Header = () => {
             </Link>
 
             <WalletMultiButton className="!w-full !mt-2 !bg-blue-600 hover:!bg-blue-700 !text-white !px-6 !py-3 !rounded-lg !font-semibold !transition-colors !duration-200 !border-0 wallet-adapter-button-trigger" />
-            
+
             {/* CBL CTA for Mobile */}
             {showCBLBadge && (
               <>

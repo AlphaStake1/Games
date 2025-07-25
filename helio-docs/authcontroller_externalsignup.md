@@ -7,5 +7,6 @@ Here's the relevant information:
 **Description:** Create a new Helio merchant account using an external authentication method.
 
 **Note:**
-*   For mainnet, use `https://api.hel.io` as the Base URL and generate API keys from `app.hel.io`.
-*   For testnet, use `https://api.dev.hel.io` as the Base URL and generate API keys from `app.dev.hel.io`.
+
+- For mainnet, use `https://api.hel.io` as the Base URL and generate API keys from `app.hel.io`.
+- For testnet, use `https://api.dev.hel.io` as the Base URL and generate API keys from `app.dev.hel.io`.

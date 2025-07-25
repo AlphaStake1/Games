@@ -400,9 +400,9 @@ const HowToPlayContent = () => {
     },
     {
       icon: Zap,
-      title: 'Instant Payouts',
+      title: 'Secure Payouts',
       description:
-        'Winners receive their crypto payouts automatically when each quarter ends.',
+        'Winners receive their crypto payouts 5 minutes after official game end, allowing time for blockchain verification.',
     },
     {
       icon: Wallet,
@@ -887,7 +887,7 @@ const HowToPlayContent = () => {
                       title: 'Winning Conditions',
                       rules: [
                         "Winners determined by last digit of each team's score",
-                        'Payouts happen at the end of each quarter',
+                        'Winners are notified at the end of each quarter; payouts are initiated 5 minutes after the official game end, including overtimes',
                         'Overtime scores count for final score payout only',
                         'Ties are handled according to official NFL rules',
                       ],
@@ -895,7 +895,7 @@ const HowToPlayContent = () => {
                     {
                       title: 'Payout Rules',
                       rules: [
-                        'Payouts are automatic and immediate',
+                        'Payments are initiated 5 minutes after the official game end, please allow time for blockchain verification and finalization',
                         'Winners receive crypto directly to their wallet',
                         'Platform takes a small fee for hosting',
                         'All transactions are recorded on the blockchain',
@@ -1019,9 +1019,9 @@ const HowToPlayContent = () => {
                     },
                     {
                       step: 3,
-                      title: 'Automatic Payouts',
+                      title: 'Secure Payouts',
                       description:
-                        'Winners receive payouts automatically to their wallet at the end of each quarter.',
+                        'Winners receive payouts to their wallet 5 minutes after official game end, allowing for blockchain verification.',
                       icon: Zap,
                     },
                     {

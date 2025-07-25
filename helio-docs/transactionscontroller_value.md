@@ -7,8 +7,9 @@ Here's the information:
 **Description:** Retrieve all transactions associated with a specific paylink ID.
 
 **Notes:**
-*   For Mainnet, use `https://api.hel.io` as your Base URL and generate API keys from `app.hel.io`.
-*   For Testnet, use `https://api.dev.hel.io` as your Base URL and generate API keys from `app.dev.hel.io`.
+
+- For Mainnet, use `https://api.hel.io` as your Base URL and generate API keys from `app.hel.io`.
+- For Testnet, use `https://api.dev.hel.io` as your Base URL and generate API keys from `app.dev.hel.io`.
 
 **Credentials:** Bearer JWT
 

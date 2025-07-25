@@ -57,17 +57,6 @@ const FantasyLinksGrid = () => {
   return (
     <section id="fantasy" className="py-20 bg-[#faf9f5]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* External Fantasy Sites Section */}
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-[#002244] mb-4">
-            Check Out Other Fantasy Football Sites
-          </h3>
-          <p className="text-lg text-[#708090] max-w-2xl mx-auto">
-            Explore these popular fantasy platforms for additional leagues and
-            features
-          </p>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {fantasyLinks.map((link, index) => (
             <div
@@ -100,7 +89,12 @@ const FantasyLinksGrid = () => {
                   className="inline-flex items-center gap-2 bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-6 py-3 rounded-lg font-semibold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 group-hover:scale-105 transform"
                   aria-label={`Open ${link.name} in new tab`}
                 >
-                  Play Now
+                  {link.name === 'ESPN Fantasy' ? 'Go For It' :
+                   link.name === 'NFL Fantasy' ? 'Blitz' :
+                   link.name === 'Yahoo Fantasy' ? 'Tush-Push It' :
+                   link.name === 'Sleeper' ? 'Hail Mary' :
+                   link.name === 'CBS Sports Fantasy' ? 'Fumble Recovery' :
+                   link.name === 'DraftSharks' ? 'Sack It' : 'Play Now'}
                   <ExternalLink className="w-4 h-4" />
                 </a>
               </div>

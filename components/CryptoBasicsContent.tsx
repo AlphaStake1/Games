@@ -416,16 +416,14 @@ export default function CryptoBasicsContent() {
           complete identity verification.
         </li>
         <li>
-          <strong>Link a Payment Method:</strong> Add a debit/credit card or set
-          up a bank transfer to fund your account. Buying with a card is instant
-          but may have higher fees.
+          <strong>Link a Payment Method:</strong> Set up a bank transfer to fund your account.
         </li>
         <li>
           <strong>Buy Crypto:</strong> Tap the "Trade" button on the home
           screen, then "Buy." Select the cryptocurrency you want.
         </li>
         <li>
-          <strong>Add Payment Source:</strong> Choose your card or fiat wallet
+          <strong>Add Payment Source:</strong> Choose your wallet
           and confirm the purchase.
         </li>
         <li>
@@ -447,8 +445,7 @@ export default function CryptoBasicsContent() {
           identity.
         </li>
         <li>
-          <strong>Fund Your Account:</strong> Add funds using a bank account,
-          debit/credit card, or other supported methods.
+          <strong>Fund Your Account:</strong> Add funds using a bank account or other supported methods.
         </li>
         <li>
           <strong>Go to "Transact":</strong> This is Uphold's main trading

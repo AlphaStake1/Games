@@ -23,7 +23,9 @@ jest.mock('@/components/OCPhilWidget', () => {
 const mockUsePathname = usePathname as jest.MockedFunction<typeof usePathname>;
 
 describe('ChatbotProvider', () => {
-  const TestChildren = () => <div data-testid="test-children">Test Content</div>;
+  const TestChildren = () => (
+    <div data-testid="test-children">Test Content</div>
+  );
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -36,7 +38,7 @@ describe('ChatbotProvider', () => {
       render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('test-children')).toBeInTheDocument();
@@ -50,7 +52,7 @@ describe('ChatbotProvider', () => {
       render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('test-children')).toBeInTheDocument();
@@ -64,7 +66,7 @@ describe('ChatbotProvider', () => {
       render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('test-children')).toBeInTheDocument();
@@ -78,7 +80,7 @@ describe('ChatbotProvider', () => {
       render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('test-children')).toBeInTheDocument();
@@ -94,7 +96,7 @@ describe('ChatbotProvider', () => {
       render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('test-children')).toBeInTheDocument();
@@ -108,7 +110,7 @@ describe('ChatbotProvider', () => {
       render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('test-children')).toBeInTheDocument();
@@ -122,7 +124,7 @@ describe('ChatbotProvider', () => {
       render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('test-children')).toBeInTheDocument();
@@ -138,7 +140,7 @@ describe('ChatbotProvider', () => {
       const { rerender } = render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('coach-b-chatbot')).toBeInTheDocument();
@@ -150,7 +152,7 @@ describe('ChatbotProvider', () => {
       rerender(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('oc-phil-widget')).toBeInTheDocument();
@@ -163,7 +165,7 @@ describe('ChatbotProvider', () => {
       render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('test-children')).toBeInTheDocument();
@@ -176,7 +178,7 @@ describe('ChatbotProvider', () => {
       render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       expect(screen.getByTestId('test-children')).toBeInTheDocument();
@@ -192,14 +194,17 @@ describe('ChatbotProvider', () => {
       const { container } = render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       const children = screen.getByTestId('test-children');
       const chatbot = screen.getByTestId('coach-b-chatbot');
 
       // Children should come before chatbot in DOM order
-      expect(children.compareDocumentPosition(chatbot) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(
+        children.compareDocumentPosition(chatbot) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBeTruthy();
     });
 
     it('maintains proper React fragment structure', () => {
@@ -208,7 +213,7 @@ describe('ChatbotProvider', () => {
       const { container } = render(
         <ChatbotProvider>
           <TestChildren />
-        </ChatbotProvider>
+        </ChatbotProvider>,
       );
 
       // Should not add any wrapper elements

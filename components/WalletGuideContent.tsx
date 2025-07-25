@@ -153,6 +153,31 @@ const WalletGuideContent = () => {
         </CardContent>
       </Card>
 
+      <div className="bg-orange-50 dark:bg-orange-900/50 border border-orange-200 dark:border-orange-800 rounded-lg p-6 my-8">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Your Path to Playing</h3>
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-200 rounded-full flex items-center justify-center font-bold">1</div>
+                <span className="text-gray-700 dark:text-gray-300">Buy Crypto</span>
+              </div>
+              <div className="text-gray-300 dark:text-gray-600">→</div>
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-200 rounded-full flex items-center justify-center font-bold">2</div>
+                <span className="text-gray-700 dark:text-gray-300">Get a Wallet</span>
+              </div>
+              <div className="text-gray-300 dark:text-gray-600">→</div>
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-200 rounded-full flex items-center justify-center font-bold">3</div>
+                <span className="text-gray-700 dark:text-gray-300">Fund Wallet</span>
+              </div>
+              <div className="text-gray-300 dark:text-gray-600">→</div>
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-orange-200 dark:bg-orange-800 text-orange-700 dark:text-orange-200 rounded-full flex items-center justify-center font-bold">4</div>
+                <span className="text-gray-700 dark:text-gray-300">Connect & Play</span>
+              </div>
+            </div>
+          </div>
+
       {/* Step 2: Choose an Exchange */}
       <Card className="mb-12 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm">
         <CardHeader>
