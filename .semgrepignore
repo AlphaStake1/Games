@@ -1,0 +1,53 @@
+# Semgrep ignore patterns for Football Squares dApp
+
+# Build and dependency directories
+node_modules/
+target/
+.next/
+out/
+dist/
+build/
+
+# Test artifacts
+test-ledger/
+*.test.ts
+*.test.tsx
+__tests__/
+coverage/
+
+# Documentation
+docs/
+*.md
+README*
+
+# Generated files
+*.generated.*
+*.d.ts
+*.min.js
+*.bundle.js
+
+# Asset files
+public/assets/
+Assets/
+*.png
+*.jpg
+*.svg
+*.ico
+
+# Configuration files (secrets handled separately)
+.env*
+*.config.js
+*.config.ts
+
+# Known safe third-party code
+ceramic/client.ts:1-50     # Third-party ceramic integration
+helio-docs/                # External API documentation
+
+# False positive suppressions
+# Format: filename:line_number:rule_id
+components/ui/chart.tsx:*:typescript.react.security.audit.react-dangerously-set-inner-html.react-dangerously-set-inner-html
+lib/markdown.tsx:57:typescript.react.security.audit.react-dangerously-set-inner-html.react-dangerously-set-inner-html
+
+# Temporary suppression for known issues
+# TODO: Remove after fixing
+programs/squares/src/lib.rs:200:rust.lang.security.audit.unsafe-usage

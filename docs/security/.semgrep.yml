@@ -1,0 +1,22 @@
+# Semgrep configuration for Football Squares dApp
+# Community rulesets only - custom rules deferred until ElizaOS V2
+
+# Global exclusions
+exclude:
+  - 'node_modules/'
+  - 'target/'
+  - 'out/'
+  - 'test-ledger/'
+  - '*.min.js'
+  - '*.generated.*'
+  - 'docs/'
+  - 'README.md'
+  - '*.md'
+  - 'public/assets/'
+  - 'Assets/'
+  - '*.log'
+  - '.env*'
+  - '*.tmp'
+  - '.git/'
+  - 'components/ui/*.tsx' # shadcn/ui components
+  - 'lib/utils.ts' # Utility functions

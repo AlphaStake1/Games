@@ -1,0 +1,41 @@
+rules:
+  - id: missing-signer-check
+    message: 'Account should be marked as Signer for security'
+    languages: [rust]
+    severity: ERROR
+    pattern-either:
+      - pattern: |
+          #[account(mut)]
+          pub $ACCOUNT: Account<'info, $TYPE>,
+    pattern-not-inside: |
+      #[account(mut)]
+      pub $ACCOUNT: Signer<'info>,
+    metadata:
+      category: security
+      cwe: 'CWE-862'
+      confidence: HIGH
+
+  - id: unchecked-pda-derivation
+    message: 'PDA derivation should validate bump parameter'
+    languages: [rust]
+    severity: ERROR
+    pattern: |
+      let ($ADDR, $BUMP) = Pubkey::find_program_address(&$SEEDS, &$PROGRAM_ID);
+    pattern-not-inside: |
+      require!($BUMP == $EXPECTED_BUMP, ...);
+    metadata:
+      category: security
+      confidence: MEDIUM
+
+  - id: lamport-overflow-risk
+    message: 'Lamport arithmetic may overflow - use checked operations'
+    languages: [rust]
+    severity: ERROR
+    pattern-either:
+      - pattern: $ACCOUNT.lamports() + $AMOUNT
+      - pattern: $ACCOUNT.lamports() - $AMOUNT
+    pattern-inside: |
+      $ACCOUNT.to_account_info().try_borrow_mut_lamports()
+    metadata:
+      category: security
+      cwe: 'CWE-190'

@@ -26,7 +26,11 @@
     "health": "ts-node scripts/health-check.ts",
     "health:single": "ts-node scripts/health-check.ts single",
     "validate:final": "ts-node scripts/final-validation.ts",
-    "phase2:complete": "npm run validate:final"
+    "phase2:complete": "npm run validate:final",
+    "security:scan": "docker run --rm -v \"$(pwd):/src\" --entrypoint=\"\" semgrep/semgrep:latest semgrep --config docs/security/.semgrep.yml /src",
+    "security:rust": "docker run --rm -v \"$(pwd):/src\" --entrypoint=\"\" semgrep/semgrep:latest semgrep --config p/rust /src/programs/",
+    "security:frontend": "docker run --rm -v \"$(pwd):/src\" --entrypoint=\"\" semgrep/semgrep:latest semgrep --config p/typescript /src/components/ /src/app/ /src/agents/",
+    "security:secrets": "docker run --rm -v \"$(pwd):/src\" --entrypoint=\"\" semgrep/semgrep:latest semgrep --config p/secrets /src"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.3",
