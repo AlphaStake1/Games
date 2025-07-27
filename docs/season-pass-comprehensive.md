@@ -1,5 +1,9 @@
 # Season Pass Conferences - Comprehensive Technical Specification
 
+**Version**: v0.9.0-draft  
+**Last Updated**: 2025-07-26  
+**Status**: Ready for Development & Audit Scoping
+
 ## Overview
 
 Season Pass Conferences transform weekly Football Squares into season-long competition. Players purchase a single season pass granting one permanent square for every NFL game (Week 1 → Super Bowl), competing within tier-matched conferences of exactly 100 players with double-random VRF fairness.
@@ -15,6 +19,15 @@ Season Pass Conferences transform weekly Football Squares into season-long compe
 | 3    | Northern → Gulf of America → Great Lakes → Heartland → Badlands  | $100        | $10,000     | ~$2,800       | ~$2,000        |
 | 4    | Western → Pacific → Sierra → Cascades → Rockies                  | $200        | $20,000     | ~$5,600       | ~$4,000        |
 | 5    | South-East → South-West → North-East → North-West → Mid-Atlantic | $500        | $50,000     | ~$14,000      | ~$10,000       |
+
+**Green Points Scoring Examples**:
+
+- Q1 Forward hit (regular season): 200 × 0.45 = 90.00 pts
+- Q2 Backward hit (regular season): 250 × 0.30 = 75.00 pts
+- Q4 +5f hit (Super Bowl): 250 × 0.15 × 5.0 = 187.50 pts
+- OT +5b hit (Conference Champ): 200 × 0.10 × 3.5 = 70.00 pts
+
+**Note on Dynamic Pricing**: Season pass prices are fixed in USD but collected in SOL/USDC. The system uses Chainlink price oracles to calculate real-time SOL equivalent. Price updates occur every 15 minutes during active trading hours. If SOL volatility exceeds ±15% within 24 hours, an emergency re-pricing window may be triggered by the protocol treasury.
 
 ### Conference Rollover Algorithm
 
@@ -145,43 +158,93 @@ contract SeasonPassRandomizer {
 ### Point Calculation Engine
 
 ```typescript
+type Quarter = 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'OT';
+type Result = 'forward' | 'backward' | '+5f' | '+5b';
+type PlayoffRound = 'WC' | 'DIV' | 'CONF' | 'SB' | null;
+
 interface PointEvent {
-  quarter: 1 | 2 | 3 | 4 | 'OT';
+  quarter: Quarter;
   homeScore: number;
   awayScore: number;
-  squarePosition: 'corner' | 'edge' | 'center';
-  isPlayoffs: boolean;
-  playoffStage?: 'wildcard' | 'divisional' | 'conference' | 'superbowl';
+  resultType: Result;
+  isPlayoff: boolean;
+  otNumber?: number;
+  playoffRound?: PlayoffRound;
 }
 
-function calculateGreenPoints(event: PointEvent): number {
-  let basePoints = 500; // Configurable base value
+/**
+ * Calculate Green points earned for a single scoring event.
+ * Uses percentage-based distribution to reward rarity of hit patterns.
+ */
+function calculateGreenPoints({
+  quarter,
+  resultType,
+  isPlayoff,
+  otNumber = 1,
+  playoffRound = null,
+}: {
+  quarter: Quarter;
+  resultType: Result;
+  isPlayoff: boolean;
+  otNumber?: number;
+  playoffRound?: PlayoffRound;
+}): number {
+  /** Baseline points per period */
+  const base: Record<Quarter, number> = {
+    Q1: 200,
+    Q2: 250, // Halftime bonus
+    Q3: 200,
+    Q4: 250, // End-of-game bonus
+    OT: 200, // Each OT period is independent
+  };
 
-  // Position multipliers
-  const positionMultiplier = {
-    corner: 1.3,
-    edge: 1.1,
-    center: 1.0,
-  }[event.squarePosition];
+  /** Category percentage split - determines relative rarity/reward */
+  const split: Record<Result, number> = {
+    forward: 0.45, // Most common: (Home, Away)
+    backward: 0.3, // Second: (Away, Home)
+    '+5f': 0.15, // Third: ((H+5)%10, (A+5)%10)
+    '+5b': 0.1, // Rarest: ((A+5)%10, (H+5)%10)
+  };
 
-  // Quarter bonuses
-  let quarterMultiplier = 1.0;
-  if (event.quarter === 2) quarterMultiplier = 1.25; // Halftime bonus
-  if (event.quarter === 'OT') quarterMultiplier = 1.2; // Per OT period
+  /** Playoff multipliers */
+  const bump: Record<Exclude<PlayoffRound, null>, number> = {
+    WC: 1.5, // Wild Card
+    DIV: 2, // Divisional
+    CONF: 3.5, // Conference Championship
+    SB: 5, // Super Bowl
+  };
 
-  // Playoff stage multipliers
-  const playoffMultiplier = event.isPlayoffs
-    ? {
-        wildcard: 2.0,
-        divisional: 3.0,
-        conference: 4.0,
-        superbowl: 5.0,
-      }[event.playoffStage!]
-    : 1.0;
+  // Core quarter value - OT periods are independent, not cumulative
+  const quarterPoints = base[quarter];
 
-  return Math.floor(
-    basePoints * positionMultiplier * quarterMultiplier * playoffMultiplier,
+  // Base score for this category
+  const rawScore = quarterPoints * split[resultType];
+
+  // Apply playoff-round bonus if relevant
+  const finalScore =
+    isPlayoff && playoffRound ? rawScore * bump[playoffRound] : rawScore;
+
+  // Keep two decimals to minimize ties
+  return Number(finalScore.toFixed(2));
+}
+
+// Tie-breaking logic for equal Green Point totals
+function calculateTieBreaker(playerA: Player, playerB: Player): number {
+  // 1. Most squares won throughout season
+  if (playerA.totalSquaresWon !== playerB.totalSquaresWon) {
+    return playerB.totalSquaresWon - playerA.totalSquaresWon;
+  }
+
+  // 2. Earliest mint block (first to join conference)
+  if (playerA.mintBlock !== playerB.mintBlock) {
+    return playerA.mintBlock - playerB.mintBlock;
+  }
+
+  // 3. VRF-seeded deterministic random (using season start VRF)
+  const combinedSeed = keccak256(
+    abi.encodePacked(playerA.wallet, playerB.wallet, seasonStartVRFSeed),
   );
+  return uint256(combinedSeed) % 2 === 0 ? -1 : 1;
 }
 ```
 
@@ -252,6 +315,8 @@ function calculateSeasonPayouts(conferencePool: number): PayoutStructure {
 
 **Rounding Policy**: Each individual prize rounded to nearest whole dollar; dust (<$10) auto-rolls into next season's seed pool.
 
+**Rollover Seed Pool Cap**: Maximum carry-over between seasons is capped at $1,000 per tier. Any excess beyond this cap is distributed to the weekly boards treasury to prevent odds dilution.
+
 **Contract Constants**:
 
 ```solidity
@@ -261,6 +326,38 @@ uint16 public constant TREASURY_BPS = 500; // 5%
 uint16 public constant OPERATIONAL_BPS = 300; // 3%
 ```
 
+## Emergency Scenarios & Refund Policy
+
+### Conference Shutdown / Season Cancellation
+
+In the event of NFL season cancellation, strike, or critical smart contract vulnerability:
+
+```solidity
+function emergencyWithdraw(bytes32 conferenceId) external {
+    require(emergencyMode[conferenceId], "Not in emergency mode");
+    require(passHolders[msg.sender][conferenceId], "No pass in conference");
+    require(!emergencyClaimed[msg.sender][conferenceId], "Already claimed");
+
+    uint256 gamesPlayed = getGamesPlayedCount(conferenceId);
+    uint256 totalGames = 22; // Regular season + playoffs
+
+    // Pro-rata refund: (unplayed games / total games) * pass price
+    uint256 refundAmount = (passPrice[conferenceId] * (totalGames - gamesPlayed)) / totalGames;
+
+    emergencyClaimed[msg.sender][conferenceId] = true;
+    payable(msg.sender).transfer(refundAmount);
+
+    emit EmergencyWithdrawal(conferenceId, msg.sender, refundAmount);
+}
+```
+
+**Trigger Conditions**:
+
+- NFL announces season suspension/cancellation
+- Critical smart contract vulnerability discovered
+- VRF oracle failure lasting >48 hours
+- Governance vote by protocol treasury multisig (3/5 threshold)
+
 ## Smart Contract Architecture
 
 ### Core Contract: SeasonPass.sol
@@ -269,9 +366,12 @@ uint16 public constant OPERATIONAL_BPS = 300; // 3%
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 
-contract SeasonPass is ERC721, VRFConsumerBaseV2 {
+contract SeasonPass is ERC721, UUPSUpgradeable, Pausable, ReentrancyGuard, VRFConsumerBaseV2 {
     struct Conference {
         bytes32 id;
         uint8 tier;
@@ -304,7 +404,7 @@ contract SeasonPass is ERC721, VRFConsumerBaseV2 {
 
     event ConferenceFilled(bytes32 indexed conferenceId, string nextConferenceName);
 
-    function mintPass(bytes32 conferenceId) external payable {
+    function mintPass(bytes32 conferenceId) external payable whenNotPaused nonReentrant {
         Conference storage conf = conferences[conferenceId];
         require(conf.active, "Conference inactive");
         require(seatsSold[conferenceId] < 100, "Conference full");
@@ -325,6 +425,34 @@ contract SeasonPass is ERC721, VRFConsumerBaseV2 {
             _createNewConference(conf.tier, nextName, conf.passPrice);
             emit ConferenceFilled(conferenceId, nextName);
         }
+    }
+
+    // Upgrade authorization (UUPS pattern)
+    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {
+        // Additional checks can be added here
+        require(block.timestamp >= lastUpgradeTime + 7 days, "Upgrade cooldown");
+        lastUpgradeTime = block.timestamp;
+    }
+
+    // Emergency controls
+    function emergencyPause() external onlyOwner {
+        _pause();
+        emit EmergencyPause(block.timestamp);
+    }
+
+    function unpause() external onlyOwner {
+        _unpause();
+        emit EmergencyUnpause(block.timestamp);
+    }
+
+    // VRF Fallback mechanism
+    function manualRandomize(bytes32 conferenceId, uint256 gameId, uint256 fallbackSeed)
+        external onlyOwner whenPaused {
+        require(block.timestamp > vrfRequestTime[conferenceId][gameId] + 6 hours, "VRF timeout not reached");
+
+        // Use fallback seed from trusted multisig
+        _processRandomization(conferenceId, gameId, fallbackSeed);
+        emit VRFFallbackUsed(conferenceId, gameId, fallbackSeed);
     }
 
     function _allocateNextSeat(bytes32 conferenceId, address owner) internal returns (uint256) {
@@ -801,6 +929,28 @@ contract SeasonPassTest is Test {
       },
       "gradient": "from-blue-500 to-blue-600"
     },
+    "3": {
+      "name": "Tier 3",
+      "price": 100,
+      "colors": {
+        "primary": "#7c3aed",
+        "secondary": "#ede9fe",
+        "border": "#c4b5fd",
+        "text": "#5b21b6"
+      },
+      "gradient": "from-purple-500 to-purple-600"
+    },
+    "4": {
+      "name": "Tier 4",
+      "price": 200,
+      "colors": {
+        "primary": "#ea580c",
+        "secondary": "#fed7aa",
+        "border": "#fdba74",
+        "text": "#9a3412"
+      },
+      "gradient": "from-orange-500 to-orange-600"
+    },
     "5": {
       "name": "Tier 5",
       "price": 500,
@@ -816,17 +966,158 @@ contract SeasonPassTest is Test {
 }
 ```
 
+## Compliance & Legal Requirements
+
+### Regulatory Compliance
+
+**Skill-Based Classification**: Season Pass Conferences are structured as skill-based sweepstakes, not gambling. The double-random VRF system ensures that while chance influences individual game outcomes, overall season success depends on accumulated performance across multiple events.
+
+**Age Verification**: All users must verify 18+ age (21+ in applicable jurisdictions) during wallet connection. Implemented via:
+
+```typescript
+const verifyAge = async (walletAddress: string) => {
+  const ageVerification = await checkAgeGate(walletAddress);
+  if (!ageVerification.isValid) {
+    throw new Error(
+      `Must be ${ageVerification.minimumAge}+ in your jurisdiction`,
+    );
+  }
+};
+```
+
+**Jurisdictional Disclaimers**: Purchase modal includes jurisdiction-specific notices:
+
+- "This is a skill-based competition available to residents of permitted jurisdictions"
+- "Prohibited in [restricted states/countries list]"
+- "Subject to local laws and regulations"
+
+### Data Privacy & GDPR Compliance
+
+**Data Retention Policy**:
+| Data Type | Retention Period | Purpose |
+|-----------|------------------|---------|
+| Wallet Addresses | Permanent | Blockchain transparency |
+| Analytics Events | 24 months | Product optimization |
+| Email Addresses | Until user deletion | Communications |
+| KYC Documents | 7 years | Regulatory compliance |
+
+**User Deletion Endpoint**:
+
+```typescript
+DELETE /api/user/{walletAddress}/gdpr-delete
+// Removes: email, analytics history, cached preferences
+// Preserves: on-chain transactions (immutable)
+```
+
+## DevOps & Monitoring
+
+### CI/CD Pipeline Requirements
+
+```yaml
+# .github/workflows/deploy.yml
+name: Season Pass Deployment
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test-matrix:
+    strategy:
+      matrix:
+        test-type: [lint, typecheck, unit, e2e, contracts, gas-report]
+    steps:
+      - name: Run ${{ matrix.test-type }}
+        run: |
+          npm run ${{ matrix.test-type }}
+          # Fail if gas usage increases >5%
+          if [[ "${{ matrix.test-type }}" == "gas-report" ]]; then
+            node scripts/check-gas-delta.js --threshold=5
+          fi
+```
+
+### Alerting & Observability
+
+**Critical Alerts (PagerDuty)**:
+
+```typescript
+// Seat reservation database >90% full
+if (reservationCount > 0.9 * maxReservations) {
+  alert('High reservation utilization', { severity: 'warning' });
+}
+
+// VRF callback >5 minutes overdue
+if (Date.now() - vrfRequestTime > 5 * 60 * 1000) {
+  alert('VRF timeout detected', { severity: 'critical' });
+}
+
+// Treasury wallet balance mismatch
+if (Math.abs(expectedBalance - actualBalance) > 0.01) {
+  alert('Treasury balance discrepancy', { severity: 'high' });
+}
+```
+
+**Health Monitoring**:
+
+```typescript
+// /api/health endpoint
+{
+  "status": "healthy",
+  "checks": {
+    "database": "ok",
+    "vrf_oracle": "ok",
+    "subgraph_sync": "ok",
+    "treasury_balance": "ok"
+  },
+  "uptime": "99.97%",
+  "last_vrf_callback": "2025-07-26T10:30:00Z"
+}
+```
+
+### Audit & Security Timeline
+
+**Pre-Launch Requirements**:
+
+- [ ] **Week 1-2**: Smart contract audit by [Audit Firm]
+- [ ] **Week 3**: Penetration testing of API endpoints
+- [ ] **Week 4**: Bug bounty program launch ($50K pool)
+- [ ] **Week 5**: Final security review & deployment approval
+- [ ] **Week 6**: Mainnet deployment with limited conference caps
+
+**Ongoing Security**:
+
+- Monthly security reviews
+- Quarterly smart contract upgrades (if needed)
+- Continuous bug bounty program
+- Real-time transaction monitoring
+
+## Glossary
+
+**VRF (Verifiable Random Function)**: Cryptographic proof that random numbers were generated fairly and cannot be manipulated by any party.
+
+**BPS (Basis Points)**: 1/100th of a percent. Used for precise percentage calculations (e.g., 500 BPS = 5%).
+
+**Green Points**: Season-long scoring currency accumulated by players for correct square matches, with playoff multipliers.
+
+**Conference Rollover**: Automatic creation of new geographic conference when current one reaches 100 players.
+
+**Double-Random System**: Two-stage randomization process: (1) NFT position shuffle, (2) digit redraw via VRF.
+
 ## Conclusion
 
 This comprehensive specification provides complete technical documentation for Season Pass Conferences, covering:
 
 - ✅ **Protocol Layer**: Smart contracts, VRF integration, event schemas
 - ✅ **Business Logic**: Payout calculations, treasury allocation, conference rollover
+- ✅ **Emergency Scenarios**: Refund policies, upgrade patterns, security controls
 - ✅ **API Specification**: Production endpoints with caching and rate limiting
 - ✅ **Purchase Flow**: End-to-end user journey with error handling
 - ✅ **Testing Strategy**: Unit, integration, and fuzz test requirements
 - ✅ **Analytics Schema**: Complete event tracking for funnel optimization
 - ✅ **Accessibility**: WCAG 2.1 AA compliance checklist
+- ✅ **Compliance**: Legal requirements, data privacy, age verification
+- ✅ **DevOps**: CI/CD, monitoring, audit timeline
 - ✅ **Deployment**: Environment variables and development scripts
+
+**Status**: This v0.9.0-draft specification addresses ~90% of implementation requirements and is ready for development handoff and auditor scoping.
 
 The Season Pass system transforms traditional weekly squares into a sophisticated season-long fantasy sport with provable fairness, tier-matched competition, and substantial prize pools distributed to top performers.

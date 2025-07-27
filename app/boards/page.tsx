@@ -45,7 +45,7 @@ const BoardsPage: React.FC = () => {
   const { connected, publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const { toast } = useToast();
-  const { user } = useAuth();
+  const { user } = useAuth('PLAYER_ROLE');
   const searchParams = useSearchParams();
   const demoMode = searchParams.get('demo') === 'true';
   const seasonalMode = searchParams.get('mode') === 'seasonal';
@@ -78,7 +78,7 @@ const BoardsPage: React.FC = () => {
   const [activeSelections, setActiveSelections] = useState<SquareSelection[]>(
     [],
   );
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isLocalProcessing, setIsLocalProcessing] = useState(false);
   const [viewMode, setViewMode] = useState<'selection' | 'board'>('selection');
 
   // Show team selection for first-time users
@@ -123,7 +123,7 @@ const BoardsPage: React.FC = () => {
       return;
     }
 
-    setIsProcessing(true);
+    setIsLocalProcessing(true);
     const { id: toastId, update: updateToast } = toast({
       title: 'Processing Transaction',
       description: 'Please wait while we submit your transaction...',
@@ -171,7 +171,7 @@ const BoardsPage: React.FC = () => {
         variant: 'destructive',
       });
     } finally {
-      setIsProcessing(false);
+      setIsLocalProcessing(false);
     }
   }, [publicKey, sendTransaction, connection, activeSelections, toast]);
 
@@ -197,7 +197,7 @@ const BoardsPage: React.FC = () => {
       return;
     }
 
-    setIsProcessing(true);
+    setIsLocalProcessing(true);
     const { update: updateToast } = toast({
       title: 'Processing VIP Payment',
       description: 'Please approve the transaction in your wallet...',
@@ -241,7 +241,7 @@ const BoardsPage: React.FC = () => {
         variant: 'destructive',
       });
     } finally {
-      setIsProcessing(false);
+      setIsLocalProcessing(false);
     }
   };
 
@@ -274,11 +274,13 @@ const BoardsPage: React.FC = () => {
                         </div>
                         <div className="flex items-center gap-2">
                           <TrendingUp className="w-5 h-5 text-green-600" />
-                          <span>Accumulate Green Points through playoffs</span>
+                          <span>
+                            Earn points each game, playoffs worth more
+                          </span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Users className="w-5 h-5 text-purple-600" />
-                          <span>100 players per conference board</span>
+                          <span>Top 21 players get paid at season end</span>
                         </div>
                       </>
                     ) : (
@@ -382,7 +384,7 @@ const BoardsPage: React.FC = () => {
               </h1>
               <p className="text-gray-600 dark:text-gray-400">
                 {seasonalMode
-                  ? 'Purchase a season pass for one permanent square through playoffs. Square location & digits are re-randomized before every game for full fairness.'
+                  ? 'Purchase a season pass for one permanent square through playoffs. Positions & digits randomized before every game for fairness.'
                   : viewMode === 'selection'
                     ? 'Select Your Game Board'
                     : 'Choose Your Squares'}
@@ -391,6 +393,25 @@ const BoardsPage: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Mode Toggle */}
+            <div className="flex items-center gap-2">
+              <Button
+                variant={!seasonalMode ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => (window.location.href = '/boards')}
+                className="text-xs"
+              >
+                Weekly
+              </Button>
+              <Button
+                variant={seasonalMode ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => (window.location.href = '/boards?mode=seasonal')}
+                className="text-xs"
+              >
+                Season Pass
+              </Button>
+            </div>
             {preferences?.isVIP && (
               <>
                 <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900">
@@ -512,9 +533,9 @@ const BoardsPage: React.FC = () => {
                         <Button
                           className="w-full bg-green-700 hover:bg-green-800 text-white"
                           onClick={() => openModal('eastern')}
-                          disabled={isProcessing}
+                          disabled={isLocalProcessing}
                         >
-                          {isProcessing
+                          {isLocalProcessing
                             ? 'Loading...'
                             : 'Buy Eastern Pass – $25'}
                         </Button>
@@ -573,9 +594,9 @@ const BoardsPage: React.FC = () => {
                         <Button
                           className="w-full bg-blue-700 hover:bg-blue-800 text-white"
                           onClick={() => openModal('southern')}
-                          disabled={isProcessing}
+                          disabled={isLocalProcessing}
                         >
-                          {isProcessing
+                          {isLocalProcessing
                             ? 'Loading...'
                             : 'Buy Southern Pass – $50'}
                         </Button>
@@ -638,9 +659,9 @@ const BoardsPage: React.FC = () => {
                         <Button
                           className="w-full bg-purple-700 hover:bg-purple-800 text-white"
                           onClick={() => openModal('northern')}
-                          disabled={isProcessing}
+                          disabled={isLocalProcessing}
                         >
-                          {isProcessing
+                          {isLocalProcessing
                             ? 'Loading...'
                             : 'Buy Northern Pass – $100'}
                         </Button>
@@ -703,9 +724,9 @@ const BoardsPage: React.FC = () => {
                         <Button
                           className="w-full bg-orange-700 hover:bg-orange-800 text-white"
                           onClick={() => openModal('western')}
-                          disabled={isProcessing}
+                          disabled={isLocalProcessing}
                         >
-                          {isProcessing
+                          {isLocalProcessing
                             ? 'Loading...'
                             : 'Buy Western Pass – $200'}
                         </Button>
@@ -767,9 +788,9 @@ const BoardsPage: React.FC = () => {
                         <Button
                           className="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-yellow-900"
                           onClick={() => openModal('south-east')}
-                          disabled={isProcessing}
+                          disabled={isLocalProcessing}
                         >
-                          {isProcessing
+                          {isLocalProcessing
                             ? 'Loading...'
                             : 'Buy South-East Pass – $500'}
                         </Button>
@@ -802,18 +823,18 @@ const BoardsPage: React.FC = () => {
                     </p>
                   </div>
                   <div className="space-y-2">
-                    <h4 className="font-semibold">2. Double-Random System</h4>
+                    <h4 className="font-semibold">2. Fair Randomization</h4>
                     <p>
-                      Before each game: (A) All 100 NFT markers shuffle to new
-                      board positions, (B) Fresh row/column digits are drawn via
-                      provably-fair VRF shuffle so every game is double-random.
+                      Before each game, positions shuffle and new digits are
+                      drawn. Every square has equal winning chances over the
+                      season.
                     </p>
                   </div>
                   <div className="space-y-2">
                     <h4 className="font-semibold">3. Accumulate Points</h4>
                     <p>
-                      Earn Green Points each game. Playoff multipliers: Wild
-                      Card ×2, Divisional ×3, Conference ×4, Super Bowl ×5.
+                      Earn Green Points each game. Playoff games have bonus
+                      multipliers, with Super Bowl worth 5× normal points.
                     </p>
                   </div>
                   <div className="space-y-2">
@@ -884,7 +905,7 @@ const BoardsPage: React.FC = () => {
                 selections={activeSelections}
                 onPurchaseConfirm={handlePurchaseConfirm}
                 onClearSelections={handleClearSelections}
-                isProcessing={isProcessing}
+                isProcessing={isLocalProcessing}
               />
             </div>
           </div>

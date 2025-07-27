@@ -1,4 +1,3 @@
-import Footer from '@/components/Footer';
 import RulesContent from '@/components/RulesContent';
 
 const RulesPage = () => {
@@ -7,7 +6,6 @@ const RulesPage = () => {
       <main className="flex-grow">
         <RulesContent />
       </main>
-      <Footer />
     </div>
   );
 };

@@ -5,11 +5,14 @@ import { useRouter } from 'next/navigation';
 
 // This is a mock. In a real app, you'd import this from your auth provider.
 // It would likely be populated by a hook like `useAuth()` that uses `useContext`.
-const useAuth = () => {
+const useAuth = (requiredRole: string) => {
   // In a real app, this would check a cookie, session, or call an API.
   // We'll simulate a loading state and an authenticated CBL user.
   return {
-    user: { name: 'OC-Phil', role: 'CBL_ROLE', isCBL: true },
+    user:
+      requiredRole === 'PLAYER_ROLE'
+        ? { name: 'Player One', role: 'PLAYER_ROLE', isCBL: false }
+        : { name: 'OC-Phil', role: 'CBL_ROLE', isCBL: true },
     isLoading: false,
     // user: null, // <-- To test the unauthenticated case
     // isLoading: true, // <-- To test the loading case
@@ -33,7 +36,7 @@ export function withAuth<P extends object>(
 ): React.ComponentType<P> {
   return function WithAuth(props: P) {
     const router = useRouter();
-    const { user, isLoading } = useAuth();
+    const { user, isLoading } = useAuth(requiredRole);
 
     useEffect(() => {
       if (!isLoading && (!user || user.role !== requiredRole)) {

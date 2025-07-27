@@ -6,7 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { BoardConfiguration, SquareSelection } from '@/lib/boardTypes';
+import { VRFState } from '@/lib/vrfTypes';
 import { formatCurrency, cn } from '@/lib/utils';
+import VRFTrustBanner from '@/components/VRFTrustBanner';
+import VRFProofModal from '@/components/VRFProofModal';
 import {
   Grid,
   MousePointer,
@@ -100,7 +103,17 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
     return `${timestamp}${random}`;
   });
 
+  // VRF modal state
+  const [showVRFProofModal, setShowVRFProofModal] = useState(false);
+  const [vrfModalState, setVrfModalState] = useState<VRFState | null>(null);
+
   const maxSquares = board.maxSquaresPerUser;
+
+  // VRF proof modal handler
+  const handleShowVRFProof = (vrfState: VRFState) => {
+    setVrfModalState(vrfState);
+    setShowVRFProofModal(true);
+  };
 
   useEffect(() => {
     if (squares.length === 0) return;
@@ -295,6 +308,14 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
       </CardHeader>
 
       <CardContent className="space-y-4">
+        {/* VRF Trust Banner */}
+        <VRFTrustBanner
+          boardId={board.boardId}
+          gameStartTime={board.gameStartTime}
+          onShowProof={handleShowVRFProof}
+          className="mb-4"
+        />
+
         {/* Board Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="text-center">
@@ -408,6 +429,13 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
           </div>
         </div>
       </CardContent>
+
+      {/* VRF Proof Modal */}
+      <VRFProofModal
+        isOpen={showVRFProofModal}
+        onClose={() => setShowVRFProofModal(false)}
+        vrfState={vrfModalState}
+      />
     </Card>
   );
 };

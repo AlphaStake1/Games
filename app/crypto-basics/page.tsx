@@ -1,6 +1,5 @@
 import CryptoBasicsContent from '../../components/CryptoBasicsContent';
 import { Metadata } from 'next';
-import Footer from '../../components/Footer';
 
 export const metadata: Metadata = {
   title: 'Crypto Basics - Football Squares',
@@ -14,7 +13,6 @@ export default function CryptoBasicsPage() {
       <main className="flex-grow container mx-auto px-4 py-8 max-w-4xl">
         <CryptoBasicsContent />
       </main>
-      <Footer />
     </div>
   );
 }

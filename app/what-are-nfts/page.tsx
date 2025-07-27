@@ -1,5 +1,4 @@
 import { WhatAreNftsContent } from '@/components/WhatAreNftsContent';
-import Footer from '@/components/Footer';
 
 export const metadata = {
   title: 'What Are NFTs? | Football Squares Digital Assets Guide',
@@ -11,7 +10,6 @@ export default function WhatAreNftsPage() {
   return (
     <div className="min-h-screen bg-[#faf9f5] dark:bg-[#444341] transition-colors duration-300">
       <WhatAreNftsContent />
-      <Footer />
     </div>
   );
 }

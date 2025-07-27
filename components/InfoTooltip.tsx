@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { HelpCircle, ExternalLink } from 'lucide-react';
+import { HelpCircle, ExternalLink } from '@/lib/icons';
 import {
   HoverCard,
   HoverCardContent,

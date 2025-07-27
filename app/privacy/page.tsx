@@ -1,6 +1,5 @@
 import PrivacyPolicyContent from '../../components/PrivacyPolicyContent';
 import { Metadata } from 'next';
-import Footer from '../../components/Footer';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - Football Squares',
@@ -14,7 +13,6 @@ export default function PrivacyPage() {
       <main className="flex-grow container mx-auto px-4 py-8 max-w-4xl">
         <PrivacyPolicyContent />
       </main>
-      <Footer />
     </div>
   );
 }

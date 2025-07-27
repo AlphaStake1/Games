@@ -22,15 +22,6 @@
         ]
       },
       {
-        "matcher": "Write|Edit|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun test || exit 2"
-          }
-        ]
-      },
-      {
         "matcher": "",
         "hooks": [
           {

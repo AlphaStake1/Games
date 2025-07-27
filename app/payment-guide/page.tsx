@@ -1,4 +1,3 @@
-import Footer from '@/components/Footer';
 import WalletConnectionContent from '@/components/WalletConnectionContent';
 
 export const metadata = {
@@ -13,7 +12,6 @@ export default function PaymentGuidePage() {
   return (
     <div className="min-h-screen bg-[#faf9f5] dark:bg-[#1a1a2e] transition-colors duration-300">
       <WalletConnectionContent />
-      <Footer />
     </div>
   );
 }

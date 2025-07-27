@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { PlayCircle } from 'lucide-react';
+import { Play } from '@/lib/icons';
 
 const Hero = () => {
   const router = useRouter();
@@ -30,7 +30,7 @@ const Hero = () => {
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-xl inline-flex items-center gap-3"
               aria-label="Join weekly cash games"
             >
-              <PlayCircle className="w-6 h-6" />
+              <Play className="w-6 h-6" />
               Join Weekly Cash Games
             </button>
           </div>

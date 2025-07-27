@@ -14,7 +14,7 @@ interface BoardState {
   randomized: boolean;
   gameStarted: boolean;
   gameEnded: boolean;
-  winner: PublicKey;
+  winner: PublicKey | null;
   payoutAmount: number;
   totalPot: number;
   homeScore: number;
@@ -85,24 +85,26 @@ export class BoardAgent extends EventEmitter {
 
   async getBoardState(boardPda: PublicKey): Promise<BoardState> {
     try {
-      const boardAccount = await this.program.account.board.fetch(boardPda);
+      // TODO: Replace with actual program account fetch when smart contract is deployed
+      const boardAccount = await this.connection.getAccountInfo(boardPda);
 
+      // TODO: Parse the account data properly when smart contract is deployed
       return {
-        gameId: boardAccount.gameId.toNumber(),
-        authority: boardAccount.authority,
-        finalized: boardAccount.finalized,
-        randomized: boardAccount.randomized,
-        gameStarted: boardAccount.gameStarted,
-        gameEnded: boardAccount.gameEnded,
-        winner: boardAccount.winner,
-        payoutAmount: boardAccount.payoutAmount.toNumber(),
-        totalPot: boardAccount.totalPot.toNumber(),
-        homeScore: boardAccount.homeScore,
-        awayScore: boardAccount.awayScore,
-        quarter: boardAccount.quarter,
-        squares: boardAccount.squares,
-        homeHeaders: boardAccount.homeHeaders,
-        awayHeaders: boardAccount.awayHeaders,
+        gameId: 1, // Mock data
+        authority: boardPda,
+        finalized: false,
+        randomized: false,
+        gameStarted: false,
+        gameEnded: false,
+        winner: null,
+        payoutAmount: 0,
+        totalPot: 0,
+        homeScore: 0,
+        awayScore: 0,
+        quarter: 1,
+        squares: [],
+        homeHeaders: [],
+        awayHeaders: [],
       };
     } catch (error) {
       console.error('Error fetching board state:', error);
@@ -218,7 +220,8 @@ Keep response under 200 words.
   async monitorBoardActivity(boardPda: PublicKey): Promise<void> {
     console.log(`Starting board monitoring for ${boardPda.toString()}`);
 
-    // Set up event listener for board changes
+    // TODO: Set up event listeners when smart contract is deployed
+    /*
     this.program.addEventListener('squarePurchased', (event) => {
       if (event.boardId.toString() === boardPda.toString()) {
         this.emit('boardActivity', {
@@ -245,6 +248,7 @@ Keep response under 200 words.
         });
       }
     });
+    */
   }
 
   async healthCheck(): Promise<boolean> {

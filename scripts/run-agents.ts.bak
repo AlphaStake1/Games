@@ -7,7 +7,7 @@ import { RandomizerAgent } from '../agents/RandomizerAgent';
 import { OracleAgent } from '../agents/OracleAgent';
 import { WinnerAgent } from '../agents/WinnerAgent';
 import { EmailAgent } from '../agents/EmailAgent';
-import { ClockworkThreadManager } from './create_thread';
+// import { ClockworkThreadManager } from './create_thread';
 import WebSocketGameServer from '../server/websocket';
 import * as fs from 'fs';
 import * as path from 'path';

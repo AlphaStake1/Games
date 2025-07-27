@@ -49,28 +49,47 @@ VRF Seed → Fisher-Yates Shuffle (100 NFT positions) + Digit Assignment (0-9 x 
 
 ## Green Points Accumulation System
 
-### Base Point Events
+### Point Calculation Formula
 
-- **Quarter Score Match**: Base points awarded for correct quarter-end combinations
-- **Halftime Bonus**: +25% multiplier for 2nd quarter matches
-- **Overtime Bonus**: +20% per OT period (treated as extra quarters)
-- **Position Multipliers**: 1.0×-1.3× based on square position (corner vs edge vs center)
+Points = **Quarter Base** × **Hit Pattern %** × **Playoff Multiplier**
+
+### Quarter Base Points
+
+- **Q1**: 200 points
+- **Q2**: 250 points (Halftime bonus)
+- **Q3**: 200 points
+- **Q4**: 250 points (End-of-game bonus)
+- **OT**: 200 points (Each OT period independent)
+
+### Hit Pattern Distribution
+
+- **Forward** `(Home, Away)`: 45% → Most common
+- **Backward** `(Away, Home)`: 30% → Second most
+- **Forward +5** `((H+5)%10, (A+5)%10)`: 15% → Third
+- **Backward +5** `((A+5)%10, (H+5)%10)`: 10% → Rarest
 
 ### Playoff Multipliers
 
-| Stage                    | Multiplier | Example Impact   |
-| ------------------------ | ---------- | ---------------- |
-| Weeks 1-18               | ×1.0       | Base points      |
-| Wild Card                | ×2.0       | Double impact    |
-| Divisional               | ×3.0       | Triple impact    |
-| Conference Championships | ×4.0       | Quadruple impact |
-| **Super Bowl**           | **×5.0**   | Maximum impact   |
+| Stage                    | Multiplier | Example Impact |
+| ------------------------ | ---------- | -------------- |
+| Weeks 1-18               | ×1.0       | Base points    |
+| Wild Card                | ×1.5       | 50% boost      |
+| Divisional               | ×2.0       | 100% boost     |
+| Conference Championships | ×3.5       | 250% boost     |
+| **Super Bowl**           | **×5.0**   | Maximum impact |
 
-### Point Range Design
+### Scoring Examples
 
-- **Target Range**: 5,000-20,000 Green Points per competitive player
-- **Purpose**: High values allow clean decimal tie-breaking while feeling substantial
-- **Accumulation**: Points build throughout season, culminating in playoff surge
+- Q1 Forward (regular): 200 × 0.45 = **90.00 pts**
+- Q2 Backward (regular): 250 × 0.30 = **75.00 pts**
+- Q4 +5f (Super Bowl): 250 × 0.15 × 5.0 = **187.50 pts**
+- OT +5b (Conf Champ): 200 × 0.10 × 3.5 = **70.00 pts**
+
+### Point Precision
+
+- **Decimal Precision**: 2 decimals to minimize ties
+- **Target Range**: 2,000-8,000 Green Points per competitive player
+- **Fairness**: Equal base calculation ensures no positional bias
 
 ## Payout Structure
 
@@ -198,6 +217,20 @@ function mintPass(bytes32 conferenceId) external payable {
 - **Real-time Estimates**: Modal shows current network fee
 - **Auto-refresh**: Gas estimates update every 30 seconds
 - **User Education**: Tooltip explaining network fees
+- **Treasury Buffer**: Protocol maintains ≥10× average SOL fee buffer; topped up weekly from rake before distributions
+
+### Conference Fill Rate Edge Cases
+
+- **Partial Fill Rule**: If a conference is ≤15 seats short at Week 1 kickoff, pool size and payouts are prorated by filled-seat percentage; otherwise passes auto-refund
+- **Example**: 85/100 seats filled = 85% of standard payouts (1st place gets 85% of projected max)
+- **Minimum Threshold**: Conferences need ≥85 players to proceed; below this triggers auto-refund
+
+### Green Points Tie-Breaking
+
+- **Primary**: Total Green Points accumulated
+- **Secondary**: Most squares won throughout season
+- **Tertiary**: Earliest mint block (first to join conference)
+- **Final**: VRF-seeded deterministic random using season start seed
 
 ## Analytics & Tracking
 

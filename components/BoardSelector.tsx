@@ -24,7 +24,14 @@ import {
   Unlock,
   Star,
   AlertTriangle,
-} from 'lucide-react';
+  Wifi,
+  WifiOff,
+  RefreshCw,
+} from '@/lib/icons';
+import { useTeamGames } from '@/hooks/useGameData';
+import { useGameBoards } from '@/hooks/useBoardData';
+import { BoardAvailabilityResponse, BoardState } from '@/lib/api/types';
+import { BoardUtils } from '@/lib/api/boardService';
 
 interface BoardSelectorProps {
   userTeam: NFLTeam;
@@ -35,52 +42,8 @@ interface BoardSelectorProps {
   className?: string;
 }
 
-// Mock data for demonstration - in real app this would come from API
-const generateMockGames = (userTeam: NFLTeam): GameSchedule[] => {
-  const currentWeek = 1;
-  const games: GameSchedule[] = [];
-
-  // Generate 4 upcoming games for the user's team
-  for (let i = 0; i < 4; i++) {
-    games.push({
-      gameId: `game-${userTeam.id}-${currentWeek + i}`,
-      week: currentWeek + i,
-      homeTeam:
-        i % 2 === 0
-          ? userTeam
-          : {
-              id: 'opp',
-              name: 'Opponent',
-              city: 'Away',
-              abbreviation: 'OPP',
-              conference: userTeam.conference === 'AFC' ? 'NFC' : 'AFC',
-              division: 'North',
-              primaryColor: '#666666',
-              secondaryColor: '#999999',
-              logoUrl: '/assets/teams/default.png',
-            },
-      awayTeam:
-        i % 2 === 1
-          ? userTeam
-          : {
-              id: 'opp',
-              name: 'Opponent',
-              city: 'Away',
-              abbreviation: 'OPP',
-              conference: userTeam.conference === 'AFC' ? 'NFC' : 'AFC',
-              division: 'North',
-              primaryColor: '#666666',
-              secondaryColor: '#999999',
-              logoUrl: '/assets/teams/default.png',
-            },
-      gameDate: new Date(Date.now() + (i + 1) * 7 * 24 * 60 * 60 * 1000),
-      isPlayoffs: false,
-      gameType: 'regular',
-    });
-  }
-
-  return games;
-};
+// Real NFL schedule data fetched via API
+// This replaces the previous mock data generation
 
 const BoardSelector: React.FC<BoardSelectorProps> = ({
   userTeam,
@@ -91,43 +54,56 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
   className = '',
 }) => {
   const [selectedGame, setSelectedGame] = useState<GameSchedule | null>(null);
-  const [availableGames, setAvailableGames] = useState<GameSchedule[]>([]);
 
+  // Use real NFL schedule data
+  const {
+    games: availableGames,
+    loading: gamesLoading,
+    error: gamesError,
+    refreshGames,
+    isConnected,
+  } = useTeamGames(userTeam, { upcomingOnly: true });
+
+  // Get board data for the selected game
+  const {
+    boards: gameBoards,
+    loading: boardsLoading,
+    error: boardsError,
+    refetch: refreshBoards,
+  } = useGameBoards(selectedGame?.gameId);
+
+  // Set default selected game when games load
   useEffect(() => {
-    const games = generateMockGames(userTeam);
-    setAvailableGames(games);
-    if (games.length > 0) {
-      setSelectedGame(games[0]); // Default to current week
+    if (availableGames.length > 0 && !selectedGame) {
+      setSelectedGame(availableGames[0]); // Default to first upcoming game
     }
-  }, [userTeam]);
+  }, [availableGames, selectedGame]);
 
   const availableTiers = getAvailableTiers(isVIP);
 
-  // Mock board availability data
-  const getBoardAvailability = (tier: BoardTier, game: GameSchedule) => {
-    const soldSquares = Math.floor(Math.random() * 85) + 5; // Random between 5-90
-    return {
-      totalSquaresSold: soldSquares,
-      availableSquares: 100 - soldSquares,
-      isActive: soldSquares < 100,
-    };
+  // Helper function to get board availability for a specific tier
+  const getBoardAvailabilityForTier = (
+    tierId: string,
+  ): BoardAvailabilityResponse | null => {
+    return gameBoards?.find((board) => board.tierId === tierId) || null;
   };
 
+  // Helper function to create board configuration from API data
   const createBoardConfiguration = (
     tier: BoardTier,
     game: GameSchedule,
+    availability: BoardAvailabilityResponse,
   ): BoardConfiguration => {
-    const availability = getBoardAvailability(tier, game);
     return {
-      boardId: `${game.gameId}-${tier.id}`,
-      gameId: game.gameId,
+      boardId: availability.boardId,
+      gameId: availability.gameId,
       tier,
       game,
-      maxSquaresPerUser: isVIP ? 100 : 5,
+      maxSquaresPerUser: availability.maxSquaresPerUser,
       availableSquares: availability.availableSquares,
       totalSquaresSold: availability.totalSquaresSold,
-      isActive: availability.isActive,
-      createdAt: new Date(),
+      isActive: BoardUtils.canPurchaseSquares(availability),
+      createdAt: new Date(availability.createdAt),
       gameStartTime: game.gameDate,
     };
   };
@@ -139,11 +115,36 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
     tier: BoardTier;
     game: GameSchedule;
   }) => {
-    const board = createBoardConfiguration(tier, game);
-    const fillPercentage = (board.totalSquaresSold / 100) * 100;
+    const availability = getBoardAvailabilityForTier(tier.id);
+
+    // Don't render if no availability data yet (still loading or doesn't exist)
+    if (!availability) {
+      return (
+        <Card className="relative opacity-60">
+          <CardHeader className="pb-3">
+            <div className="flex justify-between items-start">
+              <div>
+                <CardTitle className="text-lg">{tier.displayName}</CardTitle>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  {boardsLoading
+                    ? 'Loading board data...'
+                    : 'Board not available'}
+                </p>
+              </div>
+            </div>
+          </CardHeader>
+        </Card>
+      );
+    }
+
+    const board = createBoardConfiguration(tier, game, availability);
+    const fillPercentage = availability.fillPercentage;
     const isSelected = selectedBoards.includes(board.boardId);
     const isVIPTier = tier.isVIPOnly;
     const canSelect = !isVIPTier || isVIP;
+    const isNearCancellation =
+      BoardUtils.isNearCancellationThreshold(availability);
+    const statusMessage = BoardUtils.getBoardStatusMessage(availability);
 
     const calculateMaxWin = (tier: BoardTier) => {
       const { payouts } = tier;
@@ -169,17 +170,35 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
       <Card
         className={`relative transition-all duration-200 hover:shadow-md ${
           isSelected ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-950' : ''
-        } ${!canSelect ? 'opacity-60' : ''}`}
+        } ${!canSelect ? 'opacity-60' : ''} ${
+          isNearCancellation
+            ? 'ring-2 ring-orange-400 bg-orange-50 dark:bg-orange-950'
+            : ''
+        } ${
+          availability.boardState === BoardState.CANCELLED
+            ? 'ring-2 ring-red-400 bg-red-50 dark:bg-red-950'
+            : ''
+        }`}
       >
-        {/* VIP Badge */}
-        {isVIPTier && (
-          <div className="absolute -top-2 -right-2 z-10">
+        {/* Status Badges */}
+        <div className="absolute -top-2 -right-2 z-10 flex gap-1">
+          {isVIPTier && (
             <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900">
               <Crown className="w-3 h-3 mr-1" />
               VIP
             </Badge>
-          </div>
-        )}
+          )}
+          {isNearCancellation &&
+            availability.boardState !== BoardState.CANCELLED && (
+              <Badge variant="destructive" className="animate-pulse">
+                <AlertTriangle className="w-3 h-3 mr-1" />
+                Risk
+              </Badge>
+            )}
+          {availability.boardState === BoardState.CANCELLED && (
+            <Badge variant="destructive">Cancelled</Badge>
+          )}
+        </div>
 
         <CardHeader className="pb-3">
           <div className="flex justify-between items-start">
@@ -209,8 +228,34 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
               <span className="font-medium">{board.totalSquaresSold}/100</span>
             </div>
             <Progress value={fillPercentage} className="h-2" />
-            <p className="text-xs text-gray-500 mt-1">
-              {board.availableSquares} squares remaining
+            <div className="flex justify-between items-center mt-1">
+              <p className="text-xs text-gray-500">
+                {board.availableSquares} squares remaining
+              </p>
+              <p className="text-xs font-medium">
+                {fillPercentage.toFixed(1)}% filled
+              </p>
+            </div>
+
+            {/* Cancellation threshold warning */}
+            {isNearCancellation &&
+              availability.boardState !== BoardState.CANCELLED && (
+                <div className="mt-2 p-2 bg-orange-100 dark:bg-orange-900 rounded text-xs">
+                  <div className="flex items-center gap-1 text-orange-700 dark:text-orange-300">
+                    <AlertTriangle className="w-3 h-3" />
+                    <span className="font-medium">Cancellation Risk</span>
+                  </div>
+                  <p className="text-orange-600 dark:text-orange-400 mt-1">
+                    Board needs {availability.cancellationThreshold}% filled to
+                    avoid cancellation. Currently at {fillPercentage.toFixed(1)}
+                    %.
+                  </p>
+                </div>
+              )}
+
+            {/* Board status message */}
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              {statusMessage}
             </p>
           </div>
 
@@ -284,7 +329,17 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
                 <Star className="w-4 h-4 mr-2" />
                 Board Selected
               </Button>
-            ) : !board.isActive ? (
+            ) : availability.boardState === BoardState.CANCELLED ? (
+              <Button variant="outline" className="w-full" disabled>
+                <AlertTriangle className="w-4 h-4 mr-2" />
+                Board Cancelled
+              </Button>
+            ) : availability.boardState === BoardState.LOCKED ? (
+              <Button variant="outline" className="w-full" disabled>
+                <Lock className="w-4 h-4 mr-2" />
+                Board Locked
+              </Button>
+            ) : !board.isActive || board.availableSquares === 0 ? (
               <Button variant="outline" className="w-full" disabled>
                 <AlertTriangle className="w-4 h-4 mr-2" />
                 Board Full
@@ -292,10 +347,14 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
             ) : (
               <Button
                 onClick={() => onBoardSelect(board)}
-                className="w-full bg-blue-600 hover:bg-blue-700"
+                className={`w-full ${
+                  isNearCancellation
+                    ? 'bg-orange-600 hover:bg-orange-700'
+                    : 'bg-blue-600 hover:bg-blue-700'
+                }`}
               >
                 <Unlock className="w-4 h-4 mr-2" />
-                Select Board
+                {isNearCancellation ? 'Select Now!' : 'Select Board'}
               </Button>
             )}
           </div>
@@ -323,13 +382,72 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
           </div>
         </div>
 
-        {isVIP && (
-          <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900">
-            <Crown className="w-4 h-4 mr-1" />
-            VIP Member
+        <div className="flex items-center justify-center gap-4">
+          {isVIP && (
+            <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900">
+              <Crown className="w-4 h-4 mr-1" />
+              VIP Member
+            </Badge>
+          )}
+
+          {/* Real-time connection status */}
+          <Badge
+            variant={isConnected ? 'default' : 'secondary'}
+            className="text-xs"
+          >
+            {isConnected ? (
+              <>
+                <Wifi className="w-3 h-3 mr-1" />
+                Live Updates
+              </>
+            ) : (
+              <>
+                <WifiOff className="w-3 h-3 mr-1" />
+                Offline
+              </>
+            )}
           </Badge>
-        )}
+
+          {/* Refresh button */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              refreshGames();
+              if (selectedGame) refreshBoards();
+            }}
+            disabled={gamesLoading || boardsLoading}
+            className="text-xs"
+          >
+            <RefreshCw
+              className={`w-3 h-3 mr-1 ${gamesLoading || boardsLoading ? 'animate-spin' : ''}`}
+            />
+            Refresh
+          </Button>
+        </div>
       </div>
+
+      {/* Error Messages */}
+      {(gamesError || boardsError) && (
+        <Card className="border-red-200 bg-red-50 dark:bg-red-950">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 text-red-700 dark:text-red-300">
+              <AlertTriangle className="w-4 h-4" />
+              <span className="font-medium">Error Loading Data</span>
+            </div>
+            {gamesError && (
+              <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                Games: {gamesError}
+              </p>
+            )}
+            {boardsError && (
+              <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                Boards: {boardsError}
+              </p>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Game Week Selection */}
       <Card>
@@ -337,29 +455,53 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
           <CardTitle className="flex items-center gap-2">
             <Clock className="w-5 h-5" />
             Select Game Week
+            {gamesLoading && (
+              <RefreshCw className="w-4 h-4 animate-spin text-blue-500" />
+            )}
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {availableGames.map((game) => (
-              <Button
-                key={game.gameId}
-                variant={
-                  selectedGame?.gameId === game.gameId ? 'default' : 'outline'
-                }
-                onClick={() => setSelectedGame(game)}
-                className="h-auto p-4 flex flex-col items-center"
-              >
-                <span className="font-bold">Week {game.week}</span>
-                <span className="text-xs">
-                  {game.homeTeam.abbreviation} vs {game.awayTeam.abbreviation}
-                </span>
-                <span className="text-xs text-gray-500">
-                  {game.gameDate.toLocaleDateString()}
-                </span>
-              </Button>
-            ))}
-          </div>
+          {gamesLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-20 bg-gray-200 dark:bg-gray-700 animate-pulse rounded"
+                />
+              ))}
+            </div>
+          ) : availableGames.length === 0 ? (
+            <div className="text-center py-8">
+              <Clock className="w-8 h-8 mx-auto text-gray-400 mb-2" />
+              <p className="text-gray-600 dark:text-gray-400">
+                No upcoming games found for {userTeam.city} {userTeam.name}
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Check back later or try refreshing
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {availableGames.map((game) => (
+                <Button
+                  key={game.gameId}
+                  variant={
+                    selectedGame?.gameId === game.gameId ? 'default' : 'outline'
+                  }
+                  onClick={() => setSelectedGame(game)}
+                  className="h-auto p-4 flex flex-col items-center"
+                >
+                  <span className="font-bold">Week {game.week}</span>
+                  <span className="text-xs">
+                    {game.homeTeam.abbreviation} vs {game.awayTeam.abbreviation}
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    {game.gameDate.toLocaleDateString()}
+                  </span>
+                </Button>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -368,9 +510,15 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
         <div>
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-xl font-bold">Available Board Tiers</h3>
-            <Badge variant="outline">
-              {availableTiers.length} of {BOARD_TIERS.length} tiers available
-            </Badge>
+            <div className="flex items-center gap-2">
+              {boardsLoading && (
+                <RefreshCw className="w-4 h-4 animate-spin text-blue-500" />
+              )}
+              <Badge variant="outline">
+                {gameBoards ? gameBoards.length : availableTiers.length} of{' '}
+                {BOARD_TIERS.length} tiers available
+              </Badge>
+            </div>
           </div>
 
           {/* VIP Upgrade Prompt for Non-VIP Users */}
@@ -402,11 +550,36 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
           )}
 
           {/* Available Tiers Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {BOARD_TIERS.map((tier) => (
-              <BoardTierCard key={tier.id} tier={tier} game={selectedGame} />
-            ))}
-          </div>
+          {boardsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {BOARD_TIERS.map((tier) => (
+                <div
+                  key={tier.id}
+                  className="h-96 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-lg"
+                />
+              ))}
+            </div>
+          ) : gameBoards && gameBoards.length === 0 ? (
+            <div className="text-center py-12">
+              <TrendingUp className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+              <h4 className="text-lg font-medium text-gray-600 dark:text-gray-400 mb-2">
+                No Boards Available Yet
+              </h4>
+              <p className="text-sm text-gray-500 mb-4">
+                Boards for this game haven't been created yet. Check back later!
+              </p>
+              <Button onClick={refreshBoards} variant="outline">
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Check Again
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {BOARD_TIERS.map((tier) => (
+                <BoardTierCard key={tier.id} tier={tier} game={selectedGame} />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

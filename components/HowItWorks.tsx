@@ -1,4 +1,4 @@
-import { Target, Square, Trophy } from 'lucide-react';
+import { Target, Square, Trophy } from '@/lib/icons';
 
 const HowItWorks = () => {
   const steps: {

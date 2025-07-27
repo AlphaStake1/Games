@@ -321,19 +321,9 @@ function CBLDashboard() {
     favoriteTeams: ['Eagles', 'Cowboys', 'Chiefs'],
     bestPerformingTier: '$20 Entry',
     currentStreak: { type: 'win', count: 2 },
-    bluePoints: {
-      weekly: 142,
-      seasonal: 486,
-      cbl: 89,
-      total: 717,
-    },
+    bluePoints: 717,
     greenPoints: seasonalTotalGreenPoints, // Always cumulative seasonal total
-    orangePoints: {
-      weekly: 67,
-      seasonal: 189,
-      cbl: 45,
-      total: 301,
-    },
+    orangePoints: 301,
   };
 
   const playerStatsSeasonal: PlayerStats = {
@@ -347,19 +337,9 @@ function CBLDashboard() {
     favoriteTeams: ['Eagles', 'Cowboys', 'Chiefs'],
     bestPerformingTier: 'Full Season Player',
     currentStreak: { type: 'win', count: 3 },
-    bluePoints: {
-      weekly: 142,
-      seasonal: 486,
-      cbl: 89,
-      total: 717,
-    },
+    bluePoints: 717,
     greenPoints: seasonalTotalGreenPoints, // Always cumulative seasonal total
-    orangePoints: {
-      weekly: 67,
-      seasonal: 189,
-      cbl: 45,
-      total: 301,
-    },
+    orangePoints: 301,
   };
 
   const playerStats =
@@ -763,29 +743,10 @@ function CBLDashboard() {
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold text-blue-600">
-                        {playerStats.bluePoints.total.toLocaleString()}
+                        {playerStats.bluePoints.toLocaleString()}
                       </div>
-                      <div className="space-y-1 mt-2">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">Weekly:</span>
-                          <span className="text-blue-600">
-                            {playerStats.bluePoints.weekly}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">
-                            Seasonal:
-                          </span>
-                          <span className="text-blue-600">
-                            {playerStats.bluePoints.seasonal}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">CBL:</span>
-                          <span className="text-blue-600">
-                            {playerStats.bluePoints.cbl}
-                          </span>
-                        </div>
+                      <div className="text-xs text-muted-foreground mt-2">
+                        Total Blue Points Earned
                       </div>
                     </CardContent>
                   </Card>
@@ -837,29 +798,10 @@ function CBLDashboard() {
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold text-orange-600">
-                        {playerStats.orangePoints.total.toLocaleString()}
+                        {playerStats.orangePoints.toLocaleString()}
                       </div>
-                      <div className="space-y-1 mt-2">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">Weekly:</span>
-                          <span className="text-orange-600">
-                            {playerStats.orangePoints.weekly}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">
-                            Seasonal:
-                          </span>
-                          <span className="text-orange-600">
-                            {playerStats.orangePoints.seasonal}
-                          </span>
-                        </div>
-                        <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">CBL:</span>
-                          <span className="text-orange-600">
-                            {playerStats.orangePoints.cbl}
-                          </span>
-                        </div>
+                      <div className="text-xs text-muted-foreground mt-2">
+                        Total Orange Points Earned
                       </div>
                     </CardContent>
                   </Card>

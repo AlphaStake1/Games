@@ -6,6 +6,12 @@ const nextConfig = {
   },
   images: { unoptimized: true },
   webpack: (config, { isServer }) => {
+    // Exclude agents directory from compilation
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      exclude: [/node_modules/, /agents/, /scripts/, /programs/],
+    });
+
     // Prevent bundling of server-side modules on the client
     if (!isServer) {
       config.resolve.fallback = {

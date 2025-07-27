@@ -1,4 +1,4 @@
-import { Instagram, MessageCircle, Heart } from 'lucide-react';
+import { Instagram, MessageCircle, Heart } from '@/lib/icons';
 
 const Footer = () => {
   const quickLinks = [

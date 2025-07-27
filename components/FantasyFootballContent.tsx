@@ -904,6 +904,194 @@ const FantasyFootballContent = () => {
               </div>
             </div>
           )}
+
+          {/* Popular Fantasy Football Platforms */}
+          <section className="py-16 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                  Popular Fantasy Football Platforms
+                </h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Quick access to the most popular fantasy football platforms
+                </p>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {[
+                  {
+                    name: 'ESPN Fantasy',
+                    url: 'https://fantasy.espn.com',
+                    icon: '🏈',
+                    color: 'from-red-600 to-red-800',
+                  },
+                  {
+                    name: 'Yahoo Fantasy',
+                    url: 'https://football.fantasysports.yahoo.com',
+                    icon: '⚡',
+                    color: 'from-purple-600 to-purple-800',
+                  },
+                  {
+                    name: 'NFL Fantasy',
+                    url: 'https://fantasy.nfl.com',
+                    icon: '🏆',
+                    color: 'from-blue-600 to-blue-800',
+                  },
+                  {
+                    name: 'Sleeper',
+                    url: 'https://sleeper.app',
+                    icon: '💤',
+                    color: 'from-green-600 to-green-800',
+                  },
+                  {
+                    name: 'CBS Sports',
+                    url: 'https://www.cbssports.com/fantasy/football',
+                    icon: '📊',
+                    color: 'from-orange-600 to-orange-800',
+                  },
+                  {
+                    name: 'FanDuel',
+                    url: 'https://www.fanduel.com',
+                    icon: '🎲',
+                    color: 'from-indigo-600 to-indigo-800',
+                  },
+                ].map((platform, index) => (
+                  <div
+                    key={index}
+                    className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer group rounded-lg"
+                  >
+                    <div className="p-4 text-center">
+                      <div
+                        className={`bg-gradient-to-r ${platform.color} w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-200`}
+                      >
+                        <span className="text-2xl">{platform.icon}</span>
+                      </div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white text-sm mb-2">
+                        {platform.name}
+                      </h4>
+                      <button
+                        className="w-full text-xs border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 px-3 py-2 rounded transition-colors duration-200"
+                        onClick={() => {
+                          if (typeof window !== 'undefined') {
+                            window.open(platform.url, '_blank');
+                          }
+                        }}
+                      >
+                        Visit Site
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Fantasy Football Season Overview */}
+          <section className="py-16 bg-white dark:bg-black transition-colors duration-300">
+            <div className="max-w-6xl mx-auto">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 shadow-sm">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 text-center">
+                  Fantasy Football Season Overview
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                  <div className="space-y-2">
+                    <div className="text-2xl font-bold text-blue-600">17</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      Regular Season Weeks
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="text-2xl font-bold text-green-600">32</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      NFL Teams
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="text-2xl font-bold text-purple-600">18</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      Total Season Weeks
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="text-2xl font-bold text-orange-600">
+                      272
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      Regular Season Games
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Fantasy to Squares Bridge Section */}
+          <section className="py-16 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 transition-colors duration-300">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                  🎯 Use Fantasy Insights for Football Squares
+                </h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Leverage your fantasy football knowledge to enhance your
+                  squares strategy
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-800">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    Strategic Advantages
+                  </h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-600 dark:text-gray-400">
+                        Analyze team scoring trends and patterns
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-600 dark:text-gray-400">
+                        Understand weather and injury impacts
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-600 dark:text-gray-400">
+                        Leverage advanced stats for better picks
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-600 dark:text-gray-400">
+                        Track player performance correlations
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-800">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    Ready to Play Squares?
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">
+                    Now that you understand fantasy football, apply that
+                    knowledge to our Football Squares games for even more
+                    excitement!
+                  </p>
+                  <button
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        window.location.href = '/';
+                      }
+                    }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                    Play Football Squares
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </main>

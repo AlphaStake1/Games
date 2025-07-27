@@ -35,7 +35,7 @@ interface SystemLog {
 
 export class CeramicLogger {
   private ceramic: CeramicClient;
-  private did: DID;
+  private did!: DID;
   private gameEventsStreamId: string | null = null;
   private userActionsStreamId: string | null = null;
   private systemLogsStreamId: string | null = null;
@@ -402,9 +402,9 @@ export class CeramicLogger {
       const analytics = {
         totalEvents: events.length,
         totalActions: actions.length,
-        eventTypes: {},
-        actionTypes: {},
-        timeline: [],
+        eventTypes: {} as { [key: string]: number },
+        actionTypes: {} as { [key: string]: number },
+        timeline: [] as (GameEvent | UserAction)[],
         gameStats: gameId ? this.calculateGameStats(events, actions) : null,
       };
 

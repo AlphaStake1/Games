@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import {
   gameBasics,
   scoringExamples,
@@ -43,14 +44,18 @@ const HowToPlayContent = () => {
         Join fellow fanatics enjoying the excitement of football squares!
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button className="bg-white text-blue-600 hover:bg-gray-100 dark:bg-gray-100 dark:text-blue-600 dark:hover:bg-gray-200 px-8 py-3 text-lg font-medium">
-          Season-Long Competition
-          <Trophy className="w-5 h-5 ml-2" />
-        </Button>
-        <Button className="bg-orange-500 text-white hover:bg-orange-600 px-8 py-3 text-lg font-medium">
-          Weekly Cash Games
-          <DollarSign className="w-5 h-5 ml-2" />
-        </Button>
+        <Link href="/season-pass">
+          <Button className="bg-white text-blue-600 hover:bg-gray-100 dark:bg-gray-100 dark:text-blue-600 dark:hover:bg-gray-200 px-8 py-3 text-lg font-medium">
+            Season-Long Competition
+            <Trophy className="w-5 h-5 ml-2" />
+          </Button>
+        </Link>
+        <Link href="/boards">
+          <Button className="bg-orange-500 text-white hover:bg-orange-600 px-8 py-3 text-lg font-medium">
+            Weekly Cash Games
+            <DollarSign className="w-5 h-5 ml-2" />
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Crown, Users, TrendingUp, ArrowRight } from 'lucide-react';
+import { Crown, Users, TrendingUp, ArrowRight } from '@/lib/icons';
 
 interface CBLCallToActionCardProps {
   className?: string;

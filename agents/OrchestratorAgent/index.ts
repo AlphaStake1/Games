@@ -326,23 +326,23 @@ Respond with a JSON object containing:
         this.program.programId,
       );
 
-      const boardAccount = await this.program.account.board.fetch(boardPda);
+      // TODO: Replace with actual program account fetch when smart contract is deployed
+      const boardAccount = await this.connection.getAccountInfo(boardPda);
 
-      const gameState = this.determineGameState(boardAccount);
+      // TODO: Implement proper game state determination when smart contract is deployed
+      const gameState = 'created'; // Mock state
 
       return {
         gameId,
         boardPda,
         gameState,
         currentScore: {
-          home: boardAccount.homeScore,
-          away: boardAccount.awayScore,
-          quarter: boardAccount.quarter,
+          home: 0, // Mock score
+          away: 0, // Mock score
+          quarter: 1, // Mock quarter
         },
-        totalPot: boardAccount.totalPot.toNumber(),
-        playersCount: boardAccount.squares.filter(
-          (s) => !s.equals(PublicKey.default),
-        ).length,
+        totalPot: 0, // Mock total pot
+        playersCount: 0, // Mock players count
       };
     } catch (error) {
       console.error('Error fetching game context:', error);
@@ -385,7 +385,9 @@ Respond with a JSON object containing:
 
       this.isProcessing = true;
       try {
-        for (const [gameId, context] of this.activeGames) {
+        for (const [gameId, context] of Array.from(
+          this.activeGames.entries(),
+        )) {
           const taskPlan = await this.planTasks(gameId);
           if (taskPlan.tasks.length > 0) {
             await this.executeTaskPlan(taskPlan);

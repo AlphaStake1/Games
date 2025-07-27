@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu, X, Crown } from 'lucide-react';
+import { Menu, X, Crown } from '@/lib/icons';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { ThemeToggle } from './ui/theme-toggle';
 import { useAuth } from '@/lib/auth';
@@ -13,7 +14,8 @@ import { Badge } from '@/components/ui/badge';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user } = useAuth('PLAYER_ROLE');
+  const { connected } = useWallet();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -21,11 +23,10 @@ const Header = () => {
 
   const menuItems = [
     { label: 'How To Play', href: '/how-to-play' },
-    { label: 'Rules', href: '/rules' },
     { label: 'Fantasy', href: '/fantasy' },
-    { label: 'My NFTs', href: '/my-nfts' },
     { label: 'What are NFTs?', href: '/what-are-nfts' },
     { label: 'FAQ', href: '/faq' },
+    ...(connected ? [{ label: 'My NFTs', href: '/my-nfts' }] : []),
   ];
 
   // Show CBL CTA on home, play, and rules pages for non-CBL users
@@ -120,16 +121,21 @@ const Header = () => {
           className="md:hidden bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800 transition-colors duration-300"
         >
           <div className="px-2 pt-2 pb-3 space-y-1">
-            {menuItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 block px-3 py-2 text-base font-medium transition-colors duration-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {menuItems.map((item) => {
+              if (item.label === 'My NFTs' && !connected) {
+                return null;
+              }
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 block px-3 py-2 text-base font-medium transition-colors duration-200"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
 
             {/* Mobile Theme Toggle and Connect Wallet */}
             <div className="flex items-center justify-between px-3 py-2">

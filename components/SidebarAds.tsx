@@ -7,7 +7,7 @@ const sanitizeHTML = (html: string) => {
   return tempDiv.textContent || tempDiv.innerText || '';
 };
 
-import { Clock, TrendingUp } from 'lucide-react';
+import { Clock, TrendingUp } from '@/lib/icons';
 import { useState, useEffect } from 'react';
 import RssParser from 'rss-parser';
 

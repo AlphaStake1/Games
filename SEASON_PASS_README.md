@@ -38,15 +38,19 @@ app/page.tsx                             # Updated main page routing
 - **Half-Season Pass**: Weeks 10-18 + playoffs, up to 5 passes per wallet
 - **Scaling Prices**: Half-season passes scale: 1x, 1.1x, 1.2x, 1.3x, 1.4x
 
-### 4. **Scoring System**
+### 4. **Green Points Scoring System**
 
-- **Hit Patterns**: Forward (10pts), Backward (7pts), Forward+5 (5pts), Backward+5 (3pts)
-- **Playoff Multipliers**: Wild Card (1.5x), Divisional (2x), Conference (2.5x), Super Bowl (3x)
-- **Overtime Support**: Full points for overtime scoring events
-  - **Explanation**: Overtime does not dilute or change how a hit is scored.
-    - Same base points: Forward (10 pts), Backward (7 pts), Forward+5 (5 pts), Backward+5 (3 pts).
-    - Same playoff multiplier (if applicable): If in a Divisional-round game, every hit—regulation or OT—still gets the ×2 multiplier.
-    - Example: A Forward hit in a Divisional overtime = 10 pts × 2 = 20 pts, exactly what you’d have earned in the 1st quarter. There’s no reduction, decay, or “half-credit” just because the clock passed 60:00. Overtime keeps the scoreboard live and lets trailing players pile up points as long as the game continues.
+**Formula**: Points = **Quarter Base** × **Hit Pattern %** × **Playoff Multiplier**
+
+- **Quarter Base Points**: Q1/Q3 (200), Q2/Q4 (250), OT (200)
+- **Hit Pattern Distribution**: Forward (45%), Backward (30%), +5f (15%), +5b (10%)
+- **Playoff Multipliers**: Wild Card (1.5x), Divisional (2.0x), Conference (3.5x), Super Bowl (5.0x)
+- **Precision**: Calculated to 2 decimals to minimize ties
+- **Overtime Support**: Each OT period independent, full point calculation
+  - **Explanation**: Each overtime period awards 200 base points × hit pattern percentage × playoff multiplier.
+    - Example: Forward hit in Divisional OT = 200 × 0.45 × 2.0 = 180.00 pts
+    - Example: Super Bowl Q4 Forward hit = 250 × 0.45 × 5.0 = 562.50 pts
+    - No reduction or decay - overtime periods maintain full scoring value
 
 ### 5. **Prize Distribution**
 
@@ -154,16 +158,22 @@ const getGameTypeConfig = (gameType: string) => {
 const CONFERENCE_PRICES: [u64; 5] = [100, 200, 300, 400, 500];
 ```
 
-### Hit Pattern Points
+### Quarter Base Points
 
 ```rust
-const HIT_POINTS: [u8; 4] = [10, 7, 5, 3]; // Forward, Backward, Forward+5, Backward+5
+const QUARTER_BASE: [u16; 5] = [200, 250, 200, 250, 200]; // Q1, Q2, Q3, Q4, OT
+```
+
+### Hit Pattern Percentages
+
+```rust
+const HIT_PATTERN_SPLIT: [f32; 4] = [0.45, 0.30, 0.15, 0.10]; // Forward, Backward, +5f, +5b
 ```
 
 ### Playoff Multipliers
 
 ```rust
-const PLAYOFF_MULTIPLIERS: [f32; 4] = [1.5, 2.0, 2.5, 3.0]; // Wild Card through Super Bowl
+const PLAYOFF_MULTIPLIERS: [f32; 4] = [1.5, 2.0, 3.5, 5.0]; // Wild Card through Super Bowl
 ```
 
 ### Half-Season Scaling

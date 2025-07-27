@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '@/components/Footer';
 import TermsOfServiceContent from '@/components/TermsOfServiceContent';
 
 const TermsOfServicePage = () => {
@@ -8,7 +7,6 @@ const TermsOfServicePage = () => {
       <main className="flex-grow">
         <TermsOfServiceContent />
       </main>
-      <Footer />
     </div>
   );
 };

@@ -175,7 +175,7 @@ const ConfirmPurchaseModal: React.FC<ConfirmPurchaseModalProps> = ({
               <Checkbox
                 id="terms"
                 checked={acceptTerms}
-                onCheckedChange={setAcceptTerms}
+                onCheckedChange={(checked) => setAcceptTerms(checked === true)}
                 disabled={!walletConnected}
               />
               <label

@@ -46,7 +46,7 @@ export class EmailAgent extends EventEmitter {
 
     this.fromEmail = process.env.FROM_EMAIL || 'no-reply@footballsquares.app';
 
-    this.transporter = nodemailer.createTransporter({
+    this.transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT),
       secure: false, // Proton Bridge uses STARTTLS

@@ -48,7 +48,7 @@ class ClockworkThreadManager {
 
     // Load program
     const idl = JSON.parse(fs.readFileSync(IDL_PATH, 'utf8'));
-    this.program = new Program(idl, PROGRAM_ID, this.provider);
+    this.program = new Program(idl, this.provider);
 
     console.log('ClockworkThreadManager initialized');
   }

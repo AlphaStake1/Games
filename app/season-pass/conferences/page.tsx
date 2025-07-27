@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -45,15 +47,15 @@ interface PassPricing {
 const ConferencesPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { connected, connecting, publicKey } = useWallet();
+  const { setVisible } = useWalletModal();
   const [selectedConference, setSelectedConference] =
     useState<Conference | null>(null);
   const [selectedPassType, setSelectedPassType] = useState<'full' | 'half'>(
     'full',
   );
   const [selectedPassCount, setSelectedPassCount] = useState(1);
-  const [isConnecting, setIsConnecting] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
-  const [walletConnected, setWalletConnected] = useState(false);
 
   // Mock conferences data
   const conferences: Conference[] = [
@@ -141,54 +143,12 @@ const ConferencesPage = () => {
     });
   };
 
-  // Helper to detect Phantom provider
-  function getPhantomProvider() {
-    if (
-      typeof window !== 'undefined' &&
-      window.solana &&
-      window.solana.isPhantom
-    ) {
-      return window.solana;
-    }
-    return null;
-  }
-
-  const [walletError, setWalletError] = useState<string | null>(null);
-
-  const handleConnectWallet = async () => {
-    setIsConnecting(true);
-    setWalletError(null);
-
-    try {
-      const provider = getPhantomProvider();
-      if (!provider) {
-        setWalletError(
-          'Phantom wallet not detected. Please install the Phantom extension and refresh the page.',
-        );
-        setIsConnecting(false);
-        return;
-      }
-      // Request connection to Phantom wallet
-      const response = await provider.connect({ onlyIfTrusted: false });
-      if (response && response.publicKey) {
-        setWalletConnected(true);
-      } else {
-        setWalletError('Wallet connection failed or was rejected.');
-      }
-    } catch (error: any) {
-      if (error && error.code === 4001) {
-        setWalletError('Wallet connection was rejected by the user.');
-      } else {
-        setWalletError('Failed to connect to Phantom wallet.');
-      }
-      setWalletConnected(false);
-    } finally {
-      setIsConnecting(false);
-    }
+  const handleConnectWallet = () => {
+    setVisible(true);
   };
 
   const handleMintPass = async () => {
-    if (!selectedConference || !walletConnected) return;
+    if (!selectedConference || !connected) return;
 
     setIsMinting(true);
     // Simulate minting process
@@ -332,22 +292,15 @@ const ConferencesPage = () => {
             </div>
 
             <div className="flex flex-col items-end gap-2">
-              {!walletConnected ? (
-                <>
-                  <Button
-                    onClick={handleConnectWallet}
-                    disabled={isConnecting}
-                    className="bg-purple-600 hover:bg-purple-700"
-                  >
-                    <Wallet className="w-4 h-4 mr-2" />
-                    {isConnecting ? 'Connecting...' : 'Connect Wallet'}
-                  </Button>
-                  {walletError && (
-                    <span className="text-xs text-red-400 mt-1 max-w-xs text-right">
-                      {walletError}
-                    </span>
-                  )}
-                </>
+              {!connected ? (
+                <Button
+                  onClick={handleConnectWallet}
+                  disabled={connecting}
+                  className="bg-purple-600 hover:bg-purple-700"
+                >
+                  <Wallet className="w-4 h-4 mr-2" />
+                  {connecting ? 'Connecting...' : 'Connect Wallet'}
+                </Button>
               ) : (
                 <div className="flex items-center gap-2 text-green-400">
                   <CheckCircle className="w-4 h-4" />
@@ -521,7 +474,7 @@ const ConferencesPage = () => {
                     {/* Mint Button */}
                     <Button
                       onClick={handleMintPass}
-                      disabled={!walletConnected || isMinting}
+                      disabled={!connected || isMinting}
                       className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold py-3"
                     >
                       {isMinting ? (
@@ -529,7 +482,7 @@ const ConferencesPage = () => {
                           <Zap className="w-4 h-4 mr-2 animate-spin" />
                           Minting...
                         </>
-                      ) : !walletConnected ? (
+                      ) : !connected ? (
                         <>
                           <Shield className="w-4 h-4 mr-2" />
                           Connect Wallet First
