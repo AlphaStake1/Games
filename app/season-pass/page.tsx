@@ -7,6 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import {
+  getExamplePoints,
+  getResultDescription,
+  getResultExample,
+  type Result,
+} from '@/lib/scoring';
+import {
   Crown,
   Trophy,
   Star,
@@ -38,33 +44,33 @@ const SeasonPassLandingPage = () => {
     'full',
   );
 
-  // Mock data for conferences
+  // Conference data based on tier system from comprehensive docs
   const conferences: Conference[] = [
     {
       id: 1,
-      name: 'Northern Conference',
-      price: 100,
+      name: 'Eastern Conference',
+      price: 25,
       filled: 87,
       capacity: 100,
     },
     {
       id: 2,
       name: 'Southern Conference',
-      price: 200,
+      price: 50,
       filled: 65,
       capacity: 100,
     },
     {
       id: 3,
-      name: 'Eastern Conference',
-      price: 300,
+      name: 'Northern Conference',
+      price: 100,
       filled: 43,
       capacity: 100,
     },
     {
       id: 4,
       name: 'Western Conference',
-      price: 400,
+      price: 200,
       filled: 22,
       capacity: 100,
     },
@@ -72,7 +78,7 @@ const SeasonPassLandingPage = () => {
 
   const featuredConference: Conference = {
     id: 5,
-    name: 'North-West Conference',
+    name: 'South-East Conference',
     price: 500,
     filled: 8,
     capacity: 100,
@@ -164,7 +170,7 @@ const SeasonPassLandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:bg-none dark:bg-[#030712] text-gray-900 dark:text-white">
       {/* Hero Section */}
       <section className="relative py-20 px-4">
         <div className="max-w-6xl mx-auto text-center">
@@ -180,7 +186,7 @@ const SeasonPassLandingPage = () => {
 
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto">
             Mint once, play every game. Score on every NFL game and compete for
-            a share of $10K--$50K prize pools.
+            a share of $2.5K--$50K prize pools.
           </p>
 
           <Button
@@ -380,19 +386,43 @@ const SeasonPassLandingPage = () => {
           <Card className="bg-white/80 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg">
             <CardHeader>
               <CardTitle className="text-center text-gray-900 dark:text-white">
-                Full-Season Conference Example: $500 × 100 = $50,000 pot
+                Tier 5 Conference Example: $500 × 100 = $50,000 pot (80% to
+                players)
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 {[
-                  { place: '1st', payout: '$25,000', percentage: '50%' },
-                  { place: '2nd', payout: '$10,000', percentage: '20%' },
-                  { place: '3rd', payout: '$5,000', percentage: '10%' },
-                  { place: '4th', payout: '$2,500', percentage: '5%' },
-                  { place: '5th', payout: '$2,500', percentage: '5%' },
-                  { place: '6th', payout: '$2,500', percentage: '5%' },
-                  { place: '7th', payout: '$2,500', percentage: '5%' },
+                  {
+                    place: '1st',
+                    payout: '~$14,000',
+                    percentage: '35% of Band A',
+                  },
+                  {
+                    place: '2nd',
+                    payout: '~$9,200',
+                    percentage: '23% of Band A',
+                  },
+                  {
+                    place: '3rd',
+                    payout: '~$7,200',
+                    percentage: '18% of Band A',
+                  },
+                  {
+                    place: '4th-7th',
+                    payout: '~$2,400 each',
+                    percentage: '6% of Band A each',
+                  },
+                  {
+                    place: '8th-14th',
+                    payout: '~$750 each',
+                    percentage: '1.5x return',
+                  },
+                  {
+                    place: '15th-21st',
+                    payout: '~$525 each',
+                    percentage: '1.05x return',
+                  },
                 ].map((tier, index) => (
                   <div
                     key={index}
@@ -417,14 +447,14 @@ const SeasonPassLandingPage = () => {
                 <p className="text-sm text-center text-yellow-800 dark:text-yellow-300">
                   <Info className="w-4 h-4 inline mr-1" />
                   All Season-Pass game payouts are distributed in Solana-based
-                  USDC.
+                  USDC. Protocol retains 20% for weekly boards and operations.
                 </p>
               </div>
               <div className="mt-3 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">
                 <p className="text-sm text-center text-blue-800 dark:text-blue-300">
-                  <Info className="w-4 h-4 inline mr-1" />A matching ladder
-                  (scaled to pool size) will be published for every Half-Season
-                  Conference after it fills.
+                  <Info className="w-4 h-4 inline mr-1" />
+                  Top 21 players receive payouts. Tier-specific pool totals:
+                  $2.5K/$5K/$10K/$20K/$50K.
                 </p>
               </div>
             </CardContent>
@@ -452,27 +482,23 @@ const SeasonPassLandingPage = () => {
                   {[
                     {
                       type: 'Forward',
-                      pattern: '(Home, Away)',
-                      example: '(7, 4)',
-                      points: '10',
+                      resultType: 'forward' as Result,
+                      description: 'Most common hit pattern (45%)',
                     },
                     {
                       type: 'Backward',
-                      pattern: '(Away, Home)',
-                      example: '(4, 7)',
-                      points: '7',
+                      resultType: 'backward' as Result,
+                      description: 'Second most common (30%)',
                     },
                     {
                       type: 'Forward + 5',
-                      pattern: '((H+5) mod 10, (A+5) mod 10)',
-                      example: '(2, 9)',
-                      points: '5',
+                      resultType: '+5f' as Result,
+                      description: 'Third most common (15%)',
                     },
                     {
                       type: 'Backward + 5',
-                      pattern: 'reverse of F+5',
-                      example: '(9, 2)',
-                      points: '3',
+                      resultType: '+5b' as Result,
+                      description: 'Rarest pattern (10%)',
                     },
                   ].map((pattern, index) => (
                     <div
@@ -484,15 +510,21 @@ const SeasonPassLandingPage = () => {
                           {pattern.type}
                         </p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                          {pattern.pattern}
+                          {getResultDescription(pattern.resultType)}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-500">
-                          Example: {pattern.example}
+                          Example: {getResultExample(pattern.resultType)}
+                        </p>
+                        <p className="text-xs text-blue-600 dark:text-blue-400">
+                          {pattern.description}
                         </p>
                       </div>
-                      <Badge className="bg-green-600 text-white">
-                        {pattern.points} pts
-                      </Badge>
+                      <div className="text-right">
+                        <Badge className="bg-green-600 text-white">
+                          {getExamplePoints(pattern.resultType, 'Q1')} pts
+                        </Badge>
+                        <p className="text-xs text-gray-500 mt-1">Q1 example</p>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -509,10 +541,14 @@ const SeasonPassLandingPage = () => {
               <CardContent>
                 <div className="space-y-4">
                   {[
-                    { round: 'Wild-Card', multiplier: '× 1.5' },
-                    { round: 'Divisional', multiplier: '× 2' },
-                    { round: 'Conference Champ', multiplier: '× 2.5' },
-                    { round: 'Super Bowl', multiplier: '× 3' },
+                    { round: 'Wild-Card', multiplier: '× 1.5', code: 'WC' },
+                    { round: 'Divisional', multiplier: '× 2.0', code: 'DIV' },
+                    {
+                      round: 'Conference Champ',
+                      multiplier: '× 3.5',
+                      code: 'CONF',
+                    },
+                    { round: 'Super Bowl', multiplier: '× 5.0', code: 'SB' },
                   ].map((playoff, index) => (
                     <div
                       key={index}
@@ -531,8 +567,16 @@ const SeasonPassLandingPage = () => {
                 <div className="mt-4 p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-700">
                   <p className="text-sm text-yellow-800 dark:text-yellow-300">
                     <Zap className="w-4 h-4 inline mr-1" />
-                    All hits in overtime inherit the period's normal value; no
-                    point drop-off after 60 minutes.
+                    Each OT period awards 200 base points × hit pattern
+                    percentage × playoff multiplier. Q2 & Q4 get bonus points
+                    (250 vs 200).
+                  </p>
+                </div>
+                <div className="mt-3 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">
+                  <p className="text-sm text-blue-800 dark:text-blue-300">
+                    <Info className="w-4 h-4 inline mr-1" />
+                    Points calculated to 2 decimals to minimize ties. Example:
+                    Forward hit in SB Q4 = 250 × 0.45 × 5.0 = 562.50 pts
                   </p>
                 </div>
               </CardContent>
