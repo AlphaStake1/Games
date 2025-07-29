@@ -172,15 +172,15 @@ describe('ComponentName', () => {
 
 ```bash
 # Development
-npm run dev              # Start dev server
-npm run build            # Build for production
-npm run lint             # ESLint check
-npm run type-check       # TypeScript check
+pnpm run dev              # Start dev server
+pnpm run build            # Build for production
+pnpm run lint             # ESLint check
+pnpm run type-check       # TypeScript check
 
 # Testing
 npm test                 # Run tests
-npm run test:watch       # Watch mode
-npm run test:coverage    # Coverage report
+pnpm run test:watch       # Watch mode
+pnpm run test:coverage    # Coverage report
 ```
 
 ## Working Style

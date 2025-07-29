@@ -200,11 +200,11 @@ export function WhatAreNftsContent() {
   ];
 
   return (
-    <main className="py-12">
+    <main>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Stunning Hero Section */}
         <div
-          className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#002244] via-[#004953] to-[#002244] text-white mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+          className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#002244] via-[#004953] to-[#002244] text-white transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           {/* Animated Background Elements */}
           <div className="absolute inset-0 overflow-hidden">

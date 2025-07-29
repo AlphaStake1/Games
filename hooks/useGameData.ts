@@ -99,22 +99,42 @@ export function useGameData(
 
   // Fetch games
   const fetchGames = useCallback(async (): Promise<void> => {
+    console.log('useGameData.fetchGames called with options:', {
+      teamId,
+      season,
+      week,
+      upcomingOnly,
+      currentSeason,
+      currentWeek,
+    });
+
     try {
       const filters: NFLScheduleFilters = {
         season: season || currentSeason,
-        week: week || (upcomingOnly ? undefined : currentWeek),
+        week: week, // Use week if provided, otherwise undefined
         teamId,
       };
+
+      console.log('Filters prepared:', filters);
 
       let response: ApiResponse<GameScheduleResponse[]>;
 
       if (teamId && upcomingOnly) {
+        console.log('Using team-specific method for upcoming games');
         // Use team-specific method for upcoming games
         response = await gameService.getTeamGames(teamId, {
           season: filters.season,
           upcoming: true,
         });
+      } else if (teamId) {
+        console.log('Using team-specific method for all games');
+        // Use team-specific method for all team games
+        response = await gameService.getTeamGames(teamId, {
+          season: filters.season,
+          upcoming: upcomingOnly,
+        });
       } else {
+        console.log('Using general schedule method');
         // Use general schedule method
         response = await gameService.getSchedule(filters);
       }
@@ -230,35 +250,41 @@ export function useGameData(
     refreshGameStatuses,
   ]);
 
-  // WebSocket connection
+  // WebSocket connection - Disabled for development with mock data
   useEffect(() => {
     if (!enableRealTime) return;
 
-    const connectionHandler = (connected: boolean) => {
-      setIsConnected(connected);
-    };
+    // For development with mock data, simulate connection status
+    setIsConnected(true);
 
-    websocketService.addConnectionHandler(connectionHandler);
-    websocketService.connect();
-
-    return () => {
-      websocketService.removeConnectionHandler(connectionHandler);
-    };
+    // In production, uncomment below:
+    // const connectionHandler = (connected: boolean) => {
+    //   setIsConnected(connected);
+    // };
+    //
+    // websocketService.addConnectionHandler(connectionHandler);
+    // websocketService.connect();
+    //
+    // return () => {
+    //   websocketService.removeConnectionHandler(connectionHandler);
+    // };
   }, [enableRealTime]);
 
-  // WebSocket game subscriptions
+  // WebSocket game subscriptions - Disabled for development with mock data
   useEffect(() => {
     if (!enableRealTime || games.length === 0) return;
 
-    games.forEach((game) => {
-      websocketService.subscribeToGame(game.gameId, handleGameUpdate);
-    });
-
-    return () => {
-      games.forEach((game) => {
-        websocketService.unsubscribeFromGame(game.gameId, handleGameUpdate);
-      });
-    };
+    // For development with mock data, skip WebSocket subscriptions
+    // In production, uncomment below:
+    // games.forEach((game) => {
+    //   websocketService.subscribeToGame(game.gameId, handleGameUpdate);
+    // });
+    //
+    // return () => {
+    //   games.forEach((game) => {
+    //     websocketService.unsubscribeFromGame(game.gameId, handleGameUpdate);
+    //   });
+    // };
   }, [enableRealTime, games, handleGameUpdate]);
 
   // Cleanup
@@ -327,23 +353,25 @@ export function useGameStatus(gameId: string | undefined) {
     fetchGameStatus();
   }, [fetchGameStatus]);
 
-  // Real-time updates
+  // Real-time updates - Disabled for development with mock data
   useEffect(() => {
     if (!gameId) return;
 
-    const handler = WebSocketUtils.createScoreUpdateHandler(
-      (updatedGameId, scoreData) => {
-        if (updatedGameId === gameId) {
-          setGameStatus((prev) => (prev ? { ...prev, ...scoreData } : null));
-        }
-      },
-    );
-
-    websocketService.subscribeToGame(gameId, handler);
-
-    return () => {
-      websocketService.unsubscribeFromGame(gameId, handler);
-    };
+    // For development with mock data, skip WebSocket updates
+    // In production, uncomment below:
+    // const handler = WebSocketUtils.createScoreUpdateHandler(
+    //   (updatedGameId, scoreData) => {
+    //     if (updatedGameId === gameId) {
+    //       setGameStatus((prev) => (prev ? { ...prev, ...scoreData } : null));
+    //     }
+    //   },
+    // );
+    //
+    // websocketService.subscribeToGame(gameId, handler);
+    //
+    // return () => {
+    //   websocketService.unsubscribeFromGame(gameId, handler);
+    // };
   }, [gameId]);
 
   return {

@@ -57,12 +57,27 @@ export const saveUserPreferences = (
 export const createDefaultUserPreferences = (
   walletAddress: string,
 ): UserBoardPreferences => {
+  console.log(
+    'createDefaultUserPreferences: Creating for wallet:',
+    walletAddress,
+  );
+  console.log(
+    'createDefaultUserPreferences: Default team ID:',
+    DEFAULT_TEAM_ID,
+  );
+
   const defaultTeam = getTeamById(DEFAULT_TEAM_ID);
+  console.log('createDefaultUserPreferences: Default team found:', defaultTeam);
+
   if (!defaultTeam) {
+    console.error(
+      'createDefaultUserPreferences: Default team not found for ID:',
+      DEFAULT_TEAM_ID,
+    );
     throw new Error('Default team not found');
   }
 
-  return {
+  const preferences = {
     walletAddress,
     favoriteTeam: defaultTeam,
     isVIP: false,
@@ -70,6 +85,12 @@ export const createDefaultUserPreferences = (
     activeSelections: [],
     lastUpdated: Date.now(),
   };
+
+  console.log(
+    'createDefaultUserPreferences: Created preferences:',
+    preferences,
+  );
+  return preferences;
 };
 
 export const updateFavoriteTeam = (
@@ -177,7 +198,10 @@ export const useUserPreferences = (walletAddress: string | null) => {
   const [isFirstTime, setIsFirstTime] = useState(false);
 
   useEffect(() => {
+    console.log('useUserPreferences: walletAddress changed:', walletAddress);
+
     if (!walletAddress) {
+      console.log('useUserPreferences: No wallet address, setting defaults');
       setPreferences(null);
       setIsLoading(false);
       setIsFirstTime(false);
@@ -185,19 +209,51 @@ export const useUserPreferences = (walletAddress: string | null) => {
     }
 
     const loadPreferences = () => {
+      console.log(
+        'useUserPreferences: Loading preferences for:',
+        walletAddress,
+      );
       setIsLoading(true);
-      const stored = getUserPreferences(walletAddress);
 
-      if (!stored) {
-        setIsFirstTime(true);
-        const defaultPrefs = createDefaultUserPreferences(walletAddress);
-        setPreferences(defaultPrefs);
-      } else {
-        setIsFirstTime(false);
-        setPreferences(stored);
+      try {
+        const stored = getUserPreferences(walletAddress);
+        console.log('useUserPreferences: Stored preferences:', stored);
+
+        if (!stored) {
+          console.log(
+            'useUserPreferences: No stored preferences, creating defaults',
+          );
+          setIsFirstTime(true);
+          const defaultPrefs = createDefaultUserPreferences(walletAddress);
+          console.log(
+            'useUserPreferences: Default preferences created:',
+            defaultPrefs,
+          );
+          setPreferences(defaultPrefs);
+          saveUserPreferences(defaultPrefs); // Persist the new defaults
+        } else {
+          console.log('useUserPreferences: Using stored preferences');
+          setIsFirstTime(false);
+          setPreferences(stored);
+        }
+      } catch (error) {
+        console.error('useUserPreferences: Error loading preferences:', error);
+        // Create safe defaults even if there's an error
+        try {
+          const safeDefaults = createDefaultUserPreferences(walletAddress);
+          setPreferences(safeDefaults);
+          setIsFirstTime(true);
+        } catch (defaultError) {
+          console.error(
+            'useUserPreferences: Error creating defaults:',
+            defaultError,
+          );
+          setPreferences(null);
+        }
       }
 
       setIsLoading(false);
+      console.log('useUserPreferences: Loading complete');
     };
 
     loadPreferences();

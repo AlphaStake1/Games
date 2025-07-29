@@ -203,19 +203,12 @@ Keep response under 150 words.
   }
 
   private generateHeadersFromRandomness(randomness: number[]): number[] {
-    const headers: number[] = [];
-    const used: boolean[] = new Array(10).fill(false);
+    const headers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-    for (let i = 0; i < 10; i++) {
-      let value = randomness[i % randomness.length] % 10;
-
-      // Ensure no duplicates
-      while (used[value]) {
-        value = (value + 1) % 10;
-      }
-
-      headers.push(value);
-      used[value] = true;
+    // Fisher-Yates shuffle
+    for (let i = headers.length - 1; i > 0; i--) {
+      const j = randomness[i % randomness.length] % (i + 1);
+      [headers[i], headers[j]] = [headers[j], headers[i]];
     }
 
     return headers;

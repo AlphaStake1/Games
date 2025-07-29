@@ -119,13 +119,13 @@ solana airdrop 100
 anchor build
 
 # Run tests
-npm run test:validate
-npm run test:anchor
+pnpm run test:validate
+pnpm run test:anchor
 
 # Start development servers
-npm run dev:ws &     # WebSocket server
-npm run dev:agents & # AI agent system
-npm run dev          # Frontend
+pnpm run dev:ws &     # WebSocket server
+pnpm run dev:agents & # AI agent system
+pnpm run dev          # Frontend
 ```
 
 ### IDE Setup
@@ -247,7 +247,7 @@ git checkout -b feature/new-feature-name
 
 ```bash
 # Start local development environment
-npm run dev:all
+pnpm run dev:all
 
 # Make changes incrementally
 # - Write tests first (TDD)
@@ -259,15 +259,15 @@ npm run dev:all
 
 ```bash
 # Run comprehensive tests
-npm run test:all
+pnpm run test:all
 
 # Manual testing
-npm run dev
+pnpm run dev
 # Test in browser
 
 # Check code quality
-npm run lint
-npm run type-check
+pnpm run lint
+pnpm run type-check
 ```
 
 #### 4. Review Phase
@@ -285,18 +285,18 @@ git push origin feature/new-feature-name
 
 ```bash
 # Start full development environment
-npm run dev:all
+pnpm run dev:all
 
 # Start individual services
-npm run dev          # Frontend only
-npm run dev:ws       # WebSocket server
-npm run dev:agents   # AI agent system
+pnpm run dev          # Frontend only
+pnpm run dev:ws       # WebSocket server
+pnpm run dev:agents   # AI agent system
 
 # Development tools
-npm run lint         # Code linting
-npm run type-check   # TypeScript checking
-npm run test:watch   # Continuous testing
-npm run build        # Production build test
+pnpm run lint         # Code linting
+pnpm run type-check   # TypeScript checking
+pnpm run test:watch   # Continuous testing
+pnpm run build        # Production build test
 ```
 
 ### Git Workflow
@@ -577,21 +577,21 @@ describe('Squares Program', () => {
 
 ```bash
 # Run all tests
-npm run test
+pnpm run test
 
 # Run specific test suites
-npm run test:unit
-npm run test:integration
-npm run test:anchor
+pnpm run test:unit
+pnpm run test:integration
+pnpm run test:anchor
 
 # Run tests in watch mode
-npm run test:watch
+pnpm run test:watch
 
 # Generate coverage report
-npm run test:coverage
+pnpm run test:coverage
 
 # Run tests with debugging
-npm run test:debug
+pnpm run test:debug
 ```
 
 ### Test Data Management
@@ -700,7 +700,7 @@ setInterval(() => {
 
 ```bash
 # Analyze bundle size
-npm run analyze
+pnpm run analyze
 
 # Lighthouse audit
 npx lighthouse http://localhost:3000
@@ -826,10 +826,10 @@ git checkout -b release/v1.2.3
 
 ```bash
 # Run full test suite
-npm run test:all
+pnpm run test:all
 
 # Deploy to staging
-npm run deploy:staging
+pnpm run deploy:staging
 
 # Manual testing
 # Performance testing
@@ -847,7 +847,7 @@ git merge release/v1.2.3
 git tag v1.2.3
 
 # Deploy to production
-npm run deploy:production
+pnpm run deploy:production
 
 # Create GitHub release
 # Upload artifacts
@@ -867,7 +867,7 @@ git checkout -b hotfix/critical-issue main
 git checkout main
 git merge hotfix/critical-issue
 git tag v1.2.4
-npm run deploy:production
+pnpm run deploy:production
 ```
 
 ## Best Practices

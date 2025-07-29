@@ -62,7 +62,8 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
     error: gamesError,
     refreshGames,
     isConnected,
-  } = useTeamGames(userTeam, { upcomingOnly: true });
+    currentWeek,
+  } = useTeamGames(userTeam, { upcomingOnly: false }); // Get all games, not just upcoming
 
   // Get board data for the selected game
   const {
@@ -75,9 +76,16 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
   // Set default selected game when games load
   useEffect(() => {
     if (availableGames.length > 0 && !selectedGame) {
-      setSelectedGame(availableGames[0]); // Default to first upcoming game
+      const firstUpcomingGame = availableGames.find(
+        (game) => game.week >= currentWeek,
+      );
+      if (firstUpcomingGame) {
+        setSelectedGame(firstUpcomingGame);
+      } else if (availableGames.length > 0) {
+        setSelectedGame(availableGames[availableGames.length - 1]); // Fallback to the last game of the season
+      }
     }
-  }, [availableGames, selectedGame]);
+  }, [availableGames, selectedGame, currentWeek]);
 
   const availableTiers = getAvailableTiers(isVIP);
 
@@ -464,10 +472,10 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
           {gamesLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {Array.from({ length: 4 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-20 bg-gray-200 dark:bg-gray-700 animate-pulse rounded"
-                />
+                <div key={i} className="space-y-2">
+                  <div className="h-8 bg-gray-200 dark:bg-gray-700 animate-pulse rounded" />
+                  <div className="h-24 bg-gray-200 dark:bg-gray-700 animate-pulse rounded" />
+                </div>
               ))}
             </div>
           ) : availableGames.length === 0 ? (
@@ -481,26 +489,84 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {availableGames.map((game) => (
-                <Button
-                  key={game.gameId}
-                  variant={
-                    selectedGame?.gameId === game.gameId ? 'default' : 'outline'
+            (() => {
+              // Group games by week
+              const gamesByWeek = availableGames.reduce(
+                (acc, game) => {
+                  if (!acc[game.week]) {
+                    acc[game.week] = [];
                   }
-                  onClick={() => setSelectedGame(game)}
-                  className="h-auto p-4 flex flex-col items-center"
-                >
-                  <span className="font-bold">Week {game.week}</span>
-                  <span className="text-xs">
-                    {game.homeTeam.abbreviation} vs {game.awayTeam.abbreviation}
-                  </span>
-                  <span className="text-xs text-gray-500">
-                    {game.gameDate.toLocaleDateString()}
-                  </span>
-                </Button>
-              ))}
-            </div>
+                  acc[game.week].push(game);
+                  return acc;
+                },
+                {} as Record<number, typeof availableGames>,
+              );
+
+              const allWeeks = Object.keys(gamesByWeek)
+                .map(Number)
+                .sort((a, b) => a - b);
+
+              const currentWeekIndex = allWeeks.findIndex(
+                (week) => week >= currentWeek,
+              );
+
+              const weeks =
+                currentWeekIndex !== -1
+                  ? allWeeks.slice(currentWeekIndex, currentWeekIndex + 4)
+                  : allWeeks.slice(-4); // Fallback to last 4 weeks if no upcoming
+
+              const weekLabels = [
+                'Current Week',
+                'Next Week',
+                '2 Weeks Out',
+                '3 Weeks Out',
+              ];
+
+              return (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {weeks.map((week, index) => (
+                    <div key={week} className="space-y-2">
+                      <h4 className="font-bold text-center p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                        {weekLabels[index] || `Week ${week}`}
+                      </h4>
+                      <div className="space-y-2">
+                        {gamesByWeek[week].map((game) => (
+                          <Button
+                            key={game.gameId}
+                            variant={
+                              selectedGame?.gameId === game.gameId
+                                ? 'default'
+                                : 'outline'
+                            }
+                            onClick={() => setSelectedGame(game)}
+                            className="w-full h-auto p-3 flex flex-col items-center text-xs"
+                          >
+                            <div className="font-bold mb-1">
+                              {game.homeTeam.id === userTeam.id ? 'vs' : '@'}{' '}
+                              {game.homeTeam.id === userTeam.id
+                                ? game.awayTeam.abbreviation
+                                : game.homeTeam.abbreviation}
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              {game.gameDate.toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                              })}
+                            </div>
+                            <div className="text-xs text-gray-400">
+                              {game.gameDate.toLocaleTimeString('en-US', {
+                                hour: 'numeric',
+                                minute: '2-digit',
+                              })}
+                            </div>
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()
           )}
         </CardContent>
       </Card>

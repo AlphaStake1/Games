@@ -342,7 +342,7 @@ async function main() {
   switch (command) {
     case 'create-monitor':
       if (args.length < 2) {
-        console.error('Usage: npm run create-thread create-monitor <gameId>');
+        console.error('Usage: pnpm run create-thread create-monitor <gameId>');
         process.exit(1);
       }
       const gameId = parseInt(args[1]);
@@ -353,7 +353,7 @@ async function main() {
     case 'create-randomization':
       if (args.length < 3) {
         console.error(
-          'Usage: npm run create-thread create-randomization <gameId> <startTime>',
+          'Usage: pnpm run create-thread create-randomization <gameId> <startTime>',
         );
         process.exit(1);
       }
@@ -369,7 +369,7 @@ async function main() {
     case 'create-settlement':
       if (args.length < 3) {
         console.error(
-          'Usage: npm run create-thread create-settlement <gameId> <endTime>',
+          'Usage: pnpm run create-thread create-settlement <gameId> <endTime>',
         );
         process.exit(1);
       }
@@ -392,7 +392,7 @@ async function main() {
 
     case 'pause':
       if (args.length < 2) {
-        console.error('Usage: npm run create-thread pause <threadId>');
+        console.error('Usage: pnpm run create-thread pause <threadId>');
         process.exit(1);
       }
       await manager.pauseThread(args[1]);
@@ -400,7 +400,7 @@ async function main() {
 
     case 'resume':
       if (args.length < 2) {
-        console.error('Usage: npm run create-thread resume <threadId>');
+        console.error('Usage: pnpm run create-thread resume <threadId>');
         process.exit(1);
       }
       await manager.resumeThread(args[1]);
@@ -408,7 +408,7 @@ async function main() {
 
     case 'delete':
       if (args.length < 2) {
-        console.error('Usage: npm run create-thread delete <threadId>');
+        console.error('Usage: pnpm run create-thread delete <threadId>');
         process.exit(1);
       }
       await manager.deleteThread(args[1]);
@@ -416,7 +416,7 @@ async function main() {
 
     case 'info':
       if (args.length < 2) {
-        console.error('Usage: npm run create-thread info <threadId>');
+        console.error('Usage: pnpm run create-thread info <threadId>');
         process.exit(1);
       }
       const info = await manager.getThreadInfo(args[1]);

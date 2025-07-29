@@ -1,5 +1,5 @@
 // agents/WinnerAgent/index.ts
-import { Connection, PublicKey } from '@solana/web3.js';
+import { Connection, PublicKey, SystemProgram } from '@solana/web3.js';
 import { AnchorProvider, Program, BN } from '@coral-xyz/anchor';
 import { OpenAI } from 'openai';
 import { EventEmitter } from 'events';
@@ -145,7 +145,7 @@ export class WinnerAgent extends EventEmitter {
         .accounts({
           board: boardPda,
           winner: winnerKey,
-          systemProgram: PublicKey.default,
+          systemProgram: SystemProgram.programId,
         })
         .rpc();
 

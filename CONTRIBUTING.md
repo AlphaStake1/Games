@@ -19,6 +19,6 @@ For a fast development cycle with hot-reloading, follow these steps:
 1.  **Clone the repository.**
 2.  **Install dependencies:** `pnpm i`
 3.  **Generate assets** (if required, e.g., after a schema change): `sqd generate`
-4.  **Run the development server:** `npm run dev`
+4.  **Run the development server:** `pnpm run dev`
 
 This will start the Next.js front-end and the Subsquid processor in watch mode, automatically reloading as you make changes to the code.

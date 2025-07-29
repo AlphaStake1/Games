@@ -136,17 +136,17 @@ SMTP_PASS=bridge_pass
 
 ## 5 · Phase-1 Deliverables
 
-| #   | Deliverable         | Acceptance Criteria                                                           |
-| --- | ------------------- | ----------------------------------------------------------------------------- |
-| 1   | **Research corpus** | `research/` contains ≥ 100 pages total, organised by tech.                    |
-| 2   | **Anchor skeleton** | `anchor build` succeeds; unit test creates a board.                           |
-| 3   | **Next.js shell**   | `npm run build && npm run start` serves static site showing placeholder grid. |
-| 4   | **Design system**   | `app/globals.css` contains monochrome ink/paper CSS variables.                |
-| 5   | **SVG assets**      | `public/assets/` contains scribble-border.svg and paper-texture.svg.          |
-| 6   | **Agent stubs**     | TypeScript classes compile; Orchestrator prints planned tasks.                |
-| 7   | **CLI stubs**       | `pnpm ts-node scripts/init_board.ts` prints "TODO".                           |
-| 8   | **CI bootstrap**    | GitHub Action: lint + clippy + anchor build pass.                             |
-| 9   | **Docs**            | `docs/architecture.md` explains Phase-1 skeleton & research flow.             |
+| #   | Deliverable         | Acceptance Criteria                                                             |
+| --- | ------------------- | ------------------------------------------------------------------------------- |
+| 1   | **Research corpus** | `research/` contains ≥ 100 pages total, organised by tech.                      |
+| 2   | **Anchor skeleton** | `anchor build` succeeds; unit test creates a board.                             |
+| 3   | **Next.js shell**   | `pnpm run build && pnpm run start` serves static site showing placeholder grid. |
+| 4   | **Design system**   | `app/globals.css` contains monochrome ink/paper CSS variables.                  |
+| 5   | **SVG assets**      | `public/assets/` contains scribble-border.svg and paper-texture.svg.            |
+| 6   | **Agent stubs**     | TypeScript classes compile; Orchestrator prints planned tasks.                  |
+| 7   | **CLI stubs**       | `pnpm ts-node scripts/init_board.ts` prints "TODO".                             |
+| 8   | **CI bootstrap**    | GitHub Action: lint + clippy + anchor build pass.                               |
+| 9   | **Docs**            | `docs/architecture.md` explains Phase-1 skeleton & research flow.               |
 
 ---
 

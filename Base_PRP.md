@@ -168,7 +168,7 @@ React UI:
 ```bash
 cargo fmt --check
 cargo clippy -- -D warnings
-npm run lint   # eslint for TS
+pnpm run lint   # eslint for TS
 tsc --noEmit   # type-check agents & scripts
 ```
 
@@ -193,7 +193,7 @@ pnpm ts-node scripts/request_vrf.ts --board <PDA>
 
 - [ ] `cargo clippy` clean
 - [ ] `anchor test` green
-- [ ] `npm run test` green
+- [ ] `pnpm run test` green
 - [ ] Manual localnet run shows randomized headers
 - [ ] Updated docs (`docs/randomizer.md`)
 - [ ] CHANGELOG entry

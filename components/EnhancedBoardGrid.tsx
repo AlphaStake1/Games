@@ -10,6 +10,7 @@ import { VRFState } from '@/lib/vrfTypes';
 import { formatCurrency, cn } from '@/lib/utils';
 import VRFTrustBanner from '@/components/VRFTrustBanner';
 import VRFProofModal from '@/components/VRFProofModal';
+import HomeAwayExplainer from '@/components/HomeAwayExplainer';
 import {
   Grid,
   MousePointer,
@@ -28,6 +29,7 @@ interface EnhancedBoardGridProps {
   onSquareSelectionChange: (selection: SquareSelection) => void;
   currentSelection?: SquareSelection;
   className?: string;
+  boardType?: 'geographic' | 'vip' | 'season' | 'general';
 }
 
 interface SquareState {
@@ -68,6 +70,7 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
   onSquareSelectionChange,
   currentSelection,
   className = '',
+  boardType = 'general',
 }) => {
   const [squares, setSquares] = useState<SquareState[]>([]);
   const [selectedSquares, setSelectedSquares] = useState<number[]>([]);
@@ -289,6 +292,7 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
             <CardTitle className="flex items-center gap-2">
               <Grid className="w-5 h-5" />
               {board.tier.displayName} Board
+              <HomeAwayExplainer boardType={boardType} variant="tooltip" />
             </CardTitle>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               {board.game.homeTeam.city} vs {board.game.awayTeam.city} • Week{' '}
@@ -348,6 +352,13 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
         </div>
 
         <Separator />
+
+        {/* HOME/AWAY Quick Reference */}
+        <HomeAwayExplainer
+          boardType={boardType}
+          variant="inline"
+          className="justify-center"
+        />
 
         {/* Board Grid */}
         <div className="w-full">

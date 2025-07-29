@@ -423,8 +423,8 @@ async function main() {
   } else if (command === 'help' || command === '--help') {
     console.log('Football Squares Health Checker');
     console.log('Usage:');
-    console.log('  npm run health                  # Check all services');
-    console.log('  npm run health single <service> # Check specific service');
+    console.log('  pnpm run health                  # Check all services');
+    console.log('  pnpm run health single <service> # Check specific service');
     console.log('');
     console.log('Available services:');
     console.log('  rpc, solana     - Solana RPC connection');

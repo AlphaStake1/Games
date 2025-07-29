@@ -254,13 +254,13 @@ echo "NEXT_PUBLIC_PROGRAM_ID=<PROGRAM_ID>" >> .env.production
 
 ```bash
 # Run initialization script
-npm run init-board
+pnpm run init-board
 
 # Create Clockwork threads
-npm run create-thread
+pnpm run create-thread
 
 # Verify program functionality
-npm run health:single anchor
+pnpm run health:single anchor
 ```
 
 ## Docker Deployment
@@ -484,7 +484,7 @@ cp .env.example .env.production
 # Edit .env.production with your configuration
 
 # Build application
-npm run build
+pnpm run build
 
 # Start with PM2
 npm install -g pm2
@@ -594,16 +594,16 @@ The CI/CD pipeline is configured in [`.github/workflows/ci.yml`](../.github/work
 
 ```bash
 # Deploy to staging
-npm run deploy:staging
+pnpm run deploy:staging
 
 # Deploy to production
-npm run deploy:production
+pnpm run deploy:production
 
 # Rollback deployment
-npm run deploy:rollback
+pnpm run deploy:rollback
 
 # Check deployment status
-npm run deploy:status
+pnpm run deploy:status
 ```
 
 ## Monitoring and Maintenance
@@ -614,19 +614,19 @@ npm run deploy:status
 
 ```bash
 # Check all services
-npm run health
+pnpm run health
 
 # Check specific services
-npm run health:single rpc
-npm run health:single websocket
-npm run health:single agents
+pnpm run health:single rpc
+pnpm run health:single websocket
+pnpm run health:single agents
 ```
 
 **Automated Monitoring Setup:**
 
 ```bash
 # Set up cron job for health checks
-echo "*/5 * * * * cd /path/to/app && npm run health >> /var/log/health.log" | crontab -
+echo "*/5 * * * * cd /path/to/app && pnpm run health >> /var/log/health.log" | crontab -
 
 # Set up log rotation
 sudo tee /etc/logrotate.d/football-squares << EOF
@@ -663,7 +663,7 @@ EOF
 
 ```bash
 # Backup Ceramic data
-npm run backup:ceramic
+pnpm run backup:ceramic
 
 # Backup configuration
 tar -czf config-backup-$(date +%Y%m%d).tar.gz .env* config/
@@ -676,13 +676,13 @@ solana account <PROGRAM_ID> --output json > program-backup-$(date +%Y%m%d).json
 
 ```bash
 # Restore from backup
-npm run restore:ceramic backup-file.tar.gz
+pnpm run restore:ceramic backup-file.tar.gz
 
 # Restart services
 docker-compose restart
 
 # Verify recovery
-npm run health
+pnpm run health
 ```
 
 ## Security Considerations
@@ -806,7 +806,7 @@ sudo ufw status
 docker-compose logs agents
 
 # Verify API keys
-npm run test:validate
+pnpm run test:validate
 
 # Restart agents
 docker-compose restart agents

@@ -411,7 +411,7 @@ echo ""
 echo "Next steps:"
 echo "1. Review docs/security/reports/baseline.json"
 echo "2. Customize rules in docs/security/rules/"
-echo "3. Run: npm run security:scan"
+echo "3. Run: pnpm run security:scan"
 ```
 
 ### IDE Integration

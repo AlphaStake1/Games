@@ -439,7 +439,7 @@ async function main() {
     case 'create-game':
       if (args.length < 4) {
         console.error(
-          'Usage: npm run dev:agents create-game <gameId> <startTime> <endTime>',
+          'Usage: pnpm run dev:agents create-game <gameId> <startTime> <endTime>',
         );
         process.exit(1);
       }
@@ -458,7 +458,7 @@ async function main() {
 
     case 'end-game':
       if (args.length < 2) {
-        console.error('Usage: npm run dev:agents end-game <gameId>');
+        console.error('Usage: pnpm run dev:agents end-game <gameId>');
         process.exit(1);
       }
       await runner.endGame(parseInt(args[1]));

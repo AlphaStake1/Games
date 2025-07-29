@@ -50,14 +50,45 @@ const CBLHeader = () => {
             </div>
           </div>
 
-          {/* User Info */}
-          <div className="hidden md:flex items-center space-x-3">
-            <div className="text-right">
-              <p className="text-sm font-medium">Welcome back,</p>
-              <p className="text-lg font-bold">OC-Phil</p>
-            </div>
-            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-              <span className="text-sm font-bold">OP</span>
+          {/* Navigation & User Info */}
+          <div className="hidden md:flex items-center space-x-6">
+            {/* Navigation Links */}
+            <nav className="flex items-center space-x-4">
+              <Link
+                href="/cbl/dashboard"
+                className="text-white/80 hover:text-white transition-colors duration-200 text-sm font-medium"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/cbl/overview"
+                className="text-white/80 hover:text-white transition-colors duration-200 text-sm font-medium"
+              >
+                Overview
+              </Link>
+              <Link
+                href="/cbl/resources"
+                className="text-white/80 hover:text-white transition-colors duration-200 text-sm font-medium"
+              >
+                Resources
+              </Link>
+              <Link
+                href="/cbl/guidelines"
+                className="text-white/80 hover:text-white transition-colors duration-200 text-sm font-medium"
+              >
+                Guidelines
+              </Link>
+            </nav>
+
+            {/* User Info */}
+            <div className="flex items-center space-x-3">
+              <div className="text-right">
+                <p className="text-sm font-medium">Welcome back,</p>
+                <p className="text-lg font-bold">OC-Phil</p>
+              </div>
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                <span className="text-sm font-bold">OP</span>
+              </div>
             </div>
           </div>
         </div>

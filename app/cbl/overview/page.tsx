@@ -7,103 +7,106 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 export default function CBLOverviewPage() {
   const content = getMarkdownContent('cbl/overview.md');
 
+  // Split content into parts for custom layout
+  const whySectionStart = '### Why Lead?';
+  const stepsSectionStart = "### Phil's 3-Step CBL Path";
+
+  const beforeWhy = content.split(whySectionStart)[0];
+  const whyToSteps = content
+    .split(whySectionStart)[1]
+    ?.split(stepsSectionStart)[0];
+  const stepsAndAfter = content.split(stepsSectionStart)[1];
+
+  const whySection = whyToSteps ? whySectionStart + whyToSteps : '';
+  const stepsSection = stepsAndAfter ? stepsSectionStart + stepsAndAfter : '';
+
   return (
-    <div className="max-w-4xl mx-auto">
-      {/* Hero Section */}
-      <div className="text-center mb-12">
-        <div className="mb-8">
-          <MarkdownRenderer content={content} />
+    <>
+      <div className="max-w-4xl mx-auto pb-20 sm:pb-0">
+        {/* Hero Content - Before Why Lead */}
+        {beforeWhy && (
+          <div className="mb-12 text-left">
+            <MarkdownRenderer content={beforeWhy} />
+          </div>
+        )}
+
+        {/* Two-Column Layout: Why Lead & 3-Step Path */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Why Lead Section */}
+          {whySection && (
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border-blue-200 dark:border-blue-800">
+              <CardContent className="p-6">
+                <MarkdownRenderer content={whySection} />
+              </CardContent>
+            </Card>
+          )}
+
+          {/* 3-Step CBL Path Section */}
+          {stepsSection && (
+            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950/30 dark:to-orange-900/30 border-orange-200 dark:border-orange-800">
+              <CardContent className="p-6">
+                <MarkdownRenderer content={stepsSection} />
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         {/* Call to Action */}
-        <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-          <Button size="lg" className="w-full sm:w-auto">
-            <Link href="/cbl/dashboard" className="block">
-              Apply to Become a CBL
+        <div className="text-center space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center mb-12">
+          <Button
+            size="lg"
+            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700"
+          >
+            <Link href="/cbl/apply" className="block">
+              Apply
             </Link>
           </Button>
           <Button variant="outline" size="lg" className="w-full sm:w-auto">
-            <Link href="/how-to-play" className="block">
-              Learn More About Football Squares
+            <Link href="/cbl/learn-more" className="block">
+              Learn More
+            </Link>
+          </Button>
+        </div>
+
+        {/* Requirements Section */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>CBL Requirements</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-3 text-gray-600 dark:text-gray-300">
+              <li className="flex items-start">
+                <span className="text-green-500 mr-3 mt-1">✓</span>
+                Demonstrated community leadership or management experience
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-500 mr-3 mt-1">✓</span>
+                Commitment to follow CBL guidelines and best practices
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-500 mr-3 mt-1">✓</span>
+                Ability to manage and grow a community of 25+ active players
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Sticky Footer CTA for Mobile */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800 p-4 sm:hidden z-50">
+        <div className="flex space-x-3">
+          <Button className="flex-1 bg-blue-600 hover:bg-blue-700">
+            <Link href="/cbl/apply" className="block">
+              Apply
+            </Link>
+          </Button>
+          <Button variant="outline" className="flex-1">
+            <Link href="/cbl/learn-more" className="block">
+              Learn More
             </Link>
           </Button>
         </div>
       </div>
-
-      {/* Features Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <span className="text-2xl mr-3">🎯</span>
-              Community Management
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-gray-600 dark:text-gray-300">
-              Create and manage multiple game boards with custom rules that fit
-              your community&apos;s needs.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <span className="text-2xl mr-3">💰</span>
-              Earn Rewards
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-gray-600 dark:text-gray-300">
-              Get a percentage of platform fees plus bonuses for active
-              community engagement and growth.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <span className="text-2xl mr-3">🚀</span>
-              Priority Support
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-gray-600 dark:text-gray-300">
-              Get priority customer support, early access to features, and
-              influence on platform development.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Requirements Section */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>CBL Requirements</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-3 text-gray-600 dark:text-gray-300">
-            <li className="flex items-start">
-              <span className="text-green-500 mr-3 mt-1">✓</span>
-              Active participant in at least 5 completed football squares games
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-3 mt-1">✓</span>
-              Demonstrated community leadership or management experience
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-3 mt-1">✓</span>
-              Commitment to follow CBL guidelines and best practices
-            </li>
-            <li className="flex items-start">
-              <span className="text-green-500 mr-3 mt-1">✓</span>
-              Ability to manage and grow a community of 25+ active players
-            </li>
-          </ul>
-        </CardContent>
-      </Card>
-    </div>
+    </>
   );
 }

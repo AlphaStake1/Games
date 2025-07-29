@@ -1028,7 +1028,7 @@ jobs:
     steps:
       - name: Run ${{ matrix.test-type }}
         run: |
-          npm run ${{ matrix.test-type }}
+          pnpm run ${{ matrix.test-type }}
           # Fail if gas usage increases >5%
           if [[ "${{ matrix.test-type }}" == "gas-report" ]]; then
             node scripts/check-gas-delta.js --threshold=5

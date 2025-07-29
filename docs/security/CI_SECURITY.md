@@ -376,7 +376,7 @@ Create `.husky/pre-commit`:
 . "$(dirname -- "$0")/_/husky.sh"
 
 # Run security scan
-npm run security:precommit
+pnpm run security:precommit
 ```
 
 Add to `package.json`:

@@ -60,7 +60,7 @@ const simulateAPI = {
       passesSold: adjustedSold,
       seatsLeft: 100 - adjustedSold,
       tier: config.tier,
-      gasEstimate: 2.5, // ~$2.50 gas
+      gasEstimate: 0.03, // ~$0.03 gas for 3 transactions
       priceUSD: config.price,
     };
   },

@@ -30,18 +30,30 @@ export function MarkdownRenderer({ content }: MarkdownProps) {
     )
     .replace(
       /^### (.*$)/gim,
-      '<h3 class="text-xl font-medium mb-3 mt-6 text-gray-700 dark:text-gray-200">$1</h3>',
-    )
-    .replace(
-      /^\*\*(.*)\*\*/gim,
-      '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>',
+      '<h3 class="text-xl font-medium mb-3 mt-6 text-gray-900 dark:text-white">$1</h3>',
     )
     .replace(
       /^\* (.*$)/gim,
       '<li class="mb-2 text-gray-600 dark:text-gray-300">$1</li>',
     )
     .replace(
+      /\*\*(.*?)\*\*/g,
+      '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>',
+    )
+    .replace(
+      /\b\*([^*\n]+?)\*\b/g,
+      '<em class="italic text-gray-700 dark:text-gray-200">$1</em>',
+    )
+    .replace(
+      /_([^_\n]+?)_/g,
+      '<em class="italic text-gray-500 dark:text-gray-400">$1</em>',
+    )
+    .replace(
       /^- (.*$)/gim,
+      '<li class="mb-2 text-gray-600 dark:text-gray-300">$1</li>',
+    )
+    .replace(
+      /^\d+\.\s+(.*$)/gim,
       '<li class="mb-2 text-gray-600 dark:text-gray-300">$1</li>',
     )
     .replace(
@@ -49,7 +61,7 @@ export function MarkdownRenderer({ content }: MarkdownProps) {
       '<hr class="my-8 border-gray-300 dark:border-gray-600">',
     )
     .replace(/\n\n/g, '</p><p class="mb-4 text-gray-600 dark:text-gray-300">')
-    .replace(/🎯|💰|🚀|📈/g, '<span class="text-2xl mr-2">$&</span>');
+    .replace(/🎯|💰|🚀|👤👤👤|🧑‍🤝‍🧑|👥/g, '<span class="text-2xl mr-2">$&</span>');
 
   return (
     <div

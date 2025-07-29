@@ -23,9 +23,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Front-end (Next.js static-export)
-npm run dev            # hot reload
-npm run build          # next build && next export
-npm run start          # serve ./out locally
+pnpm run dev            # hot reload
+pnpm run build          # next build && next export
+pnpm run start          # serve ./out locally
 
 # Rust / Anchor
 anchor test            # unit + integration tests

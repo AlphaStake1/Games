@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Trophy,
   Users,
@@ -31,6 +31,10 @@ import {
 
 const FantasyFootballContent = () => {
   const [activeTab, setActiveTab] = useState('basics');
+
+  useEffect(() => {
+    setActiveTab('basics');
+  }, []);
 
   const tabs = [
     { id: 'basics', label: 'The Basics', icon: Trophy },

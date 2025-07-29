@@ -1407,7 +1407,7 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 FROM node:18-alpine AS runtime
 

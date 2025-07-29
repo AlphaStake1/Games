@@ -28,6 +28,7 @@ import {
   CheckCircle,
   Info,
 } from 'lucide-react';
+import HomeAwayExplainer from '@/components/HomeAwayExplainer';
 
 interface Conference {
   id: number;
@@ -158,10 +159,19 @@ const SeasonPassLandingPage = () => {
               className={`w-full ${conference.featured ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white' : ''}`}
               disabled={isFull}
               onClick={() =>
+                router.push(`/season-pass/leaderboard/${conference.id}`)
+              }
+            >
+              {isFull ? 'Conference Full' : 'View Leaderboard'}
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full mt-2"
+              onClick={() =>
                 router.push(`/season-pass/conferences?id=${conference.id}`)
               }
             >
-              {isFull ? 'Conference Full' : 'Select Conference'}
+              Select Conference
             </Button>
           </div>
         </CardContent>
@@ -218,7 +228,7 @@ const SeasonPassLandingPage = () => {
                 icon: <Target className="w-8 h-8" />,
                 title: 'Random Square, Every Kickoff',
                 description:
-                  'Before each matchup your NFT is assigned to one random square, then 0-9 digits are randomly rolled across the Home and Away axes.',
+                  'Before each matchup your NFT is assigned to one random square, then 0-9 digits are randomly rolled across the HOME and AWAY axes.',
               },
               {
                 icon: <TrendingUp className="w-8 h-8" />,
@@ -250,6 +260,11 @@ const SeasonPassLandingPage = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* HOME/AWAY Explanation */}
+          <div className="mt-12 max-w-4xl mx-auto">
+            <HomeAwayExplainer boardType="season" variant="card" />
           </div>
         </div>
       </section>

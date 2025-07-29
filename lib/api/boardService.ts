@@ -15,6 +15,7 @@ import {
 } from './types';
 import { BoardConfiguration, BoardTier, BOARD_TIERS } from '@/lib/boardTypes';
 import { GameSchedule } from '@/lib/boardTypes';
+import { mockDataService } from './mockDataService';
 
 // API Configuration
 const API_BASE_URL =
@@ -147,9 +148,22 @@ export class BoardService {
   async getGameBoards(
     gameId: string,
   ): Promise<ApiResponse<BoardAvailabilityResponse[]>> {
-    return this.makeRequest<BoardAvailabilityResponse[]>(
-      `/boards/game/${gameId}`,
-    );
+    try {
+      const response = await this.makeRequest<BoardAvailabilityResponse[]>(
+        `/boards/game/${gameId}`,
+      );
+
+      // If API fails, fallback to mock data
+      if (!response.success) {
+        console.warn('Board API failed, using mock data for game:', gameId);
+        return await mockDataService.getGameBoards(gameId);
+      }
+
+      return response;
+    } catch (error) {
+      console.warn('Board API error, using mock data for game:', gameId);
+      return await mockDataService.getGameBoards(gameId);
+    }
   }
 
   // Get square ownership data for a board

@@ -376,7 +376,7 @@ async function main() {
 
     case 'single':
       if (args.length < 2) {
-        console.error('Usage: npm run test single <test-name>');
+        console.error('Usage: pnpm run test single <test-name>');
         process.exit(1);
       }
       await runner.runSingleTest(args[1]);
@@ -385,10 +385,10 @@ async function main() {
     default:
       console.log('Football Squares Test Runner');
       console.log('Usage:');
-      console.log('  npm run test              # Run all tests');
-      console.log('  npm run test all          # Run all tests');
-      console.log('  npm run test validate     # Validate environment');
-      console.log('  npm run test single <name> # Run specific test');
+      console.log('  pnpm run test              # Run all tests');
+      console.log('  pnpm run test all          # Run all tests');
+      console.log('  pnpm run test validate     # Validate environment');
+      console.log('  pnpm run test single <name> # Run specific test');
       break;
   }
 }

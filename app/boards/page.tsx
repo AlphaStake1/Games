@@ -23,6 +23,7 @@ import PricingPanel from '@/components/PricingPanel';
 import VipUpgradeModal from '@/components/VipUpgradeModal';
 import CBLCallToActionCard from '@/components/CBLCallToActionCard';
 import ConfirmPurchaseModal from '@/components/ConfirmPurchaseModal';
+import HomeAwayExplainer from '@/components/HomeAwayExplainer';
 
 import { usePurchasePass } from '@/hooks/usePurchasePass';
 
@@ -389,6 +390,21 @@ const BoardsPage: React.FC = () => {
                     ? 'Select Your Game Board'
                     : 'Choose Your Squares'}
               </p>
+              {viewMode === 'board' && (
+                <div className="mt-2">
+                  <HomeAwayExplainer
+                    boardType={
+                      seasonalMode
+                        ? 'season'
+                        : preferences?.isVIP
+                          ? 'vip'
+                          : 'geographic'
+                    }
+                    variant="inline"
+                    className="text-sm"
+                  />
+                </div>
+              )}
             </div>
           </div>
 
@@ -540,7 +556,7 @@ const BoardsPage: React.FC = () => {
                             : 'Buy Eastern Pass – $25'}
                         </Button>
                         <a
-                          href="#"
+                          href="/season-pass/leaderboard/1"
                           className="text-xs text-green-600 hover:underline block text-center"
                         >
                           View Eastern Leaderboard
@@ -601,7 +617,7 @@ const BoardsPage: React.FC = () => {
                             : 'Buy Southern Pass – $50'}
                         </Button>
                         <a
-                          href="#"
+                          href="/season-pass/leaderboard/2"
                           className="text-xs text-blue-600 hover:underline block text-center"
                         >
                           View Southern Leaderboard
@@ -666,7 +682,7 @@ const BoardsPage: React.FC = () => {
                             : 'Buy Northern Pass – $100'}
                         </Button>
                         <a
-                          href="#"
+                          href="/season-pass/leaderboard/3"
                           className="text-xs text-purple-600 hover:underline block text-center"
                         >
                           View Northern Leaderboard
@@ -731,7 +747,7 @@ const BoardsPage: React.FC = () => {
                             : 'Buy Western Pass – $200'}
                         </Button>
                         <a
-                          href="#"
+                          href="/season-pass/leaderboard/4"
                           className="text-xs text-orange-600 hover:underline block text-center"
                         >
                           View Western Leaderboard
@@ -795,7 +811,7 @@ const BoardsPage: React.FC = () => {
                             : 'Buy South-East Pass – $500'}
                         </Button>
                         <a
-                          href="#"
+                          href="/season-pass/leaderboard/5"
                           className="text-xs text-yellow-700 hover:underline block text-center"
                         >
                           View South-East Leaderboard
@@ -895,6 +911,13 @@ const BoardsPage: React.FC = () => {
                   currentSelection={activeSelections.find(
                     (s) => s.boardId === selectedBoard.boardId,
                   )}
+                  boardType={
+                    seasonalMode
+                      ? 'season'
+                      : preferences?.isVIP
+                        ? 'vip'
+                        : 'geographic'
+                  }
                 />
               )}
             </div>

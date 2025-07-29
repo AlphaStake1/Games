@@ -187,7 +187,7 @@ Add to your `package.json`:
     "security:scan": "docker run --rm -v $PWD:/src semgrep-mcp semgrep --config p/security-audit /src",
     "security:rust": "docker run --rm -v $PWD:/src semgrep-mcp semgrep --config p/rust /src/programs/",
     "security:frontend": "docker run --rm -v $PWD:/src semgrep-mcp semgrep --config p/typescript /src/components/ /src/app/",
-    "security:all": "npm run security:scan && npm run security:rust && npm run security:frontend"
+    "security:all": "pnpm run security:scan && pnpm run security:rust && pnpm run security:frontend"
   }
 }
 ```

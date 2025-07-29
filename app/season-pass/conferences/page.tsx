@@ -259,6 +259,15 @@ const ConferencesPage = () => {
                 <span>Selected</span>
               </div>
             )}
+            <Button
+              variant="outline"
+              className="w-full mt-2"
+              onClick={() =>
+                router.push(`/season-pass/leaderboard/${conference.id}`)
+              }
+            >
+              View Leaderboard
+            </Button>
           </div>
         </CardContent>
       </Card>
