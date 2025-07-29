@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import WalletConnectionPopup from '@/components/WalletConnectionPopup';
+import useWalletConnectionPopup from '@/hooks/useWalletConnectionPopup';
+import { useWallet } from '@solana/wallet-adapter-react';
 import {
   Accordion,
   AccordionContent,
@@ -45,10 +48,54 @@ import {
 export function WhatAreNftsContent() {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { connected, connect } = useWallet();
+  const {
+    isPopupOpen,
+    currentIntent,
+    intentData,
+    hidePopup,
+    handleWalletConnect,
+    showCreateNFTPopup,
+    showViewCollectionPopup,
+  } = useWalletConnectionPopup();
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Handle NFT creation button clicks
+  const handleCreateNFTClick = (nftType?: string) => {
+    if (connected) {
+      // User has wallet connected, go directly to creation
+      if (nftType) {
+        window.location.href = `/create-nft/${nftType}`;
+      } else {
+        window.location.href = '/my-nfts';
+      }
+    } else {
+      // Show wallet connection popup with intent
+      showCreateNFTPopup(nftType);
+    }
+  };
+
+  // Handle view collection button clicks
+  const handleViewCollectionClick = () => {
+    if (connected) {
+      window.location.href = '/my-nfts';
+    } else {
+      showViewCollectionPopup();
+    }
+  };
+
+  // Handle wallet connection with actual Solana adapter
+  const handleConnect = async () => {
+    try {
+      await connect();
+    } catch (error) {
+      console.error('Wallet connection failed:', error);
+      throw error;
+    }
+  };
 
   const nftTiers = [
     {
@@ -260,14 +307,16 @@ export function WhatAreNftsContent() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/create-nft/custom-signature">
-                  <Button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-4 rounded-full font-bold text-lg hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                    <Play className="w-5 h-5 mr-2" />
-                    Start Creating NFTs
-                  </Button>
-                </Link>
+                <Button
+                  onClick={() => handleCreateNFTClick('custom-signature')}
+                  className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-4 rounded-full font-bold text-lg hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                >
+                  <Play className="w-5 h-5 mr-2" />
+                  Start Creating NFTs
+                </Button>
                 <Button
                   variant="outline"
+                  onClick={handleViewCollectionClick}
                   className="border-2 border-[#002244] dark:border-white/30 text-[#002244] dark:text-white bg-white/90 dark:bg-transparent px-8 py-4 rounded-full font-bold text-lg hover:bg-[#002244] hover:text-white dark:hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
                 >
                   <Gift className="w-5 h-5 mr-2" />
@@ -299,15 +348,13 @@ export function WhatAreNftsContent() {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button
-                      asChild
                       size="lg"
+                      onClick={handleViewCollectionClick}
                       className="bg-white text-[#ed5925] px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
                     >
-                      <a href="/my-nfts">
-                        <Grid3X3 className="w-6 h-6 mr-2" />
-                        Go to My NFTs
-                        <ArrowRight className="w-5 h-5 ml-2" />
-                      </a>
+                      <Grid3X3 className="w-6 h-6 mr-2" />
+                      Go to My NFTs
+                      <ArrowRight className="w-5 h-5 ml-2" />
                     </Button>
                     <Button
                       size="lg"
@@ -565,14 +612,13 @@ export function WhatAreNftsContent() {
                   </div>
 
                   <div className="mt-6 pt-6 border-t border-[#708090]/20">
-                    <Link href={`/create-nft/${tier.slug}`} passHref>
-                      <Button
-                        className={`w-full bg-gradient-to-r ${tier.gradient} text-white py-3 rounded-xl font-bold hover:shadow-lg transform hover:scale-105 transition-all duration-300`}
-                      >
-                        {tier.buttonText || `Create ${tier.name}`}
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </Link>
+                    <Button
+                      onClick={() => handleCreateNFTClick(tier.slug)}
+                      className={`w-full bg-gradient-to-r ${tier.gradient} text-white py-3 rounded-xl font-bold hover:shadow-lg transform hover:scale-105 transition-all duration-300`}
+                    >
+                      {tier.buttonText || `Create ${tier.name}`}
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -708,7 +754,7 @@ export function WhatAreNftsContent() {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-gradient-to-r from-[#8d594d] to-[#6b4238] text-white px-8 py-4 rounded-full font-bold text-lg hover:from-[#6b4238] hover:to-[#4a2e26] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mb-12"
+                  className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mb-12"
                 >
                   <a
                     href="https://sol-incinerator.com/"
@@ -850,7 +896,7 @@ export function WhatAreNftsContent() {
               {[
                 {
                   q: 'How do NFTs work as square markers in Football Squares?',
-                  a: 'When you purchase a square in any Football Squares game, your NFT appears as the visual marker instead of the standard black signature text. For example, instead of seeing &apos;John D.&apos; in plain text, other players see your custom NFT design - whether it&apos;s a colorful signature, professional artwork, or animated graphics.',
+                  a: "When you purchase a square in any Football Squares game, your NFT appears as the visual marker instead of the standard black signature text. For example, instead of seeing 'John D.' in plain text, other players see your custom NFT design - whether it's a colorful signature, professional artwork, or animated graphics.",
                 },
                 {
                   q: "What's the difference between the six NFT types?",
@@ -862,7 +908,7 @@ export function WhatAreNftsContent() {
                 },
                 {
                   q: 'How do I get House Collection NFTs for free?',
-                  a: 'House Collection NFTs can be won as prizes in free Football Squares games. You can also choose to redeem them when you win cash games - the $7 cost gets deducted from your payout, so you&apos;re essentially using your winnings to get the NFT.',
+                  a: "There are two ways to get House Collection NFTs for free: First, you can win them as prizes in free Football Squares games at no cost. Second, when you win cash games, you have the option to redeem a House Collection NFT instead of receiving the full cash payout - the $7 NFT cost is simply deducted from your winnings, so you're using your prize money to get the NFT.",
                 },
                 {
                   q: 'Where can I view my NFT collection?',
@@ -882,11 +928,11 @@ export function WhatAreNftsContent() {
                 },
                 {
                   q: 'Can I create animated NFTs with my own artwork?',
-                  a: 'Yes! For Animated NFTs ($21), you upload your artwork and we add professional animation effects like floating glow, particle effects, color pulses, or gentle rotation. You choose which effects to apply to make your square marker truly eye-catching.',
+                  a: "Absolutely! You have two exciting options: Upload your own pre-made GIF animation for instant use, or upload a still image (JPG/PNG) and we'll add professional animation effects like floating glow, particle effects, color pulses, or gentle rotation. Both options create Premium Animated NFTs ($21) that make your square marker truly eye-catching and unique.",
                 },
                 {
                   q: 'What file formats can I upload for Custom Artwork NFTs?',
-                  a: 'Custom Artwork NFTs support JPG, PNG, and GIF files up to 10MB. We automatically format your uploaded image to fit perfectly within square markers while maintaining quality and visual appeal.',
+                  a: "We support JPG, PNG, and GIF files up to 10MB. JPG and PNG files create standard Custom Artwork NFTs ($14). When you upload a GIF file, you'll see an exciting upgrade popup - since GIFs are animated, they automatically qualify as Premium Animated NFTs ($21)! You can authorize the $7 upgrade difference right there to unlock your animated masterpiece for use on game boards.",
                 },
               ].map((item, index) => (
                 <AccordionItem
@@ -959,15 +1005,13 @@ export function WhatAreNftsContent() {
 
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
                   <Button
-                    asChild
                     size="lg"
+                    onClick={() => handleCreateNFTClick()}
                     className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-10 py-5 rounded-full font-bold text-xl hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
-                    <a href="/my-nfts">
-                      <Sparkles className="w-6 h-6 mr-3" />
-                      Create Your First NFT
-                      <ArrowRight className="w-6 h-6 ml-3" />
-                    </a>
+                    <Sparkles className="w-6 h-6 mr-3" />
+                    Create Your First NFT
+                    <ArrowRight className="w-6 h-6 ml-3" />
                   </Button>
                   <Button
                     size="lg"
@@ -983,6 +1027,15 @@ export function WhatAreNftsContent() {
           </Card>
         </div>
       </div>
+
+      {/* Wallet Connection Popup */}
+      <WalletConnectionPopup
+        isOpen={isPopupOpen}
+        onClose={hidePopup}
+        onConnect={handleConnect}
+        intent={currentIntent}
+        intentData={intentData}
+      />
     </main>
   );
 }

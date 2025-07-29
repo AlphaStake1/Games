@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import WalletConnectionPopup from '@/components/WalletConnectionPopup';
+import useWalletConnectionPopup from '@/hooks/useWalletConnectionPopup';
+import { useWallet } from '@solana/wallet-adapter-react';
 import Hero from '@/components/Hero';
 import SquaresGrid from '@/components/SquaresGrid';
 import HowItWorks from '@/components/HowItWorks';
@@ -22,10 +25,22 @@ export default function Home() {
   const router = useRouter();
   const [gameId, setGameId] = useState<string>('');
   const [showBoard, setShowBoard] = useState(false);
+  const { connected, connect } = useWallet();
+  const {
+    isPopupOpen,
+    currentIntent,
+    intentData,
+    hidePopup,
+    showPlayGamePopup,
+  } = useWalletConnectionPopup();
 
   const handleJoinGame = () => {
     if (gameId.trim()) {
-      setShowBoard(true);
+      if (connected) {
+        setShowBoard(true);
+      } else {
+        showPlayGamePopup(gameId);
+      }
     }
   };
 
@@ -34,7 +49,37 @@ export default function Home() {
     if (typeof window !== 'undefined') {
       const newGameId = Math.floor(Math.random() * 10000) + 1;
       setGameId(newGameId.toString());
-      setShowBoard(true);
+      if (connected) {
+        setShowBoard(true);
+      } else {
+        showPlayGamePopup(newGameId.toString());
+      }
+    }
+  };
+
+  const handleSeasonalClick = () => {
+    if (connected) {
+      router.push('/boards?mode=seasonal');
+    } else {
+      showPlayGamePopup(undefined, '/boards?mode=seasonal');
+    }
+  };
+
+  const handleWeeklyClick = () => {
+    if (connected) {
+      router.push('/boards?mode=weekly');
+    } else {
+      showPlayGamePopup(undefined, '/boards?mode=weekly');
+    }
+  };
+
+  // Handle wallet connection with actual Solana adapter
+  const handleConnect = async () => {
+    try {
+      await connect();
+    } catch (error) {
+      console.error('Wallet connection failed:', error);
+      throw error;
     }
   };
 
@@ -127,7 +172,7 @@ export default function Home() {
                       </div>
                       <Button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white border-0 transition-colors duration-200"
-                        onClick={() => router.push('/boards?mode=seasonal')}
+                        onClick={handleSeasonalClick}
                       >
                         Join Season-Long Competition
                       </Button>
@@ -162,7 +207,7 @@ export default function Home() {
                       </div>
                       <Button
                         className="w-full bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black transition-colors duration-200"
-                        onClick={() => router.push('/boards?mode=weekly')}
+                        onClick={handleWeeklyClick}
                       >
                         Browse Weekly Games
                       </Button>
@@ -472,6 +517,15 @@ export default function Home() {
         {/* Right Sidebar */}
         <SidebarAds refreshTrigger={0} />
       </div>
+
+      {/* Wallet Connection Popup */}
+      <WalletConnectionPopup
+        isOpen={isPopupOpen}
+        onClose={hidePopup}
+        onConnect={handleConnect}
+        intent={currentIntent}
+        intentData={intentData}
+      />
     </div>
   );
 }
