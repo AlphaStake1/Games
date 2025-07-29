@@ -19,7 +19,7 @@ export interface MarkdownProps {
 export function MarkdownRenderer({ content }: MarkdownProps) {
   // Simple markdown-to-HTML conversion for demo purposes
   // In a real app, you'd use a proper markdown parser like 'marked' or 'remark'
-  const html = content
+  let html = content
     .replace(
       /^# (.*$)/gim,
       '<h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">$1</h1>',
@@ -31,10 +31,6 @@ export function MarkdownRenderer({ content }: MarkdownProps) {
     .replace(
       /^### (.*$)/gim,
       '<h3 class="text-xl font-medium mb-3 mt-6 text-gray-900 dark:text-white">$1</h3>',
-    )
-    .replace(
-      /^\* (.*$)/gim,
-      '<li class="mb-2 text-gray-600 dark:text-gray-300">$1</li>',
     )
     .replace(
       /\*\*(.*?)\*\*/g,
@@ -49,23 +45,49 @@ export function MarkdownRenderer({ content }: MarkdownProps) {
       '<em class="italic text-gray-500 dark:text-gray-400">$1</em>',
     )
     .replace(
-      /^- (.*$)/gim,
-      '<li class="mb-2 text-gray-600 dark:text-gray-300">$1</li>',
-    )
-    .replace(
-      /^\d+\.\s+(.*$)/gim,
-      '<li class="mb-2 text-gray-600 dark:text-gray-300">$1</li>',
-    )
-    .replace(
       /^---$/gim,
       '<hr class="my-8 border-gray-300 dark:border-gray-600">',
     )
-    .replace(/\n\n/g, '</p><p class="mb-4 text-gray-600 dark:text-gray-300">')
     .replace(/🎯|💰|🚀|👤👤👤|🧑‍🤝‍🧑|👥/g, '<span class="text-2xl mr-2">$&</span>');
+
+  // Handle lists with proper indentation - text aligns with content, not bullet
+  html = html.replace(/((?:^- .*$\n?)+)/gim, (match) => {
+    const listItems = match
+      .trim()
+      .split('\n')
+      .map((line) =>
+        line.replace(
+          /^- (.*)$/,
+          '<li class="mb-3 text-gray-600 dark:text-gray-300 leading-relaxed flex"><span class="mr-3">•</span><span class="flex-1">$1</span></li>',
+        ),
+      )
+      .join('');
+    return `<ul class="space-y-3 mb-6">${listItems}</ul>`;
+  });
+
+  // Handle numbered lists with proper alignment
+  html = html.replace(/((?:^\d+\.\s+.*$\n?)+)/gim, (match) => {
+    const listItems = match
+      .trim()
+      .split('\n')
+      .map((line, index) =>
+        line.replace(
+          /^\d+\.\s+(.*)$/,
+          `<li class="mb-3 text-gray-600 dark:text-gray-300 leading-relaxed flex"><span class="mr-3 flex-shrink-0">${index + 1}.</span><span class="flex-1">$1</span></li>`,
+        ),
+      )
+      .join('');
+    return `<ol class="space-y-3 mb-6">${listItems}</ol>`;
+  });
+
+  html = html.replace(
+    /\n\n/g,
+    '</p><p class="mb-4 text-gray-600 dark:text-gray-300">',
+  );
 
   return (
     <div
-      className="prose prose-lg max-w-none dark:prose-invert"
+      className="prose prose-lg max-w-none dark:prose-invert [&_ul]:pl-0 [&_li]:pl-0"
       dangerouslySetInnerHTML={{
         __html: `<p class="mb-4 text-gray-600 dark:text-gray-300">${html}</p>`,
       }}
