@@ -83,6 +83,19 @@ const Header = () => {
                 </Badge>
               </Link>
             )}
+
+            {/* CBL Dashboard Link for existing CBLs */}
+            {user?.isCBL && (
+              <Link href="/cbl/dashboard" className="ml-4">
+                <Badge
+                  variant="default"
+                  className="bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-300 transition-colors duration-200 cursor-pointer"
+                >
+                  <Crown className="w-3 h-3 mr-1" />
+                  CBL Dashboard
+                </Badge>
+              </Link>
+            )}
           </nav>
 
           {/* Desktop Actions */}
@@ -166,6 +179,21 @@ const Header = () => {
                 >
                   <Crown className="w-4 h-4 mr-2" />
                   🏆 Host a Board
+                </Link>
+              </>
+            )}
+
+            {/* CBL Dashboard for Mobile - existing CBLs */}
+            {user?.isCBL && (
+              <>
+                <div className="border-t border-gray-200 dark:border-gray-700 my-4"></div>
+                <Link
+                  href="/cbl/dashboard"
+                  className="w-full bg-purple-100 hover:bg-purple-200 text-purple-800 px-6 py-3 rounded-lg font-medium transition-colors duration-200 text-center block flex items-center justify-center"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Crown className="w-4 h-4 mr-2" />
+                  🏆 CBL Dashboard
                 </Link>
               </>
             )}

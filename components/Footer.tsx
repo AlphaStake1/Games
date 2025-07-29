@@ -1,6 +1,15 @@
+'use client';
+
 import { Instagram, MessageCircle, Heart } from '@/lib/icons';
+import { useAuth } from '@/lib/auth';
 
 const Footer = () => {
+  const { user } = useAuth('PLAYER_ROLE');
+  // Dynamic CBL link based on user status
+  const cblLink = user?.isCBL
+    ? { label: 'CBL Portal', href: '/cbl/dashboard' }
+    : { label: 'Board Leader', href: '/board-leader' };
+
   const quickLinks = [
     { label: 'How to Play', href: '/how-to-play' },
     { label: 'Rules', href: '/rules' },
@@ -9,7 +18,7 @@ const Footer = () => {
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },
     { label: 'Crypto Basics', href: '/crypto-basics' },
-    { label: 'Board Leader', href: '/board-leader' },
+    cblLink,
   ];
 
   // Custom X.com icon component

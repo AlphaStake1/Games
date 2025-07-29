@@ -12,7 +12,8 @@ const ChatbotProvider = ({ children }: ChatbotProviderProps) => {
   const pathname = usePathname();
 
   // Determine which chatbot to show based on the current route
-  const isCBLRoute = pathname.startsWith('/cbl');
+  const isCBLRoute =
+    pathname.startsWith('/cbl') || pathname === '/board-leader';
 
   return (
     <>
