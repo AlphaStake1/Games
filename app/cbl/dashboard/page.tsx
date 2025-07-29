@@ -18,6 +18,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import CBLActivityNotifications from '@/components/CBLActivityNotifications';
 import {
   Select,
   SelectContent,
@@ -205,6 +206,15 @@ function CBLDashboard() {
     bluePoints: 287,
     greenPoints: 203,
     orangePoints: 145,
+  };
+
+  // Activity tracking mock data
+  const activityStatus = {
+    isActive: true,
+    consecutiveMissedSundays: 0,
+    lastBoardCreated: new Date('2024-12-22T10:00:00'),
+    nextDeadline: new Date('2024-12-29T23:59:59'),
+    gracePeriodEnds: new Date('2024-12-31T23:59:59'),
   };
 
   const dashboardStatsSeasonal: CBLStats = {
@@ -951,6 +961,9 @@ function CBLDashboard() {
             ) : (
               // CBL View Overview (existing content)
               <>
+                {/* Activity Notifications */}
+                <CBLActivityNotifications activityStatus={activityStatus} />
+
                 {/* Enhanced Stats Overview */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <Card>
@@ -1227,10 +1240,19 @@ function CBLDashboard() {
                         playbookLink="/docs/cbl-playbook#blue-point-optimization"
                       />
                     </div>
-                    <Button onClick={() => setActiveTab('boards')}>
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create New Board
-                    </Button>
+                    <div className="flex space-x-2">
+                      <Button onClick={() => setActiveTab('boards')}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create New Board
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => setActiveTab('boards')}
+                      >
+                        <Calendar className="h-4 w-4 mr-2" />
+                        Schedule Boards
+                      </Button>
+                    </div>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
@@ -1516,12 +1538,85 @@ function CBLDashboard() {
                     <Filter className="h-4 w-4 mr-2" />
                     Filter
                   </Button>
+                  <Button variant="outline" size="sm">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Templates
+                  </Button>
                   <Button>
                     <Plus className="h-4 w-4 mr-2" />
                     Create New Board
                   </Button>
                 </div>
               </div>
+
+              {/* Board Scheduling Widget */}
+              <Card className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20 border-purple-200 dark:border-purple-800">
+                <CardHeader>
+                  <CardTitle className="flex items-center text-purple-800 dark:text-purple-200">
+                    <Calendar className="h-5 w-5 mr-2" />
+                    Weekly Board Scheduler
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div>
+                      <Label className="text-sm font-medium">
+                        Auto-Release Time
+                      </Label>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <Input
+                          type="time"
+                          defaultValue="10:00"
+                          className="text-sm"
+                        />
+                        <span className="text-xs text-muted-foreground">
+                          Sunday
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-sm font-medium">Template</Label>
+                      <Select defaultValue="last-week">
+                        <SelectTrigger className="text-sm">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="last-week">
+                            Use Last Week's Settings
+                          </SelectItem>
+                          <SelectItem value="custom">
+                            Custom Template
+                          </SelectItem>
+                          <SelectItem value="season-default">
+                            Season Default
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex items-end">
+                      <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                        <Clock className="h-4 w-4 mr-2" />
+                        Schedule Auto-Release
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="mt-4 p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
+                    <p className="text-sm text-purple-800 dark:text-purple-200">
+                      📅 <strong>Next auto-release:</strong> Sunday, Dec 29 at
+                      10:00 AM
+                      <span className="ml-2 text-xs">
+                        <button className="text-purple-600 hover:underline">
+                          Edit
+                        </button>{' '}
+                        |
+                        <button className="text-purple-600 hover:underline ml-1">
+                          Cancel
+                        </button>
+                      </span>
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
 
               <div className="grid gap-6">
                 {activeBoards.map((board) => (
