@@ -51,19 +51,19 @@ export default function CBLOverviewPage() {
           )}
         </div>
 
-        {/* Call to Action */}
+        {/* Call to Action - Funnel Flow */}
         <div className="text-center space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center mb-12">
           <Button
             size="lg"
-            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700"
+            className="w-full sm:w-auto bg-orange-600 hover:bg-orange-700"
           >
-            <Link href="/cbl/apply" className="block">
-              Apply
+            <Link href="/board-leader" className="block">
+              📊 Learn Business Details
             </Link>
           </Button>
           <Button variant="outline" size="lg" className="w-full sm:w-auto">
-            <Link href="/cbl/learn-more" className="block">
-              Learn More
+            <Link href="/cbl/apply" className="block">
+              Skip to Apply
             </Link>
           </Button>
         </div>
@@ -95,14 +95,14 @@ export default function CBLOverviewPage() {
       {/* Sticky Footer CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800 p-4 sm:hidden z-50">
         <div className="flex space-x-3">
-          <Button className="flex-1 bg-blue-600 hover:bg-blue-700">
-            <Link href="/cbl/apply" className="block">
-              Apply
+          <Button className="flex-1 bg-orange-600 hover:bg-orange-700">
+            <Link href="/board-leader" className="block">
+              📊 Business Details
             </Link>
           </Button>
           <Button variant="outline" className="flex-1">
-            <Link href="/cbl/learn-more" className="block">
-              Learn More
+            <Link href="/cbl/apply" className="block">
+              Skip to Apply
             </Link>
           </Button>
         </div>

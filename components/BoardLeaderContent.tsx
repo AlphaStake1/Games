@@ -33,17 +33,17 @@ const BoardLeaderContent = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
-            onClick={() => (window.location.href = '/cbl/learn-more')}
+            onClick={() => (window.location.href = '/cbl/apply')}
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold transition-colors duration-200"
           >
-            Become a CBL – $9.99
+            🚀 Ready to Apply – $9.99
           </Button>
           <Button
-            onClick={() => (window.location.href = '/cbl/learn-more')}
+            onClick={() => (window.location.href = '/cbl/overview')}
             variant="outline"
             className="border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 px-8 py-3 text-lg"
           >
-            Learn More
+            ← Back to Overview
           </Button>
         </div>
       </div>
@@ -120,6 +120,12 @@ const BoardLeaderContent = () => {
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                   <span className="text-gray-600 dark:text-gray-400">
+                    Create at least one board weekly to maintain active status
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-600 dark:text-gray-400">
                     Commit to hosting community boards for the current NFL
                     season
                   </span>
@@ -156,17 +162,14 @@ const BoardLeaderContent = () => {
       </Card>
 
       {/* CBL Levels & Season Milestones */}
-      <Accordion type="single" collapsible className="mb-12">
-        <AccordionItem
-          value="cbl-levels"
-          className="border border-gray-200 dark:border-gray-800 rounded-lg"
-        >
-          <AccordionTrigger className="px-6 py-4 text-left">
+      <div className="mb-12">
+        <div className="border border-gray-200 dark:border-gray-800 rounded-lg">
+          <div className="px-6 py-4">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">
               CBL Levels & Season Milestones
             </h3>
-          </AccordionTrigger>
-          <AccordionContent className="px-6 pb-6">
+          </div>
+          <div className="px-6 pb-6">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -184,45 +187,45 @@ const BoardLeaderContent = () => {
               <TableBody>
                 <TableRow>
                   <TableCell className="font-medium text-gray-900 dark:text-white">
-                    <strong>Casual Leader</strong>
+                    <strong>First Stream CBL</strong>
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
                     Register + pass quick rules quiz
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
-                    Board skins, custom rules, dashboard
+                    Board skins, custom rules, dashboard • Blue Point accrual
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium text-gray-900 dark:text-white">
-                    <strong>Season Earner</strong>
+                    <strong>Drive Maker CBL</strong>
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
                     Fill <strong>3 boards in any 7 day window</strong> (each $7+
                     squares)
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
-                    3% rake share • Blue Point accrual
+                    3% rake share • Enhanced Blue Point rate • $9.99 fee refund
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-medium text-gray-900 dark:text-white">
-                    <strong>All Star Leader</strong>
+                    <strong>Franchise CBL</strong>
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
                     50 filled boards in season <strong>OR</strong> 4,000 squares
                     sold
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
-                    3% rake + 1.5× Blue Point multiplier • merch • Hall of Fame
-                    listing
+                    3% rake + 1.5× Blue Point multiplier over Drive Maker rate •
+                    merch • Orange Point accrual per board
                   </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+          </div>
+        </div>
+      </div>
 
       {/* Board Limits & Pricing */}
       <Card className="mb-12 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm">
@@ -319,30 +322,82 @@ const BoardLeaderContent = () => {
         <CardContent>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center p-4 bg-gray-800 rounded-lg">
-              <div className="text-3xl mb-2">🎯</div>
-              <h3 className="font-semibold mb-2">Fill 9 Boards</h3>
+              <div className="text-3xl mb-2">🏈</div>
+              <h3 className="font-semibold mb-2">Become Drive Maker</h3>
               <p className="text-sm text-gray-400">
-                Successfully fill and complete 9 community boards
+                Fill 3 boards ($7+ squares) in any 7-day window
               </p>
             </div>
             <div className="text-center p-4 bg-gray-800 rounded-lg">
-              <div className="text-3xl mb-2">🖼️</div>
-              <h3 className="font-semibold mb-2">9 NFT Mints</h3>
+              <div className="text-3xl mb-2">⚏</div>
+              <h3 className="font-semibold mb-2">Or Fill 14 Boards</h3>
+              <p className="text-sm text-gray-400">
+                Successfully fill 14 boards below $7 per square
+              </p>
+            </div>
+            <div className="text-center p-4 bg-gray-800 rounded-lg">
+              <div className="text-3xl mb-2">📣</div>
+              <h3 className="font-semibold mb-2">Or 9 NFT Mints</h3>
               <p className="text-sm text-gray-400">
                 Facilitate 9 NFT mints on your boards
-              </p>
-            </div>
-            <div className="text-center p-4 bg-gray-800 rounded-lg">
-              <div className="text-3xl mb-2">🏆</div>
-              <h3 className="font-semibold mb-2">One $50+ SB Board</h3>
-              <p className="text-sm text-gray-400">
-                Fill one Super Bowl board at $50+ per square
               </p>
             </div>
           </div>
           <p className="text-center mt-6 text-sm text-gray-400">
             Whichever milestone comes first will refund your origination fee!
           </p>
+        </CardContent>
+      </Card>
+
+      {/* Activity & Commission Model */}
+      <Card className="mb-12 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 border-blue-200 dark:border-blue-800">
+        <CardHeader>
+          <CardTitle className="text-2xl text-blue-800 dark:text-blue-200">
+            ⚡ Activity & Commission Model
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-blue-800 dark:text-blue-200">
+                Staying Active
+              </h3>
+              <ul className="space-y-2 text-blue-900 dark:text-blue-100">
+                <li>• Create at least one board each week</li>
+                <li>• Grace period until Tuesday after Sunday games</li>
+                <li>• Miss 3 Sundays in a row = Inactive status</li>
+                <li>• Reactivate anytime by creating a filled board</li>
+                <li>• Notifications sent before status changes</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-blue-800 dark:text-blue-200">
+                Commission Structure
+              </h3>
+              <ul className="space-y-2 text-blue-900 dark:text-blue-100">
+                <li>
+                  • <strong>3% rake</strong>: From boards you create
+                </li>
+                <li>
+                  • <strong>30% NFT commission</strong>: From players you
+                  recruit (when active)
+                </li>
+                <li>
+                  • <strong>Blue/Orange Points</strong>: Earned per board
+                  created
+                </li>
+                <li>• All commissions pause when inactive</li>
+                <li>• Players can always access House boards</li>
+              </ul>
+            </div>
+          </div>
+          <div className="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-lg">
+            <p className="text-blue-800 dark:text-blue-200 text-sm">
+              <strong>💡 Pro Tip:</strong> Use the dashboard scheduling feature
+              to auto-release your weekly boards at consistent times. Your
+              community will appreciate the reliability!
+            </p>
+          </div>
         </CardContent>
       </Card>
 
@@ -457,16 +512,17 @@ const BoardLeaderContent = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
-            onClick={() => (window.location.href = '/cbl/learn-more')}
+            onClick={() => (window.location.href = '/cbl/apply')}
             className="bg-[#ed5925] hover:bg-[#d14513] text-white px-8 py-3 text-lg font-semibold transition-colors duration-200"
           >
-            Become a CBL – $9.99
+            🚀 Apply Now – $9.99
           </Button>
           <Button
+            onClick={() => (window.location.href = '/cbl/overview')}
             variant="outline"
             className="border-white text-white hover:bg-white hover:text-[#002244] px-8 py-3 text-lg"
           >
-            Contact Support
+            ← Back to Overview
           </Button>
         </div>
         <p className="text-sm mt-4 opacity-75">

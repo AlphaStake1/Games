@@ -24,10 +24,10 @@ Listen up! A CBL is my go-to organizer who:
 
 ### Phil's 3-Step CBL Path
 
-1. **Apply** – Quick 60-second form (I keep it simple)
-2. **Train** – Short interactive module with yours truly
-3. **Pass the Quiz** – Hit 80%+ and I'll unlock your CBL dashboard
+1. **Learn the Business** – Get the full earning breakdown and requirements
+2. **Apply** – Quick 60-second form (I keep it simple)
+3. **Train & Launch** – Short interactive module, then unlock your CBL dashboard
 
 > **Phil's Promise:** Application decision within the hour
 
-**Ready to suit up?** Hit **Apply** and let's get you leading today!
+**Want the full business details first?** Smart move – every successful CBL does their homework!
