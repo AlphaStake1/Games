@@ -8,7 +8,7 @@ const TermsOfServiceContent = () => {
           TERMS OF SERVICE
         </h1>
         <p className="text-center text-gray-400 mb-8">
-          Last updated: July 5, 2025
+          Last updated: July 29, 2025
         </p>
 
         <div className="space-y-6">
@@ -48,7 +48,120 @@ const TermsOfServiceContent = () => {
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              4. User Responsibilities
+              4. Community Board Leader (CBL) Program
+            </h2>
+            <p className="text-gray-300 mb-4">
+              The CBL program allows qualified users to create and manage boards
+              for their communities while earning commissions. CBL status is
+              subject to ongoing compliance with these additional terms:
+            </p>
+
+            <h3 className="text-xl font-semibold mb-2 text-white">
+              4.1 CBL Activity Requirements
+            </h3>
+            <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+              <li>
+                <strong>3 Sunday Rule:</strong> CBLs must create at least one
+                board every 3 consecutive Sundays to maintain active status.
+              </li>
+              <li>
+                <strong>Grace Period:</strong> CBLs have until Tuesday 11:59 PM
+                ET following each missed Sunday to create a board and reset
+                their activity streak.
+              </li>
+              <li>
+                <strong>Inactive Status:</strong> CBLs who fail to meet activity
+                requirements will be marked as inactive, and their attributed
+                players will be redirected to House boards.
+              </li>
+              <li>
+                <strong>Reactivation:</strong> Inactive CBLs return to active
+                status immediately upon creating their next board.
+              </li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mb-2 text-white">
+              4.2 Commission Structure & Payment Terms
+            </h3>
+            <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+              <li>
+                <strong>Board Creation Rake:</strong> CBLs earn 3% of the total
+                pool from boards they personally create, paid automatically upon
+                board completion.
+              </li>
+              <li>
+                <strong>NFT Referral Commissions:</strong> CBLs earn 30% of
+                platform fees from players they originally referred, distributed
+                monthly.
+              </li>
+              <li>
+                <strong>Player Attribution:</strong> Players remain attributed
+                to their original referring CBL for commission purposes,
+                regardless of which boards they participate in.
+              </li>
+              <li>
+                <strong>Fee Recovery:</strong> New CBLs can recover initial fees
+                by filling 14 boards under $7 OR generating 9 NFT mints from
+                attributed players.
+              </li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mb-2 text-white">
+              4.3 CBL Responsibilities & Obligations
+            </h3>
+            <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+              <li>
+                Maintain regular board creation schedule to serve community
+                needs.
+              </li>
+              <li>
+                Provide fair and transparent gaming experiences for all players.
+              </li>
+              <li>
+                Comply with all CBL program rules and platform terms of service.
+              </li>
+              <li>
+                Refrain from manipulating player attribution or commission
+                systems.
+              </li>
+              <li>Respond professionally to player inquiries and concerns.</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mb-2 text-white">
+              4.4 CBL Tier System
+            </h3>
+            <p className="text-gray-300 mb-2">
+              CBL advancement is based on performance metrics:
+            </p>
+            <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+              <li>
+                <strong>First Stream CBL:</strong> Entry level with basic board
+                creation privileges.
+              </li>
+              <li>
+                <strong>Drive Maker CBL:</strong> Enhanced tools and priority
+                support for active CBLs.
+              </li>
+              <li>
+                <strong>Franchise CBL:</strong> VIP player access and advanced
+                features for top performers.
+              </li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mb-2 text-white">
+              4.5 CBL Program Modifications & Termination
+            </h3>
+            <p className="text-gray-300 mb-4">
+              We reserve the right to modify CBL program terms, commission
+              rates, or activity requirements with 72 hours advance notice. CBLs
+              who violate program terms or engage in prohibited conduct may have
+              their CBL status revoked and commissions forfeited.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-semibold mb-2 text-white">
+              5. User Responsibilities
             </h2>
             <ul className="list-disc list-inside text-gray-300 space-y-2">
               <li>
@@ -65,7 +178,7 @@ const TermsOfServiceContent = () => {
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              5. Prohibited Conduct
+              6. Prohibited Conduct
             </h2>
             <p className="text-gray-300 mb-2">You agree NOT to:</p>
             <ol className="list-decimal list-inside text-gray-300 space-y-2">
@@ -96,7 +209,7 @@ const TermsOfServiceContent = () => {
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              6. Intellectual-Property Rights
+              7. Intellectual-Property Rights
             </h2>
             <p className="text-gray-300">
               All trademarks, logos, graphics, text, software, and other
@@ -109,7 +222,7 @@ const TermsOfServiceContent = () => {
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              7. User Content
+              8. User Content
             </h2>
             <p className="text-gray-300">
               You retain ownership of user-generated content you submit, but you
@@ -123,7 +236,7 @@ const TermsOfServiceContent = () => {
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              8. Disclaimers
+              9. Disclaimers
             </h2>
             <p className="text-gray-300">
               The Service is provided “as is” and “as available.” We make no
@@ -137,7 +250,7 @@ const TermsOfServiceContent = () => {
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              9. Limitation of Liability
+              10. Limitation of Liability
             </h2>
             <p className="text-gray-300">
               To the maximum extent permitted by law, we shall not be liable for
@@ -152,7 +265,7 @@ const TermsOfServiceContent = () => {
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              10. Indemnification
+              11. Indemnification
             </h2>
             <p className="text-gray-300">
               You agree to indemnify and hold harmless us, our affiliates, and
@@ -165,19 +278,19 @@ const TermsOfServiceContent = () => {
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              11. Termination
+              12. Termination
             </h2>
             <p className="text-gray-300">
               We may suspend or terminate your account or access to the Service
               at any time, with or without notice, for conduct that we believe
               violates these Terms or is harmful to the Service or other users.
-              Sections 5–13 survive any termination.
+              Sections 6–14 survive any termination.
             </p>
           </div>
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              12. Governing Law & Dispute Resolution
+              13. Governing Law & Dispute Resolution
             </h2>
             <p className="text-gray-300">
               These Terms are governed by the laws of the Cayman Islands,
@@ -191,7 +304,7 @@ const TermsOfServiceContent = () => {
 
           <div>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              13. General
+              14. General
             </h2>
             <ul className="list-disc list-inside text-gray-300 space-y-2">
               <li>

@@ -577,7 +577,188 @@ const RulesContent = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl">3. Free-to-Play Games</CardTitle>
+            <CardTitle className="text-3xl">
+              3. Community Board Leader (CBL) Program
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <p>
+              Community Board Leaders (CBLs) are authorized organizers who
+              create and manage boards for their communities, earning
+              commissions from platform activity while providing personalized
+              gaming experiences.
+            </p>
+
+            <h3 className="text-2xl font-semibold">
+              3.1 CBL Activity Requirements
+            </h3>
+            <p>
+              CBLs must maintain active engagement to preserve their leadership
+              status and player access:
+            </p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                <strong>3 Sunday Rule:</strong> CBLs who miss creating boards
+                for 3 consecutive Sundays enter "Inactive" status, triggering
+                player migration to House boards.
+              </li>
+              <li>
+                <strong>Tuesday Grace Period:</strong> CBLs have until Tuesday
+                11:59 PM ET following each missed Sunday to create a board and
+                reset their streak.
+              </li>
+              <li>
+                <strong>Activity Notifications:</strong> Progressive alerts warn
+                CBLs of approaching deadlines (Info → Warning → Critical
+                status).
+              </li>
+              <li>
+                <strong>Automatic Reactivation:</strong> Inactive CBLs
+                immediately return to active status upon creating their next
+                board.
+              </li>
+            </ul>
+
+            <h3 className="text-2xl font-semibold">
+              3.2 Player Attribution & Mobility
+            </h3>
+            <p>
+              Players maintain freedom of movement while preserving CBL
+              attribution for commissions:
+            </p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                <strong>Original Referrer Attribution:</strong> Players remain
+                attributed to their original referring CBL for NFT commission
+                purposes (30% of platform fees).
+              </li>
+              <li>
+                <strong>Board Creator Rake:</strong> CBLs earn 3% rake from
+                boards they personally create, regardless of player attribution.
+              </li>
+              <li>
+                <strong>House Board Access:</strong> When a CBL becomes
+                inactive, their attributed players can seamlessly access
+                House-operated boards without interruption.
+              </li>
+              <li>
+                <strong>Player Choice:</strong> Players may participate in any
+                active CBL's boards while maintaining their original
+                attribution.
+              </li>
+            </ul>
+
+            <h3 className="text-2xl font-semibold">
+              3.3 CBL Tier Progression & Benefits
+            </h3>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Tier</TableHead>
+                  <TableHead>Requirements</TableHead>
+                  <TableHead>Benefits</TableHead>
+                  <TableHead>Fee Recovery</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <strong>First Stream CBL</strong>
+                  </TableCell>
+                  <TableCell>Entry level</TableCell>
+                  <TableCell>Basic board creation, 3% rake</TableCell>
+                  <TableCell>Fill 14 boards under $7 OR 9 NFT mints</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Drive Maker CBL</strong>
+                  </TableCell>
+                  <TableCell>Sustained activity, volume targets</TableCell>
+                  <TableCell>Enhanced tools, priority support</TableCell>
+                  <TableCell>Automatic fee recovery</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Franchise CBL</strong>
+                  </TableCell>
+                  <TableCell>Exceptional performance</TableCell>
+                  <TableCell>VIP player access, advanced features</TableCell>
+                  <TableCell>Premium revenue sharing</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+
+            <h3 className="text-2xl font-semibold">
+              3.4 Board Scheduling & Templates
+            </h3>
+            <p>
+              CBLs have access to automated board creation tools and
+              customizable templates:
+            </p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                <strong>Scheduled Creation:</strong> CBLs can pre-schedule
+                boards to maintain activity requirements automatically.
+              </li>
+              <li>
+                <strong>Template System:</strong> Save and reuse board
+                configurations for consistent community experiences.
+              </li>
+              <li>
+                <strong>Bulk Operations:</strong> Create multiple boards
+                simultaneously for different game tiers or formats.
+              </li>
+              <li>
+                <strong>Activity Dashboard:</strong> Real-time tracking of board
+                creation history, player engagement, and commission earnings.
+              </li>
+            </ul>
+
+            <h3 className="text-2xl font-semibold">
+              3.5 Commission Structure & Payouts
+            </h3>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Commission Type</TableHead>
+                  <TableHead>Rate</TableHead>
+                  <TableHead>Source</TableHead>
+                  <TableHead>Attribution</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <strong>Board Creation Rake</strong>
+                  </TableCell>
+                  <TableCell>3%</TableCell>
+                  <TableCell>Boards created by CBL</TableCell>
+                  <TableCell>Board creator only</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>NFT Referral Commission</strong>
+                  </TableCell>
+                  <TableCell>30%</TableCell>
+                  <TableCell>Platform fees from attributed players</TableCell>
+                  <TableCell>Original referring CBL</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Volume Bonuses</strong>
+                  </TableCell>
+                  <TableCell>Variable</TableCell>
+                  <TableCell>Tier progression rewards</TableCell>
+                  <TableCell>Performance-based</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-3xl">4. Free-to-Play Games</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <p>
@@ -603,7 +784,7 @@ const RulesContent = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              General Rules & Fair Play
+              5. General Rules & Fair Play
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -718,7 +899,7 @@ const RulesContent = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              Eligibility & Legal Compliance
+              6. Eligibility & Legal Compliance
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -787,7 +968,9 @@ const RulesContent = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl">Scoring Pattern Examples</CardTitle>
+            <CardTitle className="text-3xl">
+              7. Scoring Pattern Examples
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <p>
@@ -845,7 +1028,7 @@ const RulesContent = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              Frequently Asked Questions
+              8. Frequently Asked Questions
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -925,7 +1108,7 @@ const RulesContent = () => {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              <strong>Rules v1.3 – effective July 26, 2025.</strong> Changes
+              <strong>Rules v1.4 – effective July 29, 2025.</strong> Changes
               will be announced on-chain and via Discord 72 hours before taking
               effect. The most current version is always available at this URL.
             </p>

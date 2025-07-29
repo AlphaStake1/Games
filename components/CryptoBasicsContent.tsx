@@ -6,7 +6,7 @@ export default function CryptoBasicsContent() {
       <h1>Crypto Basics: Your Beginner&apos;s Guide</h1>
 
       <p>
-        <em>Last updated: 5 July 2025</em>
+        <em>Last updated: 29 July 2025</em>
       </p>
 
       <p>
@@ -246,6 +246,74 @@ export default function CryptoBasicsContent() {
         funds to accidents or theft. Crypto puts you in control of your money,
         which is empowering but also requires vigilance.
       </p>
+
+      <hr className="my-8" />
+
+      <h2 className="mt-12">Football Squares & Blockchain Integration</h2>
+      <p className="text-lg text-muted-foreground">
+        <strong>Why this matters:</strong> Football Squares operates on
+        blockchain technology, meaning your NFT squares, commission earnings,
+        and game interactions are recorded permanently on-chain. Understanding
+        how this works helps you manage your assets and earnings effectively.
+      </p>
+
+      <h3>Community Board Leader (CBL) Earnings</h3>
+      <p>
+        If you're a Community Board Leader, you'll earn commissions in
+        cryptocurrency that are automatically distributed to your wallet:
+      </p>
+      <ul className="list-disc pl-6">
+        <li>
+          <strong>Board Creation Rake:</strong> 3% of each board you create is
+          automatically sent to your wallet address when the board completes.
+        </li>
+        <li>
+          <strong>NFT Referral Commissions:</strong> 30% of platform fees from
+          players you originally referred are distributed to your wallet
+          monthly.
+        </li>
+        <li>
+          <strong>Volume Bonuses:</strong> Tier progression rewards and
+          performance bonuses are sent directly to your connected wallet.
+        </li>
+      </ul>
+
+      <h3>NFT Squares & Ownership</h3>
+      <p>
+        Your Football Squares are NFTs (Non-Fungible Tokens) stored in your
+        wallet:
+      </p>
+      <ul className="list-disc pl-6">
+        <li>
+          <strong>Permanent Ownership:</strong> Once purchased, your NFT square
+          belongs to you permanently and is recorded on the Solana blockchain.
+        </li>
+        <li>
+          <strong>Transferable:</strong> You can send squares to other wallets,
+          though this may affect CBL attribution for commission purposes.
+        </li>
+        <li>
+          <strong>Verifiable:</strong> Anyone can verify your square ownership
+          using blockchain explorers like Solscan.io.
+        </li>
+      </ul>
+
+      <h3>Transaction Security</h3>
+      <p>When interacting with Football Squares, always verify transactions:</p>
+      <ul className="list-disc pl-6">
+        <li>
+          <strong>Double-check amounts:</strong> Ensure the transaction amount
+          matches the entry fee for your selected tier.
+        </li>
+        <li>
+          <strong>Verify contract addresses:</strong> Only interact with
+          official Football Squares smart contracts.
+        </li>
+        <li>
+          <strong>Monitor earnings:</strong> Track your CBL commissions and
+          winnings in your wallet to ensure proper distribution.
+        </li>
+      </ul>
 
       <hr className="my-8" />
 

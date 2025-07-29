@@ -6,7 +6,7 @@ export default function PrivacyPolicyContent() {
       <h1>Football Squares – Privacy Policy</h1>
 
       <p>
-        <em>Last updated: 4 July 2025</em>
+        <em>Last updated: 29 July 2025</em>
       </p>
 
       <p>
@@ -61,6 +61,11 @@ export default function PrivacyPolicyContent() {
           <strong>Support Communications</strong> (correspondence, requests,
           survey responses).
         </li>
+        <li>
+          <strong>Community Board Leader (CBL) Data</strong> (application
+          information, board creation history, activity tracking, commission
+          calculations, player attribution records).
+        </li>
       </ul>
 
       <h3>2.2 Information Collected Automatically</h3>
@@ -107,7 +112,7 @@ export default function PrivacyPolicyContent() {
             </td>
             <td>
               Operate and maintain the game, verify entries, resolve disputes,
-              and distribute winnings.
+              distribute winnings, and manage Community Board Leader programs.
             </td>
           </tr>
           <tr>
@@ -153,6 +158,16 @@ export default function PrivacyPolicyContent() {
             <td>
               Send promotional messages or newsletters you have consented to
               receive.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>CBL Activity Monitoring</strong>
+            </td>
+            <td>
+              Track board creation frequency, calculate commission eligibility,
+              monitor "3 Sunday Rule" compliance, send activity notifications,
+              and manage player attribution for referral commissions.
             </td>
           </tr>
         </tbody>
