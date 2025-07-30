@@ -90,6 +90,48 @@ export default function CBLOverviewPage() {
             </ul>
           </CardContent>
         </Card>
+
+        {/* Rewards Section */}
+        <Card className="mb-8 bg-gradient-to-r from-blue-50 to-orange-50 dark:from-blue-950/20 dark:to-orange-950/20 border-blue-200 dark:border-blue-800">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              🎁 CBL Rewards & Points System
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Community Board Leaders earn exclusive rewards through our
+              comprehensive points system:
+            </p>
+            <div className="grid md:grid-cols-2 gap-6 mb-4">
+              <div>
+                <h4 className="font-semibold text-blue-600 mb-2">
+                  Blue Points
+                </h4>
+                <ul className="text-sm space-y-1">
+                  <li>• 1.5× multiplier on filled boards ($7+)</li>
+                  <li>• +500 bonus per additional weekly board</li>
+                  <li>• Redeemable for NFTs and future tokens</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-orange-600 mb-2">
+                  Orange Points
+                </h4>
+                <ul className="text-sm space-y-1">
+                  <li>• 50 points per 95% filled board</li>
+                  <li>• 100 points for 4-week retention</li>
+                  <li>• Referral and social engagement bonuses</li>
+                </ul>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <Button variant="outline" asChild>
+                <Link href="/cbl/economics">View Detailed Economics →</Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Sticky Footer CTA for Mobile */}

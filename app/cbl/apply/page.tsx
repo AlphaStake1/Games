@@ -65,6 +65,47 @@ const CBLApplicationPage = () => {
           </p>
         </div>
 
+        {/* Rewards Benefits Preview */}
+        <Card className="mb-8 bg-gradient-to-r from-blue-50 to-orange-50 dark:from-blue-950/20 dark:to-orange-950/20 border-blue-200 dark:border-blue-800">
+          <CardContent className="p-6">
+            <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
+              🎁 CBL Rewards at a Glance
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="font-medium text-blue-600">Blue Points:</span>{' '}
+                1.5× multiplier + bonuses
+              </div>
+              <div>
+                <span className="font-medium text-orange-600">
+                  Orange Points:
+                </span>{' '}
+                Community & retention rewards
+              </div>
+              <div>
+                <span className="font-medium text-green-600">
+                  Rake Revenue:
+                </span>{' '}
+                3% on qualified boards
+              </div>
+              <div>
+                <span className="font-medium text-purple-600">
+                  NFT Commission:
+                </span>{' '}
+                30% mint revenue share
+              </div>
+            </div>
+            <div className="mt-3 text-center">
+              <a
+                href="/cbl/economics"
+                className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+              >
+                View Full Economics →
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Application Form */}
         <Card className="bg-green-800 dark:bg-green-900 border-green-700 dark:border-green-600">
           <CardHeader>

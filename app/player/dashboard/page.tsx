@@ -515,6 +515,14 @@ function PlayerDashboard() {
                         {playerStats.bluePoints.cbl}
                       </span>
                     </div>
+                    <div className="mt-3 pt-2 border-t">
+                      <a
+                        href="/rewards?tab=blue-points"
+                        className="text-xs text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1"
+                      >
+                        Learn More →
+                      </a>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -586,6 +594,14 @@ function PlayerDashboard() {
                       <span className="text-orange-600">
                         {playerStats.orangePoints.cbl}
                       </span>
+                    </div>
+                    <div className="mt-3 pt-2 border-t">
+                      <a
+                        href="/rewards?tab=orange-points"
+                        className="text-xs text-orange-600 hover:text-orange-800 font-medium inline-flex items-center gap-1"
+                      >
+                        Learn More →
+                      </a>
                     </div>
                   </div>
                 </CardContent>

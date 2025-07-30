@@ -438,6 +438,49 @@ const FaqContent = () => {
           </AccordionItem>
         </div>
 
+        {/* Rewards System */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
+            🎁 Rewards System
+          </h2>
+
+          <AccordionItem
+            value="item-rewards"
+            className="border-b border-gray-200 dark:border-gray-700"
+          >
+            <AccordionTrigger className="text-left hover:text-[#ed5925] transition-colors">
+              What are the different types of rewards?
+            </AccordionTrigger>
+            <AccordionContent className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              We have three types of reward points:
+              <br />
+              <br />
+              <strong>Blue Points</strong>: Earned through gameplay
+              participation. Higher board prices earn more points (100-2,000+
+              per square).
+              <br />
+              <strong>Orange Points</strong>: Earned through social activities
+              like referrals, social sharing, and community engagement (2-100+
+              points per activity).
+              <br />
+              <strong>Green Points</strong>: Seasonal competition points
+              displayed on public leaderboards.
+              <br />
+              <br />
+              Blue and Orange Points can be redeemed for NFTs, exclusive perks,
+              and future token airdrops. VIP members earn 1.5× Blue Points on
+              all activities.
+              <br />
+              <a
+                href="/rewards"
+                className="text-[#ed5925] hover:text-[#d14513] font-medium inline-flex items-center gap-1 mt-2"
+              >
+                View full rewards system ➜
+              </a>
+            </AccordionContent>
+          </AccordionItem>
+        </div>
+
         {/* VIP Membership */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
           <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
