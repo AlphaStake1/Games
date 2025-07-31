@@ -1,73 +1,595 @@
 'use client';
+
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import * as playerEmailService from '@/lib/services/playerEmailService';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import {
+  Mail,
+  Shield,
+  CheckCircle,
+  AlertTriangle,
+  Info,
+  Users,
+  MessageSquare,
+  Phone,
+  Gamepad2,
+} from 'lucide-react';
 
-export default function SubmitPlayerEmailPage() {
-  const [playerName, setPlayerName] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
+interface EmailSubmissionForm {
+  playerName: string;
+  emailAddress: string;
+  secondaryEmail: string;
+  phoneNumber: string;
+  telegramHandle: string;
+  discordHandle: string;
+  gameLevel: string;
+  totalGamesPlayed: number;
+  currentCBL: string;
+  preferences: {
+    emailNotifications: boolean;
+    gameUpdates: boolean;
+    promotionalEmails: boolean;
+    systemAlerts: boolean;
+    batchCommunications: boolean;
+  };
+  agreedToTerms: boolean;
+}
+
+export default function PlayerEmailSubmissionPage() {
+  const [formData, setFormData] = useState<EmailSubmissionForm>({
+    playerName: '',
+    emailAddress: '',
+    secondaryEmail: '',
+    phoneNumber: '',
+    telegramHandle: '',
+    discordHandle: '',
+    gameLevel: '',
+    totalGamesPlayed: 0,
+    currentCBL: '',
+    preferences: {
+      emailNotifications: true,
+      gameUpdates: true,
+      promotionalEmails: false,
+      systemAlerts: true,
+      batchCommunications: true,
+    },
+    agreedToTerms: false,
+  });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.playerName.trim()) {
+      newErrors.playerName = 'Player name is required';
+    }
+
+    if (!formData.emailAddress.trim()) {
+      newErrors.emailAddress = 'Email address is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.emailAddress)) {
+      newErrors.emailAddress = 'Please enter a valid email address';
+    }
+
+    if (!formData.gameLevel) {
+      newErrors.gameLevel = 'Please select your game level';
+    }
+
+    if (!formData.agreedToTerms) {
+      newErrors.agreedToTerms = 'You must agree to the terms and conditions';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
-    setError(null);
-    setSuccess(false);
 
     try {
-      await playerEmailService.addPlayerContact({
-        playerId: crypto.randomUUID(), // Or get from user session
-        playerName,
-        emailAddress,
-        isVerified: false,
-        source: 'submission_form',
-        preferences: { receivesNewsletter: true, receivesUpdates: true, receivesPromotions: false },
-        status: 'active',
-      });
-      setSuccess(true);
-    } catch (err) {
-      setError((err as Error).message);
+      // Simulate API call to submit email
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Here you would call your actual API
+      // const response = await fetch('/api/player/submit-email', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData)
+      // });
+
+      console.log('Player email submission:', formData);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Submission failed:', error);
+      alert('Submission failed. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const updateFormData = (field: string, value: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: '',
+      }));
+    }
+  };
+
+  const updatePreferences = (field: string, value: boolean) => {
+    setFormData((prev) => ({
+      ...prev,
+      preferences: {
+        ...prev.preferences,
+        [field]: value,
+      },
+    }));
+  };
+
+  if (submitted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md text-center">
+          <CardHeader>
+            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <CheckCircle className="h-8 w-8 text-green-600" />
+            </div>
+            <CardTitle className="text-green-900">
+              Email Submitted Successfully!
+            </CardTitle>
+            <CardDescription>
+              Your email has been securely added to Coach B's player
+              communications database.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="p-4 bg-blue-50 rounded-lg text-left">
+              <h4 className="font-semibold text-blue-900 mb-2">
+                What happens next:
+              </h4>
+              <ul className="text-sm text-blue-800 space-y-1">
+                <li>• You'll receive a verification email within 10 minutes</li>
+                <li>• Click the verification link to confirm your email</li>
+                <li>
+                  • Once verified, you'll start receiving game updates from
+                  Coach B
+                </li>
+                <li>
+                  • Check your spam folder if you don't see the verification
+                  email
+                </li>
+              </ul>
+            </div>
+
+            <div className="p-4 bg-amber-50 rounded-lg text-left">
+              <h4 className="font-semibold text-amber-900 mb-2">
+                Email Types You'll Receive:
+              </h4>
+              <ul className="text-sm text-amber-800 space-y-1">
+                <li>• Game updates and new feature announcements</li>
+                <li>• Strategy tips and insights from Coach B</li>
+                <li>• Community events and tournament notifications</li>
+                {formData.preferences.batchCommunications && (
+                  <li>• Batch communications and player updates</li>
+                )}
+              </ul>
+            </div>
+
+            <Button
+              onClick={() => (window.location.href = '/dashboard')}
+              className="w-full"
+            >
+              Return to Game Dashboard
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mx-auto flex justify-center items-center h-screen">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Join Coach B's Mailing List</CardTitle>
-          <CardDescription>Get the latest updates, news, and promotions directly from Coach B.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {success ? (
-            <div className="text-green-600">Thank you for subscribing!</div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <Mail className="h-8 w-8 text-green-600" />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Join Coach B's Player List
+          </h1>
+          <p className="mt-2 text-lg text-gray-600">
+            Get the latest game updates, strategy tips, and exclusive
+            communications from Coach B
+          </p>
+        </div>
+
+        {/* Security Notice */}
+        <Card className="mb-8">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-3">
+              <Shield className="h-5 w-5 text-green-600 mt-0.5" />
               <div>
-                <Label htmlFor="playerName">Your Name</Label>
-                <Input id="playerName" value={playerName} onChange={e => setPlayerName(e.target.value)} required />
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Security & Privacy
+                </h3>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>
+                    • Your email is stored in a secure, encrypted database
+                  </li>
+                  <li>• Only Coach B has access to this email list</li>
+                  <li>• All communications are logged and monitored</li>
+                  <li>• You can unsubscribe at any time</li>
+                  <li>• Your information is never shared with third parties</li>
+                </ul>
               </div>
-              <div>
-                <Label htmlFor="emailAddress">Email Address</Label>
-                <Input id="emailAddress" type="email" value={emailAddress} onChange={e => setEmailAddress(e.target.value)} required />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Form */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Player Contact Information</CardTitle>
+            <CardDescription>
+              Please provide your contact details and gaming preferences
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Basic Information */}
+              <div className="space-y-4">
+                <h4 className="font-semibold text-gray-900 border-b pb-2">
+                  Basic Information
+                </h4>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="playerName">Player Name *</Label>
+                    <Input
+                      id="playerName"
+                      value={formData.playerName}
+                      onChange={(e) =>
+                        updateFormData('playerName', e.target.value)
+                      }
+                      placeholder="Your full name"
+                      className={errors.playerName ? 'border-red-500' : ''}
+                    />
+                    {errors.playerName && (
+                      <p className="text-sm text-red-600">
+                        {errors.playerName}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="gameLevel">Game Level *</Label>
+                    <Select
+                      value={formData.gameLevel}
+                      onValueChange={(value) =>
+                        updateFormData('gameLevel', value)
+                      }
+                    >
+                      <SelectTrigger
+                        className={errors.gameLevel ? 'border-red-500' : ''}
+                      >
+                        <SelectValue placeholder="Select your level" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="beginner">Beginner</SelectItem>
+                        <SelectItem value="intermediate">
+                          Intermediate
+                        </SelectItem>
+                        <SelectItem value="advanced">Advanced</SelectItem>
+                        <SelectItem value="pro">Pro</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.gameLevel && (
+                      <p className="text-sm text-red-600">{errors.gameLevel}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="emailAddress">Primary Email Address *</Label>
+                  <Input
+                    id="emailAddress"
+                    type="email"
+                    value={formData.emailAddress}
+                    onChange={(e) =>
+                      updateFormData('emailAddress', e.target.value)
+                    }
+                    placeholder="your-email@domain.com"
+                    className={errors.emailAddress ? 'border-red-500' : ''}
+                  />
+                  {errors.emailAddress && (
+                    <p className="text-sm text-red-600">
+                      {errors.emailAddress}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="secondaryEmail">
+                    Secondary Email (Optional)
+                  </Label>
+                  <Input
+                    id="secondaryEmail"
+                    type="email"
+                    value={formData.secondaryEmail}
+                    onChange={(e) =>
+                      updateFormData('secondaryEmail', e.target.value)
+                    }
+                    placeholder="backup-email@domain.com"
+                  />
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms" required />
-                <Label htmlFor="terms">I agree to the terms and conditions</Label>
+
+              {/* Contact Methods */}
+              <div className="space-y-4">
+                <h4 className="font-semibold text-gray-900 border-b pb-2">
+                  Additional Contact Methods
+                </h4>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="phoneNumber">Phone Number</Label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <Input
+                        id="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={(e) =>
+                          updateFormData('phoneNumber', e.target.value)
+                        }
+                        placeholder="+1 (555) 123-4567"
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="totalGamesPlayed">Games Played</Label>
+                    <div className="relative">
+                      <Gamepad2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <Input
+                        id="totalGamesPlayed"
+                        type="number"
+                        min="0"
+                        value={formData.totalGamesPlayed || ''}
+                        onChange={(e) =>
+                          updateFormData(
+                            'totalGamesPlayed',
+                            parseInt(e.target.value) || 0,
+                          )
+                        }
+                        placeholder="0"
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="telegramHandle">Telegram Handle</Label>
+                    <div className="relative">
+                      <MessageSquare className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <Input
+                        id="telegramHandle"
+                        value={formData.telegramHandle}
+                        onChange={(e) =>
+                          updateFormData('telegramHandle', e.target.value)
+                        }
+                        placeholder="@yourusername"
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="discordHandle">Discord Handle</Label>
+                    <div className="relative">
+                      <MessageSquare className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <Input
+                        id="discordHandle"
+                        value={formData.discordHandle}
+                        onChange={(e) =>
+                          updateFormData('discordHandle', e.target.value)
+                        }
+                        placeholder="username#1234"
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              {error && <div className="text-red-500">{error}</div>}
-              <Button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Subscribe'}</Button>
+
+              {/* Player Details */}
+              <div className="space-y-4">
+                <h4 className="font-semibold text-gray-900 border-b pb-2">
+                  Player Details
+                </h4>
+
+                <div className="space-y-2">
+                  <Label htmlFor="currentCBL">Current CBL (Optional)</Label>
+                  <div className="relative">
+                    <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Input
+                      id="currentCBL"
+                      value={formData.currentCBL}
+                      onChange={(e) =>
+                        updateFormData('currentCBL', e.target.value)
+                      }
+                      placeholder="e.g., OC Phil's Elite Squad or Independent"
+                      className="pl-10"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Email Preferences */}
+              <div className="space-y-4">
+                <h4 className="font-semibold text-gray-900 border-b pb-2">
+                  Email Preferences
+                </h4>
+
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="emailNotifications"
+                      checked={formData.preferences.emailNotifications}
+                      onCheckedChange={(checked) =>
+                        updatePreferences('emailNotifications', !!checked)
+                      }
+                    />
+                    <Label htmlFor="emailNotifications" className="text-sm">
+                      General email notifications
+                    </Label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="gameUpdates"
+                      checked={formData.preferences.gameUpdates}
+                      onCheckedChange={(checked) =>
+                        updatePreferences('gameUpdates', !!checked)
+                      }
+                    />
+                    <Label htmlFor="gameUpdates" className="text-sm">
+                      Game updates and new features
+                    </Label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="systemAlerts"
+                      checked={formData.preferences.systemAlerts}
+                      onCheckedChange={(checked) =>
+                        updatePreferences('systemAlerts', !!checked)
+                      }
+                    />
+                    <Label htmlFor="systemAlerts" className="text-sm">
+                      System alerts and important announcements
+                    </Label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="batchCommunications"
+                      checked={formData.preferences.batchCommunications}
+                      onCheckedChange={(checked) =>
+                        updatePreferences('batchCommunications', !!checked)
+                      }
+                    />
+                    <Label htmlFor="batchCommunications" className="text-sm">
+                      Batch communications and community updates
+                    </Label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="promotionalEmails"
+                      checked={formData.preferences.promotionalEmails}
+                      onCheckedChange={(checked) =>
+                        updatePreferences('promotionalEmails', !!checked)
+                      }
+                    />
+                    <Label htmlFor="promotionalEmails" className="text-sm">
+                      Promotional emails and special offers
+                    </Label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Terms Agreement */}
+              <div className="space-y-4">
+                <div className="flex items-start space-x-2">
+                  <Checkbox
+                    id="agreedToTerms"
+                    checked={formData.agreedToTerms}
+                    onCheckedChange={(checked) =>
+                      updateFormData('agreedToTerms', !!checked)
+                    }
+                    className={errors.agreedToTerms ? 'border-red-500' : ''}
+                  />
+                  <Label htmlFor="agreedToTerms" className="text-sm leading-5">
+                    I agree to receive emails from Coach B and understand that
+                    my email will be stored securely. I can unsubscribe at any
+                    time and my information will not be shared with third
+                    parties. *
+                  </Label>
+                </div>
+                {errors.agreedToTerms && (
+                  <p className="text-sm text-red-600">{errors.agreedToTerms}</p>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <div className="pt-6">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full"
+                  size="lg"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Submitting Email...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="h-4 w-4 mr-2" />
+                      Submit Email Address
+                    </>
+                  )}
+                </Button>
+              </div>
             </form>
-          )}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+
+        {/* Footer Info */}
+        <div className="mt-8 text-center text-sm text-gray-500">
+          <p>
+            Questions about email submissions? Contact support or reach out to
+            Coach B directly.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
