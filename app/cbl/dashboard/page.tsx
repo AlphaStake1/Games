@@ -2057,6 +2057,89 @@ function CBLDashboard() {
             <TabsContent value="communications" className="space-y-6">
               <h2 className="text-2xl font-bold">Community Communications</h2>
 
+              {/* Telegram Integration Card */}
+              <Card className="bg-gradient-to-r from-blue-50 to-orange-50 dark:from-blue-950/20 dark:to-orange-950/20 border-blue-200 dark:border-blue-800">
+                <CardHeader>
+                  <CardTitle className="flex items-center text-blue-800 dark:text-blue-200">
+                    <MessageSquare className="h-5 w-5 mr-2" />
+                    Telegram Community Hub
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="space-y-3">
+                      <h4 className="font-medium">OC Phil Status</h4>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span className="text-sm">Online & Ready</span>
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Last message: 2 minutes ago
+                      </div>
+                      <Button size="sm" className="w-full" asChild>
+                        <a
+                          href="https://t.me/OC_Phil_bot"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Chat with OC Phil
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h4 className="font-medium">Community Stats</h4>
+                      <div className="space-y-1 text-sm">
+                        <div className="flex justify-between">
+                          <span>Active Members:</span>
+                          <span className="font-medium">89</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Messages Today:</span>
+                          <span className="font-medium">247</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Board Celebrations:</span>
+                          <span className="font-medium">12</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h4 className="font-medium">Quick Actions</h4>
+                      <div className="space-y-2">
+                        <Button variant="outline" size="sm" className="w-full">
+                          <Trophy className="h-4 w-4 mr-2" />
+                          Announce Board Fill
+                        </Button>
+                        <Button variant="outline" size="sm" className="w-full">
+                          <Users className="h-4 w-4 mr-2" />
+                          Share Board Link
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full"
+                          asChild
+                        >
+                          <a href="/lounge" target="_blank">
+                            Visit Lounge
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+                    <p className="text-sm text-blue-800 dark:text-blue-200">
+                      💬 <strong>Telegram Features:</strong> Real-time
+                      notifications, automated celebrations, weekly digest
+                      summaries, and direct coaching from OC Phil.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
               <div className="grid md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
@@ -2093,8 +2176,21 @@ function CBLDashboard() {
                           <SelectItem value="board">
                             Specific Board Players
                           </SelectItem>
+                          <SelectItem value="telegram">
+                            Telegram Community
+                          </SelectItem>
                         </SelectContent>
                       </Select>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="send-telegram"
+                        className="rounded"
+                      />
+                      <Label htmlFor="send-telegram" className="text-sm">
+                        Also send to Telegram via OC Phil
+                      </Label>
                     </div>
                     <Button className="w-full">
                       <Send className="h-4 w-4 mr-2" />
@@ -2111,18 +2207,24 @@ function CBLDashboard() {
                     <div className="space-y-3">
                       <div className="border-l-4 border-blue-500 pl-3">
                         <div className="font-medium">
+                          Board Fill Celebration (Telegram)
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          1 hour ago • 89 members + GIF
+                        </div>
+                      </div>
+                      <div className="border-l-4 border-green-500 pl-3">
+                        <div className="font-medium">
                           Weekly Newsletter Sent
                         </div>
                         <div className="text-sm text-muted-foreground">
                           2 days ago • 247 recipients
                         </div>
                       </div>
-                      <div className="border-l-4 border-green-500 pl-3">
-                        <div className="font-medium">
-                          Board Full Notification
-                        </div>
+                      <div className="border-l-4 border-orange-500 pl-3">
+                        <div className="font-medium">OC Phil Strategy Tip</div>
                         <div className="text-sm text-muted-foreground">
-                          5 days ago • 89 recipients
+                          3 days ago • Telegram community
                         </div>
                       </div>
                       <div className="border-l-4 border-purple-500 pl-3">
@@ -2135,6 +2237,87 @@ function CBLDashboard() {
                   </CardContent>
                 </Card>
               </div>
+
+              {/* Telegram Settings Card */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Settings className="h-5 w-5 mr-2" />
+                    Telegram Automation Settings
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h4 className="font-medium">Notification Preferences</h4>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm">
+                            Board fill celebrations
+                          </span>
+                          <Switch defaultChecked />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm">
+                            New board announcements
+                          </span>
+                          <Switch defaultChecked />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm">
+                            Weekly digest summaries
+                          </span>
+                          <Switch defaultChecked />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm">
+                            Strategy tips from OC Phil
+                          </span>
+                          <Switch />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="font-medium">Message Timing</h4>
+                      <div className="space-y-3">
+                        <div>
+                          <Label className="text-sm">Board announcements</Label>
+                          <Select defaultValue="immediate">
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="immediate">
+                                Immediate
+                              </SelectItem>
+                              <SelectItem value="delay-5">
+                                5 minutes delay
+                              </SelectItem>
+                              <SelectItem value="delay-15">
+                                15 minutes delay
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Label className="text-sm">Weekly digest day</Label>
+                          <Select defaultValue="sunday">
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="sunday">Sunday</SelectItem>
+                              <SelectItem value="monday">Monday</SelectItem>
+                              <SelectItem value="friday">Friday</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
           )}
 

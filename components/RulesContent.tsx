@@ -428,24 +428,24 @@ const RulesContent = () => {
                   <TableCell>5</TableCell>
                   <TableCell>$100</TableCell>
                   <TableCell>$10,000</TableCell>
-                  <TableCell>8% ($800)</TableCell>
-                  <TableCell>$9,200</TableCell>
+                  <TableCell>3% ($300)</TableCell>
+                  <TableCell>$9,700</TableCell>
                   <TableCell>✅</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>6</TableCell>
                   <TableCell>$250</TableCell>
                   <TableCell>$25,000</TableCell>
-                  <TableCell>8% ($2,000)</TableCell>
-                  <TableCell>$23,000</TableCell>
+                  <TableCell>3% ($750)</TableCell>
+                  <TableCell>$24,250</TableCell>
                   <TableCell>✅</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>7</TableCell>
                   <TableCell>$500</TableCell>
                   <TableCell>$50,000</TableCell>
-                  <TableCell>8% ($4,000)</TableCell>
-                  <TableCell>$46,000</TableCell>
+                  <TableCell>3% ($1,500)</TableCell>
+                  <TableCell>$48,500</TableCell>
                   <TableCell>✅</TableCell>
                 </TableRow>
               </TableBody>
@@ -515,7 +515,7 @@ const RulesContent = () => {
                 bonus transfer)
               </li>
               <li>
-                <strong>Higher Rake:</strong> VIP boards carry 8% rake vs 5% on
+                <strong>Higher Rake:</strong> VIP boards carry 3% rake vs 5% on
                 standard boards
               </li>
             </ul>

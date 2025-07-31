@@ -29,12 +29,13 @@ export default function CryptoBasicsContent() {
         decentralized applications.
       </p>
 
-      <p>
+      <p className="mb-4">
         <strong>Custodial wallets</strong> are managed by a third party (e.g., a
         crypto exchange or app) that holds your private keys on your behalf.
         Think of it like a bank holding your money.
       </p>
-      <ul className="list-disc pl-6">
+
+      <ul className="list-disc pl-6 space-y-2 mb-6">
         <li>
           <strong>Control:</strong> The third party controls your private keys.
         </li>
@@ -56,12 +57,13 @@ export default function CryptoBasicsContent() {
         </li>
       </ul>
 
-      <p>
+      <p className="mb-4">
         <strong>Non-custodial wallets</strong> (or <strong>self-custody</strong>{' '}
         wallets) put <strong>you</strong> in complete control. "Not your keys,
         not your coins" is the guiding principle.
       </p>
-      <ul className="list-disc pl-6">
+
+      <ul className="list-disc pl-6 space-y-2 mb-8">
         <li>
           <strong>Control:</strong> You hold your private keys, giving you full
           control over your funds.
@@ -82,50 +84,60 @@ export default function CryptoBasicsContent() {
 
       <h3 className="mt-8">Mobile (Software) vs. Hardware Wallets</h3>
 
-      <p>
+      <p className="mb-6">
         Non-custodial wallets come in two main forms: software and hardware.
       </p>
-      <div className="pl-6">
-        <p>
-          <strong>Software Wallets (Hot Wallets):</strong>
-        </p>
-        <ul className="list-disc pl-6">
-          <li>
-            An app or program on your phone or computer (e.g., MetaMask, Trust
-            Wallet).
-          </li>
-          <li>
-            Connected to the internet, offering convenience for daily use.
-          </li>
-          <li>
-            Considered "hot" because they are more exposed to online threats.
-          </li>
-        </ul>
-        <p className="mt-4">
-          <strong>Hardware Wallets (Cold Storage):</strong>
-        </p>
-        <ul className="list-disc pl-6">
-          <li>
-            A physical device (e.g., Ledger, Trezor) that stores keys offline.
-          </li>
-          <li>
-            Keys never touch an internet-connected device, offering maximum
-            security.
-          </li>
-          <li>
-            Requires physical access to the device to approve transactions.
-          </li>
-        </ul>
+
+      <div className="pl-6 space-y-6">
+        <div>
+          <p className="mb-3">
+            <strong>Software Wallets (Hot Wallets):</strong>
+          </p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>
+              An app or program on your phone or computer (e.g., MetaMask, Trust
+              Wallet).
+            </li>
+            <li>
+              Connected to the internet, offering convenience for daily use.
+            </li>
+            <li>
+              Considered "hot" because they are more exposed to online threats.
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="mb-3">
+            <strong>Hardware Wallets (Cold Storage):</strong>
+          </p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>
+              A physical device (e.g., Ledger, Trezor) that stores keys offline.
+            </li>
+            <li>
+              Keys never touch an internet-connected device, offering maximum
+              security.
+            </li>
+            <li>
+              Requires physical access to the device to approve transactions.
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <p>
+      <p className="mt-6 mb-4">
         For beginners, mobile/software wallets are a great starting point for
         convenience. Just remember that they live on your phone or PC – so you
         should secure those devices (with passwords, biometrics, antivirus,
-        etc.) as carefully as you would secure the wallet itself. Hardware
-        wallets are recommended once you start holding larger amounts of crypto
-        that you want to protect long-term. Many people use a combination: a
-        mobile wallet for small, daily-use funds, and a hardware wallet to{' '}
+        etc.) as carefully as you would secure the wallet itself.
+      </p>
+
+      <p className="mb-4">
+        Hardware wallets are recommended once you start holding larger amounts
+        of crypto that you want to protect long-term. Many people use a
+        combination: a mobile wallet for small, daily-use funds, and a hardware
+        wallet to{' '}
         <strong>hold savings or high-value assets in cold storage</strong>.
       </p>
 
@@ -139,12 +151,12 @@ export default function CryptoBasicsContent() {
         practices is non-negotiable for keeping your assets safe.
       </p>
 
-      <p>
+      <p className="mb-6">
         Keeping your crypto safe requires good security habits. Here are some{' '}
         <strong>DOs and DON&apos;Ts</strong> for wallet security:
       </p>
 
-      <ul>
+      <ul className="space-y-4">
         <li>
           <strong>DO:</strong>{' '}
           <strong>Safeguard your Secret Recovery Phrase (seed phrase)</strong>{' '}
@@ -241,7 +253,7 @@ export default function CryptoBasicsContent() {
         </li>
       </ul>
 
-      <p>
+      <p className="mt-6 mb-4">
         By following these practices, you greatly reduce the chance of losing
         funds to accidents or theft. Crypto puts you in control of your money,
         which is empowering but also requires vigilance.
@@ -257,12 +269,14 @@ export default function CryptoBasicsContent() {
         how this works helps you manage your assets and earnings effectively.
       </p>
 
-      <h3>Community Board Leader (CBL) Earnings</h3>
-      <p>
+      <h3 className="mb-4">Community Board Leader (CBL) Earnings</h3>
+
+      <p className="mb-4">
         If you're a Community Board Leader, you'll earn commissions in
         cryptocurrency that are automatically distributed to your wallet:
       </p>
-      <ul className="list-disc pl-6">
+
+      <ul className="list-disc pl-6 space-y-3 mb-8">
         <li>
           <strong>Board Creation Rake:</strong> 3% of each board you create is
           automatically sent to your wallet address when the board completes.
@@ -278,12 +292,14 @@ export default function CryptoBasicsContent() {
         </li>
       </ul>
 
-      <h3>NFT Squares & Ownership</h3>
-      <p>
+      <h3 className="mb-4">NFT Squares & Ownership</h3>
+
+      <p className="mb-4">
         Your Football Squares are NFTs (Non-Fungible Tokens) stored in your
         wallet:
       </p>
-      <ul className="list-disc pl-6">
+
+      <ul className="list-disc pl-6 space-y-3 mb-8">
         <li>
           <strong>Permanent Ownership:</strong> Once purchased, your NFT square
           belongs to you permanently and is recorded on the Solana blockchain.
@@ -298,9 +314,13 @@ export default function CryptoBasicsContent() {
         </li>
       </ul>
 
-      <h3>Transaction Security</h3>
-      <p>When interacting with Football Squares, always verify transactions:</p>
-      <ul className="list-disc pl-6">
+      <h3 className="mb-4">Transaction Security</h3>
+
+      <p className="mb-4">
+        When interacting with Football Squares, always verify transactions:
+      </p>
+
+      <ul className="list-disc pl-6 space-y-3 mb-8">
         <li>
           <strong>Double-check amounts:</strong> Ensure the transaction amount
           matches the entry fee for your selected tier.
@@ -325,12 +345,14 @@ export default function CryptoBasicsContent() {
         are beginner-friendly, step-by-step guides for several popular services.
       </p>
 
-      <h3>Robinhood</h3>
-      <p>
+      <h3 className="mb-3">Robinhood</h3>
+
+      <p className="mb-4">
         Best for users who already have a Robinhood account for stocks. Simple
         interface, but limited crypto selection and withdrawal features.
       </p>
-      <ol>
+
+      <ol className="space-y-2 mb-8">
         <li>
           <strong>Open the Robinhood App:</strong> Log in to your account.
         </li>
@@ -358,12 +380,14 @@ export default function CryptoBasicsContent() {
         </li>
       </ol>
 
-      <h3>Cash App</h3>
-      <p>
+      <h3 className="mb-3">Cash App</h3>
+
+      <p className="mb-4">
         Extremely simple for buying, selling, and sending Bitcoin. Ideal for
         beginners making their first Bitcoin purchase.
       </p>
-      <ol>
+
+      <ol className="space-y-2 mb-8">
         <li>
           <strong>Open Cash App:</strong> Go to the home screen.
         </li>
@@ -386,12 +410,14 @@ export default function CryptoBasicsContent() {
         </li>
       </ol>
 
-      <h3>Venmo</h3>
-      <p>
+      <h3 className="mb-3">Venmo</h3>
+
+      <p className="mb-4">
         Good for users who are already active on Venmo and want to easily buy
         small amounts of crypto without leaving the app.
       </p>
-      <ol>
+
+      <ol className="space-y-2 mb-8">
         <li>
           <strong>Open Venmo:</strong> Navigate to the "Crypto" tab from the
           home screen.
@@ -416,13 +442,15 @@ export default function CryptoBasicsContent() {
         </li>
       </ol>
 
-      <h3>Gemini</h3>
-      <p>
+      <h3 className="mb-3">Gemini</h3>
+
+      <p className="mb-4">
         A full-featured cryptocurrency exchange with a wider variety of assets
         and trading tools. Good for those ready for a more traditional exchange
         experience.
       </p>
-      <ol>
+
+      <ol className="space-y-2 mb-8">
         <li>
           <strong>Create and Verify Account:</strong> Sign up on the Gemini
           website or app and complete the required identity verification (KYC).
@@ -447,12 +475,14 @@ export default function CryptoBasicsContent() {
         </li>
       </ol>
 
-      <h3>Kraken</h3>
-      <p>
+      <h3 className="mb-3">Kraken</h3>
+
+      <p className="mb-4">
         One of the oldest and most respected exchanges, known for good security
         and a wide range of available cryptocurrencies.
       </p>
-      <ol>
+
+      <ol className="space-y-2 mb-8">
         <li>
           <strong>Sign Up and Verify:</strong> Create an account on Kraken and
           complete the necessary verification levels.
@@ -477,12 +507,14 @@ export default function CryptoBasicsContent() {
         </li>
       </ol>
 
-      <h3>Crypto.com</h3>
-      <p>
+      <h3 className="mb-3">Crypto.com</h3>
+
+      <p className="mb-4">
         A popular mobile-first platform known for its large user base and
         extensive marketing. The app makes buying easy.
       </p>
-      <ol>
+
+      <ol className="space-y-2 mb-8">
         <li>
           <strong>Download the App and Sign Up:</strong> Create your account and
           complete identity verification.
@@ -507,12 +539,14 @@ export default function CryptoBasicsContent() {
         </li>
       </ol>
 
-      <h3>Uphold</h3>
-      <p>
+      <h3 className="mb-3">Uphold</h3>
+
+      <p className="mb-4">
         A versatile platform that allows you to trade between different asset
         classes, not just crypto. Uses a card-based interface.
       </p>
-      <ol>
+
+      <ol className="space-y-2 mb-8">
         <li>
           <strong>Create an Uphold Account:</strong> Sign up and verify your
           identity.
