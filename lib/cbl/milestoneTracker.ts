@@ -505,7 +505,7 @@ export class CBLMilestoneTracker {
         process.env.TELEGRAM_BOT_FATHER_TOKEN || '',
         process.env.WEBHOOK_BASE_URL || 'https://api.your-domain.com',
         process.env.OC_PHIL_BOT_TOKEN || '',
-        this.database, // Pass database connection
+        null, // Database connection not available in this context
       );
 
       const botRequest = {

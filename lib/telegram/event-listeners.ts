@@ -249,7 +249,9 @@ export class SolanaEventListener {
   async stopListening() {
     console.log('Stopping Solana event listeners');
 
-    for (const [name, subscription] of this.subscriptions) {
+    for (const [name, subscription] of Array.from(
+      this.subscriptions.entries(),
+    )) {
       try {
         await this.connection.removeOnLogsListener(subscription);
         console.log(`Removed listener: ${name}`);

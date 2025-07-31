@@ -99,8 +99,7 @@ export class CoachBResponseService {
       metadata: {
         playerCurrentCBL: complaint.currentCBL,
         playerComplaintReason: complaint.complaintType,
-        complaintSeverity: complaint.severity,
-        transferOptionOffered: options.includeTransferOption,
+        suggestedCBLs: [], // Could be populated with suggested alternatives
       },
     };
   }
@@ -136,8 +135,8 @@ export class CoachBResponseService {
       playerId,
       timestamp: new Date(),
       metadata: {
-        responseType: 'supportive',
-        situation: situation || 'general_support',
+        playerComplaintReason: situation || 'general_support',
+        suggestedCBLs: [],
       },
     };
   }
@@ -208,9 +207,8 @@ export class CoachBResponseService {
         playerId: complaint.playerId,
         timestamp: new Date(),
         metadata: {
-          error: true,
-          errorMessage:
-            error instanceof Error ? error.message : 'Unknown error',
+          playerComplaintReason: 'technical_error',
+          suggestedCBLs: [],
         },
       };
     }

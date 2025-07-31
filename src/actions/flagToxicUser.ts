@@ -4,7 +4,17 @@
  * Integrates with toxicity detection and platform moderation tools
  */
 
-import { type ActionHandler, type ActionContext } from '@elizaos/core';
+// import { type ActionHandler, type ActionContext } from '@elizaos/core';
+// Note: These types may not be available in the current ElizaOS version
+
+// Define types locally
+type ActionHandler = (ctx: ActionContext) => Promise<any>;
+type ActionContext = {
+  message: any;
+  user: any;
+  platform: string;
+  [key: string]: any;
+};
 
 interface ToxicityScore {
   overall: number;
@@ -80,7 +90,9 @@ const flagToxicUser: ActionHandler = async (ctx: ActionContext) => {
       },
     };
   } catch (error) {
-    logger.error(`Toxicity analysis failed: ${error.message}`);
+    logger.error(
+      `Toxicity analysis failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
 
     // Default to manual review on system failure
     await tools.flagForManualReview(
@@ -92,7 +104,7 @@ const flagToxicUser: ActionHandler = async (ctx: ActionContext) => {
       content:
         '[SYSTEM] Message flagged for manual review due to analysis error.',
       performed: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 };

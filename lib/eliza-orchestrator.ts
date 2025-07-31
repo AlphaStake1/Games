@@ -68,6 +68,22 @@ export class ElizaOrchestrator extends EventEmitter {
   constructor(config: ElizaOrchestratorConfig) {
     super();
     this.config = config;
+
+    // Initialize Fry integration
+    this.fryIntegration = new FryCharacterIntegration({
+      solanaRPC:
+        config.fryConfig?.solanaRPC || 'https://api.mainnet-beta.solana.com',
+      monitoringIntervalMs: config.fryConfig?.monitoringIntervalMs || 30000,
+      alertThresholds: config.fryConfig?.alertThresholds || {
+        responseTime: 5000,
+        errorRate: 0.1,
+        uptimeMinimum: 0.95,
+      },
+    });
+
+    // Initialize memory manager
+    this.memoryManager = new MemoryManager('orchestrator');
+
     console.log('🎭 ElizaOS Orchestrator initializing...');
   }
 
@@ -122,12 +138,16 @@ export class ElizaOrchestrator extends EventEmitter {
     console.log('⏹️ Stopping ElizaOS Character System...');
 
     // Stop all characters
-    for (const [characterId, runtime] of this.characters) {
+    for (const [characterId, runtime] of Array.from(
+      this.characters.entries(),
+    )) {
       await runtime.stop();
     }
 
     // Close platform connections
-    for (const [platform, connection] of this.platformConnections) {
+    for (const [platform, connection] of Array.from(
+      this.platformConnections.entries(),
+    )) {
       if (connection.close) {
         await connection.close();
       }
@@ -190,7 +210,11 @@ export class ElizaOrchestrator extends EventEmitter {
           );
 
           // Send error response
-          await this.sendErrorResponse(platformMessage, characterId, error);
+          await this.sendErrorResponse(
+            platformMessage,
+            characterId,
+            error instanceof Error ? error : new Error(String(error)),
+          );
         }
       }
     } catch (error) {
@@ -262,13 +286,7 @@ export class ElizaOrchestrator extends EventEmitter {
   private async initializeMemoryManager(): Promise<void> {
     console.log('🧠 Initializing Memory Manager...');
 
-    this.memoryManager = new MemoryManager({
-      provider: this.config.memoryConfig.provider,
-      connectionString: this.config.memoryConfig.connectionString,
-      scopes: this.config.memoryConfig.scopes,
-    });
-
-    await this.memoryManager.initialize();
+    this.memoryManager = new MemoryManager('orchestrator');
     console.log('   ✅ Memory Manager initialized');
   }
 
@@ -402,7 +420,9 @@ export class ElizaOrchestrator extends EventEmitter {
     console.log('🔄 Setting up Inter-Character Communication...');
 
     // Listen for escalations from all characters
-    for (const [characterId, runtime] of this.characters) {
+    for (const [characterId, runtime] of Array.from(
+      this.characters.entries(),
+    )) {
       runtime.on('escalation', async (escalationMessage: CharacterMessage) => {
         console.log(
           `🔄 Escalation: ${characterId} → ${escalationMessage.characterId}`,
@@ -616,13 +636,13 @@ export class ElizaOrchestrator extends EventEmitter {
     console.log('');
 
     console.log('🤖 Active Characters:');
-    for (const characterId of this.characters.keys()) {
+    for (const characterId of Array.from(this.characters.keys())) {
       console.log(`   • ${characterId}`);
     }
     console.log('');
 
     console.log('🌐 Connected Platforms:');
-    for (const platform of this.platformConnections.keys()) {
+    for (const platform of Array.from(this.platformConnections.keys())) {
       console.log(`   • ${platform}`);
     }
     console.log('');
@@ -731,7 +751,9 @@ export class ElizaOrchestrator extends EventEmitter {
       Dean_Security: 'technical_terse',
       Commissioner_Jerry: 'executive_summary',
     };
-    return styleMap[characterName] || 'professional_generic';
+    return (
+      styleMap[characterName as keyof typeof styleMap] || 'professional_generic'
+    );
   }
 }
 

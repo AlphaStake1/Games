@@ -492,5 +492,4 @@ export class CBLRewardService {
   }
 }
 
-// Export for use in your application
-export { CBLRewardService };
+// Service is already exported with the class declaration above

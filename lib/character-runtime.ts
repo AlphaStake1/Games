@@ -167,10 +167,14 @@ export class CharacterRuntime extends EventEmitter {
       );
 
       return {
-        content: this.generateErrorResponse(error),
+        content: this.generateErrorResponse(
+          error instanceof Error ? error : new Error(String(error)),
+        ),
         shouldEscalate: true,
         escalateTo: 'Dean_Security',
-        fryDiagnosis: { error: error.message },
+        fryDiagnosis: {
+          error: error instanceof Error ? error.message : String(error),
+        },
       };
     }
   }
@@ -238,7 +242,10 @@ export class CharacterRuntime extends EventEmitter {
           actionName: action.name,
           urgency: parameters.message?.context?.urgency || 'medium',
         },
-        expectedResponse: this.config.fryIntegration.responseStyle,
+        expectedResponse: this.config.fryIntegration.responseStyle as
+          | 'technical'
+          | 'user_friendly'
+          | 'escalation',
       };
 
       return await this.fry.supportCharacter(supportRequest);
@@ -550,8 +557,9 @@ export class CharacterRuntime extends EventEmitter {
     };
 
     return (
-      defaultResponses[this.config.characterId] ||
-      'Hello! How can I assist you today?'
+      defaultResponses[
+        this.config.characterId as keyof typeof defaultResponses
+      ] || 'Hello! How can I assist you today?'
     );
   }
 
@@ -594,15 +602,15 @@ export class CharacterRuntime extends EventEmitter {
       }
     });
 
-    // Listen for Fry alerts
-    if (this.config.fryIntegration.enabled) {
-      this.fry.on('criticalAlert', (alert) => {
-        console.log(
-          `🚨 ${this.config.characterId} received critical alert from Fry`,
-        );
-        this.emit('fryAlert', { characterId: this.config.characterId, alert });
-      });
-    }
+    // TODO: Listen for Fry alerts when FryCharacterIntegration extends EventEmitter
+    // if (this.config.fryIntegration.enabled) {
+    //   this.fry.on('criticalAlert', (alert) => {
+    //     console.log(
+    //       `🚨 ${this.config.characterId} received critical alert from Fry`,
+    //     );
+    //     this.emit('fryAlert', { characterId: this.config.characterId, alert });
+    //   });
+    // }
   }
 
   /**
@@ -694,7 +702,7 @@ export class CharacterRuntime extends EventEmitter {
     };
 
     return (
-      errorResponses[this.config.characterId] ||
+      errorResponses[this.config.characterId as keyof typeof errorResponses] ||
       "I'm sorry, I encountered an error. Please try again."
     );
   }

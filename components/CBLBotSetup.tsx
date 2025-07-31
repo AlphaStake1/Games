@@ -213,7 +213,7 @@ const CBLBotSetup: React.FC<CBLBotSetupProps> = ({
         return {
           ...prev,
           [parent]: {
-            ...prev[parent as keyof BotPersonality],
+            ...(prev[parent as keyof BotPersonality] as object),
             [child]: value,
           },
         };

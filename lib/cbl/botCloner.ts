@@ -719,5 +719,4 @@ export function generateBotName(platformHandle?: string): string[] {
   ];
 }
 
-// Export the service for use in milestone rewards
-export { CBLBotCloner };
+// Service is already exported with the class declaration above

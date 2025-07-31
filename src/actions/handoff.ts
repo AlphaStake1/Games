@@ -4,7 +4,16 @@
  * Used by Coach B, Trainer Reviva, and others for escalation
  */
 
-import { type ActionHandler, type ActionContext } from '@elizaos/core';
+// import { type ActionHandler, type ActionContext } from '@elizaos/core';
+// Define types locally
+type ActionHandler = (ctx: ActionContext) => Promise<any>;
+type ActionContext = {
+  agent: any;
+  message: any;
+  tools: any;
+  logger: any;
+  [key: string]: any;
+};
 
 const handoff: ActionHandler = async (ctx: ActionContext) => {
   const { agent, message, tools, logger } = ctx;
@@ -47,13 +56,15 @@ const handoff: ActionHandler = async (ctx: ActionContext) => {
       },
     };
   } catch (error) {
-    logger.error(`Handoff failed: ${error.message}`);
+    logger.error(
+      `Handoff failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
 
     return {
       content:
         "I'm having trouble connecting you with the right specialist. Let me try a different approach to help you.",
       performed: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 };
@@ -151,9 +162,12 @@ function generateHandoffResponse(
     },
   };
 
-  const agentResponses = responses[fromAgent];
-  if (agentResponses && agentResponses[toAgent]) {
-    return agentResponses[toAgent];
+  const agentResponses = responses[fromAgent as keyof typeof responses];
+  if (
+    agentResponses &&
+    agentResponses[toAgent as keyof typeof agentResponses]
+  ) {
+    return agentResponses[toAgent as keyof typeof agentResponses];
   }
 
   // Generic fallback

@@ -6,12 +6,8 @@
 
 import ReferralService from './referralService';
 import CommunityTransferService from './communityTransferService';
-import {
-  Player,
-  ReferralReward,
-  PlayerActivity,
-  BonusProcessingResult,
-} from '@/lib/types/player';
+import { Player, ReferralReward, PlayerActivity } from '@/lib/types/player';
+import { BonusProcessingResult } from './referralService';
 
 export interface PointsRewardRequest {
   playerId: string;

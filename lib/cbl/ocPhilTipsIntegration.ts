@@ -495,5 +495,4 @@ export class OCPhilTipsService {
   }
 }
 
-// Export for use in OC Phil bot commands
-export { TIPS_DATABASE, NOTION_PLAYBOOK_URLS, OCPhilTipsService };
+// Services and constants are already exported with their declarations above

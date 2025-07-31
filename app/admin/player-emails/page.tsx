@@ -584,7 +584,9 @@ const CampaignHistory: React.FC = () => {
                       <span className="text-gray-500">Open Rate:</span>
                       <span className="ml-1 font-medium">
                         {Math.round(
-                          (campaign.openedCount / campaign.sentCount) * 100,
+                          ((campaign.openedCount || 0) /
+                            (campaign.sentCount || 1)) *
+                            100,
                         )}
                         %
                       </span>

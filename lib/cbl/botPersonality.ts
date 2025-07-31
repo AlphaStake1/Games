@@ -428,5 +428,4 @@ export class BotPersonalityCustomizer {
   }
 }
 
-// Export for integration with bot cloner
-export { BotPersonalityCustomizer };
+// Service is already exported with the class declaration above
