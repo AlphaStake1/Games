@@ -13,9 +13,7 @@ console.log('   NOTION_VERSION:', process.env.NOTION_VERSION || 'Missing ❌');
 
 if (!process.env.NOTION_TOKEN) {
   console.log('\n❌ NOTION_TOKEN not found. Please add to .env.local:');
-  console.log(
-    'NOTION_TOKEN=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',
-  );
+  console.log('NOTION_TOKEN=your_notion_token_here');
   console.log('NOTION_VERSION=2022-06-28');
   console.log(
     '\nNote: Make sure there are NO SPACES before the variable names!',
