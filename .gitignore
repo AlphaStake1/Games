@@ -51,3 +51,13 @@ solana-release*
 test-ledger/
 *.tar.zst
 *.bin
+
+# Solana keypairs and private keys - NEVER COMMIT
+keys/
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!components.json
+!builder.config.json
+*-keypair.json
