@@ -64,6 +64,7 @@ pnpm lint && tsc --noEmit           # ESLint + TS type-check
 \| 5 | All new TS code must pass `pnpm lint` & `tsc --noEmit`. |
 \| 6 | Unit tests live in `/tests` (TS) or `programs/squares/tests` (Mocha). Provide: happy-path, edge, failure. |
 \| 7 | If uncertain → ask a clarifying question instead of guessing. |
+\| 8 | **Before installing tools/MCPs** → Check global availability AND Docker containers first. |
 
 ---
 
@@ -106,6 +107,69 @@ _Stick to this layout unless PLANNING.md says otherwise._
 
 ---
 
+## 🔍 Tool Discovery & Installation Protocol
+
+**ALWAYS follow this sequence before installing any tool or MCP:**
+
+### 1. Check Global System Availability
+
+```bash
+# Check if tool exists in PATH
+which <tool-name>
+command -v <tool-name>
+
+# For Python packages
+python3 -c "import <package>; print('<package> is available')" 2>/dev/null || echo "<package> not found"
+
+# For Node packages
+npm list -g <package-name>
+pnpm list -g <package-name>
+```
+
+### 2. Check Docker Container Availability
+
+```bash
+# Search for official Docker images
+docker search <tool-name> | head -5
+
+# Check if tool is available in existing containers
+docker run --rm <image-name> which <tool-name>
+docker run --rm <image-name> <tool-name> --version
+
+# List container contents to explore
+docker run --rm <image-name> ls -la /
+docker run --rm <image-name> find /app -name "*<tool>*" -type f
+```
+
+### 3. Check MCP Server Integration
+
+```bash
+# Look for MCP-provided tools (they start with "mcp__")
+# Always prefer MCP tools over manual installations
+```
+
+### 4. Only Install If Not Available
+
+- **Docker approach preferred** for isolation and reproducibility
+- Document installation method in scripts with comments
+- Add tool info to this CLAUDE.md file under "Local Dev Commands"
+
+### Example: Tool Discovery Process
+
+```bash
+# 1. Check global
+which crawl4ai || echo "Not in PATH"
+
+# 2. Check Docker
+docker search crawl4ai | head -3
+docker run --rm unclecode/crawl4ai python3 --version
+
+# 3. Use Docker if available, else install
+# Always prefer Docker containers for external tools
+```
+
+---
+
 ## 🔬 Testing & Validation Loop
 
 1. **Lint / Type-check**
@@ -122,7 +186,18 @@ _Stick to this layout unless PLANNING.md says otherwise._
    pnpm vitest
    ```
 
-3. **Localnet integration**
+3. **Browser automation testing**
+
+   ```bash
+   # Start dev server in background
+   nohup pnpm run dev > dev.log 2>&1 &
+
+   # Use MCP Playwright tools for browser testing
+   # Key pages to verify: /, /help, /how-to-play, /fantasy
+   # Test interactive elements: support forms, navigation, RSS feeds
+   ```
+
+4. **Localnet integration**
 
    ```bash
    solana-test-validator -r &
@@ -152,6 +227,26 @@ _All steps must be green before marking a TASK complete._
   RPC_ENDPOINT=...
   PROTON_BRIDGE_USER=...
   PROTON_BRIDGE_PASS=...
+
+  # Mailchain (Coach B's email system)
+  MAILCHAIN_URL=https://app.mailchain.com
+  MAILCHAIN_EMAIL=CoachB@mail.chain
+  MAILCHAIN_PASSWORD=...
+  MAILCHAIN_PRIVATE_KEY=...
+
+  # Solana Domain Email Aliases (also registered to Coach B's wallet)
+  # squaregames.sol
+  # footballsquares.sol
+  # playboards.sol
+  # fantasyball.sol
+  # playsquares.sol
+  # footballboards.sol
+  # footballboard.sol
+
+  # Coach B's Phantom Wallet
+  COACH_B_PHANTOM_USERNAME=@CoachB1
+  COACH_B_WALLET_ADDRESS=4JJjBzzefL4wzneyyjLu2GzB98MpTSZ9RSdvm7pp9DrH
+  COACH_B_WALLET_PASSPHRASE=...
   ```
 
 ---
