@@ -23,6 +23,8 @@
     "test:integration": "ts-node scripts/test-runner.ts single integration",
     "test:anchor": "ts-node scripts/test-runner.ts single anchor",
     "test:validate": "ts-node scripts/test-runner.ts validate",
+    "test:jerry": "ts-node scripts/test-jerry-wallet.ts",
+    "jerry:init": "ts-node scripts/test-jerry-wallet.ts",
     "health": "ts-node scripts/health-check.ts",
     "health:single": "ts-node scripts/health-check.ts single",
     "validate:final": "ts-node scripts/final-validation.ts",
@@ -31,7 +33,8 @@
     "security:rust": "docker run --rm -v \"$(pwd):/src\" --entrypoint=\"\" semgrep/semgrep:latest semgrep --config p/rust /src/programs/",
     "security:frontend": "docker run --rm -v \"$(pwd):/src\" --entrypoint=\"\" semgrep/semgrep:latest semgrep --config p/typescript /src/components/ /src/app/ /src/agents/",
     "security:secrets": "docker run --rm -v \"$(pwd):/src\" --entrypoint=\"\" semgrep/semgrep:latest semgrep --config p/secrets /src",
-    "eliza:dev": "ts-node scripts/eliza-dev.ts",
+    "eliza:start": "ts-node scripts/start-eliza-v2.ts",
+    "eliza:dev": "ts-node scripts/start-eliza-v2.ts",
     "eliza:migrate": "drizzle-kit push:pg",
     "eliza:migrate:generate": "drizzle-kit generate:pg",
     "calculator:test": "ts-node agents/Calculator/test.ts"

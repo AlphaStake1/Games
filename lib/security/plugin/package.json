@@ -1,0 +1,26 @@
+{
+  "name": "footballsquares-security",
+  "version": "1.0.0",
+  "description": "Football Squares Security Plugin for ElizaOS - Bot Detection and Policy Enforcement",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "types": "./index.d.ts"
+    }
+  },
+  "keywords": [
+    "elizaos",
+    "plugin",
+    "security",
+    "bot-detection",
+    "football-squares"
+  ],
+  "dependencies": {
+    "@elizaos/core": "^1.3.1"
+  },
+  "peerDependencies": {
+    "@elizaos/core": "^1.3.1"
+  }
+}
