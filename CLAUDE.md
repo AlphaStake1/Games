@@ -218,7 +218,9 @@ _All steps must be green before marking a TASK complete._
 
 ## 🔑 Secrets & Environment
 
-- Use `.env.local` – never commit real keys.
+- **Main project**: Use `.env.local` – never commit real keys.
+- **Eliza agents**: Copy `eliza-config/.env.template` to `eliza-config/.env` and fill in values.
+- **Security**: Protected by git hooks and `.gitignore` patterns.
 - Required vars (see `.env.example`):
 
   ```env
@@ -242,6 +244,75 @@ _All steps must be green before marking a TASK complete._
   # playsquares.sol
   # footballboards.sol
   # footballboard.sol
+
+  # Coach B's Social Media Accounts
+  # X.com (Temporary - OC-Phil credentials until Coach B's Tuta email available)
+  X_ACCOUNT_USERNAME=Phil1Board
+  X_ACCOUNT_EMAIL=OC-Phil@tutamail.com
+  X_ACCOUNT_PASSWORD=OCPhil01
+  X_PASSKEY_CODE=7717
+
+  # X Developer API Keys (Phil1Board account)
+  TWITTER_APP_ID=31292646
+  TWITTER_BEARER_TOKEN=AAAAAAAAAAAAAAAAAAAAAOZ83QEAAAAA%2B6kGAHX5MuDwo45gALxplH5vTtU%3DIXZOH2lpHT01cRkuimTEL1WqguE0KmVglhRogpJKQvgzAjxQMh
+  TWITTER_ACCESS_TOKEN=1951433990898065415-ByTv4y9hKW2Sit0sm6jS11ERDPK8PU
+  TWITTER_ACCESS_TOKEN_SECRET=WXw12KXI4tWnkXIdAXcvnmUuYgxr3wM2KV12IwnQOOnSW
+  TWITTER_API_KEY=P2IjC1XKz9OGmKQ8VW62FdCFd
+  TWITTER_API_SECRET=97dgPOP1YIFSPudCRFXhV3EVrwKURgQPuKesASoBCpkFvkuW3t
+  TWITTER_CLIENT_ID=eFVNME5BSWZxRDRJZ2N4Z3lsR2g6MTpjaQ
+  TWITTER_CLIENT_SECRET=QuHZRUz1PGwNgFmIqJ3gPCJLgm2gB82XYcrGxh747Wti-9L-Q-
+
+  # X Developer Platform Products (for Max Buzz upgrades)
+  # https://developer.x.com/en/portal/products
+  # - Basic: Free tier (current)
+  # - Pro: $100/month - Higher rate limits, more endpoints
+  # - Enterprise: Custom pricing - Full access, premium support
+
+  # X for Websites Integration (future development)
+  # https://developer.x.com/en/products/x-for-websites
+  # - Tweet embeds, Follow buttons, Timeline widgets
+  # - Share buttons, Login with X
+  # - Useful for Football Squares platform social features
+
+  # Discord Bot Configuration (Coach B)
+  DISCORD_EMAIL=OC-Phil@tutamail.com
+  DISCORD_DISPLAY_NAME=Coach B
+  DISCORD_USERNAME=oc_phil_onboard
+  DISCORD_PASSWORD=CoachB000!
+
+  # Discord Developer Application
+  DISCORD_BOT_TOKEN=MTQwMTA4NjU4MTQxODQ5MjA0Ng.GSM9ba.3QAExLiw0po0DAbItEH2-GEQTa5hNKEqN3SRC8
+  DISCORD_APPLICATION_ID=1401086581418492046
+  DISCORD_CLIENT_ID=1401086581418492046
+  DISCORD_CLIENT_SECRET=k3sMbTbkZ6PrfCwafbsGBt1RK8HkZOZC
+  DISCORD_PUBLIC_KEY=e1ac439c98ddd63163a5182da865cee72511dd197042da32c545287c566ad695
+  DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/1401078685574103100/XNUUgGnETC1MJuenVC3ELmp8ri05uMm7yNcuBwXpsarxGmSbAVqrzaoGtd8gigJxD0bN
+  DISCORD_PERMISSIONS_INTEGER=8
+  DISCORD_INVITE_URL=https://discord.com/oauth2/authorize?client_id=1401086581418492046&permissions=8&integration_type=0&scope=bot+applications.commands
+
+  # Discord Community Management Guidelines for Agents
+  # ⚠️  IMPORTANT: Discord channels currently have placeholder text only
+  #
+  # Coach B & Team Instructions:
+  # - Replace ALL placeholder content with engaging, informative text
+  # - Make channels welcoming and easy to understand for new players
+  # - Provide clear, simple instructions for Football Squares gameplay
+  # - Keep tone friendly and approachable - avoid complexity
+  # - Focus on user experience: "How would a newcomer feel joining this?"
+  # - Add helpful resources, FAQs, and getting-started guides
+  # - Use Discord features: reactions, embeds, pins for better UX
+  #
+  # Priority Channels to Enhance:
+  # - #welcome / #getting-started
+  # - #how-to-play
+  # - #rules-and-scoring
+  # - #game-announcements
+  # - #support / #help
+
+  # Telegram Bot Configuration (OC Phil)
+  TELEGRAM_BOT_TOKEN=8200812544:AAHOHPP2R5KS9qLAYEup3pHQ2f_vY8lpeyc
+  TELEGRAM_BOT_USERNAME=@OC_Phil_bot
+  TELEGRAM_BOT_NAME=Offensive Coordinator Phil
 
   # Coach B's Phantom Wallet
   COACH_B_PHANTOM_USERNAME=@CoachB1
