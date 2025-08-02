@@ -39,7 +39,17 @@ import {
   RefreshCw,
   ToggleLeft,
   ToggleRight,
+  Search,
+  Zap,
+  Settings,
 } from 'lucide-react';
+import BoardSelector from '@/components/BoardSelector';
+import EnhancedBoardGrid from '@/components/EnhancedBoardGrid';
+import PricingPanel from '@/components/PricingPanel';
+import ConfirmPurchaseModal from '@/components/ConfirmPurchaseModal';
+import { usePurchasePass } from '@/hooks/usePurchasePass';
+import { useUserPreferences } from '@/lib/userPreferences';
+import { BoardConfiguration, SquareSelection } from '@/lib/boardTypes';
 
 interface PointsBreakdown {
   weekly: number;
@@ -89,7 +99,6 @@ interface ActivePosition {
   potentialPoints: { q1: number; q2: number; q3: number; final: number };
   gameStatus: 'pre-game' | 'q1' | 'q2' | 'q3' | 'q4' | 'final' | 'overtime';
   currentScore?: { home: number; away: number };
-  isWinning?: boolean;
 }
 
 interface TrendData {
@@ -106,7 +115,34 @@ function PlayerDashboard() {
   const [dashboardPeriod, setDashboardPeriod] = useState<'weekly' | 'seasonal'>(
     'weekly',
   );
+  const [viewMode, setViewMode] = useState<'beginner' | 'advanced'>('beginner');
   const [loading, setLoading] = useState(false);
+  const [selectedBoard, setSelectedBoard] = useState<BoardConfiguration | null>(null);
+  const [activeSelections, setActiveSelections] = useState<SquareSelection[]>([]);
+
+  const { preferences, isLoading: prefsLoading } = useUserPreferences(
+    'demo-wallet-address',
+  );
+  const {
+    isModalOpen,
+    isProcessing,
+    currentQuote,
+    walletConnected,
+    openModal,
+    closeModal,
+    connectWallet,
+    confirmPurchase,
+  } = usePurchasePass();
+
+  const handleSquareSelectionChange = (selection: SquareSelection) => {
+    setActiveSelections((prev) => {
+      const filtered = prev.filter((s) => s.boardId !== selection.boardId);
+      if (selection.squareIndices.length > 0) {
+        return [...filtered, selection];
+      }
+      return filtered;
+    });
+  };
 
   // Mock data - in real app, this would come from API
   // Green Points are always cumulative seasonal total (consistent across views)
@@ -178,7 +214,6 @@ function PlayerDashboard() {
       potentialPoints: { q1: 45, q2: 75, q3: 45, final: 135 },
       gameStatus: 'q2',
       currentScore: { home: 14, away: 7 },
-      isWinning: true,
     },
     {
       gameId: 'week15-chiefs-bills',
@@ -291,6 +326,31 @@ function PlayerDashboard() {
             </p>
           </div>
           <div className="flex items-center space-x-2">
+            {/* Beginner/Advanced Toggle */}
+            <div className="flex items-center space-x-1 p-1 rounded-lg bg-slate-200 dark:bg-slate-700">
+              <button
+                onClick={() => setViewMode('beginner')}
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+                  viewMode === 'beginner'
+                    ? 'bg-white dark:bg-slate-800 shadow'
+                    : 'text-slate-600 dark:text-slate-300'
+                }`}
+              >
+                <ToggleLeft className="h-4 w-4 inline mr-1" />
+                Beginner
+              </button>
+              <button
+                onClick={() => setViewMode('advanced')}
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+                  viewMode === 'advanced'
+                    ? 'bg-white dark:bg-slate-800 shadow'
+                    : 'text-slate-600 dark:text-slate-300'
+                }`}
+              >
+                <ToggleRight className="h-4 w-4 inline mr-1" />
+                Advanced
+              </button>
+            </div>
             {/* Prominent Period Toggle */}
             <div className="flex items-center space-x-1 p-1 rounded-lg bg-gradient-to-r from-blue-100 to-green-100 dark:from-blue-900/30 dark:to-green-900/30 border-2 border-blue-200 dark:border-blue-700">
               <button
@@ -337,18 +397,41 @@ function PlayerDashboard() {
           onValueChange={setActiveTab}
           className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="active">Active Games</TabsTrigger>
-            <TabsTrigger value="history">Game History</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-6">
+            <TabsTrigger value="overview">
+              <Eye className="h-4 w-4 mr-2" />
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="active">
+              <Activity className="h-4 w-4 mr-2" />
+              Active Games
+            </TabsTrigger>
+            <TabsTrigger value="find-games">
+              <Search className="h-4 w-4 mr-2" />
+              Find Games
+            </TabsTrigger>
+            <TabsTrigger value="history">
+              <Calendar className="h-4 w-4 mr-2" />
+              Game History
+            </TabsTrigger>
+            <TabsTrigger value="analytics">
+              <BarChart3 className="h-4 w-4 mr-2" />
+              Analytics
+            </TabsTrigger>
+            <TabsTrigger value="settings">
+              <Settings className="h-4 w-4 mr-2" />
+              Settings
+            </TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
             {/* Key Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+              className={`grid grid-cols-1 md:grid-cols-2 ${
+                dashboardPeriod === 'weekly' ? 'lg:grid-cols-3' : 'lg:grid-cols-2'
+              } gap-6`}
+            >
               {/* Green Points Card - Featured First for Seasonal Players */}
               {dashboardPeriod === 'seasonal' && (
                 <Card className="col-span-full bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 border-2 border-green-200 dark:border-green-700">
@@ -394,7 +477,6 @@ function PlayerDashboard() {
                     <CardTitle className="text-sm font-medium">
                       Total Winnings
                     </CardTitle>
-                    <DollarSign className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold text-green-600">
@@ -413,7 +495,6 @@ function PlayerDashboard() {
                   <CardTitle className="text-sm font-medium">
                     Games Played
                   </CardTitle>
-                  <Trophy className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">
@@ -437,7 +518,6 @@ function PlayerDashboard() {
                       playbookLink="/docs/player-guide#win-rate"
                     />
                   </div>
-                  <Target className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">
@@ -457,23 +537,6 @@ function PlayerDashboard() {
                       )}
                     </span>
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Best Tier
-                  </CardTitle>
-                  <Star className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-lg font-bold">
-                    {playerStats.bestPerformingTier}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Avg {playerStats.averagePositionsPerGame} positions/game
-                  </p>
                 </CardContent>
               </Card>
 
@@ -608,6 +671,75 @@ function PlayerDashboard() {
               </Card>
             </div>
 
+            {/* Featured Boards */}
+            <Card className="bg-gradient-to-r from-slate-100 to-gray-100 dark:from-slate-800/50 dark:to-gray-800/50">
+              <CardHeader>
+                <CardTitle className="flex items-center text-lg">
+                  <Zap className="h-5 w-5 mr-2 text-yellow-500" />
+                  Featured Boards (Quick Join)
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Hot games starting soon. Jump right in!
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Example Featured Board Cards - these would be dynamic */}
+                  <div className="border rounded-lg p-4 space-y-2 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
+                    <div className="font-bold">Eagles vs Cowboys</div>
+                    <div className="text-sm text-muted-foreground">
+                      $20 Tier
+                    </div>
+                    <Progress value={87} />
+                    <div className="text-xs text-muted-foreground">
+                      87/100 Filled
+                    </div>
+                    <Button
+                      size="sm"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                      onClick={() => setActiveTab('find-games')}
+                    >
+                      Join Now
+                    </Button>
+                  </div>
+                  <div className="border rounded-lg p-4 space-y-2 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
+                    <div className="font-bold">Chiefs vs Bills</div>
+                    <div className="text-sm text-muted-foreground">
+                      $50 Tier
+                    </div>
+                    <Progress value={42} />
+                    <div className="text-xs text-muted-foreground">
+                      42/100 Filled
+                    </div>
+                    <Button
+                      size="sm"
+                      className="w-full bg-green-600 hover:bg-green-700 text-white"
+                      onClick={() => setActiveTab('find-games')}
+                    >
+                      Join Now
+                    </Button>
+                  </div>
+                  <div className="border rounded-lg p-4 space-y-2 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors">
+                    <div className="font-bold">49ers vs Rams</div>
+                    <div className="text-sm text-muted-foreground">
+                      $10 Tier
+                    </div>
+                    <Progress value={95} />
+                    <div className="text-xs text-muted-foreground">
+                      95/100 Filled
+                    </div>
+                    <Button
+                      size="sm"
+                      className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                      onClick={() => setActiveTab('find-games')}
+                    >
+                      Join Now
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Active Positions Summary */}
             <Card>
               <CardHeader>
@@ -640,9 +772,7 @@ function PlayerDashboard() {
                             variant={
                               position.gameStatus === 'pre-game'
                                 ? 'secondary'
-                                : position.isWinning
-                                  ? 'default'
-                                  : 'outline'
+                                : 'default'
                             }
                           >
                             {position.gameStatus}
@@ -676,76 +806,159 @@ function PlayerDashboard() {
               </CardContent>
             </Card>
 
-            {/* Performance Trends */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <TrendingUp className="h-5 w-5 mr-2" />
-                    Monthly Performance
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {trendData.map((month, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between"
-                      >
-                        <div className="space-y-1">
-                          <div className="font-medium">{month.date}</div>
-                          <div className="text-sm text-muted-foreground">
-                            {month.gamesPlayed} games
+            {/* Performance Trends - Advanced View Only */}
+            {viewMode === 'advanced' && (
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <TrendingUp className="h-5 w-5 mr-2" />
+                      Monthly Performance
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {trendData.map((month, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between"
+                        >
+                          <div className="space-y-1">
+                            <div className="font-medium">{month.date}</div>
+                            <div className="text-sm text-muted-foreground">
+                              {month.gamesPlayed} games
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div
+                              className={`font-medium ${month.netProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}
+                            >
+                              {month.netProfit >= 0 ? '+' : ''}$
+                              {month.netProfit}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              ${month.winnings} won
+                            </div>
                           </div>
                         </div>
-                        <div className="text-right">
-                          <div
-                            className={`font-medium ${month.netProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}
-                          >
-                            {month.netProfit >= 0 ? '+' : ''}${month.netProfit}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            ${month.winnings} won
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Users className="h-5 w-5 mr-2" />
-                    Favorite Teams
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {playerStats.favoriteTeams.map((team, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <Avatar className="h-8 w-8">
-                            <AvatarImage
-                              src={`/team-logos/${team.toLowerCase()}.png`}
-                            />
-                            <AvatarFallback>{team.slice(0, 2)}</AvatarFallback>
-                          </Avatar>
-                          <span className="font-medium">{team}</span>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <Users className="h-5 w-5 mr-2" />
+                      Favorite Teams
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {playerStats.favoriteTeams.map((team, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <Avatar className="h-8 w-8">
+                              <AvatarImage
+                                src={`/team-logos/${team.toLowerCase()}.png`}
+                              />
+                              <AvatarFallback>
+                                {team.slice(0, 2)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span className="font-medium">{team}</span>
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            #{index + 1} most played
+                          </div>
                         </div>
-                        <div className="text-sm text-muted-foreground">
-                          #{index + 1} most played
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </TabsContent>
+
+          {/* Find Games Tab */}
+          <TabsContent value="find-games" className="space-y-6">
+            {selectedBoard ? (
+              <div>
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedBoard(null)}
+                  className="mb-4"
+                >
+                  Back to Board Selection
+                </Button>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className="lg:col-span-2">
+                    <EnhancedBoardGrid
+                      board={selectedBoard}
+                      userWalletAddress={'demo-wallet-address'}
+                      isVIP={preferences?.isVIP || false}
+                      onSquareSelectionChange={handleSquareSelectionChange}
+                      currentSelection={activeSelections.find(
+                        (s) => s.boardId === selectedBoard.boardId,
+                      )}
+                      boardType={
+                        dashboardPeriod === 'seasonal'
+                          ? 'season'
+                          : preferences?.isVIP
+                            ? 'vip'
+                            : 'geographic'
+                      }
+                    />
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                  <div className="lg:col-span-1">
+                    <PricingPanel
+                      selections={activeSelections}
+                      onPurchaseConfirm={() => {}}
+                      onClearSelections={() => setActiveSelections([])}
+                      isProcessing={isProcessing}
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h2 className="text-2xl font-bold">Find New Games</h2>
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mt-4">
+                  <div className="lg:col-span-3">
+                    <BoardSelector
+                      userTeam={
+                        preferences?.favoriteTeam || {
+                          id: 'dal',
+                          name: 'Cowboys',
+                          city: 'Dallas',
+                          abbreviation: 'DAL',
+                          conference: 'NFC',
+                          division: 'East',
+                          primaryColor: '#041E42',
+                          secondaryColor: '#869397',
+                          logoUrl: '/assets/teams/dal.png',
+                        }
+                      }
+                      isVIP={preferences?.isVIP || false}
+                      onBoardSelect={(board) => setSelectedBoard(board)}
+                      onVIPUpgrade={() => {}}
+                      selectedBoards={preferences?.selectedBoards || []}
+                    />
+                  </div>
+                  <div className="lg:col-span-1">
+                    <PricingPanel
+                      selections={activeSelections}
+                      onPurchaseConfirm={() => {}}
+                      onClearSelections={() => setActiveSelections([])}
+                      isProcessing={isProcessing}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </TabsContent>
 
           {/* Active Games Tab */}
@@ -777,19 +990,11 @@ function PlayerDashboard() {
                               variant={
                                 position.gameStatus === 'pre-game'
                                   ? 'secondary'
-                                  : position.isWinning
-                                    ? 'default'
-                                    : 'outline'
+                                  : 'default'
                               }
                             >
                               {position.gameStatus}
                             </Badge>
-                            {position.isWinning && (
-                              <Badge variant="default" className="bg-green-600">
-                                <Trophy className="h-3 w-3 mr-1" />
-                                Winning!
-                              </Badge>
-                            )}
                           </div>
                         </div>
                       </CardTitle>
@@ -905,12 +1110,6 @@ function PlayerDashboard() {
                             <div className="text-sm text-muted-foreground">
                               Current Score
                             </div>
-                            {position.isWinning && (
-                              <div className="flex items-center text-green-600">
-                                <CheckCircle className="h-4 w-4 mr-1" />
-                                Your square is currently winning!
-                              </div>
-                            )}
                           </div>
                         ) : (
                           <div className="text-muted-foreground">
@@ -929,7 +1128,15 @@ function PlayerDashboard() {
           {/* Game History Tab */}
           <TabsContent value="history" className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Game History</h2>
+              <div>
+                <h2 className="text-2xl font-bold">Game History</h2>
+                <p className="text-sm text-muted-foreground">
+                  Your best performing tier is:{' '}
+                  <span className="font-semibold text-primary">
+                    {playerStats.bestPerformingTier}
+                  </span>
+                </p>
+              </div>
               <div className="flex items-center space-x-2">
                 <select
                   value={timeFilter}
