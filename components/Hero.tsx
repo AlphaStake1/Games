@@ -3,39 +3,20 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Play } from 'lucide-react';
-import WalletConnectionPopup from '@/components/WalletConnectionPopup';
-import useWalletConnectionPopup from '@/hooks/useWalletConnectionPopup';
+import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
 import { useWallet } from '@solana/wallet-adapter-react';
 
 const Hero = () => {
-  const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
-  const { connected, connect } = useWallet();
-  const {
-    isPopupOpen,
-    currentIntent,
-    intentData,
-    hidePopup,
-    showPlayGamePopup,
-  } = useWalletConnectionPopup();
+  const { showPopup } = useWalletConnection();
+  const { connected } = useWallet();
+  const router = useRouter();
 
   const handleJoinGames = () => {
     if (connected) {
-      // User has wallet connected, go directly to boards
       router.push('/boards?mode=weekly');
     } else {
-      // Show wallet connection popup with intent
-      showPlayGamePopup(undefined, '/boards?mode=weekly');
-    }
-  };
-
-  // Handle wallet connection with actual Solana adapter
-  const handleConnect = async () => {
-    try {
-      await connect();
-    } catch (error) {
-      console.error('Wallet connection failed:', error);
-      throw error;
+      showPopup('play-game', { redirectPath: '/boards?mode=weekly' });
     }
   };
 
@@ -108,15 +89,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-      {/* Wallet Connection Popup */}
-      <WalletConnectionPopup
-        isOpen={isPopupOpen}
-        onClose={hidePopup}
-        onConnect={handleConnect}
-        intent={currentIntent}
-        intentData={intentData}
-      />
     </section>
   );
 };

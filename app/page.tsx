@@ -1,14 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import WalletConnectionPopup from '@/components/WalletConnectionPopup';
-import useWalletConnectionPopup from '@/hooks/useWalletConnectionPopup';
+import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
 import { useWallet } from '@solana/wallet-adapter-react';
 import Hero from '@/components/Hero';
 import SquaresGrid from '@/components/SquaresGrid';
 import HowItWorks from '@/components/HowItWorks';
-import SidebarAds from '@/components/SidebarAds';
 import VideoSection from '@/components/VideoSection';
 import { Button } from '@/components/ui/button';
 import {
@@ -31,15 +30,25 @@ export default function Home() {
     currentIntent,
     intentData,
     hidePopup,
-    showPlayGamePopup,
-  } = useWalletConnectionPopup();
+    showPopup: showPlayGamePopup,
+  } = useWalletConnection();
+
+  useEffect(() => {
+    if (connected && currentIntent && currentIntent !== 'general') {
+      if (intentData?.redirectPath) {
+        router.push(intentData.redirectPath);
+      } else if (intentData?.gameId) {
+        router.push(`/boards?gameId=${intentData.gameId}`);
+      }
+    }
+  }, [connected, currentIntent, intentData, router]);
 
   const handleJoinGame = () => {
     if (gameId.trim()) {
       if (connected) {
         setShowBoard(true);
       } else {
-        showPlayGamePopup(gameId);
+        showPlayGamePopup('play-game', { gameId });
       }
     }
   };
@@ -52,7 +61,7 @@ export default function Home() {
       if (connected) {
         setShowBoard(true);
       } else {
-        showPlayGamePopup(newGameId.toString());
+        showPlayGamePopup('play-game', { gameId: newGameId.toString() });
       }
     }
   };
@@ -61,7 +70,7 @@ export default function Home() {
     if (connected) {
       router.push('/boards?mode=seasonal');
     } else {
-      showPlayGamePopup(undefined, '/boards?mode=seasonal');
+      showPlayGamePopup('play-game', { redirectPath: '/boards?mode=seasonal' });
     }
   };
 
@@ -69,7 +78,7 @@ export default function Home() {
     if (connected) {
       router.push('/boards?mode=weekly');
     } else {
-      showPlayGamePopup(undefined, '/boards?mode=weekly');
+      showPlayGamePopup('play-game', { redirectPath: '/boards?mode=weekly' });
     }
   };
 
@@ -513,19 +522,8 @@ export default function Home() {
             </div>
           </section>
         </div>
-
-        {/* Right Sidebar */}
-        <SidebarAds refreshTrigger={0} />
       </div>
 
-      {/* Wallet Connection Popup */}
-      <WalletConnectionPopup
-        isOpen={isPopupOpen}
-        onClose={hidePopup}
-        onConnect={handleConnect}
-        intent={currentIntent}
-        intentData={intentData}
-      />
     </div>
   );
 }

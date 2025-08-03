@@ -1,7 +1,13 @@
+'use client';
+
 import type { Metadata } from 'next';
 import { Recursive } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
+import { WalletConnectionProvider } from '@/contexts/WalletConnectionProvider';
+import WalletConnectionPopup from '@/components/WalletConnectionPopup';
+import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
+import { useWallet } from '@solana/wallet-adapter-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -10,10 +16,34 @@ const recursive = Recursive({
   variable: '--font-recursive',
 });
 
-export const metadata: Metadata = {
-  title: 'Football Squares - Decentralized NFL Squares on Solana',
-  description:
-    'Play Football Squares with crypto rewards. Join games, create boards, and win SOL with our fair and transparent blockchain-based platform.',
+
+const RootLayoutContent = ({ children }: { children: React.ReactNode }) => {
+  const { isPopupOpen, hidePopup, currentIntent, intentData } = useWalletConnection();
+  const { connect } = useWallet();
+
+  const handleConnect = async () => {
+    try {
+      await connect();
+    } catch (error) {
+      console.error('Wallet connection failed:', error);
+      throw error;
+    }
+  };
+
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <Footer />
+      <WalletConnectionPopup
+        isOpen={isPopupOpen}
+        onClose={hidePopup}
+        onConnect={handleConnect}
+        intent={currentIntent}
+        intentData={intentData}
+      />
+    </>
+  );
 };
 
 export default function RootLayout({
@@ -25,9 +55,9 @@ export default function RootLayout({
     <html lang="en" className={`${recursive.variable} font-sans`}>
       <body>
         <Providers>
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <WalletConnectionProvider>
+            <RootLayoutContent>{children}</RootLayoutContent>
+          </WalletConnectionProvider>
         </Providers>
       </body>
     </html>

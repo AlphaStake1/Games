@@ -7,7 +7,6 @@ import {
   WalletProvider,
 } from '@solana/wallet-adapter-react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { clusterApiUrl } from '@solana/web3.js';
 import { useMemo, useEffect, useState } from 'react';
 
@@ -50,17 +49,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect={mounted}>
-        <WalletModalProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem={true}
-            storageKey="football-squares-theme"
-          >
-            {children}
-            <Toaster />
-          </ThemeProvider>
-        </WalletModalProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={true}
+          storageKey="football-squares-theme"
+        >
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </WalletProvider>
     </ConnectionProvider>
   );

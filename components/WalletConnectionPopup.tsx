@@ -91,40 +91,7 @@ const WalletConnectionPopup: React.FC<WalletConnectionPopupProps> = ({
   const handleConnect = async () => {
     setIsConnecting(true);
     try {
-      // Store intent data in localStorage for after wallet creation
-      if (intent !== 'general') {
-        localStorage.setItem(
-          'userIntent',
-          JSON.stringify({
-            intent,
-            intentData,
-            timestamp: Date.now(),
-          }),
-        );
-      }
-
       await onConnect();
-
-      // After successful connection, handle the intent
-      setTimeout(() => {
-        if (intent === 'create-nft') {
-          if (intentData?.nftType) {
-            window.location.href = `/create-nft/${intentData.nftType}`;
-          } else {
-            window.location.href = '/my-nfts';
-          }
-        } else if (intent === 'play-game') {
-          if (intentData?.gameId) {
-            window.location.href = `/boards?gameId=${intentData.gameId}`;
-          } else if (intentData?.redirectPath) {
-            window.location.href = intentData.redirectPath;
-          } else {
-            window.location.href = '/boards';
-          }
-        } else if (intent === 'view-collection') {
-          window.location.href = '/my-nfts';
-        }
-      }, 1000); // Small delay to allow wallet connection to complete
     } catch (error) {
       console.error('Wallet connection failed:', error);
     } finally {
