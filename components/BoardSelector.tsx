@@ -63,7 +63,26 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
     refreshGames,
     isConnected,
     currentWeek,
-  } = useTeamGames(userTeam, { upcomingOnly: false }); // Get all games, not just upcoming
+  } = useTeamGames(userTeam, { upcomingOnly: false });
+
+  // Debug logging
+  console.log('BoardSelector: Team games data:', {
+    userTeam: userTeam?.abbreviation,
+    userTeamId: userTeam?.id,
+    gamesLoading,
+    availableGamesCount: availableGames?.length || 0,
+    gamesError,
+    currentWeek,
+    isConnected,
+  });
+
+  // Force immediate display for demo/testing
+  useEffect(() => {
+    if (!gamesLoading && availableGames.length === 0 && !gamesError) {
+      console.log('BoardSelector: No games loaded, forcing refresh...');
+      refreshGames();
+    }
+  }, [gamesLoading, availableGames.length, gamesError, refreshGames]);
 
   // Get board data for the selected game
   const {
@@ -155,18 +174,14 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
     const statusMessage = BoardUtils.getBoardStatusMessage(availability);
 
     const calculateMaxWin = (tier: BoardTier) => {
-      const { payouts } = tier;
-      const regularGameTotal =
-        payouts.q1Regular +
-        payouts.q2Regular +
-        payouts.q3Regular +
-        payouts.q4Regular;
-      const overtimeSplit =
-        (payouts.q1Overtime ?? 0) +
-        (payouts.q2Overtime ?? 0) +
-        (payouts.q3Overtime ?? 0) +
-        (payouts.q4Overtime ?? 0);
-      const expiredOvertime = payouts.finalOvertime ?? 0;
+      // Use playerPool directly since it's already rake-deducted
+      const regularGameTotal = tier.playerPool;
+
+      // For overtime: 50% of the Q4 payout (using the raw Q4 amount from playerPool proportion)
+      const q4Amount = tier.payouts.q4Regular;
+      const overtimeSplit = q4Amount * 0.5;
+      const expiredOvertime = q4Amount * 0.5;
+
       return {
         regularGameTotal,
         overtimeSplit,
@@ -273,45 +288,60 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
               <TrendingUp className="w-4 h-4" />
               Potential Winnings:
             </h4>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="flex justify-between">
-                <span>Q1:</span>
-                <span className="font-medium">
-                  {formatCurrency(tier.payouts.q1Regular)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Q2:</span>
-                <span className="font-medium">
-                  {formatCurrency(tier.payouts.q2Regular)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Q3:</span>
-                <span className="font-medium">
-                  {formatCurrency(tier.payouts.q3Regular)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Q4:</span>
-                <span className="font-bold text-green-600">
-                  {formatCurrency(tier.payouts.q4Regular)}
-                </span>
-              </div>
-            </div>
-            {tier.payouts.finalOvertime && (
-              <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-                <div className="flex justify-between text-xs">
-                  <span>Overtime (Split):</span>
-                  <span className="font-medium">
-                    {formatCurrency(calculateMaxWin(tier).overtimeSplit)}
-                  </span>
+            {isVIPTier ? (
+              // Detailed breakdown for VIP boards
+              <>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="flex justify-between">
+                    <span>Q1:</span>
+                    <span className="font-medium">
+                      {formatCurrency(tier.payouts.q1Regular)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Q2:</span>
+                    <span className="font-medium">
+                      {formatCurrency(tier.payouts.q2Regular)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Q3:</span>
+                    <span className="font-medium">
+                      {formatCurrency(tier.payouts.q3Regular)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Q4:</span>
+                    <span className="font-bold text-green-600">
+                      {formatCurrency(tier.payouts.q4Regular)}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex justify-between text-xs">
-                  <span>Overtime (Expired):</span>
-                  <span className="font-medium">
-                    {formatCurrency(calculateMaxWin(tier).expiredOvertime ?? 0)}
-                  </span>
+                {tier.payouts.finalOvertime && (
+                  <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+                    <div className="flex justify-between text-xs">
+                      <span>Overtime Split (50%):</span>
+                      <span className="font-medium">
+                        {formatCurrency(calculateMaxWin(tier).overtimeSplit)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span>Overtime (Expired):</span>
+                      <span className="font-medium">
+                        {formatCurrency(calculateMaxWin(tier).expiredOvertime)}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              // Simplified display for non-VIP boards
+              <div className="text-center">
+                <div className="text-lg font-bold text-green-600">
+                  {formatCurrency(calculateMaxWin(tier).regularGameTotal)}
+                </div>
+                <div className="text-xs text-gray-500 mt-1">
+                  Total Potential Winnings
                 </div>
               </div>
             )}
