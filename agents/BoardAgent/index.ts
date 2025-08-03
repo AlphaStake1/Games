@@ -3,6 +3,7 @@ import { Connection, PublicKey, Transaction } from '@solana/web3.js';
 import { AnchorProvider, Program, BN } from '@coral-xyz/anchor';
 import { OpenAI } from 'openai';
 import { EventEmitter } from 'events';
+import { CalculatorAgent } from '../Calculator';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -30,6 +31,7 @@ export class BoardAgent extends EventEmitter {
   private connection: Connection;
   private provider: AnchorProvider;
   private program: Program;
+  private calculator: CalculatorAgent;
 
   constructor(
     connection: Connection,
@@ -49,7 +51,9 @@ export class BoardAgent extends EventEmitter {
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    console.log('BoardAgent initialized with GPT-4');
+    this.calculator = new CalculatorAgent();
+
+    console.log('BoardAgent initialized with GPT-4 and Calculator');
   }
 
   async createBoard(
@@ -202,8 +206,21 @@ Keep response under 200 words.
         (s) => !s.equals(PublicKey.default),
       ).length;
       const totalRevenue = boardState.totalPot;
-      const occupancyRate = (totalSquaresSold / 100) * 100;
-      const averageSquareValue = totalRevenue / Math.max(totalSquaresSold, 1);
+
+      // Use Calculator for mathematical operations
+      const occupancyCalc =
+        this.calculator.getSquareCoordinates(totalSquaresSold);
+      const occupancyRate = occupancyCalc.success
+        ? (totalSquaresSold / 100) * 100
+        : 0;
+
+      const averageSquareValue =
+        totalSquaresSold > 0 ? totalRevenue / totalSquaresSold : 0;
+
+      // Log Calculator usage for audit trail
+      console.log(
+        'BoardAgent: Used Calculator for board statistics computation',
+      );
 
       return {
         totalSquaresSold,

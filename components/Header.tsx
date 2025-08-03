@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Menu, X, Crown } from '@/lib/icons';
+import { Wallet } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -10,15 +11,25 @@ import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { ThemeToggle } from './ui/theme-toggle';
 import { useAuth } from '@/lib/auth';
 import { Badge } from '@/components/ui/badge';
+import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
+import { Button } from '@/components/ui/button';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const { user } = useAuth('PLAYER_ROLE');
   const { connected } = useWallet();
+  const { showPopup } = useWalletConnection();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleWalletClick = () => {
+    if (!connected) {
+      // Show our custom popup instead of direct wallet connection
+      showPopup('general');
+    }
   };
 
   const menuItems = [
@@ -107,7 +118,17 @@ const Header = () => {
             >
               Need a Wallet?
             </Link>
-            <WalletMultiButton className="!bg-blue-600 hover:!bg-blue-700 !text-white !px-6 !py-2 !rounded-lg !font-semibold !transition-colors !duration-200 !border-0 wallet-adapter-button-trigger" />
+            {connected ? (
+              <WalletMultiButton className="!bg-blue-600 hover:!bg-blue-700 !text-white !px-6 !py-2 !rounded-lg !font-semibold !transition-colors !duration-200 !border-0 wallet-adapter-button-trigger" />
+            ) : (
+              <Button
+                onClick={handleWalletClick}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200 border-0"
+              >
+                <Wallet className="w-4 h-4 mr-2" />
+                Select Wallet
+              </Button>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -166,7 +187,17 @@ const Header = () => {
               Need a Wallet?
             </Link>
 
-            <WalletMultiButton className="!w-full !mt-2 !bg-blue-600 hover:!bg-blue-700 !text-white !px-6 !py-3 !rounded-lg !font-semibold !transition-colors !duration-200 !border-0 wallet-adapter-button-trigger" />
+            {connected ? (
+              <WalletMultiButton className="!w-full !mt-2 !bg-blue-600 hover:!bg-blue-700 !text-white !px-6 !py-3 !rounded-lg !font-semibold !transition-colors !duration-200 !border-0 wallet-adapter-button-trigger" />
+            ) : (
+              <Button
+                onClick={handleWalletClick}
+                className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 border-0"
+              >
+                <Wallet className="w-5 h-5 mr-2" />
+                Select Wallet
+              </Button>
+            )}
 
             {/* CBL CTA for Mobile */}
             {showCBLBadge && (

@@ -36,6 +36,14 @@ eliza-config/.env
 *.tsbuildinfo
 next-env.d.ts
 
+# Compiled JavaScript files (keep only TypeScript sources)
+lib/memory/*.js
+agents/Calculator/*.js
+scripts/setup-eliza-characters.js
+
+# Backup directories
+backups/
+
 .env
 
 # Python

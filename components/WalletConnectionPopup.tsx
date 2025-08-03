@@ -17,6 +17,9 @@ import {
   ChevronRight,
   Info,
 } from 'lucide-react';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { WalletName } from '@solana/wallet-adapter-base';
+import Image from 'next/image';
 
 interface WalletConnectionPopupProps {
   isOpen: boolean;
@@ -38,6 +41,8 @@ const WalletConnectionPopup: React.FC<WalletConnectionPopupProps> = ({
   intentData,
 }) => {
   const [isConnecting, setIsConnecting] = useState(false);
+  const [selectedWallet, setSelectedWallet] = useState<WalletName | null>(null);
+  const { wallets, select, connected, connecting } = useWallet();
 
   const intentMessages = {
     'create-nft': {
@@ -88,16 +93,47 @@ const WalletConnectionPopup: React.FC<WalletConnectionPopupProps> = ({
 
   const currentIntent = intentMessages[intent];
 
-  const handleConnect = async () => {
+  const handleWalletSelect = async (walletName: WalletName) => {
+    setSelectedWallet(walletName);
     setIsConnecting(true);
     try {
+      console.log('Selecting wallet:', walletName);
+      select(walletName);
+      // Give the wallet selection time to process
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      console.log('Connecting to wallet...');
       await onConnect();
+      console.log('Wallet connected successfully');
+      onClose();
     } catch (error) {
       console.error('Wallet connection failed:', error);
     } finally {
       setIsConnecting(false);
+      setSelectedWallet(null);
     }
   };
+
+  // Available wallets with their info
+  const availableWallets = [
+    {
+      name: 'Phantom' as WalletName,
+      icon: 'https://phantom.app/img/phantom-favicon.ico',
+      downloadUrl: 'https://phantom.app/',
+      description: 'Popular Solana wallet',
+    },
+    {
+      name: 'Solflare' as WalletName,
+      icon: 'https://solflare.com/favicon.ico',
+      downloadUrl: 'https://solflare.com/',
+      description: 'Secure Solana wallet',
+    },
+    {
+      name: 'Torus' as WalletName,
+      icon: 'https://app.tor.us/img/favicon.ico',
+      downloadUrl: 'https://app.tor.us/',
+      description: 'Email-based wallet',
+    },
+  ];
 
   const handleGetPhantom = () => {
     // Store intent before redirecting to Phantom
@@ -146,25 +182,66 @@ const WalletConnectionPopup: React.FC<WalletConnectionPopupProps> = ({
             </ul>
           </div>
 
-          {/* Action Buttons */}
+          {/* Wallet Selection */}
           <div className="space-y-3">
-            <Button
-              onClick={handleConnect}
-              disabled={isConnecting}
-              className="w-full bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white py-3 rounded-xl font-bold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-300 transform hover:scale-105 shadow-lg"
-            >
-              <Wallet className="w-5 h-5 mr-2" />
-              {isConnecting ? 'Connecting...' : currentIntent.primaryAction}
-            </Button>
+            <h4 className="font-semibold text-[#002244] dark:text-white mb-3 text-center">
+              Choose your wallet:
+            </h4>
+            {availableWallets.map((wallet) => {
+              const isInstalled = wallets.some(
+                (w) => w.adapter.name === wallet.name,
+              );
+              const isSelectedWallet = selectedWallet === wallet.name;
+              const isCurrentlyConnecting = isConnecting && isSelectedWallet;
 
-            <Button
-              onClick={handleGetPhantom}
-              variant="outline"
-              className="w-full border-2 border-[#708090]/30 text-[#002244] dark:text-white hover:bg-[#708090]/10 py-3 rounded-xl font-semibold"
-            >
-              <ExternalLink className="w-4 h-4 mr-2" />
-              Get Phantom Wallet
-            </Button>
+              return (
+                <div key={wallet.name} className="space-y-2">
+                  <Button
+                    onClick={() =>
+                      isInstalled
+                        ? handleWalletSelect(wallet.name)
+                        : window.open(wallet.downloadUrl, '_blank')
+                    }
+                    disabled={isConnecting}
+                    className={`w-full ${
+                      isInstalled
+                        ? 'bg-gradient-to-r from-[#ed5925] to-[#96abdc] hover:from-[#d14a1f] hover:to-[#7a95d1]'
+                        : 'bg-gray-500 hover:bg-gray-600'
+                    } text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-between`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                        <img
+                          src={wallet.icon}
+                          alt={`${wallet.name} icon`}
+                          className="w-6 h-6"
+                        />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-bold">{wallet.name}</div>
+                        <div className="text-xs opacity-90">
+                          {wallet.description}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {isCurrentlyConnecting ? (
+                        <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+                      ) : isInstalled ? (
+                        <ChevronRight className="w-4 h-4" />
+                      ) : (
+                        <ExternalLink className="w-4 h-4" />
+                      )}
+                    </div>
+                  </Button>
+                  {!isInstalled && (
+                    <div className="text-xs text-[#708090] dark:text-[#96abdc] text-center">
+                      Not installed - click to download
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Info Section */}

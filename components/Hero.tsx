@@ -13,9 +13,12 @@ const Hero = () => {
   const router = useRouter();
 
   const handleJoinGames = () => {
+    console.log('Join Weekly Cash Games clicked - Connected:', connected);
     if (connected) {
+      console.log('Redirecting to boards...');
       router.push('/boards?mode=weekly');
     } else {
+      console.log('Showing wallet popup...');
       showPopup('play-game', { redirectPath: '/boards?mode=weekly' });
     }
   };

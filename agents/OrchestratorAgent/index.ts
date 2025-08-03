@@ -7,6 +7,8 @@ import { RandomizerAgent } from '../RandomizerAgent';
 import { OracleAgent } from '../OracleAgent';
 import { WinnerAgent } from '../WinnerAgent';
 import { EmailAgent } from '../EmailAgent';
+import { DocumentationAgent } from '../DocumentationAgent';
+import { CodeReviewAgent } from '../CodeReviewAgent';
 import { EventEmitter } from 'events';
 import * as dotenv from 'dotenv';
 
@@ -32,6 +34,26 @@ interface TaskPlan {
   reasoning: string;
 }
 
+interface SubagentTask {
+  id: string;
+  type: 'game_operation' | 'development' | 'documentation' | 'review';
+  agent: string;
+  action: string;
+  args: any;
+  status: 'pending' | 'in_progress' | 'completed' | 'failed';
+  priority: number;
+  dependencies: string[];
+  createdAt: Date;
+  completedAt?: Date;
+  result?: any;
+  error?: string;
+}
+
+interface SubagentRegistry {
+  gameAgents: Map<string, any>;
+  developmentAgents: Map<string, any>;
+}
+
 export class OrchestratorAgent extends EventEmitter {
   private anthropic: Anthropic;
   private connection: Connection;
@@ -40,6 +62,12 @@ export class OrchestratorAgent extends EventEmitter {
   private activeGames: Map<number, GameContext> = new Map();
   private taskQueue: Array<any> = [];
   private isProcessing: boolean = false;
+
+  // Subagent system
+  private subagentRegistry: SubagentRegistry;
+  private subagentTasks: Map<string, SubagentTask> = new Map();
+  private developmentQueue: SubagentTask[] = [];
+  private isProcessingDevelopment: boolean = false;
 
   constructor(
     connection: Connection,
@@ -60,7 +88,9 @@ export class OrchestratorAgent extends EventEmitter {
     });
 
     console.log('OrchestratorAgent initialized with Claude Sonnet 4');
+    this.initializeSubagentRegistry();
     this.startProcessingLoop();
+    this.startDevelopmentProcessingLoop();
   }
 
   async planTasks(gameId: number): Promise<TaskPlan> {
@@ -418,6 +448,351 @@ Respond with a JSON object containing:
       console.error('Health check failed:', error);
       return false;
     }
+  }
+
+  // ============================================================================
+  // SUBAGENT SYSTEM METHODS
+  // ============================================================================
+
+  /**
+   * Initialize the subagent registry with available agents
+   */
+  private initializeSubagentRegistry(): void {
+    this.subagentRegistry = {
+      gameAgents: new Map([
+        ['BoardAgent', BoardAgent],
+        ['RandomizerAgent', RandomizerAgent],
+        ['OracleAgent', OracleAgent],
+        ['WinnerAgent', WinnerAgent],
+        ['EmailAgent', EmailAgent],
+      ]),
+      developmentAgents: new Map([
+        ['DocumentationAgent', DocumentationAgent],
+        ['CodeReviewAgent', CodeReviewAgent],
+      ]),
+    };
+
+    console.log(
+      'Subagent registry initialized with',
+      this.subagentRegistry.gameAgents.size +
+        this.subagentRegistry.developmentAgents.size,
+      'agents',
+    );
+  }
+
+  /**
+   * Delegate a task to a specialized subagent
+   */
+  async delegateToSubagent(
+    task: Omit<SubagentTask, 'id' | 'createdAt' | 'status'>,
+  ): Promise<string> {
+    const taskId = `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    const subagentTask: SubagentTask = {
+      ...task,
+      id: taskId,
+      status: 'pending',
+      createdAt: new Date(),
+    };
+
+    this.subagentTasks.set(taskId, subagentTask);
+
+    if (
+      task.type === 'development' ||
+      task.type === 'documentation' ||
+      task.type === 'review'
+    ) {
+      this.developmentQueue.push(subagentTask);
+    } else {
+      this.taskQueue.push(subagentTask);
+    }
+
+    this.emit('taskDelegated', { taskId, task: subagentTask });
+
+    console.log(
+      `Task delegated to ${task.agent}: ${task.action} (ID: ${taskId})`,
+    );
+    return taskId;
+  }
+
+  /**
+   * Generate documentation for a file or component
+   */
+  async generateDocumentation(
+    filePath: string,
+    type: 'anchor_program' | 'agent_workflow' | 'api_endpoint' | 'user_guide',
+    context?: any,
+  ): Promise<string> {
+    return this.delegateToSubagent({
+      type: 'documentation',
+      agent: 'DocumentationAgent',
+      action:
+        type === 'anchor_program'
+          ? 'generateAnchorProgramDocs'
+          : type === 'agent_workflow'
+            ? 'generateAgentWorkflowDocs'
+            : type === 'api_endpoint'
+              ? 'generateAPIEndpointDocs'
+              : 'generateUserGuide',
+      args: { filePath, context },
+      priority: 6,
+      dependencies: [],
+    });
+  }
+
+  /**
+   * Review code with the CodeReviewAgent
+   */
+  async reviewCode(
+    filePath: string,
+    changeType: 'new_file' | 'modification' | 'refactor',
+    context?: any,
+  ): Promise<string> {
+    return this.delegateToSubagent({
+      type: 'review',
+      agent: 'CodeReviewAgent',
+      action: filePath.endsWith('.rs')
+        ? 'reviewRustCode'
+        : filePath.includes('agents/')
+          ? 'reviewAgentIntegration'
+          : 'reviewTypeScriptCode',
+      args: {
+        filePath,
+        changeType,
+        context,
+      },
+      priority: 8,
+      dependencies: [],
+    });
+  }
+
+  /**
+   * Coordinate multiple subagents for complex tasks
+   */
+  async coordinateMultiAgentTask(
+    tasks: Array<Omit<SubagentTask, 'id' | 'createdAt' | 'status'>>,
+  ): Promise<string[]> {
+    const taskIds: string[] = [];
+
+    // Sort tasks by priority and dependencies
+    const sortedTasks = this.topologicalSort(tasks);
+
+    for (const task of sortedTasks) {
+      const taskId = await this.delegateToSubagent(task);
+      taskIds.push(taskId);
+    }
+
+    this.emit('multiAgentTaskCoordinated', {
+      taskIds,
+      taskCount: tasks.length,
+    });
+
+    console.log(`Coordinated ${tasks.length} tasks across multiple agents`);
+    return taskIds;
+  }
+
+  /**
+   * Development processing loop for documentation and code review tasks
+   */
+  private async startDevelopmentProcessingLoop(): Promise<void> {
+    setInterval(async () => {
+      if (this.isProcessingDevelopment || this.developmentQueue.length === 0) {
+        return;
+      }
+
+      this.isProcessingDevelopment = true;
+
+      try {
+        const task = this.developmentQueue.shift();
+        if (task) {
+          await this.executeDevelopmentTask(task);
+        }
+      } catch (error) {
+        console.error('Error in development processing loop:', error);
+      } finally {
+        this.isProcessingDevelopment = false;
+      }
+    }, 5000); // Process every 5 seconds
+  }
+
+  /**
+   * Execute development-related tasks (documentation, code review)
+   */
+  private async executeDevelopmentTask(task: SubagentTask): Promise<void> {
+    try {
+      task.status = 'in_progress';
+      this.subagentTasks.set(task.id, task);
+
+      console.log(`Executing development task: ${task.agent}.${task.action}`);
+
+      let result: any;
+
+      switch (task.agent) {
+        case 'DocumentationAgent':
+          result = await this.executeDocumentationTask(task);
+          break;
+        case 'CodeReviewAgent':
+          result = await this.executeCodeReviewTask(task);
+          break;
+        default:
+          throw new Error(`Unknown development agent: ${task.agent}`);
+      }
+
+      task.status = 'completed';
+      task.completedAt = new Date();
+      task.result = result;
+
+      this.subagentTasks.set(task.id, task);
+      this.emit('developmentTaskCompleted', { task, result });
+
+      console.log(`Development task completed: ${task.id}`);
+    } catch (error) {
+      task.status = 'failed';
+      task.error = error instanceof Error ? error.message : String(error);
+      task.completedAt = new Date();
+
+      this.subagentTasks.set(task.id, task);
+      this.emit('developmentTaskFailed', { task, error });
+
+      console.error(`Development task failed: ${task.id}`, error);
+    }
+  }
+
+  /**
+   * Execute documentation generation tasks
+   */
+  private async executeDocumentationTask(task: SubagentTask): Promise<any> {
+    const agent = new DocumentationAgent();
+
+    switch (task.action) {
+      case 'generateAnchorProgramDocs':
+        return await agent.generateAnchorProgramDocs(task.args.filePath);
+      case 'generateAgentWorkflowDocs':
+        return await agent.generateAgentWorkflowDocs(task.args.filePath);
+      case 'generateAPIEndpointDocs':
+        return await agent.generateAPIEndpointDocs(task.args.filePath);
+      case 'generateUserGuide':
+        return await agent.generateUserGuide(task.args.context);
+      default:
+        throw new Error(`Unknown documentation action: ${task.action}`);
+    }
+  }
+
+  /**
+   * Execute code review tasks
+   */
+  private async executeCodeReviewTask(task: SubagentTask): Promise<any> {
+    const agent = new CodeReviewAgent();
+    const fileContent = await require('fs/promises').readFile(
+      task.args.filePath,
+      'utf-8',
+    );
+
+    const request = {
+      filePath: task.args.filePath,
+      fileContent,
+      changeType: task.args.changeType,
+      context: task.args.context,
+    };
+
+    switch (task.action) {
+      case 'reviewRustCode':
+        return await agent.reviewRustCode(request);
+      case 'reviewTypeScriptCode':
+        return await agent.reviewTypeScriptCode(request);
+      case 'reviewAgentIntegration':
+        return await agent.reviewAgentIntegration(request);
+      default:
+        throw new Error(`Unknown code review action: ${task.action}`);
+    }
+  }
+
+  /**
+   * Get task status and results
+   */
+  getTaskStatus(taskId: string): SubagentTask | undefined {
+    return this.subagentTasks.get(taskId);
+  }
+
+  /**
+   * Get all tasks for a specific agent
+   */
+  getTasksByAgent(agentName: string): SubagentTask[] {
+    return Array.from(this.subagentTasks.values()).filter(
+      (task) => task.agent === agentName,
+    );
+  }
+
+  /**
+   * Get development queue status
+   */
+  getDevelopmentQueueStatus(): {
+    pending: number;
+    inProgress: number;
+    completed: number;
+    failed: number;
+  } {
+    const allTasks = Array.from(this.subagentTasks.values());
+    const devTasks = allTasks.filter(
+      (task) =>
+        task.type === 'development' ||
+        task.type === 'documentation' ||
+        task.type === 'review',
+    );
+
+    return {
+      pending: devTasks.filter((t) => t.status === 'pending').length,
+      inProgress: devTasks.filter((t) => t.status === 'in_progress').length,
+      completed: devTasks.filter((t) => t.status === 'completed').length,
+      failed: devTasks.filter((t) => t.status === 'failed').length,
+    };
+  }
+
+  /**
+   * Simple topological sort for task dependencies
+   */
+  private topologicalSort(
+    tasks: Array<Omit<SubagentTask, 'id' | 'createdAt' | 'status'>>,
+  ): typeof tasks {
+    // Simple implementation - sort by priority for now
+    // In production, implement proper topological sorting based on dependencies
+    return tasks.sort((a, b) => b.priority - a.priority);
+  }
+
+  /**
+   * Health check including subagent system
+   */
+  async healthCheckSubagents(): Promise<{
+    orchestrator: boolean;
+    gameAgents: Record<string, boolean>;
+    developmentAgents: Record<string, boolean>;
+    taskQueueStatus: any;
+  }> {
+    const gameAgentHealth: Record<string, boolean> = {};
+    const developmentAgentHealth: Record<string, boolean> = {};
+
+    // Test DocumentationAgent
+    try {
+      const docAgent = new DocumentationAgent();
+      developmentAgentHealth.DocumentationAgent = await docAgent.healthCheck();
+    } catch (error) {
+      developmentAgentHealth.DocumentationAgent = false;
+    }
+
+    // Test CodeReviewAgent
+    try {
+      const reviewAgent = new CodeReviewAgent();
+      developmentAgentHealth.CodeReviewAgent = await reviewAgent.healthCheck();
+    } catch (error) {
+      developmentAgentHealth.CodeReviewAgent = false;
+    }
+
+    return {
+      orchestrator: true,
+      gameAgents: gameAgentHealth,
+      developmentAgents: developmentAgentHealth,
+      taskQueueStatus: this.getDevelopmentQueueStatus(),
+    };
   }
 }
 

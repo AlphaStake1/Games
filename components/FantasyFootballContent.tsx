@@ -28,6 +28,7 @@ import {
   Flame,
   ExternalLink,
 } from 'lucide-react';
+import VideoSection from './VideoSection';
 
 const FantasyFootballContent = () => {
   const [activeTab, setActiveTab] = useState('basics');
@@ -328,6 +329,11 @@ const FantasyFootballContent = () => {
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Fantasy Football Video Section */}
+        <div className="mb-16">
+          <VideoSection />
         </div>
 
         {/* Tab Navigation */}

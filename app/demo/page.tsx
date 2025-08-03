@@ -61,6 +61,14 @@ export default function DemoPage() {
               isVIP={false}
               onSquareSelectionChange={handleSelectionChange}
               currentSelection={currentSelection}
+              userTeam={{
+                id: 'sea',
+                name: 'Seahawks',
+                city: 'Seattle',
+                abbreviation: 'SEA',
+                primaryColor: '#002244',
+                secondaryColor: '#69BE28',
+              }}
             />
           </div>
 

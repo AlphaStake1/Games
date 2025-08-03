@@ -1,3 +1,5 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 
 const HowToPlayContent = dynamic(
@@ -15,11 +17,7 @@ const HowToPlayContent = dynamic(
   },
 );
 
-export const metadata = {
-  title: 'How To Play Football Squares | Complete Guide',
-  description:
-    'Learn how to play Football Squares with our comprehensive guide. Understand the rules, scoring, and strategies for winning.',
-};
+// Note: metadata moved to layout or will be handled by next/head in client component
 
 export default function HowToPlayPage() {
   return (

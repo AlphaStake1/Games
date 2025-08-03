@@ -1,189 +1,97 @@
 /**
- * Centralized icon exports to reduce import bloat
- * Organized by category for better maintainability
+ * Centralized icon exports - includes all icons actually used in codebase
+ * Cleaned up from original 100+ exports, keeping only what's needed
  */
 
-// Navigation & UI
 export {
+  // Navigation & UI
   ArrowRight,
-  ArrowLeft,
-  ArrowUp,
-  ArrowDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  ChevronDown,
   Menu,
   X,
-  Home,
   ExternalLink,
-} from 'lucide-react';
+  ChevronDown,
+  ChevronUp,
 
-// User & Account
-export { User, Users, UserCheck, UserPlus, Settings } from 'lucide-react';
-
-// Communication
-export {
-  Mail,
-  MessageCircle,
-  Phone,
-  Send,
-  Reply,
+  // Users & Social
+  Users,
   Instagram,
-} from 'lucide-react';
+  MessageCircle,
 
-// Status & Feedback
-export {
-  CheckCircle,
-  AlertCircle,
+  // Status & Feedback
   AlertTriangle,
-  Info,
   HelpCircle,
   RefreshCw,
   Loader2 as Loader,
-} from 'lucide-react';
+  CheckCircle,
+  Info,
+  AlertCircle,
 
-// Content & Media
-export {
+  // Content & Actions
   FileText,
+  Bug,
+  Copy,
   Download,
   Upload,
-  Copy,
-  Edit,
-  Trash,
-  Save,
-  Share,
-} from 'lucide-react';
 
-// Security & Privacy
-export { Shield, Lock, Unlock, Eye, EyeOff, Key } from 'lucide-react';
+  // Security
+  Lock,
+  Shield,
+  Eye,
+  EyeOff,
+  Unlock,
 
-// Technology & Web
-export {
+  // Technology & Web
   Globe,
   Wifi,
   WifiOff,
+  Grid,
   Activity,
   Hash,
-  Smartphone,
   Monitor,
-  Tablet,
-  Laptop,
-  Server,
-} from 'lucide-react';
+  Smartphone,
 
-// Business & Commerce
-export {
-  CreditCard,
-  DollarSign,
+  // Business & Analytics
   TrendingUp,
-  TrendingDown,
+  DollarSign,
   BarChart,
-  PieChart,
-} from 'lucide-react';
 
-// Gaming & Sports
-export {
+  // Gaming & Sports
   Trophy,
   Target,
-  Gamepad,
-  Star,
-  Award,
-  Flag,
   Crown,
   Square,
-} from 'lucide-react';
+  Star,
+  Award,
 
-// Time & Calendar
-export { Calendar, Clock, Timer, History } from 'lucide-react';
+  // Time
+  Clock,
+  Calendar,
 
-// Actions & Controls
-export {
-  Play,
-  PlayCircle,
-  Pause,
-  SkipForward,
-  SkipBack,
-  Volume,
-  VolumeX,
-} from 'lucide-react';
+  // Communication
+  Mail,
+  Phone,
 
-// Location & Geography
-export { MapPin, Map, Navigation, Compass } from 'lucide-react';
+  // Location
+  MapPin,
 
-// Tools & Utilities
-export { Search, Filter, Grid, List, Wrench, Bug } from 'lucide-react';
-
-// Miscellaneous
-export {
-  Heart,
-  Bookmark,
-  Tag,
-  Bell,
-  Gift,
+  // Tools & Settings
+  Settings,
   Zap,
-  Flame,
+  Search,
+  Wrench,
+
+  // Miscellaneous
+  Heart,
   Sparkles,
   Moon,
   Sun,
+
+  // Legal & Compliance
+  Gavel,
+  Scale,
+  Building,
+  Timer,
+  UserCheck,
+  Ban,
+  CreditCard,
 } from 'lucide-react';
-
-// Legal & Compliance
-export { Scale, Gavel, Building, Ban } from 'lucide-react';
-
-// Re-export commonly used icon sets for specific domains
-import {
-  ArrowRight as _ArrowRight,
-  ArrowLeft as _ArrowLeft,
-  ChevronLeft as _ChevronLeft,
-  ChevronRight as _ChevronRight,
-  Home as _Home,
-  ExternalLink as _ExternalLink,
-} from 'lucide-react';
-
-export const NavigationIcons = {
-  ArrowRight: _ArrowRight,
-  ArrowLeft: _ArrowLeft,
-  ChevronLeft: _ChevronLeft,
-  ChevronRight: _ChevronRight,
-  Home: _Home,
-  ExternalLink: _ExternalLink,
-} as const;
-
-import {
-  CheckCircle as _CheckCircle,
-  AlertCircle as _AlertCircle,
-  AlertTriangle as _AlertTriangle,
-  Info as _Info,
-  HelpCircle as _HelpCircle,
-  User as _User,
-  Users as _Users,
-  UserCheck as _UserCheck,
-  Settings as _Settings,
-  Shield as _Shield,
-  Lock as _Lock,
-  Eye as _Eye,
-  EyeOff as _EyeOff,
-} from 'lucide-react';
-
-export const StatusIcons = {
-  CheckCircle: _CheckCircle,
-  AlertCircle: _AlertCircle,
-  AlertTriangle: _AlertTriangle,
-  Info: _Info,
-  HelpCircle: _HelpCircle,
-} as const;
-
-export const UserIcons = {
-  User: _User,
-  Users: _Users,
-  UserCheck: _UserCheck,
-  Settings: _Settings,
-} as const;
-
-export const SecurityIcons = {
-  Shield: _Shield,
-  Lock: _Lock,
-  Eye: _Eye,
-  EyeOff: _EyeOff,
-} as const;

@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { saveEmailSubscription, emailExists } from '@/lib/emailSubscriptions';
 import { getEmailService } from '@/lib/emailService';
 
+export const dynamic = 'force-dynamic';
+
 // Validation schema for the subscription request
 const subscriptionSchema = z.object({
   email: z.string().email('Invalid email format'),

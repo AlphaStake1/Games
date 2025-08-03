@@ -75,6 +75,12 @@ export function useGameData(
   const refreshTimerRef = useRef<NodeJS.Timeout | null>(null);
   const mountedRef = useRef(true);
 
+  // Ensure mountedRef is always true on hook initialization
+  mountedRef.current = true;
+
+  // Debug: Log mount state changes
+  console.log('useGameData: Hook initialized, mounted:', mountedRef.current);
+
   // Get current week and season
   const currentWeek = gameService.getCurrentWeek();
   const currentSeason = gameService.getCurrentSeason();
@@ -139,20 +145,47 @@ export function useGameData(
         response = await gameService.getSchedule(filters);
       }
 
-      if (!mountedRef.current) return;
+      console.log('API Response received:', {
+        success: response.success,
+        dataLength: response.data?.length || 0,
+        error: response.error?.message || 'none',
+      });
+
+      console.log('useGameData: Component mounted check:', {
+        mounted: mountedRef.current,
+      });
+      if (!mountedRef.current) {
+        console.log(
+          'useGameData: Component not mounted, skipping state update',
+        );
+        return;
+      }
 
       if (response.success && response.data) {
+        console.log('useGameData: Raw API data:', response.data.slice(0, 2)); // Log first 2 items
         const gameSchedules = response.data.map(
           gameService.convertToGameSchedule,
         );
+        console.log(
+          'useGameData: Converted game schedules:',
+          gameSchedules.slice(0, 2),
+        ); // Log first 2 converted items
+        console.log(
+          'useGameData: Setting games state with',
+          gameSchedules.length,
+          'games',
+        );
         setGames(gameSchedules);
         setError(null);
+        console.log('useGameData: Games state update completed');
       } else {
+        console.error('Failed to get games:', response.error?.message);
         setError(response.error?.message || 'Failed to fetch games');
         setGames([]);
       }
     } catch (err) {
       if (!mountedRef.current) return;
+      console.error('Error in fetchGames:', err);
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
       setGames([]);
     }
@@ -289,7 +322,11 @@ export function useGameData(
 
   // Cleanup
   useEffect(() => {
+    console.log('useGameData: Cleanup effect registered');
     return () => {
+      console.log(
+        'useGameData: Component unmounting, setting mounted to false',
+      );
       mountedRef.current = false;
       if (refreshTimerRef.current) {
         clearInterval(refreshTimerRef.current);

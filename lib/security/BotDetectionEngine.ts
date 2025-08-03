@@ -648,7 +648,7 @@ export class BotDetectionEngine {
       `Bot detection confidence: ${Math.round(confidence * 100)}%. ` +
       `Primary indicators: ${primaryIndicators.join(', ')}. ` +
       `Risk level: ${riskLevel}. ` +
-      `Recommendation: ${this.enforcementLevels[riskLevel].type}.`;
+      `Recommendation: ${this.enforcementLevels[riskLevel as keyof typeof this.enforcementLevels].type}.`;
 
     return reasoning;
   }

@@ -30,6 +30,14 @@ interface EnhancedBoardGridProps {
   currentSelection?: SquareSelection;
   className?: string;
   boardType?: 'geographic' | 'vip' | 'season' | 'general';
+  userTeam?: {
+    id: string;
+    city: string;
+    name: string;
+    abbreviation: string;
+    primaryColor: string;
+    secondaryColor?: string;
+  };
 }
 
 interface SquareState {
@@ -71,6 +79,7 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
   currentSelection,
   className = '',
   boardType = 'general',
+  userTeam,
 }) => {
   const [squares, setSquares] = useState<SquareState[]>([]);
   const [selectedSquares, setSelectedSquares] = useState<number[]>([]);
@@ -111,6 +120,39 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
   const [vrfModalState, setVrfModalState] = useState<VRFState | null>(null);
 
   const maxSquares = board.maxSquaresPerUser;
+
+  // Fan-based positioning logic
+  const getDisplayTeams = () => {
+    if (!userTeam) {
+      // Fallback to traditional home/away positioning
+      return {
+        topTeam: board.game.homeTeam,
+        leftTeam: board.game.awayTeam,
+        isUserTeamOnTop: false,
+      };
+    }
+
+    const isUserTeamHome = board.game.homeTeam.id === userTeam.id;
+    const isUserTeamAway = board.game.awayTeam.id === userTeam.id;
+
+    if (isUserTeamHome || isUserTeamAway) {
+      // User's team is playing - put them on top
+      return {
+        topTeam: userTeam,
+        leftTeam: isUserTeamHome ? board.game.awayTeam : board.game.homeTeam,
+        isUserTeamOnTop: true,
+      };
+    } else {
+      // User's team is not playing - use traditional home/away positioning
+      return {
+        topTeam: board.game.homeTeam,
+        leftTeam: board.game.awayTeam,
+        isUserTeamOnTop: false,
+      };
+    }
+  };
+
+  const displayTeams = getDisplayTeams();
 
   // VRF proof modal handler
   const handleShowVRFProof = (vrfState: VRFState) => {
@@ -373,17 +415,30 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
               </div>
               <div className="text-xs">VS</div>
             </div>
-            <div className="flex-1 h-16 flex items-center justify-center bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold text-lg border-b border-gray-400">
-              {board.game.homeTeam.city} {board.game.homeTeam.name}
+            <div
+              className="flex-1 h-16 flex items-center justify-center text-white font-bold text-lg border-b border-gray-400"
+              style={{
+                background: `linear-gradient(to right, ${displayTeams.topTeam.primaryColor}, ${displayTeams.topTeam.secondaryColor || displayTeams.topTeam.primaryColor})`,
+              }}
+            >
+              {displayTeams.topTeam.city} {displayTeams.topTeam.name}
+              {displayTeams.isUserTeamOnTop && (
+                <span className="ml-2 text-yellow-300">★</span>
+              )}
             </div>
           </div>
 
           {/* Main Grid Body */}
           <div className="flex">
-            {/* Vertical Away Team Banner */}
-            <div className="w-24 shrink-0 flex items-center justify-center bg-gradient-to-b from-red-600 to-red-400 text-white font-bold text-lg border-r border-gray-400">
+            {/* Vertical Left Team Banner */}
+            <div
+              className="w-24 shrink-0 flex items-center justify-center text-white font-bold text-lg border-r border-gray-400"
+              style={{
+                background: `linear-gradient(to bottom, ${displayTeams.leftTeam.primaryColor}, ${displayTeams.leftTeam.secondaryColor || displayTeams.leftTeam.primaryColor})`,
+              }}
+            >
               <div className="transform -rotate-90 whitespace-nowrap">
-                {board.game.awayTeam.city} {board.game.awayTeam.name}
+                {displayTeams.leftTeam.city} {displayTeams.leftTeam.name}
               </div>
             </div>
 
@@ -395,8 +450,12 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
                 <div className="w-12 shrink-0 aspect-square"></div>
                 {homeNumbers.map((num) => (
                   <div
-                    key={`home-${num}`}
-                    className="flex-1 aspect-square flex items-center justify-center bg-blue-200 text-black font-bold border-b border-r border-gray-400"
+                    key={`top-${num}`}
+                    className="flex-1 aspect-square flex items-center justify-center text-white font-bold border-b border-r border-gray-400"
+                    style={{
+                      backgroundColor: displayTeams.topTeam.primaryColor,
+                      opacity: 0.8,
+                    }}
                   >
                     {num}
                   </div>
@@ -407,7 +466,13 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
               {awayNumbers.map((awayNum, rowIndex) => (
                 <div key={`row-${rowIndex}`} className="flex">
                   {/* Y-Axis Number Cell */}
-                  <div className="w-12 shrink-0 aspect-square flex items-center justify-center bg-red-200 text-black font-bold border-b border-r border-gray-400">
+                  <div
+                    className="w-12 shrink-0 aspect-square flex items-center justify-center text-white font-bold border-b border-r border-gray-400"
+                    style={{
+                      backgroundColor: displayTeams.leftTeam.primaryColor,
+                      opacity: 0.8,
+                    }}
+                  >
                     {awayNum}
                   </div>
                   {/* Square Cells */}
@@ -428,7 +493,7 @@ const EnhancedBoardGrid: React.FC<EnhancedBoardGridProps> = ({
                           square.isAnimating ||
                           !board.isActive
                         }
-                        title={`Square ${homeNum}-${awayNum}`}
+                        title={`Square ${homeNum}-${awayNum} (${displayTeams.topTeam.abbreviation}-${displayTeams.leftTeam.abbreviation})`}
                       >
                         {getSquareContent(square)}
                       </button>

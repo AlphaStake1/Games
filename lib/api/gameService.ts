@@ -136,24 +136,22 @@ export class GameService {
 
   // Get current NFL season
   getCurrentSeason(): number {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    // NFL season typically starts in September
-    return now.getMonth() >= 8 ? currentYear : currentYear - 1;
+    // For 2025 season development
+    return 2025;
   }
 
   // Get current NFL week
   getCurrentWeek(): number {
-    // For development purposes, always return week 10 to simulate mid-season
-    // In production, this would calculate based on the actual NFL schedule
-    return 10;
+    // For development purposes, simulate we're in Week 1 of 2025 season
+    // This allows users to see upcoming games starting from the beginning
+    return 1;
 
-    // Original calculation (commented out for development):
+    // For production, you would calculate based on actual date:
     // const now = new Date();
-    // const seasonStart = new Date(this.getCurrentSeason(), 8, 1); // September 1st
+    // const seasonStart = new Date(2025, 8, 4); // September 4, 2025
     // const diffTime = now.getTime() - seasonStart.getTime();
     // const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
-    // return Math.max(1, Math.min(18, diffWeeks + 1)); // Weeks 1-18
+    // return Math.max(1, Math.min(22, diffWeeks + 1)); // Weeks 1-22 (including playoffs)
   }
 
   // Get NFL schedule with filters
@@ -233,29 +231,38 @@ export class GameService {
     };
 
     try {
-      const allGamesResponse = await this.getSchedule(filters);
+      // For development, always use mock data to avoid API failures
+      console.log('GameService.getTeamGames: Using mock data for development');
 
-      if (!allGamesResponse.success) {
-        throw new Error('API fetch failed, using mock data fallback');
-      }
+      // Add a small delay to simulate loading but not too long
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      let games = allGamesResponse.data!;
-      if (options.upcoming) {
-        games = games.filter((game) => {
-          const gameDate = new Date(game.gameDate);
-          return gameDate >= new Date();
-        });
-      }
+      return mockDataService.getTeamGames(teamId, {
+        upcomingOnly: options.upcoming,
+        season,
+        weeks: options.weeks,
+      });
 
-      if (options.weeks && options.weeks.length > 0) {
-        games = games.filter((game) => options.weeks!.includes(game.week));
-      }
-
-      return {
-        success: true,
-        data: games,
-        timestamp: allGamesResponse.timestamp,
-      };
+      // Original API code (commented out for development):
+      // const allGamesResponse = await this.getSchedule(filters);
+      // if (!allGamesResponse.success) {
+      //   throw new Error('API fetch failed, using mock data fallback');
+      // }
+      // let games = allGamesResponse.data!;
+      // if (options.upcoming) {
+      //   games = games.filter((game) => {
+      //     const gameDate = new Date(game.gameDate);
+      //     return gameDate >= new Date();
+      //   });
+      // }
+      // if (options.weeks && options.weeks.length > 0) {
+      //   games = games.filter((game) => options.weeks!.includes(game.week));
+      // }
+      // return {
+      //   success: true,
+      //   data: games,
+      //   timestamp: allGamesResponse.timestamp,
+      // };
     } catch (error) {
       console.warn(
         'API call failed, falling back to mock data for getTeamGames:',
@@ -536,12 +543,17 @@ export class GameService {
 
   // Convert GameScheduleResponse to our internal GameSchedule format
   convertToGameSchedule(gameResponse: GameScheduleResponse): GameSchedule {
+    const gameDate =
+      typeof gameResponse.gameDate === 'string'
+        ? new Date(gameResponse.gameDate)
+        : gameResponse.gameDate;
+
     return {
       gameId: gameResponse.gameId,
       week: gameResponse.week,
       homeTeam: gameResponse.homeTeam,
       awayTeam: gameResponse.awayTeam,
-      gameDate: new Date(gameResponse.gameDate),
+      gameDate: gameDate,
       isPlayoffs: gameResponse.isPlayoffs,
       gameType: gameResponse.gameType,
     };

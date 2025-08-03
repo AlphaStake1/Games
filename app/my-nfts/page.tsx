@@ -1,14 +1,12 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 
 const MyNFTsContent = dynamic(() => import('@/components/MyNFTsContent'), {
   ssr: false,
 });
 
-export const metadata = {
-  title: 'My NFTs | Football Squares Collection',
-  description:
-    'View your Football Squares NFT collection and learn about creating unique digital assets for your game squares.',
-};
+// Note: metadata moved to layout or will be handled by next/head in client component
 
 export default function MyNFTsPage() {
   return (

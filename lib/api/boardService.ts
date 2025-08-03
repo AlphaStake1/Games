@@ -149,17 +149,21 @@ export class BoardService {
     gameId: string,
   ): Promise<ApiResponse<BoardAvailabilityResponse[]>> {
     try {
-      const response = await this.makeRequest<BoardAvailabilityResponse[]>(
-        `/boards/game/${gameId}`,
+      // For development, always use mock data to avoid API failures
+      console.log(
+        'BoardService.getGameBoards: Using mock data for development',
       );
+      return await mockDataService.getGameBoards(gameId);
 
-      // If API fails, fallback to mock data
-      if (!response.success) {
-        console.warn('Board API failed, using mock data for game:', gameId);
-        return await mockDataService.getGameBoards(gameId);
-      }
-
-      return response;
+      // Original API code (commented out for development):
+      // const response = await this.makeRequest<BoardAvailabilityResponse[]>(
+      //   `/boards/game/${gameId}`,
+      // );
+      // if (!response.success) {
+      //   console.warn('Board API failed, using mock data for game:', gameId);
+      //   return await mockDataService.getGameBoards(gameId);
+      // }
+      // return response;
     } catch (error) {
       console.warn('Board API error, using mock data for game:', gameId);
       return await mockDataService.getGameBoards(gameId);

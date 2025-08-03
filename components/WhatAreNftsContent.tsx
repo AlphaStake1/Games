@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import WalletConnectionPopup from '@/components/WalletConnectionPopup';
-import useWalletConnectionPopup from '@/hooks/useWalletConnectionPopup';
+import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
 import { useWallet } from '@solana/wallet-adapter-react';
 import {
   Accordion,
@@ -49,15 +49,8 @@ export function WhatAreNftsContent() {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const { connected, connect } = useWallet();
-  const {
-    isPopupOpen,
-    currentIntent,
-    intentData,
-    hidePopup,
-    handleWalletConnect,
-    showCreateNFTPopup,
-    showViewCollectionPopup,
-  } = useWalletConnectionPopup();
+  const { isPopupOpen, currentIntent, intentData, hidePopup, showPopup } =
+    useWalletConnection();
 
   useEffect(() => {
     setIsVisible(true);
@@ -74,7 +67,7 @@ export function WhatAreNftsContent() {
       }
     } else {
       // Show wallet connection popup with intent
-      showCreateNFTPopup(nftType);
+      showPopup('create-nft', { nftType });
     }
   };
 
@@ -83,7 +76,7 @@ export function WhatAreNftsContent() {
     if (connected) {
       window.location.href = '/my-nfts';
     } else {
-      showViewCollectionPopup();
+      showPopup('view-collection');
     }
   };
 

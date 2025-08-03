@@ -54,8 +54,13 @@ export async function generateStaticParams() {
   }));
 }
 
-const ConferenceLeaderboardPage = ({ params }: { params: { id: string } }) => {
-  const conference = conferences.find((c) => c.id.toString() === params.id);
+const ConferenceLeaderboardPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params;
+  const conference = conferences.find((c) => c.id.toString() === id);
 
   return <ConferenceLeaderboard conference={conference} />;
 };

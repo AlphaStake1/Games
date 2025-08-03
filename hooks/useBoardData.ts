@@ -426,20 +426,39 @@ export function useGameBoards(gameId: string | undefined) {
   const [error, setError] = useState<string | null>(null);
 
   const fetchGameBoards = useCallback(async () => {
-    if (!gameId) return;
+    if (!gameId) {
+      console.log('useGameBoards: No gameId provided');
+      return;
+    }
 
+    console.log('useGameBoards: Fetching boards for gameId:', gameId);
     setLoading(true);
     setError(null);
 
     try {
       const response = await boardService.getGameBoards(gameId);
+      console.log('useGameBoards: Received response:', {
+        success: response.success,
+        dataLength: response.data?.length || 0,
+        error: response.error?.message || 'none',
+      });
 
       if (response.success && response.data) {
+        console.log(
+          'useGameBoards: Setting boards data:',
+          response.data.length,
+          'boards',
+        );
         setBoards(response.data);
       } else {
+        console.error(
+          'useGameBoards: Failed to fetch boards:',
+          response.error?.message,
+        );
         setError(response.error?.message || 'Failed to fetch game boards');
       }
     } catch (err) {
+      console.error('useGameBoards: Exception occurred:', err);
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     } finally {
       setLoading(false);

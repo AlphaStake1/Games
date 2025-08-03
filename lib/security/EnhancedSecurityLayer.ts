@@ -409,7 +409,7 @@ export class EnhancedSecurityLayer extends UniversalSecurityLayer {
     };
 
     return (
-      responses[agentId] ||
+      responses[agentId as keyof typeof responses] ||
       '🚫 Automated interactions are not permitted for this service. Please complete human verification if you believe this is an error.'
     );
   }
@@ -436,7 +436,7 @@ export class EnhancedSecurityLayer extends UniversalSecurityLayer {
     };
 
     return (
-      responses[agentId] ||
+      responses[agentId as keyof typeof responses] ||
       "🔍 Please help us verify you're human by providing a detailed, personal response about why you're interested in Football Squares."
     );
   }
@@ -456,7 +456,7 @@ export class EnhancedSecurityLayer extends UniversalSecurityLayer {
         '\n\n🔒 **Security Notice**: You may be asked to complete verification for certain actions.',
     };
 
-    const notice = notices[agentId] || notices.default;
+    const notice = notices[agentId as keyof typeof notices] || notices.default;
     return response + notice;
   }
 
@@ -473,7 +473,10 @@ export class EnhancedSecurityLayer extends UniversalSecurityLayer {
         'This decision requires manual review. Please contact support with evidence of human identity.',
     };
 
-    return instructions[riskLevel] || instructions.MODERATE;
+    return (
+      instructions[riskLevel as keyof typeof instructions] ||
+      instructions.MODERATE
+    );
   }
 
   /**

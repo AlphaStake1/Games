@@ -117,8 +117,12 @@ function PlayerDashboard() {
   );
   const [viewMode, setViewMode] = useState<'beginner' | 'advanced'>('beginner');
   const [loading, setLoading] = useState(false);
-  const [selectedBoard, setSelectedBoard] = useState<BoardConfiguration | null>(null);
-  const [activeSelections, setActiveSelections] = useState<SquareSelection[]>([]);
+  const [selectedBoard, setSelectedBoard] = useState<BoardConfiguration | null>(
+    null,
+  );
+  const [activeSelections, setActiveSelections] = useState<SquareSelection[]>(
+    [],
+  );
 
   const { preferences, isLoading: prefsLoading } = useUserPreferences(
     'demo-wallet-address',
@@ -429,7 +433,9 @@ function PlayerDashboard() {
             {/* Key Stats */}
             <div
               className={`grid grid-cols-1 md:grid-cols-2 ${
-                dashboardPeriod === 'weekly' ? 'lg:grid-cols-3' : 'lg:grid-cols-2'
+                dashboardPeriod === 'weekly'
+                  ? 'lg:grid-cols-3'
+                  : 'lg:grid-cols-2'
               } gap-6`}
             >
               {/* Green Points Card - Featured First for Seasonal Players */}
@@ -910,6 +916,16 @@ function PlayerDashboard() {
                           : preferences?.isVIP
                             ? 'vip'
                             : 'geographic'
+                      }
+                      userTeam={
+                        preferences?.favoriteTeam || {
+                          id: 'dal',
+                          name: 'Cowboys',
+                          city: 'Dallas',
+                          abbreviation: 'DAL',
+                          primaryColor: '#003594',
+                          secondaryColor: '#869397',
+                        }
                       }
                     />
                   </div>

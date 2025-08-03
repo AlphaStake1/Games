@@ -1,6 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  Suspense,
+} from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import {
@@ -42,7 +48,7 @@ import {
   Info,
 } from 'lucide-react';
 
-const BoardsPage: React.FC = () => {
+const BoardsPageContent: React.FC = () => {
   const { connected, publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const { toast } = useToast();
@@ -71,6 +77,32 @@ const BoardsPage: React.FC = () => {
   const { preferences, isLoading, isFirstTime, setFavoriteTeam, setVIPStatus } =
     useUserPreferences(walletAddress);
 
+  // For demo mode, bypass all loading and go straight to Miami Dolphins
+  const demoPreferences = demoMode
+    ? {
+        walletAddress: 'demo-wallet-address',
+        favoriteTeam: {
+          id: 'dal',
+          name: 'Cowboys',
+          city: 'Dallas',
+          abbreviation: 'DAL',
+          conference: 'NFC' as const,
+          division: 'East' as const,
+          primaryColor: '#041E42',
+          secondaryColor: '#869397',
+          logoUrl: '/assets/teams/cowboys.png',
+        },
+        isVIP: false,
+        selectedBoards: [],
+        activeSelections: [],
+        lastUpdated: Date.now(),
+      }
+    : null;
+
+  // Use demo preferences in demo mode, otherwise use real preferences
+  const effectivePreferences = demoMode ? demoPreferences : preferences;
+  const effectiveIsLoading = demoMode ? false : isLoading;
+
   const [showTeamSelection, setShowTeamSelection] = useState(false);
   const [showVipUpgrade, setShowVipUpgrade] = useState(false);
   const [selectedBoard, setSelectedBoard] = useState<BoardConfiguration | null>(
@@ -82,15 +114,19 @@ const BoardsPage: React.FC = () => {
   const [isLocalProcessing, setIsLocalProcessing] = useState(false);
   const [viewMode, setViewMode] = useState<'selection' | 'board'>('selection');
 
-  // Show team selection for first-time users
+  // Team selection is now automatic via geolocation
+  // VIP users can change teams, non-VIP users get location-based assignment
   useEffect(() => {
-    if (isConnected && isFirstTime && !isLoading) {
-      setShowTeamSelection(true);
-    }
-  }, [isConnected, isFirstTime, isLoading]);
+    // No manual team selection needed - teams are auto-assigned by location
+    setShowTeamSelection(false);
+  }, [demoMode]);
 
-  const handleTeamSelection = (team: NFLTeam) => {
-    setFavoriteTeam(team);
+  const handleTeamSelection = async (team: NFLTeam) => {
+    if (!demoMode) {
+      // In real mode, use the actual preferences system
+      await setFavoriteTeam(team);
+    }
+    // In demo mode, no need to update anything as it's hardcoded
     setShowTeamSelection(false);
   };
 
@@ -328,7 +364,7 @@ const BoardsPage: React.FC = () => {
     );
   }
 
-  if (isLoading) {
+  if (effectiveIsLoading) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
         <div className="container mx-auto px-4">
@@ -345,7 +381,7 @@ const BoardsPage: React.FC = () => {
     );
   }
 
-  if (!preferences) {
+  if (!effectivePreferences) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
         <div className="container mx-auto px-4">
@@ -871,22 +907,22 @@ const BoardsPage: React.FC = () => {
             <div className="lg:col-span-3">
               <BoardSelector
                 userTeam={
-                  preferences?.favoriteTeam || {
-                    id: 'dal',
-                    name: 'Cowboys',
-                    city: 'Dallas',
-                    abbreviation: 'DAL',
-                    conference: 'NFC',
+                  effectivePreferences?.favoriteTeam || {
+                    id: 'mia',
+                    name: 'Dolphins',
+                    city: 'Miami',
+                    abbreviation: 'MIA',
+                    conference: 'AFC',
                     division: 'East',
-                    primaryColor: '#041E42',
-                    secondaryColor: '#869397',
-                    logoUrl: '/assets/teams/dal.png',
+                    primaryColor: '#008E97',
+                    secondaryColor: '#FC4C02',
+                    logoUrl: '/assets/teams/dolphins.png',
                   }
                 }
-                isVIP={preferences?.isVIP || false}
+                isVIP={effectivePreferences?.isVIP || false}
                 onBoardSelect={handleBoardSelect}
                 onVIPUpgrade={() => setShowVipUpgrade(true)}
-                selectedBoards={preferences?.selectedBoards || []}
+                selectedBoards={effectivePreferences?.selectedBoards || []}
               />
             </div>
 
@@ -917,6 +953,16 @@ const BoardsPage: React.FC = () => {
                       : preferences?.isVIP
                         ? 'vip'
                         : 'geographic'
+                  }
+                  userTeam={
+                    effectivePreferences?.favoriteTeam || {
+                      id: 'mia',
+                      name: 'Dolphins',
+                      city: 'Miami',
+                      abbreviation: 'MIA',
+                      primaryColor: '#008E97',
+                      secondaryColor: '#FC4C02',
+                    }
                   }
                 />
               )}
@@ -959,6 +1005,23 @@ const BoardsPage: React.FC = () => {
         />
       </div>
     </div>
+  );
+};
+
+const BoardsPage: React.FC = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#faf9f5] dark:bg-[#444341] flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-lg">Loading Boards...</p>
+          </div>
+        </div>
+      }
+    >
+      <BoardsPageContent />
+    </Suspense>
   );
 };
 

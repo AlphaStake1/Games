@@ -3,6 +3,8 @@ import { OCPhilBot } from '@/lib/telegram/bot';
 import { TELEGRAM_CONFIG } from '@/lib/telegram/config';
 import { WebhookEvent } from '@/lib/telegram/types';
 
+export const dynamic = 'force-dynamic';
+
 const bot = new OCPhilBot(TELEGRAM_CONFIG.BOT_TOKEN);
 
 export async function POST(request: NextRequest) {

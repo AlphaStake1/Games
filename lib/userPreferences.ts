@@ -1,5 +1,6 @@
 import { NFLTeam, getTeamById } from './nflTeams';
 import { UserBoardPreferences, SquareSelection } from './boardTypes';
+import { geolocationService } from './geolocationService';
 
 const USER_PREFERENCES_KEY = 'football-squares-user-prefs';
 
@@ -54,49 +55,65 @@ export const saveUserPreferences = (
   }
 };
 
-export const createDefaultUserPreferences = (
+export const createDefaultUserPreferences = async (
   walletAddress: string,
-): UserBoardPreferences => {
+): Promise<UserBoardPreferences> => {
   console.log(
     'createDefaultUserPreferences: Creating for wallet:',
     walletAddress,
   );
-  console.log(
-    'createDefaultUserPreferences: Default team ID:',
-    DEFAULT_TEAM_ID,
-  );
 
-  const defaultTeam = getTeamById(DEFAULT_TEAM_ID);
-  console.log('createDefaultUserPreferences: Default team found:', defaultTeam);
+  try {
+    // Use geolocation to assign team based on user's location
+    const geoResult = await geolocationService.getTeamByLocation();
+    const assignedTeam = geoResult.team;
 
-  if (!defaultTeam) {
-    console.error(
-      'createDefaultUserPreferences: Default team not found for ID:',
-      DEFAULT_TEAM_ID,
+    console.log('createDefaultUserPreferences: Team assigned by location:', {
+      location: geoResult.location,
+      team: assignedTeam.abbreviation,
+    });
+
+    const preferences = {
+      walletAddress,
+      favoriteTeam: assignedTeam,
+      isVIP: false,
+      selectedBoards: [],
+      activeSelections: [],
+      lastUpdated: Date.now(),
+    };
+
+    console.log(
+      'createDefaultUserPreferences: Created preferences:',
+      preferences,
     );
-    throw new Error('Default team not found');
+    return preferences;
+  } catch (error) {
+    console.error(
+      'createDefaultUserPreferences: Geolocation failed, using fallback:',
+      error,
+    );
+
+    // Fallback to default team if geolocation fails
+    const defaultTeam = getTeamById(DEFAULT_TEAM_ID);
+    if (!defaultTeam) {
+      throw new Error('Default team not found');
+    }
+
+    return {
+      walletAddress,
+      favoriteTeam: defaultTeam,
+      isVIP: false,
+      selectedBoards: [],
+      activeSelections: [],
+      lastUpdated: Date.now(),
+    };
   }
-
-  const preferences = {
-    walletAddress,
-    favoriteTeam: defaultTeam,
-    isVIP: false,
-    selectedBoards: [],
-    activeSelections: [],
-    lastUpdated: Date.now(),
-  };
-
-  console.log(
-    'createDefaultUserPreferences: Created preferences:',
-    preferences,
-  );
-  return preferences;
 };
 
-export const updateFavoriteTeam = (
+export const updateFavoriteTeam = async (
   walletAddress: string,
   team: NFLTeam,
-): void => {
+): Promise<void> => {
   const existing = getUserPreferences(walletAddress);
   if (existing) {
     saveUserPreferences({
@@ -104,8 +121,9 @@ export const updateFavoriteTeam = (
       favoriteTeam: team,
     });
   } else {
+    const defaultPrefs = await createDefaultUserPreferences(walletAddress);
     saveUserPreferences({
-      ...createDefaultUserPreferences(walletAddress),
+      ...defaultPrefs,
       favoriteTeam: team,
     });
   }
@@ -208,12 +226,15 @@ export const useUserPreferences = (walletAddress: string | null) => {
       return;
     }
 
-    const loadPreferences = () => {
+    const loadPreferences = async () => {
       console.log(
         'useUserPreferences: Loading preferences for:',
         walletAddress,
       );
       setIsLoading(true);
+
+      // Use setTimeout to ensure the loading state is set before processing
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       try {
         const stored = getUserPreferences(walletAddress);
@@ -224,7 +245,8 @@ export const useUserPreferences = (walletAddress: string | null) => {
             'useUserPreferences: No stored preferences, creating defaults',
           );
           setIsFirstTime(true);
-          const defaultPrefs = createDefaultUserPreferences(walletAddress);
+          const defaultPrefs =
+            await createDefaultUserPreferences(walletAddress);
           console.log(
             'useUserPreferences: Default preferences created:',
             defaultPrefs,
@@ -240,7 +262,8 @@ export const useUserPreferences = (walletAddress: string | null) => {
         console.error('useUserPreferences: Error loading preferences:', error);
         // Create safe defaults even if there's an error
         try {
-          const safeDefaults = createDefaultUserPreferences(walletAddress);
+          const safeDefaults =
+            await createDefaultUserPreferences(walletAddress);
           setPreferences(safeDefaults);
           setIsFirstTime(true);
         } catch (defaultError) {
@@ -272,8 +295,8 @@ export const useUserPreferences = (walletAddress: string | null) => {
     isLoading,
     isFirstTime,
     updatePreferences,
-    setFavoriteTeam: (team: NFLTeam) => {
-      updateFavoriteTeam(walletAddress || '', team);
+    setFavoriteTeam: async (team: NFLTeam) => {
+      await updateFavoriteTeam(walletAddress || '', team);
       updatePreferences({ favoriteTeam: team });
     },
     setVIPStatus: (isVIP: boolean) => {

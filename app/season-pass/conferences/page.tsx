@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
@@ -44,7 +44,7 @@ interface PassPricing {
   savings?: number;
 }
 
-const ConferencesPage = () => {
+const ConferencesPageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { connected, connecting, publicKey } = useWallet();
@@ -528,6 +528,23 @@ const ConferencesPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const ConferencesPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#faf9f5] dark:bg-[#444341] flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-lg">Loading Conferences...</p>
+          </div>
+        </div>
+      }
+    >
+      <ConferencesPageContent />
+    </Suspense>
   );
 };
 

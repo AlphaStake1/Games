@@ -381,7 +381,7 @@ export class BotMonitoringSystem {
       escalations: { low: 0, medium: 0, high: 0, critical: 0 },
     };
 
-    for (const [hourKey, metrics] of this.metrics) {
+    for (const [hourKey, metrics] of Array.from(this.metrics.entries())) {
       const hourDate = new Date(hourKey);
       if (hourDate >= startTime && hourDate <= now) {
         aggregated.totalInteractions += metrics.totalInteractions;

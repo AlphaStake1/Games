@@ -332,7 +332,10 @@ export class UniversalSecurityLayer {
     agentId: string,
     originalResponse: string,
   ): string {
-    const agentResponses = this.agentSecurityResponses[agentId];
+    const agentResponses =
+      this.agentSecurityResponses[
+        agentId as keyof typeof this.agentSecurityResponses
+      ];
 
     if (!agentResponses) {
       // Fallback for unknown agents
@@ -366,12 +369,12 @@ export class UniversalSecurityLayer {
    */
   private getSeverityWeight(severity: string): number {
     const weights = { CRITICAL: 4, HIGH: 3, MEDIUM: 2, LOW: 1, SAFE: 0 };
-    return weights[severity] || 0;
+    return weights[severity as keyof typeof weights] || 0;
   }
 
   private getPatternConfidence(severity: string): number {
     const confidence = { CRITICAL: 40, HIGH: 25, MEDIUM: 15, LOW: 10 };
-    return confidence[severity] || 5;
+    return confidence[severity as keyof typeof confidence] || 5;
   }
 
   private sanitizeForLogging(message: string): string {

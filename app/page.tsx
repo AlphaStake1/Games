@@ -1,14 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
 import WalletConnectionPopup from '@/components/WalletConnectionPopup';
 import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
 import { useWallet } from '@solana/wallet-adapter-react';
 import Hero from '@/components/Hero';
 import SquaresGrid from '@/components/SquaresGrid';
 import HowItWorks from '@/components/HowItWorks';
-import VideoSection from '@/components/VideoSection';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -21,7 +19,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export default function Home() {
-  const router = useRouter();
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
+  );
+}
+
+function HomeContent() {
   const [gameId, setGameId] = useState<string>('');
   const [showBoard, setShowBoard] = useState(false);
   const { connected, connect } = useWallet();
@@ -36,12 +41,12 @@ export default function Home() {
   useEffect(() => {
     if (connected && currentIntent && currentIntent !== 'general') {
       if (intentData?.redirectPath) {
-        router.push(intentData.redirectPath);
+        window.location.href = intentData.redirectPath;
       } else if (intentData?.gameId) {
-        router.push(`/boards?gameId=${intentData.gameId}`);
+        window.location.href = `/boards?gameId=${intentData.gameId}`;
       }
     }
-  }, [connected, currentIntent, intentData, router]);
+  }, [connected, currentIntent, intentData]);
 
   const handleJoinGame = () => {
     if (gameId.trim()) {
@@ -68,16 +73,19 @@ export default function Home() {
 
   const handleSeasonalClick = () => {
     if (connected) {
-      router.push('/boards?mode=seasonal');
+      window.location.href = '/boards?mode=seasonal';
     } else {
       showPlayGamePopup('play-game', { redirectPath: '/boards?mode=seasonal' });
     }
   };
 
   const handleWeeklyClick = () => {
+    console.log('Browse Weekly Games clicked - Connected:', connected);
     if (connected) {
-      router.push('/boards?mode=weekly');
+      console.log('Redirecting to boards...');
+      window.location.href = '/boards?mode=weekly';
     } else {
+      console.log('Showing wallet popup...');
       showPlayGamePopup('play-game', { redirectPath: '/boards?mode=weekly' });
     }
   };
@@ -130,9 +138,6 @@ export default function Home() {
     <div className="min-h-screen bg-white dark:bg-black transition-colors duration-300">
       {/* Hero Banner */}
       <Hero />
-
-      {/* Fantasy Football Video Section */}
-      <VideoSection />
 
       {/* Main Content with Sidebar Layout */}
       <div className="flex">
@@ -523,7 +528,6 @@ export default function Home() {
           </section>
         </div>
       </div>
-
     </div>
   );
 }
