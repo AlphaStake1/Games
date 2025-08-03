@@ -389,8 +389,8 @@ const FaqContent = () => {
               <strong>Drive Maker CBL</strong>: 3% rake on boards, Blue Points
               accrual.
               <br />
-              <strong>Franchise CBL</strong>: 1.5× Blue Points, merch, Future
-              development mastermind.
+              <strong>Franchise CBL</strong>: Additional 1.5× multiplier on CBL
+              Blue Points, merch, Future development mastermind.
               <br />
               <br />
               <strong>Blue Points</strong> are earned for board activity and can

@@ -108,7 +108,7 @@ const CBLEconomicsPage = () => {
       boardsFilled: '2 per week',
       avgFillRate: '85%',
       calculation:
-        'Players earn 150 Blue each, CBL earns 0 Blue + occasional Orange',
+        'Players earn up to 750 Blue (5 squares × 150), CBL earns 0 Blue + occasional Orange',
       monthlyBlue: '0',
       monthlyOrange: '~100',
       monthlyRake: '$0',
@@ -119,8 +119,8 @@ const CBLEconomicsPage = () => {
       boardsFilled: '3 per week',
       avgFillRate: '95%',
       calculation:
-        '(200 × 100 squares × 1.5 CBL bonus) × 3 boards = 90,000 Blue + 150 Orange',
-      monthlyBlue: '~360,000',
+        'Player max: 5 squares × 200 = 1,000 points. CBL: 1,000 × 1.5 = 1,500 per board × 3 boards = 4,500 Blue + 150 Orange',
+      monthlyBlue: '~18,000',
       monthlyOrange: '~600',
       monthlyRake: '3% of filled boards',
     },
@@ -130,8 +130,8 @@ const CBLEconomicsPage = () => {
       boardsFilled: '2 per week',
       avgFillRate: '98%',
       calculation:
-        '(600 × 100 squares × 1.5 CBL bonus) × 2 boards = 180,000 Blue + 400 Orange',
-      monthlyBlue: '~720,000',
+        'Player max: 10 squares × 600 = 6,000 points. CBL: 6,000 × 1.5 = 9,000 per board × 2 boards = 18,000 Blue + 400 Orange',
+      monthlyBlue: '~72,000',
       monthlyOrange: '~1,600',
       monthlyRake: '3% of $10,000+ monthly volume',
     },
@@ -169,7 +169,7 @@ const CBLEconomicsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50 dark:from-slate-900 dark:to-green-900">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -177,9 +177,11 @@ const CBLEconomicsPage = () => {
             <div className="p-3 bg-green-100 rounded-full">
               <Users className="h-8 w-8 text-green-600" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900">CBL Economics</h1>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+              CBL Economics
+            </h1>
           </div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Complete guide to Community Board Leader point earnings, pricing
             strategies, and revenue optimization.
           </p>
@@ -197,9 +199,9 @@ const CBLEconomicsPage = () => {
           <TabsContent value="overview" className="space-y-8">
             <div className="grid md:grid-cols-3 gap-8">
               {/* Blue Points Card */}
-              <Card className="border-blue-200 bg-blue-50/50">
+              <Card className="border-blue-200 bg-blue-50/50 dark:border-blue-800 dark:bg-blue-950/50">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-blue-800">
+                  <CardTitle className="flex items-center gap-2 text-blue-800 dark:text-blue-200">
                     <Target className="h-6 w-6" />
                     Blue Points (CBL)
                   </CardTitle>
@@ -207,32 +209,49 @@ const CBLEconomicsPage = () => {
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">$7+ boards only</span>
+                      <span className="text-sm dark:text-gray-300">
+                        $7+ boards only
+                      </span>
                       <Badge className="bg-blue-600">Required</Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">95% fill rate</span>
+                      <span className="text-sm dark:text-gray-300">
+                        95% fill rate
+                      </span>
                       <Badge className="bg-blue-600">Required</Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">CBL multiplier</span>
+                      <span className="text-sm dark:text-gray-300">
+                        CBL multiplier vs Players
+                      </span>
                       <Badge className="bg-blue-600">1.5×</Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Multi-board bonus</span>
+                      <span className="text-sm dark:text-gray-300">
+                        Multi-board bonus
+                      </span>
                       <Badge className="bg-blue-600">+500</Badge>
                     </div>
                   </div>
-                  <p className="text-xs text-blue-600 mt-4">
-                    Formula: (Base Points × Squares × 1.5) + Multi-board bonuses
-                  </p>
+                  <div className="mt-4 p-2 bg-blue-100 dark:bg-blue-900/30 rounded border-l-2 border-blue-500">
+                    <p className="text-xs text-blue-700 dark:text-blue-300 font-semibold mb-1">
+                      CBL Multiplier Explained:
+                    </p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400">
+                      When a CBL fills their board, they earn 1.5× the Blue
+                      Points that a single Player could earn at maximum
+                      participation on that board (5 squares for non-VIP, 10
+                      squares for VIP boards). This fairly rewards board
+                      creators relative to individual player earning potential.
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
 
               {/* Orange Points Card */}
-              <Card className="border-orange-200 bg-orange-50/50">
+              <Card className="border-orange-200 bg-orange-50/50 dark:border-orange-800 dark:bg-orange-950/50">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-orange-800">
+                  <CardTitle className="flex items-center gap-2 text-orange-800 dark:text-orange-200">
                     <Users className="h-6 w-6" />
                     Orange Points (CBL)
                   </CardTitle>
@@ -240,32 +259,40 @@ const CBLEconomicsPage = () => {
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">95% fill</span>
+                      <span className="text-sm dark:text-gray-300">
+                        95% fill
+                      </span>
                       <Badge className="bg-orange-600">50 pts</Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">4-week retention</span>
+                      <span className="text-sm dark:text-gray-300">
+                        4-week retention
+                      </span>
                       <Badge className="bg-orange-600">100 pts</Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Referral signup</span>
+                      <span className="text-sm dark:text-gray-300">
+                        Referral signup
+                      </span>
                       <Badge className="bg-orange-600">20 pts</Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Referral play</span>
+                      <span className="text-sm dark:text-gray-300">
+                        Referral play
+                      </span>
                       <Badge className="bg-orange-600">50 pts</Badge>
                     </div>
                   </div>
-                  <p className="text-xs text-orange-600 mt-4">
+                  <p className="text-xs text-orange-600 dark:text-orange-400 mt-4">
                     Earned on all boards regardless of price tier
                   </p>
                 </CardContent>
               </Card>
 
               {/* Rake Revenue Card */}
-              <Card className="border-green-200 bg-green-50/50">
+              <Card className="border-green-200 bg-green-50/50 dark:border-green-800 dark:bg-green-950/50">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-green-800">
+                  <CardTitle className="flex items-center gap-2 text-green-800 dark:text-green-200">
                     <DollarSign className="h-6 w-6" />
                     Rake Revenue
                   </CardTitle>
@@ -273,19 +300,25 @@ const CBLEconomicsPage = () => {
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Drive Maker CBL</span>
+                      <span className="text-sm dark:text-gray-300">
+                        Drive Maker CBL
+                      </span>
                       <Badge className="bg-green-600">3%</Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Franchise CBL</span>
+                      <span className="text-sm dark:text-gray-300">
+                        Franchise CBL
+                      </span>
                       <Badge variant="outline">TBD</Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Minimum price</span>
+                      <span className="text-sm dark:text-gray-300">
+                        Minimum price
+                      </span>
                       <Badge className="bg-green-600">$7</Badge>
                     </div>
                   </div>
-                  <p className="text-xs text-green-600 mt-4">
+                  <p className="text-xs text-green-600 dark:text-green-400 mt-4">
                     Rake only applies to boards priced $7+ per square
                   </p>
                 </CardContent>
@@ -293,9 +326,9 @@ const CBLEconomicsPage = () => {
             </div>
 
             {/* Key Rules */}
-            <Card className="border-red-200 bg-red-50/50">
+            <Card className="border-red-200 bg-red-50/50 dark:border-red-800 dark:bg-red-950/50">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-red-800">
+                <CardTitle className="flex items-center gap-2 text-red-800 dark:text-red-200">
                   <AlertTriangle className="h-6 w-6" />
                   Critical CBL Rules
                 </CardTitle>
@@ -303,8 +336,10 @@ const CBLEconomicsPage = () => {
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-3">
-                    <h4 className="font-semibold">Blue Point Requirements</h4>
-                    <ul className="space-y-2 text-sm">
+                    <h4 className="font-semibold dark:text-gray-200">
+                      Blue Point Requirements
+                    </h4>
+                    <ul className="space-y-2 text-sm dark:text-gray-300">
                       <li className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-red-600" />
                         Board must be priced $7+ per square
@@ -315,13 +350,16 @@ const CBLEconomicsPage = () => {
                       </li>
                       <li className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-red-600" />
-                        CBL earns 1.5× multiplier on base points
+                        CBL earns 1.5× the max points a single Player can earn
+                        on that board
                       </li>
                     </ul>
                   </div>
                   <div className="space-y-3">
-                    <h4 className="font-semibold">Important Notes</h4>
-                    <ul className="space-y-2 text-sm">
+                    <h4 className="font-semibold dark:text-gray-200">
+                      Important Notes
+                    </h4>
+                    <ul className="space-y-2 text-sm dark:text-gray-300">
                       <li className="flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4 text-red-600" />
                         Sub-$7 boards: CBL earns 0 Blue Points
@@ -398,7 +436,7 @@ const CBLEconomicsPage = () => {
                             <AlertTriangle className="h-5 w-5 text-red-600" />
                           )}
                         </TableCell>
-                        <TableCell className="text-sm text-gray-600">
+                        <TableCell className="text-sm text-gray-600 dark:text-gray-300">
                           {tier.vipOnly && (
                             <Badge className="bg-yellow-100 text-yellow-800 mr-2">
                               VIP Only
@@ -444,7 +482,7 @@ const CBLEconomicsPage = () => {
                         <TableCell className="text-sm">
                           {activity.frequency}
                         </TableCell>
-                        <TableCell className="text-sm text-gray-600">
+                        <TableCell className="text-sm text-gray-600 dark:text-gray-300">
                           {activity.requirement}
                         </TableCell>
                       </TableRow>
@@ -468,7 +506,7 @@ const CBLEconomicsPage = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="font-semibold mb-2">VIP Player Benefits</h4>
-                    <ul className="text-sm space-y-1">
+                    <ul className="text-sm space-y-1 dark:text-gray-300">
                       <li>• Access to $50+ boards</li>
                       <li>• 1.5× Blue Point multiplier</li>
                       <li>• Premium board features</li>
@@ -476,7 +514,7 @@ const CBLEconomicsPage = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">CBL Considerations</h4>
-                    <ul className="text-sm space-y-1">
+                    <ul className="text-sm space-y-1 dark:text-gray-300">
                       <li>• Smaller player pool</li>
                       <li>• Higher point rewards</li>
                       <li>• Premium positioning</li>
@@ -501,8 +539,10 @@ const CBLEconomicsPage = () => {
                   <CardContent>
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-3">
-                        <h4 className="font-semibold">Scenario Details</h4>
-                        <div className="space-y-2 text-sm">
+                        <h4 className="font-semibold dark:text-gray-200">
+                          Scenario Details
+                        </h4>
+                        <div className="space-y-2 text-sm dark:text-gray-300">
                           <div className="flex justify-between">
                             <span>Board Price:</span>
                             <span className="font-semibold">
@@ -524,16 +564,20 @@ const CBLEconomicsPage = () => {
                         </div>
                       </div>
                       <div className="space-y-3">
-                        <h4 className="font-semibold">Monthly Earnings</h4>
-                        <div className="space-y-2 text-sm">
+                        <h4 className="font-semibold dark:text-gray-200">
+                          Monthly Earnings
+                        </h4>
+                        <div className="space-y-2 text-sm dark:text-gray-300">
                           <div className="flex justify-between">
-                            <span className="text-blue-600">Blue Points:</span>
+                            <span className="text-blue-600 dark:text-blue-400">
+                              Blue Points:
+                            </span>
                             <span className="font-semibold">
                               {scenario.monthlyBlue}
                             </span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-orange-600">
+                            <span className="text-orange-600 dark:text-orange-400">
                               Orange Points:
                             </span>
                             <span className="font-semibold">
@@ -541,7 +585,7 @@ const CBLEconomicsPage = () => {
                             </span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-green-600">
+                            <span className="text-green-600 dark:text-green-400">
                               Rake Revenue:
                             </span>
                             <span className="font-semibold">
@@ -551,11 +595,11 @@ const CBLEconomicsPage = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                      <h5 className="font-semibold text-sm mb-1">
+                    <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <h5 className="font-semibold text-sm mb-1 dark:text-gray-200">
                         Calculation:
                       </h5>
-                      <p className="text-xs text-gray-700">
+                      <p className="text-xs text-gray-700 dark:text-gray-300">
                         {scenario.calculation}
                       </p>
                     </div>
@@ -564,33 +608,45 @@ const CBLEconomicsPage = () => {
               ))}
             </div>
 
-            <Card className="bg-blue-50/50 border-blue-200">
+            <Card className="bg-blue-50/50 border-blue-200 dark:bg-blue-950/50 dark:border-blue-800">
               <CardHeader>
-                <CardTitle className="text-blue-800">
+                <CardTitle className="text-blue-800 dark:text-blue-200">
                   Point Calculation Formula
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="p-4 bg-blue-100 rounded-lg">
-                    <h4 className="font-semibold mb-2">
+                  <div className="p-4 bg-blue-100 dark:bg-blue-900/50 rounded-lg">
+                    <h4 className="font-semibold mb-2 dark:text-gray-200">
                       CBL Blue Points (per board)
                     </h4>
-                    <code className="text-sm">
-                      (Base Points per Square × 100 Squares × 1.5 CBL
-                      Multiplier) + Multi-board Bonus
+                    <code className="text-sm dark:text-gray-200">
+                      CBL Points = (Max Player Points × 1.5) + Multi-board Bonus
                     </code>
+                    <p className="text-xs mt-2 text-blue-700 dark:text-blue-300">
+                      <strong>Non-VIP Example:</strong> $10 board, Player max =
+                      5 squares × 200 points = 1,000 points. CBL earns 1,000 ×
+                      1.5 = 1,500 Blue Points
+                      <br />
+                      <strong>VIP Example:</strong> $50 board, Player max = 10
+                      squares × 600 points = 6,000 points. CBL earns 6,000 × 1.5
+                      = 9,000 Blue Points
+                    </p>
                   </div>
-                  <div className="p-4 bg-orange-100 rounded-lg">
-                    <h4 className="font-semibold mb-2">CBL Orange Points</h4>
-                    <code className="text-sm">
+                  <div className="p-4 bg-orange-100 dark:bg-orange-900/50 rounded-lg">
+                    <h4 className="font-semibold mb-2 dark:text-gray-200">
+                      CBL Orange Points
+                    </h4>
+                    <code className="text-sm dark:text-gray-200">
                       50 points per 95% filled board + 100 points per 4-week
                       retention period
                     </code>
                   </div>
-                  <div className="p-4 bg-green-100 rounded-lg">
-                    <h4 className="font-semibold mb-2">Multi-board Bonus</h4>
-                    <code className="text-sm">
+                  <div className="p-4 bg-green-100 dark:bg-green-900/50 rounded-lg">
+                    <h4 className="font-semibold mb-2 dark:text-gray-200">
+                      Multi-board Bonus
+                    </h4>
+                    <code className="text-sm dark:text-gray-200">
                       +500 Blue Points for each additional board filled in the
                       same week
                     </code>
@@ -623,7 +679,9 @@ const CBLEconomicsPage = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-700">{tip.description}</p>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      {tip.description}
+                    </p>
                   </CardContent>
                 </Card>
               ))}
@@ -639,10 +697,10 @@ const CBLEconomicsPage = () => {
               <CardContent>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="space-y-3">
-                    <h4 className="font-semibold text-green-600">
+                    <h4 className="font-semibold text-green-600 dark:text-green-400">
                       Pricing Strategy
                     </h4>
-                    <ul className="text-sm space-y-2">
+                    <ul className="text-sm space-y-2 dark:text-gray-300">
                       <li>• Start at $10 for good Blue Point earnings</li>
                       <li>• Test $20-$25 for higher rewards</li>
                       <li>• Consider VIP-only $50+ for premium positioning</li>
@@ -650,10 +708,10 @@ const CBLEconomicsPage = () => {
                     </ul>
                   </div>
                   <div className="space-y-3">
-                    <h4 className="font-semibold text-blue-600">
+                    <h4 className="font-semibold text-blue-600 dark:text-blue-400">
                       Volume Strategy
                     </h4>
-                    <ul className="text-sm space-y-2">
+                    <ul className="text-sm space-y-2 dark:text-gray-300">
                       <li>• Aim for 2-3 boards per week minimum</li>
                       <li>• Time board releases for maximum participation</li>
                       <li>• Build consistent community engagement</li>
@@ -661,10 +719,10 @@ const CBLEconomicsPage = () => {
                     </ul>
                   </div>
                   <div className="space-y-3">
-                    <h4 className="font-semibold text-orange-600">
+                    <h4 className="font-semibold text-orange-600 dark:text-orange-400">
                       Community Building
                     </h4>
-                    <ul className="text-sm space-y-2">
+                    <ul className="text-sm space-y-2 dark:text-gray-300">
                       <li>• Actively promote referral program</li>
                       <li>• Maintain social media presence</li>
                       <li>• Engage with players consistently</li>
@@ -675,32 +733,36 @@ const CBLEconomicsPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-purple-50/50 border-purple-200">
+            <Card className="bg-purple-50/50 border-purple-200 dark:bg-purple-950/50 dark:border-purple-800">
               <CardHeader>
-                <CardTitle className="text-purple-800">
+                <CardTitle className="text-purple-800 dark:text-purple-200">
                   Advanced CBL Tactics
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold mb-2">Franchise CBL Path</h4>
-                    <p className="text-sm text-gray-700 mb-2">
+                  <div className="p-4 border rounded-lg dark:border-gray-600">
+                    <h4 className="font-semibold mb-2 dark:text-gray-200">
+                      Franchise CBL Path
+                    </h4>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
                       Achieve consistent performance to unlock Franchise CBL
                       status with additional benefits.
                     </p>
-                    <ul className="text-sm space-y-1">
+                    <ul className="text-sm space-y-1 dark:text-gray-300">
                       <li>• Enhanced rake structure (TBD)</li>
                       <li>• Exclusive board features</li>
                       <li>• Premium community access</li>
                     </ul>
                   </div>
-                  <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold mb-2">Seasonal Planning</h4>
-                    <p className="text-sm text-gray-700 mb-2">
+                  <div className="p-4 border rounded-lg dark:border-gray-600">
+                    <h4 className="font-semibold mb-2 dark:text-gray-200">
+                      Seasonal Planning
+                    </h4>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
                       Plan your CBL strategy across the full 18-week NFL season.
                     </p>
-                    <ul className="text-sm space-y-1">
+                    <ul className="text-sm space-y-1 dark:text-gray-300">
                       <li>• Higher engagement during playoff weeks</li>
                       <li>
                         • Build momentum through consistent weekly presence

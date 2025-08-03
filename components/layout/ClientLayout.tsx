@@ -3,6 +3,7 @@
 import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
 import { useWallet } from '@solana/wallet-adapter-react';
 import WalletConnectionPopup from '@/components/WalletConnectionPopup';
+import ChatbotProvider from '@/components/ChatbotProvider';
 
 const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   const { isPopupOpen, hidePopup, currentIntent, intentData } =
@@ -26,7 +27,7 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <>
+    <ChatbotProvider>
       {children}
       <WalletConnectionPopup
         isOpen={isPopupOpen}
@@ -35,7 +36,7 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
         intent={currentIntent}
         intentData={intentData}
       />
-    </>
+    </ChatbotProvider>
   );
 };
 
