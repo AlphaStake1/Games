@@ -16,7 +16,7 @@ The schema supports the v0.4 specification requirements:
 - **7-tier pricing system** ($5 → $500)
 - **95% threshold logic** for auto-fill vs cancellation
 - **VRF timing** (40 minutes before kickoff)
-- **Rake structure** (5% for standard, 8% for VIP tiers)
+- **Rake structure** (5% for <$100 House boards, 8% for $100+ House boards; 5% for <$50 CBL boards, 8% for $50+ CBL mixed boards, 10% for $50+ CBL VIP-only boards)
 - **Weekly reset cycle** (every Tuesday)
 
 ---
@@ -89,6 +89,8 @@ INSERT INTO weekly_tiers VALUES
 ('tier_5', 5, 10000, 1000000, 8.00, 920000, TRUE, 5, 10, TRUE, NOW()),
 ('tier_6', 6, 25000, 2500000, 8.00, 2300000, TRUE, 5, 10, TRUE, NOW()),
 ('tier_7', 7, 50000, 5000000, 8.00, 4600000, TRUE, 5, 10, TRUE, NOW());
+-- Note: CBL rake percentages (5%, 8%, 10%) are handled at the application layer, not in this table.
+-- This table defines the base House rake.
 ```
 
 #### `weekly_boards`
@@ -1388,7 +1390,11 @@ WEEKLY_AUTO_FILL_THRESHOLD=0.95
 WEEKLY_VRF_TRIGGER_MINUTES=40
 WEEKLY_HOUSE_RAKE_PERCENTAGE=5
 WEEKLY_HOUSE_RAKE_PERCENTAGE_HIGH=8
-WEEKLY_VIP_BONUS_PERCENTAGE=5
+WEEKLY_CBL_RAKE_PERCENTAGE_LOW=5
+WEEKLY_CBL_RAKE_PERCENTAGE_MID=8
+WEEKLY_CBL_RAKE_PERCENTAGE_HIGH=10
+WEEKLY_VIP_BONUS_HOUSE=5
+WEEKLY_VIP_BONUS_CBL=3
 
 # Monitoring
 SENTRY_DSN=${SENTRY_DSN}
@@ -1952,7 +1958,11 @@ WEEKLY_AUTO_FILL_THRESHOLD=0.95
 WEEKLY_VRF_TRIGGER_MINUTES=40
 WEEKLY_HOUSE_RAKE_PERCENTAGE=5
 WEEKLY_HOUSE_RAKE_PERCENTAGE_HIGH=8
-WEEKLY_VIP_BONUS_PERCENTAGE=5
+WEEKLY_CBL_RAKE_PERCENTAGE_LOW=5
+WEEKLY_CBL_RAKE_PERCENTAGE_MID=8
+WEEKLY_CBL_RAKE_PERCENTAGE_HIGH=10
+WEEKLY_VIP_BONUS_HOUSE=5
+WEEKLY_VIP_BONUS_CBL=3
 WEEKLY_MAX_SQUARES_STANDARD=5
 WEEKLY_MAX_SQUARES_VIP=10
 

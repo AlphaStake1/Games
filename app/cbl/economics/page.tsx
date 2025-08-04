@@ -103,7 +103,7 @@ const CBLEconomicsPage = () => {
 
   const exampleScenarios = [
     {
-      scenario: 'Budget CBL',
+      scenario: 'First Stream CBL',
       boardPrice: '$5',
       boardsFilled: '2 per week',
       avgFillRate: '85%',
@@ -122,10 +122,10 @@ const CBLEconomicsPage = () => {
         'Player max: 5 squares × 200 = 1,000 points. CBL: 1,000 × 1.5 = 1,500 per board × 3 boards = 4,500 Blue + 150 Orange',
       monthlyBlue: '~18,000',
       monthlyOrange: '~600',
-      monthlyRake: '3% of filled boards',
+      monthlyRake: '3% of filled boards (5% total rake)',
     },
     {
-      scenario: 'Premium CBL',
+      scenario: 'Franchise CBL',
       boardPrice: '$50',
       boardsFilled: '2 per week',
       avgFillRate: '98%',
@@ -133,15 +133,15 @@ const CBLEconomicsPage = () => {
         'Player max: 10 squares × 600 = 6,000 points. CBL: 6,000 × 1.5 = 9,000 per board × 2 boards = 18,000 Blue + 400 Orange',
       monthlyBlue: '~72,000',
       monthlyOrange: '~1,600',
-      monthlyRake: '3% of $10,000+ monthly volume',
+      monthlyRake: '5% of $10,000+ monthly volume (8% total rake mixed)',
     },
   ];
 
   const strategicTips = [
     {
-      title: 'Price for Points',
+      title: 'Premium Pricing Strategy',
       description:
-        'Price boards at $7+ to earn Blue Points. Sub-$7 boards earn 0 Blue Points for CBLs.',
+        'Price boards at $50+ for premium rake rates. Non-premium boards (<$50) earn 3% CBL rake, premium boards earn 5% CBL rake.',
       icon: Target,
       priority: 'Critical',
     },
@@ -308,32 +308,34 @@ const CBLEconomicsPage = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-green-800 dark:text-green-200">
                     <DollarSign className="h-6 w-6" />
-                    Rake Revenue
+                    CBL Rake Revenue
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-sm dark:text-gray-300">
-                        Drive Maker CBL
+                        Non-Premium (&lt;$50)
                       </span>
                       <Badge className="bg-green-600">3%</Badge>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm dark:text-gray-300">
-                        Franchise CBL
+                        Premium Mixed ($50+)
                       </span>
-                      <Badge variant="outline">TBD</Badge>
+                      <Badge className="bg-green-600">5%</Badge>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm dark:text-gray-300">
-                        Minimum price
+                        Premium VIP-Only ($50+)
                       </span>
-                      <Badge className="bg-green-600">$7</Badge>
+                      <Badge className="bg-green-600">5%</Badge>
                     </div>
                   </div>
                   <p className="text-xs text-green-600 dark:text-green-400 mt-4">
-                    Rake only applies to boards priced $7+ per square
+                    Non-premium: 5% total rake (3% CBL, 2% House). Premium
+                    mixed: 8% total rake (5% CBL, 3% House). Premium VIP-only:
+                    10% total rake (5% CBL, 2% House, 3% VIP bonus).
                   </p>
                 </CardContent>
               </Card>
@@ -356,7 +358,7 @@ const CBLEconomicsPage = () => {
                     <ul className="space-y-2 text-sm dark:text-gray-300">
                       <li className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-red-600" />
-                        Board must be priced $7+ per square
+                        Non-premium boards: any price, 5% total rake
                       </li>
                       <li className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-red-600" />
@@ -376,11 +378,13 @@ const CBLEconomicsPage = () => {
                     <ul className="space-y-2 text-sm dark:text-gray-300">
                       <li className="flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4 text-red-600" />
-                        Sub-$7 boards: CBL earns 0 Blue Points
+                        Premium boards ($50+): 8% rake (mixed) or 10% rake
+                        (VIP-only)
                       </li>
                       <li className="flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4 text-red-600" />
-                        Players still earn points on sub-$7 CBL boards
+                        VIP players always earn bonuses: 3% on Community, 5% on
+                        House
                       </li>
                       <li className="flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4 text-red-600" />
@@ -717,10 +721,14 @@ const CBLEconomicsPage = () => {
                       Pricing Strategy
                     </h4>
                     <ul className="text-sm space-y-2 dark:text-gray-300">
-                      <li>• Start at $10 for good Blue Point earnings</li>
-                      <li>• Test $20-$25 for higher rewards</li>
-                      <li>• Consider VIP-only $50+ for premium positioning</li>
-                      <li>• Avoid sub-$7 pricing unless for charity/promo</li>
+                      <li>
+                        • Non-premium (&lt;$50): 3% CBL rake from 5% total
+                      </li>
+                      <li>• Premium mixed ($50+): 5% CBL rake from 8% total</li>
+                      <li>
+                        • Premium VIP-only ($50+): 5% CBL rake from 10% total
+                      </li>
+                      <li>• VIP players earn 3% bonus on Community boards</li>
                     </ul>
                   </div>
                   <div className="space-y-3">
@@ -780,9 +788,12 @@ const CBLEconomicsPage = () => {
                     </p>
                     <ul className="text-sm space-y-1 dark:text-gray-300">
                       <li>• Enhanced rake: 5% on $50+ premium boards</li>
-                      <li>• House takes 3%, you keep 5% (vs 3% standard)</li>
-                      <li>• Exclusive board features</li>
-                      <li>• Premium community access</li>
+                      <li>• Mixed boards: 8% total (5% CBL, 3% House)</li>
+                      <li>
+                        • VIP-only boards: 10% total (5% CBL, 3% VIP bonus, 2%
+                        House)
+                      </li>
+                      <li>• Premium community access and exclusive features</li>
                     </ul>
                   </div>
                   <div className="p-4 border rounded-lg dark:border-gray-600">
