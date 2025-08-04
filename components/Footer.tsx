@@ -8,7 +8,7 @@ const Footer = () => {
   // Dynamic CBL link based on user status
   const cblLink = user?.isCBL
     ? { label: 'CBL Portal', href: '/cbl/dashboard' }
-    : { label: 'Board Leader', href: '/board-leader' };
+    : { label: 'Community Boards', href: '/board-leader' };
 
   const quickLinks = [
     { label: 'How to Play', href: '/how-to-play' },

@@ -499,6 +499,27 @@ function HomeContent() {
             </div>
           </section>
 
+          {/* Play Now CTA */}
+          <section className="py-16 bg-black dark:bg-gray-900 transition-colors duration-300">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="text-4xl font-bold mb-4 text-white">
+                  Ready to Win?
+                </h2>
+                <Button
+                  onClick={handleWeeklyClick}
+                  className="bg-green-600 text-white hover:bg-green-700 px-8 py-4 text-lg font-semibold transition-colors duration-200"
+                  size="lg"
+                >
+                  Play Now
+                </Button>
+                <p className="text-sm text-gray-400 mt-4">
+                  Connect your wallet to access weekly boards
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* Newsletter Signup */}
           <section className="py-16 bg-white dark:bg-black transition-colors duration-300">
             <div className="container mx-auto px-4">
