@@ -38,37 +38,37 @@ const CBLEconomicsPage = () => {
     {
       price: '$1-$4',
       blueForCBL: '0',
-      blueForPlayers: '100',
+      blueForPlayers: 'up to 100',
       rakeEligible: false,
     },
     {
       price: '$5-$6',
       blueForCBL: '0',
-      blueForPlayers: '150',
+      blueForPlayers: 'up to 150',
       rakeEligible: false,
     },
     {
       price: '$7-$9',
-      blueForCBL: '300-450',
-      blueForPlayers: '150',
+      blueForCBL: 'up to 225',
+      blueForPlayers: 'up to 150',
       rakeEligible: true,
     },
     {
       price: '$10-$19',
-      blueForCBL: '400-760',
-      blueForPlayers: '200',
+      blueForCBL: 'up to 300',
+      blueForPlayers: 'up to 200',
       rakeEligible: true,
     },
     {
       price: '$20-$49',
-      blueForCBL: '800-1,960',
-      blueForPlayers: '400',
+      blueForCBL: 'up to 600',
+      blueForPlayers: 'up to 400',
       rakeEligible: true,
     },
     {
       price: '$50+',
-      blueForCBL: '1,200+',
-      blueForPlayers: '600+',
+      blueForCBL: '9,000+',
+      blueForPlayers: '6,000+',
       rakeEligible: true,
       vipOnly: true,
     },
@@ -150,6 +150,20 @@ const CBLEconomicsPage = () => {
       description:
         'Maintain 95%+ fill rates for 4 consecutive weeks to earn the 100 Orange Point retention bonus.',
       icon: TrendingUp,
+      priority: 'High',
+    },
+    {
+      title: 'NFT Strategy',
+      description:
+        "Promote NFT mints (the unique stamp mark representing each player's square) to players for 30% commission earnings. Focus on driving NFT creation and sales.",
+      icon: Crown,
+      priority: 'High',
+    },
+    {
+      title: 'Player Engagement',
+      description:
+        'Keep players excited and engaged! Create fun themes, celebrate wins, and build a community atmosphere that keeps players coming back.',
+      icon: Zap,
       priority: 'High',
     },
     {
@@ -495,29 +509,31 @@ const CBLEconomicsPage = () => {
             <Card className="bg-yellow-50/50 border-yellow-200">
               <CardHeader>
                 <CardTitle className="text-yellow-800">
-                  VIP Board Access
+                  VIP Player Benefits & Board Access
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-yellow-700 mb-4">
-                  CBLs creating boards $50+ per square require VIP membership
-                  from players to participate.
+                  VIP members get enhanced benefits and flexible board access
+                  options.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold mb-2">VIP Player Benefits</h4>
+                    <h4 className="font-semibold mb-2">VIP Benefits</h4>
                     <ul className="text-sm space-y-1 dark:text-gray-300">
-                      <li>• Access to $50+ boards</li>
-                      <li>• 1.5× Blue Point multiplier</li>
-                      <li>• Premium board features</li>
+                      <li>• Up to 10 squares (vs 5 for non-VIP)</li>
+                      <li>• 5% bonus on House board winnings</li>
+                      <li>• 3% bonus on CBL board winnings</li>
+                      <li>• Access to exclusive $100+ House boards</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">CBL Considerations</h4>
+                    <h4 className="font-semibold mb-2">CBL Board Options</h4>
                     <ul className="text-sm space-y-1 dark:text-gray-300">
-                      <li>• Smaller player pool</li>
-                      <li>• Higher point rewards</li>
-                      <li>• Premium positioning</li>
+                      <li>• Can create mixed or VIP-only boards</li>
+                      <li>• $50+ boards with enhanced rake structure</li>
+                      <li>• Flexible community targeting</li>
+                      <li>• Premium positioning opportunities</li>
                     </ul>
                   </div>
                 </div>
@@ -695,7 +711,7 @@ const CBLEconomicsPage = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid md:grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-4 gap-6">
                   <div className="space-y-3">
                     <h4 className="font-semibold text-green-600 dark:text-green-400">
                       Pricing Strategy
@@ -719,14 +735,27 @@ const CBLEconomicsPage = () => {
                     </ul>
                   </div>
                   <div className="space-y-3">
-                    <h4 className="font-semibold text-orange-600 dark:text-orange-400">
-                      Community Building
+                    <h4 className="font-semibold text-purple-600 dark:text-purple-400">
+                      NFT & Revenue
                     </h4>
                     <ul className="text-sm space-y-2 dark:text-gray-300">
-                      <li>• Actively promote referral program</li>
-                      <li>• Maintain social media presence</li>
-                      <li>• Engage with players consistently</li>
-                      <li>• Build long-term relationships</li>
+                      <li>• Promote NFT mints for 30% commission</li>
+                      <li>
+                        • Goal: 9 NFT mints recovers your $9.99 initiation fee
+                      </li>
+                      <li>• Drive NFT creation and customization</li>
+                      <li>• Encourage player artistic expression</li>
+                    </ul>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="font-semibold text-orange-600 dark:text-orange-400">
+                      Player Engagement
+                    </h4>
+                    <ul className="text-sm space-y-2 dark:text-gray-300">
+                      <li>• Create fun board themes and narratives</li>
+                      <li>• Celebrate wins and build excitement</li>
+                      <li>• Host contests and bonus events</li>
+                      <li>• Maintain active community chat</li>
                     </ul>
                   </div>
                 </div>
@@ -750,9 +779,42 @@ const CBLEconomicsPage = () => {
                       status with additional benefits.
                     </p>
                     <ul className="text-sm space-y-1 dark:text-gray-300">
-                      <li>• Enhanced rake structure (TBD)</li>
+                      <li>• Enhanced rake: 5% on $50+ premium boards</li>
+                      <li>• House takes 3%, you keep 5% (vs 3% standard)</li>
                       <li>• Exclusive board features</li>
                       <li>• Premium community access</li>
+                    </ul>
+                  </div>
+                  <div className="p-4 border rounded-lg dark:border-gray-600">
+                    <h4 className="font-semibold mb-2 dark:text-gray-200">
+                      NFT Monetization Strategy
+                    </h4>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                      Maximize revenue through strategic NFT promotion and VIP
+                      experiences.
+                    </p>
+                    <ul className="text-sm space-y-1 dark:text-gray-300">
+                      <li>• Earn 30% commission on every NFT mint</li>
+                      <li>• Encourage custom NFT creation and artwork</li>
+                      <li>• Promote NFT personalization and uniqueness</li>
+                      <li>• Build community around player creativity</li>
+                    </ul>
+                  </div>
+                  <div className="p-4 border rounded-lg dark:border-gray-600">
+                    <h4 className="font-semibold mb-2 dark:text-gray-200">
+                      Fun & Engagement Mastery
+                    </h4>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                      Keep players excited and coming back with creative
+                      engagement tactics.
+                    </p>
+                    <ul className="text-sm space-y-1 dark:text-gray-300">
+                      <li>
+                        • Create themed boards (holidays, rivalries, memes)
+                      </li>
+                      <li>• Celebrate big wins with community shoutouts</li>
+                      <li>• Run mini-contests and bonus square events</li>
+                      <li>• Share behind-the-scenes stories and insights</li>
                     </ul>
                   </div>
                   <div className="p-4 border rounded-lg dark:border-gray-600">

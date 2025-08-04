@@ -253,5 +253,5 @@ export const calculateSquareSelectionCost = (
 };
 
 export const getMaxSquaresForUser = (isVIP: boolean): number => {
-  return isVIP ? 100 : 5; // VIP gets unlimited (100 is practical max), non-VIP gets 5
+  return isVIP ? 10 : 5; // VIP gets 10 squares, non-VIP gets 5
 };

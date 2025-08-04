@@ -21,7 +21,7 @@ This document provides the complete technical specification for the Blue Points 
 
 - **Free players**: Cap of 3 free boards per week (300 Blue Points maximum weekly)
 - **CBL boards under $7**: Players still earn Blue Points based on price tier, but CBL earns 0 Blue Points
-- **VIP requirement**: Boards $50+ require VIP membership to access
+- **VIP access**: House boards $100+ are VIP-only; CBL boards allow CBL to choose mixed or VIP-only
 
 ### 1.2 Multipliers and Bonuses
 
@@ -71,8 +71,10 @@ Orange Points are designed to total roughly one-fifth of an equally active playe
 | Benefit               | Details                                         |
 | --------------------- | ----------------------------------------------- |
 | Blue-Point multiplier | **1.5×** on all Blue Point earnings             |
-| Board access          | All weekly games + VIP-only price tiers ($100+) |
-| Exclusive boards      | Franchise Community Boards                      |
+| Square capacity       | Up to 10 squares (vs 5 for non-VIP)             |
+| Win bonus             | 5% on House boards, 3% on CBL boards            |
+| Board access          | All weekly games + VIP-only House tiers ($100+) |
+| Exclusive boards      | Access to VIP-only CBL boards (CBL choice)      |
 | Future perks          | Early NFT drops, free square placements         |
 
 ## 4. Technical Implementation

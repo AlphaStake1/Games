@@ -16,7 +16,7 @@ Weekly Football Squares lets fans play **single‑game NFT squares** without sea
 - **Game‑by‑game** participation only.
 - **Weekly reset** every Tuesday.
 - **Immediate SOL/USDC payouts** per quarter (no cumulative scoring).
-- **House rake: 5% on $5–$50 boards; 8% on VIP $100/$250/$500 boards.**
+- **House rake: 5% on $5–$50 boards; 8% on VIP $100+ House boards; 8% on $50+ CBL boards (5% to CBL, 3% to House).**
 
 ---
 
@@ -50,6 +50,8 @@ graph TD;
 
 ### 3.1 Tier Table
 
+### 3.1.1 House Board Tiers
+
 | Tier | Entry Price | Total Pool | **House Rake** | Player Pool | VIP Only |
 | ---- | ----------- | ---------: | -------------: | ----------: | :------: |
 | 1    | $5          |       $500 |       5% ($25) |        $475 |    –     |
@@ -60,7 +62,15 @@ graph TD;
 | 6    | $250        |    $25,000 |    8% ($2,000) |     $23,000 |    ✅    |
 | 7    | $500        |    $50,000 |    8% ($4,000) |     $46,000 |    ✅    |
 
-> **VIP $100/$250/$500 boards carry an 8% rake; after the standard 5% VIP bonus the House nets 3%.**
+> **House board economics**: VIP bonus is 5% on all House boards. $100+ House boards are VIP-only access.
+
+### 3.1.2 CBL Board Economics
+
+| CBL Tier | Entry Price | Total Pool | **Total Rake** | **CBL Share** | **House Share** | VIP Access |
+| -------- | ----------- | ---------: | -------------: | ------------: | --------------: | :--------: |
+| $50+     | $50+        |   Variable |       8% total |            5% |              3% | CBL choice |
+
+> **CBL board economics**: VIP bonus is 3% on CBL boards. CBLs can choose mixed or VIP-only access.
 
 ### 3.2 Base (Forward‑Only) Payout Split
 
@@ -75,9 +85,10 @@ _Overtime:_ If OT occurs, Q4 payout is split 50/50 between the end‑Q4 score an
 
 ### 3.3 VIP Rules
 
-- **Tier 5+ access**.
+- **House board access:** All tiers; VIP-only for $100+ House boards.
+- **CBL board access:** All tiers; CBL chooses mixed or VIP-only.
 - **Square cap:** VIP = 10; Standard = 5.
-- **Win bonus:** +5% on net winnings (separate bonus transfer).
+- **Win bonus:** +5% on House board winnings; +3% on CBL board winnings (separate bonus transfer).
 
 ### 3.4 House‑Board Variants & Sample $20 Board (Player Pool $1,900)
 
@@ -289,9 +300,11 @@ WEEKLY_VRF_TRIGGER_MINUTES=40
 
 # Economics
 # House rake
-WEEKLY_HOUSE_RAKE_PERCENTAGE=5  # $5–$50 boards
-WEEKLY_HOUSE_RAKE_PERCENTAGE_HIGH=8  # VIP $100/$250/$500 boards
-WEEKLY_VIP_BONUS_PERCENTAGE=5
+WEEKLY_HOUSE_RAKE_PERCENTAGE=5  # $5–$50 House boards
+WEEKLY_HOUSE_RAKE_PERCENTAGE_HIGH=8  # $100+ House boards (VIP-only)
+WEEKLY_CBL_RAKE_PERCENTAGE=8  # $50+ CBL boards (5% CBL, 3% House)
+WEEKLY_VIP_BONUS_HOUSE=5  # VIP bonus on House boards
+WEEKLY_VIP_BONUS_CBL=3  # VIP bonus on CBL boards
 WEEKLY_MAX_SQUARES_STANDARD=5
 WEEKLY_MAX_SQUARES_VIP=10
 ```
