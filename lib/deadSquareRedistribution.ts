@@ -1,5 +1,47 @@
 import { BoardTier, PayoutStructure } from '@/lib/boardTypes';
 
+/**
+ * COMMUNITY BOARD SYSTEM - Dead Square Economics
+ *
+ * Community boards operate with dynamic payouts based on actual funds raised:
+ *
+ * 1. RAKE STRUCTURE: Always 5% of total funds raised
+ *    - CBL gets: 3% of total pool
+ *    - House gets: 2% of total pool
+ *
+ * 2. PAYOUT CALCULATION: Based on remaining player pool after rake
+ *    - Q1: 15% of player pool
+ *    - Q2: 25% of player pool
+ *    - Q3: 15% of player pool
+ *    - Q4: 45% of player pool
+ *
+ * 3. EXAMPLE ($100 tier, 95% fill):
+ *    - Funds Raised: 95 × $100 = $9,500
+ *    - Rake (5%): $475 (CBL: $285, House: $190)
+ *    - Player Pool: $9,025
+ *    - Q1: $1,353.75, Q2: $2,256.25, Q3: $1,353.75, Q4: $4,061.25
+ *
+ * 4. DEAD SQUARE REDISTRIBUTION: 10% House, 5% CBL, 85% to players
+ */
+
+export interface CommunityBoardConfiguration {
+  boardId: string;
+  boardType: 'community';
+  tier: BoardTier;
+  squaresSold: number;
+  fundsRaised: number;
+  communityRakeRate: number; // 5% for all community boards
+  cblRakeShare: number; // 3% of total pool (60% of rake)
+  houseRakeShare: number; // 2% of total pool (40% of rake)
+  playerPool: number; // fundsRaised - totalRake
+  quarterPayouts: {
+    q1: number;
+    q2: number;
+    q3: number;
+    q4: number;
+  };
+}
+
 export interface DeadSquareRedistribution {
   boardId: string;
   quarter: 'q1' | 'q2' | 'q3' | 'q4';
@@ -37,9 +79,43 @@ export class DeadSquareRedistributionService {
   private static readonly CBL_MANAGEMENT_RATE = 0.05; // 5% CBL fee
   private static readonly MIN_REDISTRIBUTION_THRESHOLD = 1; // $1 minimum
 
-  static calculateRedistribution(
+  // Community Board constants
+  private static readonly COMMUNITY_RAKE_RATE = 0.05; // 5% total rake
+  private static readonly CBL_RAKE_SHARE = 0.03; // 3% of total pool (60% of rake)
+  private static readonly HOUSE_RAKE_SHARE = 0.02; // 2% of total pool (40% of rake)
+
+  static createCommunityBoardConfig(
     boardId: string,
     tier: BoardTier,
+    squaresSold: number,
+  ): CommunityBoardConfiguration {
+    const fundsRaised = squaresSold * tier.pricePerSquare;
+    const totalRake = fundsRaised * this.COMMUNITY_RAKE_RATE;
+    const cblRakeAmount = fundsRaised * this.CBL_RAKE_SHARE;
+    const houseRakeAmount = fundsRaised * this.HOUSE_RAKE_SHARE;
+    const playerPool = fundsRaised - totalRake;
+
+    return {
+      boardId,
+      boardType: 'community',
+      tier,
+      squaresSold,
+      fundsRaised,
+      communityRakeRate: this.COMMUNITY_RAKE_RATE,
+      cblRakeShare: cblRakeAmount,
+      houseRakeShare: houseRakeAmount,
+      playerPool,
+      quarterPayouts: {
+        q1: playerPool * 0.15, // 15%
+        q2: playerPool * 0.25, // 25%
+        q3: playerPool * 0.15, // 15%
+        q4: playerPool * 0.45, // 45%
+      },
+    };
+  }
+
+  static calculateCommunityRedistribution(
+    communityBoard: CommunityBoardConfiguration,
     quarter: 'q1' | 'q2' | 'q3' | 'q4',
     isOvertime: boolean,
     deadSquareCount: number,
@@ -55,12 +131,9 @@ export class DeadSquareRedistributionService {
         };
       }
 
-      const deadSquareFunds = deadSquareCount * tier.pricePerSquare;
-      const originalPayout = this.getQuarterPayout(
-        tier.payouts,
-        quarter,
-        isOvertime,
-      );
+      const deadSquareFunds =
+        deadSquareCount * communityBoard.tier.pricePerSquare;
+      const originalPayout = communityBoard.quarterPayouts[quarter];
 
       const houseOverheadFee =
         Math.round(deadSquareFunds * this.HOUSE_OVERHEAD_RATE * 100) / 100;
@@ -98,7 +171,7 @@ export class DeadSquareRedistributionService {
       };
 
       const redistribution: DeadSquareRedistribution = {
-        boardId,
+        boardId: communityBoard.boardId,
         quarter,
         isOvertime,
         deadSquareCount,
@@ -156,6 +229,26 @@ export class DeadSquareRedistributionService {
       `• CBL Management (5%): $${redistribution.cblManagementFee}\n` +
       `• Player Distribution: $${(redistribution.perWinnerBonus * redistribution.quarterWinners.length).toFixed(2)}\n\n` +
       `Winners receive their regular payout PLUS the bonus! 🚀`
+    );
+  }
+
+  // Legacy method for backwards compatibility
+  static calculateRedistribution(
+    boardId: string,
+    tier: BoardTier,
+    quarter: 'q1' | 'q2' | 'q3' | 'q4',
+    isOvertime: boolean,
+    deadSquareCount: number,
+    quarterWinners: string[],
+  ): RedistributionResult {
+    // Create a mock community board with 100% fill for legacy compatibility
+    const communityBoard = this.createCommunityBoardConfig(boardId, tier, 100);
+    return this.calculateCommunityRedistribution(
+      communityBoard,
+      quarter,
+      isOvertime,
+      deadSquareCount,
+      quarterWinners,
     );
   }
 
