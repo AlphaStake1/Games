@@ -1,4 +1,5 @@
 import { BoardTier, PayoutStructure } from '@/lib/boardTypes';
+import { BOARD_RULES } from '@/lib/boardRules';
 
 /**
  * COMMUNITY BOARD SYSTEM - Dead Square Economics
@@ -75,14 +76,19 @@ export interface RedistributionResult {
 }
 
 export class DeadSquareRedistributionService {
-  private static readonly HOUSE_OVERHEAD_RATE = 0.1; // 10% house fee
-  private static readonly CBL_MANAGEMENT_RATE = 0.05; // 5% CBL fee
-  private static readonly MIN_REDISTRIBUTION_THRESHOLD = 1; // $1 minimum
+  // All constants now reference BOARD_RULES for consistency
+  private static get HOUSE_OVERHEAD_RATE() {
+    return BOARD_RULES.DEAD_SQUARE_REDISTRIBUTION.COMMUNITY.HOUSE_OVERHEAD_RATE;
+  }
 
-  // Community Board constants
-  private static readonly COMMUNITY_RAKE_RATE = 0.05; // 5% total rake
-  private static readonly CBL_RAKE_SHARE = 0.03; // 3% of total pool (60% of rake)
-  private static readonly HOUSE_RAKE_SHARE = 0.02; // 2% of total pool (40% of rake)
+  private static get CBL_MANAGEMENT_RATE() {
+    return BOARD_RULES.DEAD_SQUARE_REDISTRIBUTION.COMMUNITY.CBL_MANAGEMENT_RATE;
+  }
+
+  private static get MIN_REDISTRIBUTION_THRESHOLD() {
+    return BOARD_RULES.DEAD_SQUARE_REDISTRIBUTION.COMMUNITY
+      .MIN_REDISTRIBUTION_THRESHOLD;
+  }
 
   static createCommunityBoardConfig(
     boardId: string,
@@ -90,9 +96,12 @@ export class DeadSquareRedistributionService {
     squaresSold: number,
   ): CommunityBoardConfiguration {
     const fundsRaised = squaresSold * tier.pricePerSquare;
-    const totalRake = fundsRaised * this.COMMUNITY_RAKE_RATE;
-    const cblRakeAmount = fundsRaised * this.CBL_RAKE_SHARE;
-    const houseRakeAmount = fundsRaised * this.HOUSE_RAKE_SHARE;
+    const totalRake =
+      fundsRaised * BOARD_RULES.COMMUNITY_BOARDS.TOTAL_RAKE_PERCENTAGE;
+    const cblRakeAmount =
+      fundsRaised * BOARD_RULES.COMMUNITY_BOARDS.RAKE_SPLIT.CBL_PERCENTAGE;
+    const houseRakeAmount =
+      fundsRaised * BOARD_RULES.COMMUNITY_BOARDS.RAKE_SPLIT.HOUSE_PERCENTAGE;
     const playerPool = fundsRaised - totalRake;
 
     return {
@@ -101,15 +110,15 @@ export class DeadSquareRedistributionService {
       tier,
       squaresSold,
       fundsRaised,
-      communityRakeRate: this.COMMUNITY_RAKE_RATE,
+      communityRakeRate: BOARD_RULES.COMMUNITY_BOARDS.TOTAL_RAKE_PERCENTAGE,
       cblRakeShare: cblRakeAmount,
       houseRakeShare: houseRakeAmount,
       playerPool,
       quarterPayouts: {
-        q1: playerPool * 0.15, // 15%
-        q2: playerPool * 0.25, // 25%
-        q3: playerPool * 0.15, // 15%
-        q4: playerPool * 0.45, // 45%
+        q1: playerPool * BOARD_RULES.COMMUNITY_BOARDS.QUARTER_SPLITS.Q1,
+        q2: playerPool * BOARD_RULES.COMMUNITY_BOARDS.QUARTER_SPLITS.Q2,
+        q3: playerPool * BOARD_RULES.COMMUNITY_BOARDS.QUARTER_SPLITS.Q3,
+        q4: playerPool * BOARD_RULES.COMMUNITY_BOARDS.QUARTER_SPLITS.Q4,
       },
     };
   }

@@ -1,4 +1,5 @@
 import { BoardTier, PayoutStructure } from '@/lib/boardTypes';
+import { BOARD_RULES } from '@/lib/boardRules';
 
 /**
  * HOUSE BOARD SYSTEM - Dead Square Economics
@@ -68,10 +69,14 @@ export interface HouseBoardOutcome {
 }
 
 export class HouseBoardSystem {
-  private static readonly DEFAULT_HOUSE_RAKE = 0.08; // 8% for VIP tiers
-  private static readonly VIP_BONUS_RATE = 0.05; // 5% VIP bonus
-  private static readonly MAX_DEAD_SQUARES = 3; // For 97% fill on VIP boards
   private static readonly HOUSE_NFT_IDENTIFIER = 'HOUSE_NFT';
+
+  // All constants now reference BOARD_RULES for consistency
+  private static getHouseRules(isVIP: boolean) {
+    return isVIP
+      ? BOARD_RULES.HOUSE_BOARDS.VIP
+      : BOARD_RULES.HOUSE_BOARDS.NON_VIP;
+  }
 
   private static readonly DEFAULT_HOUSE_NFT_STYLE: HouseNftStyle = {
     indicatorType: 'circle',
