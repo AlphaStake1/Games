@@ -13,16 +13,18 @@ import { BoardTier, PayoutStructure } from '@/lib/boardTypes';
  *
  * 3. VIP ECONOMICS EXAMPLE ($100 tier):
  *    - Total Revenue: $10,000 (100 squares × $100)
+ *    - House Rake: $800 (8%)
+ *    - VIP Bonus Cost: $500 (5% of $10,000)
+ *    - Net House Margin: $300 (3%)
  *    - Player Pool: $9,200 (guaranteed payouts)
- *    - VIP Bonus Pool: $300 (extra 5% for VIP players)
- *    - House Guaranteed Loss: $800 (if no dead squares hit)
+ *    - Required Fill: 97% (only 3 empty squares max to preserve margin)
  *
- * 4. RECOVERY EXAMPLES:
- *    - Q1/Q3 hit: Recover $1,380 + $69 VIP bonus = $1,449 vs $800 loss = +$649 profit
- *    - Q2 hit: Recover $2,300 + $115 VIP bonus = $2,415 vs $800 loss = +$1,615 profit
- *    - Q4 hit: Recover $4,140 + $207 VIP bonus = $4,347 vs $800 loss = +$3,547 profit
+ * 4. RECOVERY EXAMPLES (3 dead squares):
+ *    - Q1/Q3 hit: Recover $1,380 + $69 VIP bonus = $1,449 vs $300 loss = +$1,149 profit
+ *    - Q2 hit: Recover $2,300 + $115 VIP bonus = $2,415 vs $300 loss = +$2,115 profit
+ *    - Q4 hit: Recover $4,140 + $207 VIP bonus = $4,347 vs $300 loss = +$4,047 profit
  *
- * 5. PROBABILITY: 5% chance per quarter (5 dead squares / 100 total squares)
+ * 5. PROBABILITY: 3% chance per quarter (3 dead squares / 100 total squares)
  */
 
 export interface HouseBoardConfiguration {
@@ -30,7 +32,7 @@ export interface HouseBoardConfiguration {
   boardType: 'house';
   tier: BoardTier;
   houseRakePercentage: number; // 8% for VIP tiers
-  maxDeadSquares: number; // 5 for 95% fill
+  maxDeadSquares: number; // 3 for 97% fill on VIP boards
   guaranteedPayouts: boolean; // Always true for House boards
   houseNftStyle: HouseNftStyle;
   vipBonusRate: number; // 5% extra for VIP players
@@ -68,7 +70,7 @@ export interface HouseBoardOutcome {
 export class HouseBoardSystem {
   private static readonly DEFAULT_HOUSE_RAKE = 0.08; // 8% for VIP tiers
   private static readonly VIP_BONUS_RATE = 0.05; // 5% VIP bonus
-  private static readonly MAX_DEAD_SQUARES = 5; // For 95% fill
+  private static readonly MAX_DEAD_SQUARES = 3; // For 97% fill on VIP boards
   private static readonly HOUSE_NFT_IDENTIFIER = 'HOUSE_NFT';
 
   private static readonly DEFAULT_HOUSE_NFT_STYLE: HouseNftStyle = {
@@ -225,7 +227,7 @@ export class HouseBoardSystem {
 
   static simulateHouseBoardScenarios(
     tier: BoardTier,
-    deadSquareCount: number = 5,
+    deadSquareCount: number = 3,
   ): {
     scenario: string;
     quarterPayout: number;

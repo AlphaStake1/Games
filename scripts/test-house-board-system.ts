@@ -16,16 +16,16 @@ function runHouseBoardTests() {
     `🎨 NFT Style: ${houseBoardConfig.houseNftStyle.indicatorColor} ${houseBoardConfig.houseNftStyle.indicatorType}\n`,
   );
 
-  // Mock board with 5 dead squares (95% fill)
+  // Mock board with 3 dead squares (97% fill - VIP requirement)
   const boardSquares: { [key: string]: string | null } = {};
   for (let i = 0; i < 100; i++) {
-    boardSquares[i.toString()] = i < 95 ? `0xplayer${i}` : null; // 95 filled, 5 empty
+    boardSquares[i.toString()] = i < 97 ? `0xplayer${i}` : null; // 97 filled, 3 empty
   }
-  const deadSquareIndices = [95, 96, 97, 98, 99]; // The 5 empty squares
+  const deadSquareIndices = [97, 98, 99]; // The 3 empty squares
 
   console.log('📊 TEST 1: House Board - Dead Square MISS');
   console.log(
-    'Scenario: Q1 ends 17-14, dead squares are [95,96,97,98,99], winning square is 74',
+    'Scenario: Q1 ends 17-14, dead squares are [97,98,99], winning square is 74',
   );
   const test1 = HouseBoardSystem.processHouseBoardQuarter(
     houseBoardConfig,
@@ -49,15 +49,15 @@ function runHouseBoardTests() {
 
   console.log('📊 TEST 2: House Board - Dead Square HIT!');
   console.log(
-    'Scenario: Q2 ends 13-17, dead squares are [95,96,97,98,99], winning square is 37... wait, that is not a dead square',
+    'Scenario: Q2 ends 23-27, dead squares are [97,98,99], winning square is 37... wait, that is not dead',
   );
-  console.log('Let me try: Q2 ends 19-25, winning square is 95 (dead square!)');
+  console.log('Let me try: Q2 ends 19-27, winning square is 97 (dead square!)');
   const test2 = HouseBoardSystem.processHouseBoardQuarter(
     houseBoardConfig,
     'q2',
     false,
     19, // Home score
-    25, // Away score (winning square = 95, which IS in dead squares!)
+    27, // Away score (winning square = 97, which IS in dead squares!)
     { ...boardSquares },
     deadSquareIndices,
   );
@@ -76,15 +76,8 @@ function runHouseBoardTests() {
   }
 
   console.log('📊 TEST 3: Q4 Big Payout Dead Square Hit');
-  console.log(
-    'Scenario: Q4 ends 10-15, winning square is 05... wait that is not dead either',
-  );
-  console.log(
-    'Let me use Q4 ends 23-28, winning square is 38... also not dead',
-  );
-  console.log(
-    'Actually, let me use a score that hits square 99: Q4 ends 29-29, winning square is 99',
-  );
+  console.log('Scenario: Q4 ends 29-29, winning square is 99 (dead square!)');
+  console.log('Dead squares are now [97,98,99] for VIP boards (97% fill)');
   const test3 = HouseBoardSystem.processHouseBoardQuarter(
     houseBoardConfig,
     'q4',
@@ -108,8 +101,8 @@ function runHouseBoardTests() {
     console.log(`❌ Test 3 failed: ${test3.error}\n`);
   }
 
-  console.log('📊 House Board Risk Analysis:');
-  const riskAnalysis = HouseBoardSystem.simulateHouseBoardScenarios(tier100, 5);
+  console.log('📊 House Board Risk Analysis (VIP - 3 dead squares):');
+  const riskAnalysis = HouseBoardSystem.simulateHouseBoardScenarios(tier100, 3);
   riskAnalysis.forEach((scenario) => {
     console.log(
       `${scenario.scenario}: Risk $${scenario.houseRisk} for ${scenario.probabilityOfHouseWin}% chance to win $${scenario.housePotentialWin}`,
