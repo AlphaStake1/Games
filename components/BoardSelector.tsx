@@ -63,7 +63,7 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
     refreshGames,
     isConnected,
     currentWeek,
-  } = useTeamGames(userTeam, { upcomingOnly: false });
+  } = useTeamGames(userTeam, { upcomingOnly: false }); // Get all games, not just upcoming
 
   // Debug logging
   console.log('BoardSelector: Team games data:', {
@@ -107,6 +107,36 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
   }, [availableGames, selectedGame, currentWeek]);
 
   const availableTiers = getAvailableTiers(isVIP);
+
+  // Helper function to calculate Blue Points earned based on price tier
+  const calculateBluePoints = (pricePerSquare: number): number => {
+    if (pricePerSquare >= 1 && pricePerSquare <= 5) return 150;
+    if (pricePerSquare >= 6 && pricePerSquare <= 10) return 200;
+    if (pricePerSquare >= 11 && pricePerSquare <= 20) return 400;
+    if (pricePerSquare >= 21 && pricePerSquare <= 50) return 600;
+    if (pricePerSquare >= 51 && pricePerSquare <= 100) return 1000;
+    if (pricePerSquare >= 101 && pricePerSquare <= 250) return 1500;
+    if (pricePerSquare >= 251) return 2000;
+    return 100; // Free boards
+  };
+
+  // Helper function to get the dollar range for each pricing tier
+  const getPriceRangeDisplay = (pricePerSquare: number): string => {
+    if (pricePerSquare >= 1 && pricePerSquare <= 5)
+      return `${formatCurrency(1)} - ${formatCurrency(5)}`;
+    if (pricePerSquare >= 6 && pricePerSquare <= 10)
+      return `${formatCurrency(6)} - ${formatCurrency(10)}`;
+    if (pricePerSquare >= 11 && pricePerSquare <= 20)
+      return `${formatCurrency(11)} - ${formatCurrency(20)}`;
+    if (pricePerSquare >= 21 && pricePerSquare <= 50)
+      return `${formatCurrency(21)} - ${formatCurrency(50)}`;
+    if (pricePerSquare >= 51 && pricePerSquare <= 100)
+      return `${formatCurrency(51)} - ${formatCurrency(100)}`;
+    if (pricePerSquare >= 101 && pricePerSquare <= 250)
+      return `${formatCurrency(101)} - ${formatCurrency(250)}`;
+    if (pricePerSquare >= 251) return `${formatCurrency(251)}+`;
+    return formatCurrency(pricePerSquare); // Fallback to single price
+  };
 
   // Helper function to get board availability for a specific tier
   const getBoardAvailabilityForTier = (
@@ -174,14 +204,15 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
     const statusMessage = BoardUtils.getBoardStatusMessage(availability);
 
     const calculateMaxWin = (tier: BoardTier) => {
-      // Use playerPool directly since it's already rake-deducted
-      const regularGameTotal = tier.playerPool;
-
-      // For overtime: 50% of the Q4 payout (using the raw Q4 amount from playerPool proportion)
-      const q4Amount = tier.payouts.q4Regular;
-      const overtimeSplit = q4Amount * 0.5;
-      const expiredOvertime = q4Amount * 0.5;
-
+      const { payouts } = tier;
+      const regularGameTotal =
+        payouts.q1Regular +
+        payouts.q2Regular +
+        payouts.q3Regular +
+        payouts.q4Regular;
+      // Overtime Split should be 50% of Q4 value
+      const overtimeSplit = payouts.q4Regular * 0.5;
+      const expiredOvertime = payouts.finalOvertime ?? 0;
       return {
         regularGameTotal,
         overtimeSplit,
@@ -233,9 +264,9 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
             </div>
             <div className="text-right">
               <p className="text-2xl font-bold text-green-600">
-                {formatCurrency(tier.pricePerSquare)}
+                {getPriceRangeDisplay(tier.pricePerSquare)}
               </p>
-              <p className="text-xs text-gray-500">per square</p>
+              <p className="text-xs text-gray-500">per square range</p>
             </div>
           </div>
         </CardHeader>
@@ -282,66 +313,71 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
             </p>
           </div>
 
+          {/* Blue Points Information */}
+          <div className="bg-blue-50 dark:bg-blue-950 rounded-lg p-3 border border-blue-200 dark:border-blue-800">
+            <h4 className="text-sm font-medium mb-2 flex items-center gap-1 text-blue-800 dark:text-blue-200">
+              <Star className="w-4 h-4" />
+              Blue Points Earned:
+            </h4>
+            <div className="text-center">
+              <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                {calculateBluePoints(tier.pricePerSquare).toLocaleString()}{' '}
+                points
+              </span>
+              <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                per square purchased
+              </p>
+            </div>
+          </div>
+
           {/* Payout Information */}
           <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3">
             <h4 className="text-sm font-medium mb-2 flex items-center gap-1">
               <TrendingUp className="w-4 h-4" />
               Potential Winnings:
             </h4>
-            {isVIPTier ? (
-              // Detailed breakdown for VIP boards
-              <>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="flex justify-between">
-                    <span>Q1:</span>
-                    <span className="font-medium">
-                      {formatCurrency(tier.payouts.q1Regular)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Q2:</span>
-                    <span className="font-medium">
-                      {formatCurrency(tier.payouts.q2Regular)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Q3:</span>
-                    <span className="font-medium">
-                      {formatCurrency(tier.payouts.q3Regular)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Q4:</span>
-                    <span className="font-bold text-green-600">
-                      {formatCurrency(tier.payouts.q4Regular)}
-                    </span>
-                  </div>
-                </div>
-                {tier.payouts.finalOvertime && (
-                  <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-                    <div className="flex justify-between text-xs">
-                      <span>Overtime Split (50%):</span>
-                      <span className="font-medium">
-                        {formatCurrency(calculateMaxWin(tier).overtimeSplit)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-xs">
-                      <span>Overtime (Expired):</span>
-                      <span className="font-medium">
-                        {formatCurrency(calculateMaxWin(tier).expiredOvertime)}
-                      </span>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="flex justify-between">
+                <span>Q1:</span>
+                <span className="font-medium">
+                  {formatCurrency(tier.payouts.q1Regular)}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Q2:</span>
+                <span className="font-medium">
+                  {formatCurrency(tier.payouts.q2Regular)}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Q3:</span>
+                <span className="font-medium">
+                  {formatCurrency(tier.payouts.q3Regular)}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Q4:</span>
+                <span className="font-bold text-green-600">
+                  {formatCurrency(tier.payouts.q4Regular)}
+                </span>
+              </div>
+            </div>
+            {tier.payouts.finalOvertime && (
+              <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex justify-between text-xs">
+                  <span>Overtime Split:</span>
+                  <div className="text-right">
+                    <div className="font-medium">50% with 4th Q</div>
+                    <div className="text-green-600 font-bold">
+                      {formatCurrency(calculateMaxWin(tier).overtimeSplit)}
                     </div>
                   </div>
-                )}
-              </>
-            ) : (
-              // Simplified display for non-VIP boards
-              <div className="text-center">
-                <div className="text-lg font-bold text-green-600">
-                  {formatCurrency(calculateMaxWin(tier).regularGameTotal)}
                 </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  Total Potential Winnings
+                <div className="flex justify-between text-xs mt-1">
+                  <span>Overtime (Expired):</span>
+                  <span className="font-medium">
+                    {formatCurrency(calculateMaxWin(tier).expiredOvertime ?? 0)}
+                  </span>
                 </div>
               </div>
             )}
