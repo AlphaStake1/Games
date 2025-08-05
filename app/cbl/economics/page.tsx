@@ -90,14 +90,14 @@ const CBLEconomicsPage = () => {
     {
       activity: 'Referral signup',
       points: '20',
-      frequency: 'Unlimited',
+      frequency: '1-Time bonus',
       requirement: 'New wallet connection through your link',
     },
     {
       activity: 'Referral first play',
       points: '50',
-      frequency: 'Per referral',
-      requirement: 'Referred player makes first paid play',
+      frequency: '1-Time bonus',
+      requirement: "Referred player plays on CBL's board",
     },
   ];
 
@@ -114,26 +114,26 @@ const CBLEconomicsPage = () => {
       monthlyRake: '$0',
     },
     {
-      scenario: 'Entry-Level CBL',
-      boardPrice: '$10',
-      boardsFilled: '3 per week',
+      scenario: 'Drive Maker CBL',
+      boardPrice: '$20',
+      boardsFilled: '8 per week',
       avgFillRate: '95%',
       calculation:
-        'Player max: 5 squares × 200 = 1,000 points. CBL: 1,000 × 1.5 = 1,500 per board × 3 boards = 4,500 Blue + 150 Orange',
-      monthlyBlue: '~18,000',
-      monthlyOrange: '~600',
-      monthlyRake: '3% of filled boards (5% total rake)',
+        'Player max: 5 squares × 400 = 2,000 points. CBL: 2,000 × 1.5 = 3,000 per board × 8 boards = 24,000 Blue + 400 Orange',
+      monthlyBlue: '~96,000',
+      monthlyOrange: '~1,600',
+      monthlyRake: '3% rake = ~$260',
     },
     {
       scenario: 'Franchise CBL',
-      boardPrice: '$50',
-      boardsFilled: '2 per week',
-      avgFillRate: '98%',
+      boardPrice: '$300',
+      boardsFilled: '35 per week',
+      avgFillRate: '99%',
       calculation:
-        'Player max: 10 squares × 600 = 6,000 points. CBL: 6,000 × 1.5 = 9,000 per board × 2 boards = 18,000 Blue + 400 Orange',
-      monthlyBlue: '~72,000',
-      monthlyOrange: '~1,600',
-      monthlyRake: '5% of $10,000+ monthly volume (8% total rake mixed)',
+        'Player max: 10 squares × 1,500 = 15,000 points. CBL: 15,000 × 1.5 = 22,500 per board × 35 boards = 787,500 Blue + 1,750 Orange',
+      monthlyBlue: '~3,150,000',
+      monthlyOrange: '~7,000',
+      monthlyRake: '5% rake = ~$4,470',
     },
   ];
 
@@ -358,7 +358,7 @@ const CBLEconomicsPage = () => {
                     <ul className="space-y-2 text-sm dark:text-gray-300">
                       <li className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-red-600" />
-                        Non-premium boards: any price, 5% total rake
+                        Non-premium boards: only for $7+ priced boards
                       </li>
                       <li className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-red-600" />
@@ -383,8 +383,7 @@ const CBLEconomicsPage = () => {
                       </li>
                       <li className="flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4 text-red-600" />
-                        VIP players always earn bonuses: 3% on Community, 5% on
-                        House
+                        VIP players always earn bonuses: 3% on Community
                       </li>
                       <li className="flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4 text-red-600" />
@@ -414,7 +413,6 @@ const CBLEconomicsPage = () => {
                       <TableHead>CBL Blue Points</TableHead>
                       <TableHead>Player Blue Points</TableHead>
                       <TableHead>Rake Eligible</TableHead>
-                      <TableHead>Notes</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -453,14 +451,6 @@ const CBLEconomicsPage = () => {
                           ) : (
                             <AlertTriangle className="h-5 w-5 text-red-600" />
                           )}
-                        </TableCell>
-                        <TableCell className="text-sm text-gray-600 dark:text-gray-300">
-                          {tier.vipOnly && (
-                            <Badge className="bg-yellow-100 text-yellow-800 mr-2">
-                              VIP Only
-                            </Badge>
-                          )}
-                          {tier.blueForCBL === '0' && 'No Blue Points for CBL'}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -507,40 +497,6 @@ const CBLEconomicsPage = () => {
                     ))}
                   </TableBody>
                 </Table>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-yellow-50/50 border-yellow-200">
-              <CardHeader>
-                <CardTitle className="text-yellow-800">
-                  VIP Player Benefits & Board Access
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-yellow-700 mb-4">
-                  VIP members get enhanced benefits and flexible board access
-                  options.
-                </p>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-semibold mb-2">VIP Benefits</h4>
-                    <ul className="text-sm space-y-1 dark:text-gray-300">
-                      <li>• Up to 10 squares (vs 5 for non-VIP)</li>
-                      <li>• 5% bonus on House board winnings</li>
-                      <li>• 3% bonus on CBL board winnings</li>
-                      <li>• Access to exclusive $100+ House boards</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">CBL Board Options</h4>
-                    <ul className="text-sm space-y-1 dark:text-gray-300">
-                      <li>• Can create mixed or VIP-only boards</li>
-                      <li>• $50+ boards with enhanced rake structure</li>
-                      <li>• Flexible community targeting</li>
-                      <li>• Premium positioning opportunities</li>
-                    </ul>
-                  </div>
-                </div>
               </CardContent>
             </Card>
           </TabsContent>
