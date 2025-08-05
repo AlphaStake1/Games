@@ -4,12 +4,26 @@ use switchboard_solana::VrfAccountData;
 
 declare_id!("Fg6PaFprPjfrgxLbfXyAyzsK1m1S82mC2f43s5D2qQq");
 
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, Copy, PartialEq)]
+pub enum BoardVisibility {
+    Public,      // Anyone can find & join
+    InviteOnly,  // Direct URL/QR only
+    VipOnly,     // Contract enforces VIP status
+}
+
 #[program]
 pub mod squares {
     use super::*;
 
-    pub fn create_board(ctx: Context<CreateBoard>, game_id: u64) -> Result<()> {
+    pub fn create_board(
+        ctx: Context<CreateBoard>, 
+        game_id: u64, 
+        price_per_square: u64, 
+        visibility: BoardVisibility
+    ) -> Result<()> {
         let board = &mut ctx.accounts.board;
+        let clock = Clock::get()?;
+        
         board.game_id = game_id;
         board.authority = *ctx.accounts.authority.key;
         board.finalized = false;
@@ -28,13 +42,22 @@ pub mod squares {
         board.home_headers = [10; 10];
         board.away_headers = [10; 10];
         board.bump = ctx.bumps.board;
+        
+        // Initialize Board Boost fields
+        board.boost_amount = 0;
+        board.boost_expires_at = 0;
+        board.created_at = clock.unix_timestamp;
+        board.visibility = visibility;
+        board.price_per_square = price_per_square;
+        board.fill_rate = 0;
+        board.tags = [0; 32];
 
         emit!(BoardCreated {
             game_id,
             authority: *ctx.accounts.authority.key,
         });
 
-        msg!("Board for game #{} created!", game_id);
+        msg!("Board for game #{} created with price {} and visibility {:?}!", game_id, price_per_square, visibility);
         Ok(())
     }
 
@@ -212,6 +235,80 @@ pub mod squares {
         msg!("Winner paid for board #{}", board.game_id);
         Ok(())
     }
+
+    pub fn initialize_treasury(ctx: Context<InitializeTreasury>) -> Result<()> {
+        let treasury = &mut ctx.accounts.treasury;
+        treasury.authority = *ctx.accounts.authority.key;
+        treasury.total_collected = 0;
+        treasury.bump = ctx.bumps.treasury;
+
+        emit!(TreasuryInitialized {
+            authority: *ctx.accounts.authority.key,
+        });
+
+        msg!("Treasury initialized!");
+        Ok(())
+    }
+
+    pub fn boost_board(ctx: Context<BoostBoard>, duration_days: u8) -> Result<()> {
+        let board = &mut ctx.accounts.board;
+        let clock = Clock::get()?;
+
+        // Validate duration
+        require!(
+            duration_days == 1 || duration_days == 3 || duration_days == 7,
+            SquaresError::InvalidBoostDuration
+        );
+
+        // Calculate boost fee based on duration
+        let base_fee = match duration_days {
+            1 => 50_000_000,   // 0.05 SOL for 1 day
+            3 => 120_000_000,  // 0.12 SOL for 3 days  
+            7 => 250_000_000,  // 0.25 SOL for 7 days
+            _ => return Err(SquaresError::InvalidBoostDuration.into()),
+        };
+
+        // Transfer SOL from CBL to treasury
+        let transfer_ix = anchor_lang::system_program::Transfer {
+            from: ctx.accounts.authority.to_account_info(),
+            to: ctx.accounts.treasury.to_account_info(),
+        };
+        let cpi_ctx = CpiContext::new(
+            ctx.accounts.system_program.to_account_info(),
+            transfer_ix,
+        );
+        anchor_lang::system_program::transfer(cpi_ctx, base_fee)?;
+
+        // Update board boost data
+        board.boost_amount += base_fee;
+        board.boost_expires_at = clock.unix_timestamp + (duration_days as i64 * 86400);
+
+        // Update treasury
+        let treasury = &mut ctx.accounts.treasury;
+        treasury.total_collected += base_fee;
+
+        emit!(BoardBoosted {
+            game_id: board.game_id,
+            boost_amount: base_fee,
+            expires_at: board.boost_expires_at,
+            booster: *ctx.accounts.authority.key,
+        });
+
+        msg!("Board #{} boosted for {} days with {} lamports!", 
+             board.game_id, duration_days, base_fee);
+        Ok(())
+    }
+
+    pub fn update_fill_rate(ctx: Context<UpdateFillRate>, fill_rate: u8) -> Result<()> {
+        let board = &mut ctx.accounts.board;
+        
+        require!(fill_rate <= 100, SquaresError::InvalidScore);
+        
+        board.fill_rate = fill_rate;
+        
+        msg!("Board #{} fill rate updated to {}%", board.game_id, fill_rate);
+        Ok(())
+    }
 }
 
 // Helper function to derive headers from randomness
@@ -246,13 +343,41 @@ fn find_winner_square(
     Ok((home_index * 10 + away_index) as u8)
 }
 
+// Board Boost utility functions
+impl Board {
+    pub fn is_boosted(&self, current_timestamp: i64) -> bool {
+        self.boost_expires_at > current_timestamp && self.boost_amount > 0
+    }
+    
+    pub fn calculate_boost_score(&self, current_timestamp: i64) -> f64 {
+        if !self.is_boosted(current_timestamp) {
+            return 0.0;
+        }
+        
+        // Normalize boost amount (scale relative to baseline 0.25 SOL)
+        let normalized_boost = (self.boost_amount as f64 / 250_000_000.0).min(1.0);
+        
+        // Weight by fill rate, time remaining, and boost amount
+        let fill_rate_factor = self.fill_rate as f64 / 100.0;
+        let time_remaining = (self.boost_expires_at - current_timestamp) as f64;
+        let urgency_factor = if time_remaining > 0.0 { 
+            (time_remaining / 86400.0).min(7.0) / 7.0 // Normalize to 0-1 based on days remaining
+        } else { 
+            0.0 
+        };
+        
+        // Weighted scoring algorithm
+        normalized_boost * 0.5 + fill_rate_factor * 0.3 + urgency_factor * 0.2
+    }
+}
+
 #[derive(Accounts)]
 #[instruction(game_id: u64)]
 pub struct CreateBoard<'info> {
     #[account(
         init,
         payer = authority,
-        space = 8 + 8 + 32 + 1 + 1 + 1 + 1 + 32 + 8 + 8 + 1 + 1 + 1 + (32 * 100) + (1 * 10) + (1 * 10) + 1,
+        space = 8 + 8 + 32 + 1 + 1 + 1 + 1 + 32 + 8 + 8 + 1 + 1 + 1 + (32 * 100) + (1 * 10) + (1 * 10) + 1 + 8 + 8 + 8 + 1 + 8 + 1 + 32,
         seeds = [b"board", game_id.to_le_bytes().as_ref()],
         bump
     )]
@@ -312,6 +437,49 @@ pub struct PayoutWinner<'info> {
     pub system_program: Program<'info, System>,
 }
 
+#[derive(Accounts)]
+pub struct InitializeTreasury<'info> {
+    #[account(
+        init,
+        payer = authority,
+        space = 8 + 32 + 8 + 1,
+        seeds = [b"treasury"],
+        bump
+    )]
+    pub treasury: Account<'info, Treasury>,
+    #[account(mut)]
+    pub authority: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct BoostBoard<'info> {
+    #[account(
+        mut,
+        has_one = authority,
+    )]
+    pub board: Account<'info, Board>,
+    #[account(mut)]
+    pub authority: Signer<'info>,
+    #[account(
+        mut,
+        seeds = [b"treasury"],
+        bump
+    )]
+    pub treasury: Account<'info, Treasury>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct UpdateFillRate<'info> {
+    #[account(
+        mut,
+        has_one = authority,
+    )]
+    pub board: Account<'info, Board>,
+    pub authority: Signer<'info>,
+}
+
 #[account]
 pub struct Board {
     pub game_id: u64,
@@ -329,6 +497,22 @@ pub struct Board {
     pub squares: [Pubkey; 100],
     pub home_headers: [u8; 10],
     pub away_headers: [u8; 10],
+    pub bump: u8,
+    
+    // Board Boost fields
+    pub boost_amount: u64,        // Total SOL paid for boosts
+    pub boost_expires_at: i64,    // Unix timestamp when boost expires
+    pub created_at: i64,          // Board creation timestamp
+    pub visibility: BoardVisibility, // Public, InviteOnly, or VipOnly
+    pub price_per_square: u64,    // Price per square in lamports
+    pub fill_rate: u8,            // Cached fill percentage (0-100)
+    pub tags: [u8; 32],           // Searchable discovery tags
+}
+
+#[account]
+pub struct Treasury {
+    pub authority: Pubkey,
+    pub total_collected: u64,
     pub bump: u8,
 }
 
@@ -382,6 +566,19 @@ pub struct WinnerPaid {
     pub amount: u64,
 }
 
+#[event]
+pub struct TreasuryInitialized {
+    pub authority: Pubkey,
+}
+
+#[event]
+pub struct BoardBoosted {
+    pub game_id: u64,
+    pub boost_amount: u64,
+    pub expires_at: i64,
+    pub booster: Pubkey,
+}
+
 #[error_code]
 pub enum SquaresError {
     #[msg("Board has already been randomized")]
@@ -412,4 +609,6 @@ pub enum SquaresError {
     InvalidWinner,
     #[msg("Invalid score")]
     InvalidScore,
+    #[msg("Invalid boost duration")]
+    InvalidBoostDuration,
 }

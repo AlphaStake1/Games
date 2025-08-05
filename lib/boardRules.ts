@@ -13,30 +13,34 @@ export const BOARD_RULES = {
    */
   HOUSE_BOARDS: {
     /**
-     * NON-VIP HOUSE BOARDS
-     * - House has 5% margin (5% rake, no VIP bonus cost)
-     * - Can afford 5 empty squares maximum
+     * STANDARD HOUSE BOARDS (<$100 per square) - Anyone can play
+     * - House has 5% rake, VIP players get 5% bonus
+     * - House break-even risk if all quarters won by VIPs
      */
-    NON_VIP: {
+    STANDARD: {
+      PRICE_THRESHOLD: 100, // Under $100 per square
       MIN_FILL_PERCENTAGE: 95, // 95% minimum fill (95 squares sold)
       MAX_DEAD_SQUARES: 5, // 5 empty squares maximum
       RAKE_PERCENTAGE: 0.05, // 5% house rake
-      VIP_BONUS_COST: 0, // No VIP bonus to pay
-      NET_MARGIN_PERCENTAGE: 0.05, // 5% net margin
+      VIP_BONUS_PERCENTAGE: 0.05, // 5% VIP bonus
+      NET_MARGIN_PERCENTAGE: 0.05, // 5% base margin (break-even if all VIP wins)
+      VIP_ACCESS_REQUIRED: false, // Anyone can play
       GUARANTEES_FULL_PAYOUTS: true,
     },
 
     /**
-     * VIP HOUSE BOARDS
-     * - House has 3% margin (8% rake - 5% VIP bonus cost)
-     * - Can only afford 3 empty squares maximum
+     * PREMIUM HOUSE BOARDS ($100+ per square) - VIP-only access
+     * - House has 8% rake, VIP players get 5% bonus, House keeps 3%
+     * - Guaranteed 3% house margin
      */
-    VIP: {
+    PREMIUM: {
+      PRICE_THRESHOLD: 100, // $100+ per square
       MIN_FILL_PERCENTAGE: 97, // 97% minimum fill (97 squares sold)
       MAX_DEAD_SQUARES: 3, // 3 empty squares maximum
       RAKE_PERCENTAGE: 0.08, // 8% house rake
-      VIP_BONUS_COST: 0.05, // 5% VIP bonus cost
+      VIP_BONUS_PERCENTAGE: 0.05, // 5% VIP bonus
       NET_MARGIN_PERCENTAGE: 0.03, // 3% net margin (8% - 5%)
+      VIP_ACCESS_REQUIRED: true, // VIP players only
       GUARANTEES_FULL_PAYOUTS: true,
     },
   },
@@ -46,14 +50,38 @@ export const BOARD_RULES = {
    */
   COMMUNITY_BOARDS: {
     MIN_FILL_PERCENTAGE: 95, // 95% minimum fill for all community boards
-    TOTAL_RAKE_PERCENTAGE: 0.05, // 5% total rake on funds raised
 
     /**
-     * RAKE DISTRIBUTION (of the 5% total rake)
+     * NON-PREMIUM COMMUNITY BOARDS (<$50 per square)
      */
-    RAKE_SPLIT: {
-      CBL_PERCENTAGE: 0.03, // CBL gets 3% of total pool (60% of rake)
-      HOUSE_PERCENTAGE: 0.02, // House gets 2% of total pool (40% of rake)
+    NON_PREMIUM: {
+      PRICE_THRESHOLD: 50, // Under $50 per square
+      TOTAL_RAKE_PERCENTAGE: 0.05, // 5% total rake
+      CBL_PERCENTAGE: 0.03, // 3% to CBL
+      HOUSE_PERCENTAGE: 0.02, // 2% to House
+      VIP_BONUS_PERCENTAGE: 0.03, // 3% VIP bonus (paid from House portion)
+    },
+
+    /**
+     * PREMIUM MIXED COMMUNITY BOARDS ($50+ per square, VIP + non-VIP players)
+     */
+    PREMIUM_MIXED: {
+      PRICE_THRESHOLD: 50, // $50+ per square
+      TOTAL_RAKE_PERCENTAGE: 0.08, // 8% total rake
+      CBL_PERCENTAGE: 0.05, // 5% to CBL
+      HOUSE_PERCENTAGE: 0.03, // 3% to House
+      VIP_BONUS_PERCENTAGE: 0.03, // 3% VIP bonus (paid from House portion)
+    },
+
+    /**
+     * PREMIUM VIP-ONLY COMMUNITY BOARDS ($50+ per square, VIP players only)
+     */
+    PREMIUM_VIP_ONLY: {
+      PRICE_THRESHOLD: 50, // $50+ per square
+      TOTAL_RAKE_PERCENTAGE: 0.1, // 10% total rake
+      CBL_PERCENTAGE: 0.05, // 5% to CBL
+      HOUSE_PERCENTAGE: 0.02, // 2% to House
+      VIP_BONUS_PERCENTAGE: 0.03, // 3% VIP bonus (separate from House portion)
     },
 
     /**
@@ -104,10 +132,11 @@ export const BoardRuleValidation = {
   /**
    * Check if a House board configuration is valid
    */
-  isValidHouseBoardFill(squaresSold: number, isVIP: boolean): boolean {
-    const rules = isVIP
-      ? BOARD_RULES.HOUSE_BOARDS.VIP
-      : BOARD_RULES.HOUSE_BOARDS.NON_VIP;
+  isValidHouseBoardFill(squaresSold: number, pricePerSquare: number): boolean {
+    const rules =
+      pricePerSquare >= BOARD_RULES.HOUSE_BOARDS.PREMIUM.PRICE_THRESHOLD
+        ? BOARD_RULES.HOUSE_BOARDS.PREMIUM
+        : BOARD_RULES.HOUSE_BOARDS.STANDARD;
     const fillPercentage = squaresSold / 100;
     return fillPercentage >= rules.MIN_FILL_PERCENTAGE / 100;
   },
@@ -125,34 +154,68 @@ export const BoardRuleValidation = {
   /**
    * Get maximum allowed dead squares for House boards
    */
-  getMaxDeadSquares(isVIP: boolean): number {
-    return isVIP
-      ? BOARD_RULES.HOUSE_BOARDS.VIP.MAX_DEAD_SQUARES
-      : BOARD_RULES.HOUSE_BOARDS.NON_VIP.MAX_DEAD_SQUARES;
+  getMaxDeadSquares(pricePerSquare: number): number {
+    return pricePerSquare >= BOARD_RULES.HOUSE_BOARDS.PREMIUM.PRICE_THRESHOLD
+      ? BOARD_RULES.HOUSE_BOARDS.PREMIUM.MAX_DEAD_SQUARES
+      : BOARD_RULES.HOUSE_BOARDS.STANDARD.MAX_DEAD_SQUARES;
   },
 
   /**
    * Calculate House board net margin
    */
-  calculateHouseNetMargin(totalRevenue: number, isVIP: boolean): number {
-    const rules = isVIP
-      ? BOARD_RULES.HOUSE_BOARDS.VIP
-      : BOARD_RULES.HOUSE_BOARDS.NON_VIP;
+  calculateHouseNetMargin(
+    totalRevenue: number,
+    pricePerSquare: number,
+  ): number {
+    const rules =
+      pricePerSquare >= BOARD_RULES.HOUSE_BOARDS.PREMIUM.PRICE_THRESHOLD
+        ? BOARD_RULES.HOUSE_BOARDS.PREMIUM
+        : BOARD_RULES.HOUSE_BOARDS.STANDARD;
     return totalRevenue * rules.NET_MARGIN_PERCENTAGE;
+  },
+
+  /**
+   * Get Community board rake structure based on price and VIP access
+   */
+  getCommunityBoardRules(pricePerSquare: number, isVipOnly: boolean) {
+    if (
+      pricePerSquare < BOARD_RULES.COMMUNITY_BOARDS.NON_PREMIUM.PRICE_THRESHOLD
+    ) {
+      return BOARD_RULES.COMMUNITY_BOARDS.NON_PREMIUM;
+    }
+    return isVipOnly
+      ? BOARD_RULES.COMMUNITY_BOARDS.PREMIUM_VIP_ONLY
+      : BOARD_RULES.COMMUNITY_BOARDS.PREMIUM_MIXED;
+  },
+
+  /**
+   * Check if House board requires VIP access
+   */
+  requiresVipAccess(pricePerSquare: number, isHouseBoard: boolean): boolean {
+    if (!isHouseBoard) return false;
+    return pricePerSquare >= BOARD_RULES.HOUSE_BOARDS.PREMIUM.PRICE_THRESHOLD;
   },
 };
 
 /**
  * AGENT QUICK REFERENCE EXAMPLES
  *
- * // Check VIP house board fill requirement
- * if (squaresSold < BOARD_RULES.HOUSE_BOARDS.VIP.MIN_FILL_PERCENTAGE) {
- *   throw new Error('VIP House boards require 97% fill minimum');
- * }
+ * // Check if House board requires VIP access
+ * const requiresVip = BoardRuleValidation.requiresVipAccess(pricePerSquare, true);
  *
- * // Calculate community board rake
- * const cblShare = fundsRaised * BOARD_RULES.COMMUNITY_BOARDS.RAKE_SPLIT.CBL_PERCENTAGE;
+ * // Get Community board rake structure
+ * const rules = BoardRuleValidation.getCommunityBoardRules(pricePerSquare, isVipOnly);
+ * const cblShare = fundsRaised * rules.CBL_PERCENTAGE;
+ * const houseShare = fundsRaised * rules.HOUSE_PERCENTAGE;
+ *
+ * // Check premium house board fill requirement
+ * if (pricePerSquare >= 100 && squaresSold < BOARD_RULES.HOUSE_BOARDS.PREMIUM.MIN_FILL_PERCENTAGE) {
+ *   throw new Error('Premium House boards require 97% fill minimum');
+ * }
  *
  * // Get Q4 payout percentage
  * const q4Payout = playerPool * BOARD_RULES.COMMUNITY_BOARDS.QUARTER_SPLITS.Q4;
+ *
+ * // Calculate VIP bonus for House boards
+ * const vipBonus = winAmount * BOARD_RULES.HOUSE_BOARDS.STANDARD.VIP_BONUS_PERCENTAGE;
  */

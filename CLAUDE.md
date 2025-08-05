@@ -12,7 +12,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 2. **Check `TASK.md`** – if your task isn't listed, add it with a date & one-line description.
 3. **Consult `/research/*`** – scrape pages live only if documentation is missing there.
 4. **Sacred truths**
-   - Primary orchestrator model: `claude-sonnet-4-20250514`.
+   - Primary orchestrator model: `claude-opus-4-20241218` (for building larger tasks).
+   - Supporting Claude model: `claude-sonnet-4-20250514` (for focused tasks).
    - Supporting OpenAI model: `gpt-4.1`. **Never rename or swap models.**
    - CRON / scheduler = **Clockwork**.
    - Email = **Proton Mail + Proton VPN/Bridge**.

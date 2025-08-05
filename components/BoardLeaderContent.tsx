@@ -217,7 +217,7 @@ const BoardLeaderContent = () => {
                     sold
                   </TableCell>
                   <TableCell className="text-gray-600 dark:text-gray-400">
-                    3% rake + 1.5× Blue Point multiplier over Drive Maker rate •
+                    5% rake + 1.5× Blue Point multiplier over Drive Maker rate •
                     merch • Orange Point accrual per board
                   </TableCell>
                 </TableRow>
@@ -304,7 +304,7 @@ const BoardLeaderContent = () => {
                   No limit
                 </TableCell>
                 <TableCell className="text-gray-600 dark:text-gray-400">
-                  1.5× Blue‑Points • merch
+                  5% rake • 1.5× Blue‑Points • merch
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -376,7 +376,8 @@ const BoardLeaderContent = () => {
               </h3>
               <ul className="space-y-2 text-blue-900 dark:text-blue-100">
                 <li>
-                  • <strong>3% rake</strong>: From boards you create
+                  • <strong>3-5% rake</strong>: From boards you create (tier
+                  dependent)
                 </li>
                 <li>
                   • <strong>30% NFT commission</strong>: From players you
