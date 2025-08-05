@@ -268,7 +268,6 @@ function CBLDashboard() {
 
   const cblTier = getCBLTier();
 
-
   const playersList: PlayerInfo[] = [
     {
       id: 'player-001',
@@ -548,60 +547,75 @@ function CBLDashboard() {
               </div>
 
               {/* Action Buttons - Player View shows period toggle, CBL View doesn't */}
-              <div className="flex items-center space-x-2">
-                {/* Period Toggle - Only for Player View */}
-                {isPlayerView && (
-                  <div className="flex items-center space-x-1 p-1 rounded-lg bg-gradient-to-r from-blue-100 to-green-100 dark:from-blue-900/30 dark:to-green-900/30 border-2 border-blue-200 dark:border-blue-700">
-                    <button
-                      onClick={() => setDashboardPeriod('weekly')}
-                      className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
-                        dashboardPeriod === 'weekly'
-                          ? 'bg-blue-500 text-white shadow-lg transform scale-105'
-                          : 'text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800/50'
-                      }`}
-                    >
-                      💰 Weekly
-                    </button>
-                    <button
-                      onClick={() => setDashboardPeriod('seasonal')}
-                      className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
-                        dashboardPeriod === 'seasonal'
-                          ? 'bg-green-500 text-white shadow-lg transform scale-105'
-                          : 'text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800/50'
-                      }`}
-                    >
-                      🏆 Seasonal
-                    </button>
-                  </div>
+              <div className="flex items-center space-x-4">
+                {/* Prominent Create Board Button - Only visible in CBL View */}
+                {!isPlayerView && (
+                  <Button
+                    size="lg"
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-0"
+                    onClick={() => (window.location.href = '/cbl/create-board')}
+                  >
+                    <Plus className="h-5 w-5 mr-2" />
+                    Create Board
+                  </Button>
                 )}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={refreshData}
-                  disabled={loading}
-                  className={
-                    isPlayerView
-                      ? 'border-emerald-300 hover:bg-emerald-50 dark:border-emerald-700 dark:hover:bg-emerald-900/20'
-                      : 'border-purple-300 hover:bg-purple-50 dark:border-purple-700 dark:hover:bg-purple-900/20'
-                  }
-                >
-                  <RefreshCw
-                    className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`}
-                  />
-                  Refresh
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className={
-                    isPlayerView
-                      ? 'border-emerald-300 hover:bg-emerald-50 dark:border-emerald-700 dark:hover:bg-emerald-900/20'
-                      : 'border-purple-300 hover:bg-purple-50 dark:border-purple-700 dark:hover:bg-purple-900/20'
-                  }
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Export
-                </Button>
+
+                {/* Secondary Action Buttons */}
+                <div className="flex items-center space-x-2">
+                  {/* Period Toggle - Only for Player View */}
+                  {isPlayerView && (
+                    <div className="flex items-center space-x-1 p-1 rounded-lg bg-gradient-to-r from-blue-100 to-green-100 dark:from-blue-900/30 dark:to-green-900/30 border-2 border-blue-200 dark:border-blue-700">
+                      <button
+                        onClick={() => setDashboardPeriod('weekly')}
+                        className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
+                          dashboardPeriod === 'weekly'
+                            ? 'bg-blue-500 text-white shadow-lg transform scale-105'
+                            : 'text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800/50'
+                        }`}
+                      >
+                        💰 Weekly
+                      </button>
+                      <button
+                        onClick={() => setDashboardPeriod('seasonal')}
+                        className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
+                          dashboardPeriod === 'seasonal'
+                            ? 'bg-green-500 text-white shadow-lg transform scale-105'
+                            : 'text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800/50'
+                        }`}
+                      >
+                        🏆 Seasonal
+                      </button>
+                    </div>
+                  )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={refreshData}
+                    disabled={loading}
+                    className={
+                      isPlayerView
+                        ? 'border-emerald-300 hover:bg-emerald-50 dark:border-emerald-700 dark:hover:bg-emerald-900/20'
+                        : 'border-purple-300 hover:bg-purple-50 dark:border-purple-700 dark:hover:bg-purple-900/20'
+                    }
+                  >
+                    <RefreshCw
+                      className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`}
+                    />
+                    Refresh
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={
+                      isPlayerView
+                        ? 'border-emerald-300 hover:bg-emerald-50 dark:border-emerald-700 dark:hover:bg-emerald-900/20'
+                        : 'border-purple-300 hover:bg-purple-50 dark:border-purple-700 dark:hover:bg-purple-900/20'
+                    }
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Export
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -1213,7 +1227,6 @@ function CBLDashboard() {
                     </CardContent>
                   </Card>
                 </div>
-
               </>
             )}
           </TabsContent>
@@ -1483,7 +1496,6 @@ function CBLDashboard() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
-
                   {/* Global Settings */}
                   <div className="grid md:grid-cols-3 gap-4">
                     <div>
@@ -1678,7 +1690,6 @@ function CBLDashboard() {
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
 
@@ -1730,10 +1741,8 @@ function CBLDashboard() {
                   </Alert>
                 </CardContent>
               </Card>
-
             </TabsContent>
           )}
-
 
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-6">
@@ -2419,7 +2428,7 @@ function CBLDashboard() {
                                       <SelectValue placeholder="Select 3rd team" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                       <SelectItem value="broncos">
+                                      <SelectItem value="broncos">
                                         Denver Broncos
                                       </SelectItem>
                                       <SelectItem value="chiefs">
