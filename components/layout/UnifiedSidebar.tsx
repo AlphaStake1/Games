@@ -202,6 +202,7 @@ export default function UnifiedSidebar() {
               width={40}
               height={40}
               className="object-contain"
+              style={{ height: 'auto' }}
             />
             {!isCollapsed && (
               <span className="text-lg font-bold text-gray-900 dark:text-white">
@@ -259,11 +260,22 @@ export default function UnifiedSidebar() {
         <nav className="flex-1 overflow-y-auto p-4 space-y-6">
           {/* Main Navigation */}
           <div>
-            {!isCollapsed && (
-              <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-                Main
-              </h3>
-            )}
+            <div className="flex items-center justify-between mb-2">
+              {!isCollapsed && (
+                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  Main
+                </h3>
+              )}
+              {isCollapsed && (
+                <button
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                  className="hidden lg:block p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700"
+                  title="Expand sidebar"
+                >
+                  <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                </button>
+              )}
+            </div>
             <div className="space-y-1">
               {mainNavItems.map((item) => (
                 <Link
@@ -372,17 +384,15 @@ export default function UnifiedSidebar() {
           {/* Theme Toggle & Collapse */}
           <div className="p-4 flex items-center justify-between">
             <ThemeToggle />
-            <button
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              className="hidden lg:block p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-              title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            >
-              {isCollapsed ? (
-                <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-              ) : (
+            {!isCollapsed && (
+              <button
+                onClick={() => setIsCollapsed(!isCollapsed)}
+                className="hidden lg:block p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                title="Collapse sidebar"
+              >
                 <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-              )}
-            </button>
+              </button>
+            )}
           </div>
 
           {/* Footer Links - Only visible when expanded */}
