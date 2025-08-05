@@ -53,13 +53,13 @@ const RewardsSystemPage = () => {
       vipOnly: false,
       limit: '3 boards/week',
     },
-    { tier: '1', price: '$5', points: '150', vipOnly: false },
-    { tier: '2', price: '$10', points: '200', vipOnly: false },
-    { tier: '3', price: '$20', points: '400', vipOnly: false },
-    { tier: '4', price: '$50', points: '600', vipOnly: false },
-    { tier: '5', price: '$100', points: '1,000', vipOnly: true },
-    { tier: '6', price: '$250', points: '1,500', vipOnly: true },
-    { tier: '7', price: '$500+', points: '2,000', vipOnly: true },
+    { tier: '1', price: '$1 - $5', points: '150', vipOnly: false },
+    { tier: '2', price: '$6 - $10', points: '200', vipOnly: false },
+    { tier: '3', price: '$11 - $20', points: '400', vipOnly: false },
+    { tier: '4', price: '$21 - $50', points: '600', vipOnly: false },
+    { tier: '5', price: '$51 - $100', points: '1,000', vipOnly: true },
+    { tier: '6', price: '$101 - $250', points: '1,500', vipOnly: true },
+    { tier: '7', price: '$251+', points: '2,000', vipOnly: true },
   ];
 
   const orangePointActivities = [
@@ -327,7 +327,6 @@ const RewardsSystemPage = () => {
                       <TableHead>Board Price</TableHead>
                       <TableHead>Points per Square</TableHead>
                       <TableHead>Access</TableHead>
-                      <TableHead>Notes</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -353,9 +352,6 @@ const RewardsSystemPage = () => {
                           ) : (
                             <Badge variant="outline">All Players</Badge>
                           )}
-                        </TableCell>
-                        <TableCell className="text-sm text-gray-600">
-                          {tier.limit || '—'}
                         </TableCell>
                       </TableRow>
                     ))}
