@@ -19,6 +19,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CBLActivityNotifications from '@/components/CBLActivityNotifications';
+import { BoardBoostModal } from '@/components/BoardBoostModal';
+import { useBoardBoost } from '@/lib/services/boardBoostService';
 import {
   Select,
   SelectContent,
@@ -28,6 +30,10 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Checkbox } from '@/components/ui/checkbox';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Separator } from '@/components/ui/separator';
 import InfoTooltip from '@/components/InfoTooltip';
 import {
   Users,
@@ -62,6 +68,11 @@ import {
   Zap,
   Gamepad2,
   Briefcase,
+  Home,
+  Crown,
+  Bot,
+  MessageCircle,
+  Info,
   Play,
   Pause,
 } from 'lucide-react';
@@ -180,6 +191,9 @@ function CBLDashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [isPlayerView, setIsPlayerView] = useState(false);
+  const [isBoostModalOpen, setIsBoostModalOpen] = useState(false);
+  const [selectedBoardForBoost, setSelectedBoardForBoost] = useState<any>(null);
+  const { boostBoard, getBoardBoostInfo, isReady } = useBoardBoost();
   const [timeFilter, setTimeFilter] = useState('all'); // for player view
   const [dashboardPeriod, setDashboardPeriod] = useState<'weekly' | 'seasonal'>(
     'weekly',
@@ -237,42 +251,23 @@ function CBLDashboard() {
       ? dashboardStatsWeekly
       : dashboardStatsSeasonal;
 
-  const activeBoards: BoardInfo[] = [
-    {
-      id: 'board-001',
-      name: 'NFL Week 15 - Championship Board',
-      gameId: 'week15-eagles-cowboys',
-      gameDate: new Date('2024-12-22T20:00:00'),
-      homeTeam: 'Cowboys',
-      awayTeam: 'Eagles',
-      players: 89,
-      maxPlayers: 100,
-      entryFee: 50,
-      status: 'active',
-      prizePool: 4500,
-      createdAt: new Date('2024-12-15T10:00:00'),
-      fillRate: 89,
-      revenue: 4450,
-      playersData: [],
-    },
-    {
-      id: 'board-002',
-      name: 'Monday Night Special',
-      gameId: 'week15-chiefs-bills',
-      gameDate: new Date('2024-12-23T20:00:00'),
-      homeTeam: 'Bills',
-      awayTeam: 'Chiefs',
-      players: 34,
-      maxPlayers: 50,
-      entryFee: 25,
-      status: 'filling',
-      prizePool: 850,
-      createdAt: new Date('2024-12-18T14:00:00'),
-      fillRate: 68,
-      revenue: 850,
-      playersData: [],
-    },
-  ];
+  // CBL Tier Detection Logic
+  const getCBLTier = () => {
+    const totalBoards = dashboardStatsSeasonal.activeBoards;
+    const totalRevenue = dashboardStatsSeasonal.revenueGenerated;
+
+    // Mock logic based on performance metrics
+    if (totalBoards >= 50 || totalRevenue >= 10000) {
+      return 'franchise';
+    } else if (totalBoards >= 10 || totalRevenue >= 2000) {
+      return 'drive-maker';
+    } else {
+      return 'first-stream';
+    }
+  };
+
+  const cblTier = getCBLTier();
+
 
   const playersList: PlayerInfo[] = [
     {
@@ -285,7 +280,7 @@ function CBLDashboard() {
       joinDate: new Date('2024-10-15'),
       status: 'active',
       tier: 'vip',
-      favoriteTeams: ['Eagles', 'Cowboys'],
+      favoriteTeams: ['Broncos', 'Chiefs', 'Raiders'],
       lastActivity: new Date('2024-12-20'),
     },
     {
@@ -298,7 +293,7 @@ function CBLDashboard() {
       joinDate: new Date('2024-11-20'),
       status: 'active',
       tier: 'regular',
-      favoriteTeams: ['Chiefs', 'Bills'],
+      favoriteTeams: ['Broncos', 'Chiefs', 'Raiders'],
       lastActivity: new Date('2024-12-19'),
     },
   ];
@@ -328,7 +323,7 @@ function CBLDashboard() {
     winRate: 33.3,
     profitLoss: 160,
     averagePositionsPerGame: 4.0,
-    favoriteTeams: ['Eagles', 'Cowboys', 'Chiefs'],
+    favoriteTeams: ['Broncos', 'Chiefs', 'Raiders'],
     bestPerformingTier: '$20 Entry',
     currentStreak: { type: 'win', count: 2 },
     bluePoints: 717,
@@ -344,7 +339,7 @@ function CBLDashboard() {
     winRate: 28.5,
     profitLoss: 0, // No dollar tracking for seasonal
     averagePositionsPerGame: 3.9,
-    favoriteTeams: ['Eagles', 'Cowboys', 'Chiefs'],
+    favoriteTeams: ['Broncos', 'Chiefs', 'Raiders'],
     bestPerformingTier: 'Full Season Player',
     currentStreak: { type: 'win', count: 3 },
     bluePoints: 717,
@@ -618,7 +613,7 @@ function CBLDashboard() {
           className="space-y-6"
         >
           <TabsList
-            className={`grid w-full ${isPlayerView ? 'grid-cols-5' : 'grid-cols-6'}`}
+            className={`grid w-full ${isPlayerView ? 'grid-cols-5' : 'grid-cols-5'}`}
           >
             <TabsTrigger value="overview">Overview</TabsTrigger>
             {isPlayerView ? (
@@ -631,7 +626,6 @@ function CBLDashboard() {
             ) : (
               <>
                 <TabsTrigger value="boards">Boards</TabsTrigger>
-                <TabsTrigger value="players">Players</TabsTrigger>
                 <TabsTrigger value="analytics">Analytics</TabsTrigger>
                 <TabsTrigger value="communications">Communications</TabsTrigger>
                 <TabsTrigger value="settings">Settings</TabsTrigger>
@@ -971,7 +965,6 @@ function CBLDashboard() {
                       <CardTitle className="text-sm font-medium">
                         Active Boards
                       </CardTitle>
-                      <Trophy className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold">
@@ -988,7 +981,6 @@ function CBLDashboard() {
                       <CardTitle className="text-sm font-medium">
                         Total Players
                       </CardTitle>
-                      <Users className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold">
@@ -1012,7 +1004,6 @@ function CBLDashboard() {
                           playbookLink="/docs/cbl-playbook#price-floor-quick-look"
                         />
                       </div>
-                      <DollarSign className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold">
@@ -1036,7 +1027,6 @@ function CBLDashboard() {
                           playbookLink="/docs/cbl-playbook#wallet-cap-optimization"
                         />
                       </div>
-                      <TrendingUp className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold">
@@ -1061,7 +1051,6 @@ function CBLDashboard() {
                           playbookLink="/docs/cbl-playbook#blue-point-system"
                         />
                       </div>
-                      <div className="h-4 w-4 bg-blue-600 rounded-full" />
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold text-blue-600">
@@ -1088,7 +1077,6 @@ function CBLDashboard() {
                           playbookLink="/docs/cbl-playbook#green-point-system"
                         />
                       </div>
-                      <div className="h-4 w-4 bg-green-600 rounded-full" />
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold text-green-600">
@@ -1098,9 +1086,7 @@ function CBLDashboard() {
                         })}
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        {dashboardPeriod === 'weekly'
-                          ? 'This week'
-                          : 'Season total'}
+                        Season total
                       </p>
                     </CardContent>
                   </Card>
@@ -1118,7 +1104,6 @@ function CBLDashboard() {
                           playbookLink="/docs/cbl-playbook#orange-point-system"
                         />
                       </div>
-                      <div className="h-4 w-4 bg-orange-600 rounded-full" />
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold text-orange-600">
@@ -1229,78 +1214,6 @@ function CBLDashboard() {
                   </Card>
                 </div>
 
-                {/* Active Boards Summary */}
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <div className="flex items-center">
-                      <CardTitle>Active Boards</CardTitle>
-                      <InfoTooltip
-                        title="Blue-Point Performance Meter"
-                        description="The Blue-Point meter tracks your board's engagement and completion rates. Higher scores indicate better player retention and satisfaction, leading to increased rewards and community growth opportunities."
-                        playbookLink="/docs/cbl-playbook#blue-point-optimization"
-                      />
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button onClick={() => setActiveTab('boards')}>
-                        <Plus className="h-4 w-4 mr-2" />
-                        Create New Board
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setActiveTab('boards')}
-                      >
-                        <Calendar className="h-4 w-4 mr-2" />
-                        Schedule Boards
-                      </Button>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {activeBoards.map((board) => (
-                        <div
-                          key={board.id}
-                          className="flex items-center justify-between p-4 border rounded-lg"
-                        >
-                          <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
-                              <h4 className="font-medium">{board.name}</h4>
-                              <Badge
-                                variant={
-                                  board.status === 'active'
-                                    ? 'default'
-                                    : 'secondary'
-                                }
-                              >
-                                {board.status}
-                              </Badge>
-                            </div>
-                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                              <span>
-                                {board.players}/{board.maxPlayers} players
-                              </span>
-                              <span>${board.entryFee} entry</span>
-                              <span>
-                                ${board.prizePool.toLocaleString()} prize pool
-                              </span>
-                            </div>
-                            <Progress
-                              value={(board.players / board.maxPlayers) * 100}
-                              className="w-48"
-                            />
-                          </div>
-                          <div className="flex space-x-2">
-                            <Button variant="outline" size="sm">
-                              <Settings className="h-4 w-4" />
-                            </Button>
-                            <Button variant="outline" size="sm">
-                              <BarChart3 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
               </>
             )}
           </TabsContent>
@@ -1542,26 +1455,57 @@ function CBLDashboard() {
                     <Calendar className="h-4 w-4 mr-2" />
                     Templates
                   </Button>
-                  <Button>
+                  <Button
+                    onClick={() => (window.location.href = '/cbl/create-board')}
+                  >
                     <Plus className="h-4 w-4 mr-2" />
                     Create New Board
                   </Button>
                 </div>
               </div>
 
-              {/* Board Scheduling Widget */}
+              {/* Enhanced Board Scheduling Widget */}
               <Card className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20 border-purple-200 dark:border-purple-800">
                 <CardHeader>
-                  <CardTitle className="flex items-center text-purple-800 dark:text-purple-200">
-                    <Calendar className="h-5 w-5 mr-2" />
-                    Weekly Board Scheduler
+                  <CardTitle className="flex items-center justify-between text-purple-800 dark:text-purple-200">
+                    <div className="flex items-center">
+                      <Calendar className="h-5 w-5 mr-2" />
+                      Schedule Future Boards
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Badge variant="outline" className="text-xs">
+                        3 Boards Scheduled
+                      </Badge>
+                      <Button variant="ghost" size="sm">
+                        <Settings className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-6">
+
+                  {/* Global Settings */}
                   <div className="grid md:grid-cols-3 gap-4">
                     <div>
                       <Label className="text-sm font-medium">
-                        Auto-Release Time
+                        Default Release Day
+                      </Label>
+                      <Select defaultValue="sunday">
+                        <SelectTrigger className="text-sm">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="thursday">Thursday</SelectItem>
+                          <SelectItem value="friday">Friday</SelectItem>
+                          <SelectItem value="saturday">Saturday</SelectItem>
+                          <SelectItem value="sunday">Sunday</SelectItem>
+                          <SelectItem value="monday">Monday</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label className="text-sm font-medium">
+                        Release Time
                       </Label>
                       <div className="flex items-center space-x-2 mt-1">
                         <Input
@@ -1570,312 +1514,226 @@ function CBLDashboard() {
                           className="text-sm"
                         />
                         <span className="text-xs text-muted-foreground">
-                          Sunday
+                          EST
                         </span>
                       </div>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium">Template</Label>
-                      <Select defaultValue="last-week">
+                      <Label className="text-sm font-medium">
+                        Days Before Game
+                      </Label>
+                      <Select defaultValue="3">
                         <SelectTrigger className="text-sm">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="last-week">
-                            Use Last Week's Settings
-                          </SelectItem>
-                          <SelectItem value="custom">
-                            Custom Template
-                          </SelectItem>
-                          <SelectItem value="season-default">
-                            Season Default
-                          </SelectItem>
+                          <SelectItem value="1">1 day</SelectItem>
+                          <SelectItem value="2">2 days</SelectItem>
+                          <SelectItem value="3">3 days</SelectItem>
+                          <SelectItem value="5">5 days</SelectItem>
+                          <SelectItem value="7">1 week</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="flex items-end">
-                      <Button className="w-full bg-purple-600 hover:bg-purple-700">
-                        <Clock className="h-4 w-4 mr-2" />
-                        Schedule Auto-Release
+                  </div>
+
+                  <Separator />
+
+                  {/* Individual Game Controls */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <Label className="text-base font-semibold">
+                        Week 16 Games (Dec 29 - Jan 2)
+                      </Label>
+                      <Button variant="outline" size="sm">
+                        <Filter className="h-4 w-4 mr-2" />
+                        Filter Games
                       </Button>
                     </div>
-                  </div>
-                  <div className="mt-4 p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
-                    <p className="text-sm text-purple-800 dark:text-purple-200">
-                      📅 <strong>Next auto-release:</strong> Sunday, Dec 29 at
-                      10:00 AM
-                      <span className="ml-2 text-xs">
-                        <button className="text-purple-600 hover:underline">
-                          Edit
-                        </button>{' '}
-                        |
-                        <button className="text-purple-600 hover:underline ml-1">
-                          Cancel
-                        </button>
-                      </span>
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
 
-              <div className="grid gap-6">
-                {activeBoards.map((board) => (
-                  <Card key={board.id}>
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-1">
-                          <CardTitle className="flex items-center">
-                            <div>{board.name}</div>
-                            <Badge
-                              variant={
-                                board.status === 'active'
-                                  ? 'default'
-                                  : 'secondary'
-                              }
-                              className="ml-2"
-                            >
-                              {board.status}
-                            </Badge>
-                          </CardTitle>
-                          <div className="text-sm text-muted-foreground">
-                            {board.homeTeam} vs {board.awayTeam} •{' '}
-                            {board.gameDate.toLocaleDateString()}
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Button variant="outline" size="sm">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid md:grid-cols-4 gap-6">
-                        <div>
-                          <h4 className="font-medium mb-2">Participation</h4>
-                          <div className="space-y-2">
-                            <div className="flex justify-between text-sm">
-                              <span>Players:</span>
-                              <span className="font-medium">
-                                {board.players}/{board.maxPlayers}
-                              </span>
-                            </div>
-                            <Progress value={board.fillRate} className="h-2" />
-                            <div className="text-xs text-muted-foreground">
-                              {board.fillRate}% filled
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="font-medium mb-2">Financials</h4>
-                          <div className="space-y-1 text-sm">
-                            <div className="flex justify-between">
-                              <span>Entry Fee:</span>
-                              <span className="font-medium">
-                                ${board.entryFee}
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>Prize Pool:</span>
-                              <span className="font-medium">
-                                ${board.prizePool}
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>Your Revenue:</span>
-                              <span className="font-medium text-green-600">
-                                ${board.revenue * 0.1}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="font-medium mb-2">Timeline</h4>
-                          <div className="space-y-1 text-sm">
-                            <div className="flex justify-between">
-                              <span>Created:</span>
-                              <span>
-                                {board.createdAt.toLocaleDateString()}
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>Game Date:</span>
-                              <span>{board.gameDate.toLocaleDateString()}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>Status:</span>
-                              <span className="capitalize">{board.status}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="font-medium mb-2">Actions</h4>
-                          <div className="space-y-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="w-full"
-                            >
-                              <MessageSquare className="h-4 w-4 mr-2" />
-                              Message Players
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="w-full"
-                            >
-                              <BarChart3 className="h-4 w-4 mr-2" />
-                              View Analytics
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          )}
-
-          {/* Players Management Tab - CBL View Only */}
-          {!isPlayerView && (
-            <TabsContent value="players" className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Player Management</h2>
-                <div className="flex items-center space-x-2">
-                  <div className="relative">
-                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Search players..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-8"
-                    />
-                  </div>
-                  <Select value={filterStatus} onValueChange={setFilterStatus}>
-                    <SelectTrigger className="w-32">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Status</SelectItem>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="inactive">Inactive</SelectItem>
-                      <SelectItem value="banned">Banned</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button variant="outline" size="sm">
-                    <UserPlus className="h-4 w-4 mr-2" />
-                    Invite Players
-                  </Button>
-                </div>
-              </div>
-
-              <Card>
-                <CardContent className="p-0">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Player</TableHead>
-                        <TableHead>Wallet</TableHead>
-                        <TableHead>Games</TableHead>
-                        <TableHead>Spent</TableHead>
-                        <TableHead>Won</TableHead>
-                        <TableHead>Net</TableHead>
-                        <TableHead>Tier</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {playersList.map((player) => (
-                        <TableRow key={player.id}>
-                          <TableCell>
-                            <div className="flex items-center space-x-2">
-                              <Avatar className="h-8 w-8">
-                                <AvatarFallback>
-                                  {player.username.slice(0, 2)}
-                                </AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <div className="font-medium">
-                                  {player.username}
+                    <div className="space-y-3 max-h-80 overflow-y-auto">
+                      {/* Game 1 - Scheduled */}
+                      <div className="p-4 border rounded-lg bg-white dark:bg-gray-900 transition-all">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-start space-x-3 flex-1">
+                            <Switch
+                              id="game-1"
+                              defaultChecked
+                              className="mt-1 data-[state=checked]:bg-green-600"
+                            />
+                            <div className="flex-1">
+                              <Label
+                                htmlFor="game-1"
+                                className="cursor-pointer"
+                              >
+                                <div className="font-semibold">
+                                  Chiefs @ Raiders
                                 </div>
                                 <div className="text-sm text-muted-foreground">
-                                  Joined {player.joinDate.toLocaleDateString()}
+                                  Sunday, 4:25 PM EST • Rivalry Game
+                                </div>
+                              </Label>
+                              <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3">
+                                <div>
+                                  <Label className="text-xs">Board Type</Label>
+                                  <Select defaultValue="both">
+                                    <SelectTrigger className="h-8 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="forwards">
+                                        Forwards Only
+                                      </SelectItem>
+                                      <SelectItem value="both">
+                                        F & B
+                                      </SelectItem>
+                                      <SelectItem value="all">
+                                        All Types
+                                      </SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div>
+                                  <Label className="text-xs">Price Tier</Label>
+                                  <Select defaultValue="20-50">
+                                    <SelectTrigger className="h-8 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="10">$10</SelectItem>
+                                      <SelectItem value="20">$20</SelectItem>
+                                      <SelectItem value="20-50">
+                                        $20 + $50
+                                      </SelectItem>
+                                      <SelectItem value="50-100">
+                                        $50 + $100
+                                      </SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div>
+                                  <Label className="text-xs">Release</Label>
+                                  <Select defaultValue="default">
+                                    <SelectTrigger className="h-8 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="default">
+                                        Default (3d)
+                                      </SelectItem>
+                                      <SelectItem value="1d">
+                                        1 day before
+                                      </SelectItem>
+                                      <SelectItem value="5d">
+                                        5 days before
+                                      </SelectItem>
+                                      <SelectItem value="7d">
+                                        1 week before
+                                      </SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div className="flex items-end">
+                                  <div className="flex items-center space-x-1">
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => {
+                                        setSelectedBoardForBoost({
+                                          id: `chiefs-raiders-${Date.now()}`,
+                                          name: 'Chiefs @ Raiders',
+                                          gameInfo:
+                                            'Sunday, 4:25 PM EST • Rivalry Game',
+                                          entryFee: 20,
+                                          currentFillRate: 0,
+                                          playersCount: 0,
+                                          maxPlayers: 100,
+                                          gameDate: new Date('2024-12-29'),
+                                          isVipOnly: false,
+                                        });
+                                        setIsBoostModalOpen(true);
+                                      }}
+                                      className="h-6 px-2 text-xs bg-purple-50 hover:bg-purple-100 text-purple-700 border-purple-300"
+                                    >
+                                      <Zap className="h-3 w-3 mr-1" />
+                                      Boost
+                                    </Button>
+                                    <InfoTooltip
+                                      title="Board Boost"
+                                      description="Pay to promote this board in the discovery feed and attract more players. Boosted boards appear at the top of search results."
+                                      playbookLink="/docs/cbl-playbook#board-boost"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </TableCell>
-                          <TableCell className="font-mono text-xs">
-                            {player.walletAddress.slice(0, 8)}...
-                            {player.walletAddress.slice(-4)}
-                          </TableCell>
-                          <TableCell>{player.gamesPlayed}</TableCell>
-                          <TableCell>${player.totalSpent}</TableCell>
-                          <TableCell className="text-green-600">
-                            ${player.totalWon}
-                          </TableCell>
-                          <TableCell
-                            className={
-                              player.totalWon - player.totalSpent >= 0
-                                ? 'text-green-600'
-                                : 'text-red-600'
-                            }
-                          >
-                            {player.totalWon - player.totalSpent >= 0
-                              ? '+'
-                              : ''}
-                            ${player.totalWon - player.totalSpent}
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant={
-                                player.tier === 'vip' ? 'default' : 'secondary'
-                              }
-                            >
-                              {player.tier}
+                          </div>
+                          <div className="ml-4 text-right">
+                            <Badge className="bg-green-100 text-green-800">
+                              Scheduled
                             </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant={
-                                player.status === 'active'
-                                  ? 'default'
-                                  : player.status === 'inactive'
-                                    ? 'secondary'
-                                    : 'destructive'
-                              }
-                            >
-                              {player.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center space-x-1">
-                              <Button variant="ghost" size="sm">
-                                <Mail className="h-4 w-4" />
-                              </Button>
-                              <Button variant="ghost" size="sm">
-                                <Eye className="h-4 w-4" />
-                              </Button>
-                              <Button variant="ghost" size="sm">
-                                <MoreHorizontal className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              Release: Dec 26
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Quick Actions */}
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium">Quick Actions</p>
+                      <p className="text-xs text-muted-foreground">
+                        Apply settings to multiple games at once
+                      </p>
+                    </div>
+                    <div className="flex space-x-2">
+                      <Button variant="outline" size="sm">
+                        <Play className="h-4 w-4 mr-2" />
+                        Schedule All
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <Pause className="h-4 w-4 mr-2" />
+                        Pause All
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        Use Template
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Status Summary */}
+                  <Alert>
+                    <CheckCircle className="h-4 w-4" />
+                    <AlertTitle>Schedule Summary</AlertTitle>
+                    <AlertDescription>
+                      <div className="mt-2 space-y-1">
+                        <p>
+                          • <strong>3 boards</strong> scheduled for auto-release
+                          this week
+                        </p>
+                        <p>
+                          • <strong>1 board</strong> has promotional boost
+                          active
+                        </p>
+                        <p>
+                          • Next release:{' '}
+                          <strong>Thursday, Dec 26 at 10:00 AM EST</strong>
+                        </p>
+                      </div>
+                    </AlertDescription>
+                  </Alert>
                 </CardContent>
               </Card>
+
             </TabsContent>
           )}
+
 
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-6">
@@ -2176,21 +2034,8 @@ function CBLDashboard() {
                           <SelectItem value="board">
                             Specific Board Players
                           </SelectItem>
-                          <SelectItem value="telegram">
-                            Telegram Community
-                          </SelectItem>
                         </SelectContent>
                       </Select>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id="send-telegram"
-                        className="rounded"
-                      />
-                      <Label htmlFor="send-telegram" className="text-sm">
-                        Also send to Telegram via OC Phil
-                      </Label>
                     </div>
                     <Button className="w-full">
                       <Send className="h-4 w-4 mr-2" />
@@ -2263,18 +2108,6 @@ function CBLDashboard() {
                           </span>
                           <Switch defaultChecked />
                         </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm">
-                            Weekly digest summaries
-                          </span>
-                          <Switch defaultChecked />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm">
-                            Strategy tips from OC Phil
-                          </span>
-                          <Switch />
-                        </div>
                       </div>
                     </div>
 
@@ -2297,19 +2130,6 @@ function CBLDashboard() {
                               <SelectItem value="delay-15">
                                 15 minutes delay
                               </SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label className="text-sm">Weekly digest day</Label>
-                          <Select defaultValue="sunday">
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="sunday">Sunday</SelectItem>
-                              <SelectItem value="monday">Monday</SelectItem>
-                              <SelectItem value="friday">Friday</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -2398,10 +2218,626 @@ function CBLDashboard() {
               <>
                 <h2 className="text-2xl font-bold">CBL Settings</h2>
 
-                <div className="grid md:grid-cols-2 gap-6">
+                {/* Tiered Auto Create Boards System */}
+                <div className="space-y-6">
+                  {cblTier === 'first-stream' && (
+                    <Card className="border-blue-200">
+                      <CardHeader>
+                        <CardTitle className="flex items-center">
+                          <Home className="h-5 w-5 mr-2 text-blue-600" />
+                          Home Team Boards
+                          <Badge className="ml-2 bg-blue-100 text-blue-800">
+                            First Stream CBL
+                          </Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div>
+                          <Label>Select Your Home Team</Label>
+                          <Select defaultValue="chiefs">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Choose your home team" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="chiefs">
+                                Kansas City Chiefs
+                              </SelectItem>
+                              <SelectItem value="bills">
+                                Buffalo Bills
+                              </SelectItem>
+                              <SelectItem value="bengals">
+                                Cincinnati Bengals
+                              </SelectItem>
+                              <SelectItem value="ravens">
+                                Baltimore Ravens
+                              </SelectItem>
+                              <SelectItem value="cowboys">
+                                Dallas Cowboys
+                              </SelectItem>
+                              <SelectItem value="eagles">
+                                Philadelphia Eagles
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Create boards for all games featuring this team
+                          </p>
+                        </div>
+
+                        <div>
+                          <Label>Board Price Point</Label>
+                          <Select defaultValue="10">
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="5">$5 per square</SelectItem>
+                              <SelectItem value="10">$10 per square</SelectItem>
+                              <SelectItem value="20">$20 per square</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div>
+                          <Label>Game Type</Label>
+                          <Select defaultValue="forwards-only">
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="forwards-only">
+                                Forwards Only (Q1, Q2, Q3, Q4)
+                              </SelectItem>
+                              <SelectItem value="f-and-b">
+                                Forwards & Backwards (Q1, Q2, Q3, Q4, Rev)
+                              </SelectItem>
+                              <SelectItem value="f-b-5f">
+                                F & B + 5th Forward (Q1, Q2, Q3, Q4, Rev, 5F)
+                              </SelectItem>
+                              <SelectItem value="f-b-5b">
+                                F & B + 5th Backward (Q1, Q2, Q3, Q4, Rev, 5B)
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Choose payout structure for your boards
+                          </p>
+                        </div>
+
+                        <div>
+                          <Label>Release Timing</Label>
+                          <Select defaultValue="3">
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="1">
+                                1 day before game
+                              </SelectItem>
+                              <SelectItem value="3">
+                                3 days before game
+                              </SelectItem>
+                              <SelectItem value="7">
+                                1 week before game
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <Switch id="auto-create-home" defaultChecked />
+                          <Label htmlFor="auto-create-home">
+                            Enable auto-creation
+                          </Label>
+                        </div>
+
+                        <Alert>
+                          <Info className="h-4 w-4" />
+                          <AlertDescription>
+                            <strong>First Stream CBL:</strong> Focus on
+                            mastering one team's fan base. Build consistent
+                            engagement with Chiefs fans before expanding.
+                          </AlertDescription>
+                        </Alert>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {cblTier === 'drive-maker' && (
+                    <Card className="border-green-200">
+                      <CardHeader>
+                        <CardTitle className="flex items-center">
+                          <Target className="h-5 w-5 mr-2 text-green-600" />
+                          Multi-Team Strategy
+                          <Badge className="ml-2 bg-green-100 text-green-800">
+                            Drive Maker CBL
+                          </Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                        <div>
+                          <Label>Primary Home Team</Label>
+                          <Select defaultValue="broncos">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Your main team" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="broncos">
+                                Denver Broncos
+                              </SelectItem>
+                              <SelectItem value="chiefs">
+                                Kansas City Chiefs
+                              </SelectItem>
+                              <SelectItem value="raiders">
+                                Las Vegas Raiders
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                          <Label className="text-base font-semibold">
+                            Additional Teams (Choose 2)
+                          </Label>
+                          <Tabs defaultValue="teams" className="mt-2">
+                            <TabsList className="grid w-full grid-cols-2">
+                              <TabsTrigger value="teams">
+                                Specific Teams
+                              </TabsTrigger>
+                              <TabsTrigger value="primetime">
+                                Primetime Games
+                              </TabsTrigger>
+                            </TabsList>
+
+                            <TabsContent value="teams" className="space-y-3">
+                              <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                  <Label>Team 2</Label>
+                                  <Select defaultValue="chiefs">
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select 2nd team" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="broncos">
+                                        Denver Broncos
+                                      </SelectItem>
+                                      <SelectItem value="chiefs">
+                                        Kansas City Chiefs
+                                      </SelectItem>
+                                      <SelectItem value="raiders">
+                                        Las Vegas Raiders
+                                      </SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                <div>
+                                  <Label>Team 3</Label>
+                                  <Select defaultValue="raiders">
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select 3rd team" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                       <SelectItem value="broncos">
+                                        Denver Broncos
+                                      </SelectItem>
+                                      <SelectItem value="chiefs">
+                                        Kansas City Chiefs
+                                      </SelectItem>
+                                      <SelectItem value="raiders">
+                                        Las Vegas Raiders
+                                      </SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+                            </TabsContent>
+
+                            <TabsContent
+                              value="primetime"
+                              className="space-y-3"
+                            >
+                              <div className="space-y-2">
+                                <div className="flex items-center space-x-2">
+                                  <Checkbox id="tnf" defaultChecked />
+                                  <Label htmlFor="tnf">
+                                    Thursday Night Football
+                                  </Label>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Checkbox id="snf" defaultChecked />
+                                  <Label htmlFor="snf">
+                                    Sunday Night Football
+                                  </Label>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Checkbox id="mnf" />
+                                  <Label htmlFor="mnf">
+                                    Monday Night Football
+                                  </Label>
+                                </div>
+                              </div>
+                              <p className="text-xs text-muted-foreground">
+                                Select 2 primetime slots to auto-create boards
+                                regardless of teams
+                              </p>
+                            </TabsContent>
+                          </Tabs>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                          <Label>Game Type Options</Label>
+                          <div className="mt-2 space-y-2">
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="dm-forwards-only" defaultChecked />
+                              <Label htmlFor="dm-forwards-only">
+                                Forwards Only (Q1, Q2, Q3, Q4)
+                              </Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="dm-f-and-b" defaultChecked />
+                              <Label htmlFor="dm-f-and-b">
+                                Forwards & Backwards (Q1, Q2, Q3, Q4, Rev)
+                              </Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="dm-f-b-5f" />
+                              <Label htmlFor="dm-f-b-5f">
+                                F & B + 5th Forward (Q1, Q2, Q3, Q4, Rev, 5F)
+                              </Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="dm-f-b-5b" />
+                              <Label htmlFor="dm-f-b-5b">
+                                F & B + 5th Backward (Q1, Q2, Q3, Q4, Rev, 5B)
+                              </Label>
+                            </div>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Select which game types to offer (can choose
+                            multiple)
+                          </p>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                          <Label>Board Strategy</Label>
+                          <RadioGroup defaultValue="single" className="mt-2">
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="single" id="single" />
+                              <Label htmlFor="single">
+                                Single tier per game ($10, $20, or $50)
+                              </Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="dual" id="dual" />
+                              <Label htmlFor="dual">
+                                Dual tier approach (e.g., $10 + $50)
+                              </Label>
+                            </div>
+                          </RadioGroup>
+                        </div>
+
+                        <Alert>
+                          <TrendingUp className="h-4 w-4" />
+                          <AlertDescription>
+                            <strong>Drive Maker CBL:</strong> You've proven you
+                            can fill boards consistently. Time to diversify and
+                            build multiple fan communities!
+                          </AlertDescription>
+                        </Alert>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {cblTier === 'franchise' && (
+                    <Card className="border-purple-200">
+                      <CardHeader>
+                        <CardTitle className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <Crown className="h-5 w-5 mr-2 text-purple-600" />
+                            Complete Board Management
+                            <Badge className="ml-2 bg-purple-100 text-purple-800">
+                              Franchise CBL
+                            </Badge>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-purple-600"
+                          >
+                            <MessageCircle className="h-4 w-4 mr-1" />
+                            Chat with OC-Phil
+                          </Button>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                        {/* OC-Phil Recommendation Widget */}
+                        <Alert className="bg-purple-50 border-purple-200">
+                          <Bot className="h-4 w-4" />
+                          <AlertTitle>OC-Phil's Weekly Game Plan</AlertTitle>
+                          <AlertDescription className="mt-2">
+                            <div className="space-y-2">
+                              <p>
+                                <strong>This Week's Focus:</strong> Rivalry
+                                games (Chiefs vs Raiders) showing 85% higher
+                                engagement
+                              </p>
+                              <p>
+                                <strong>Recommended:</strong> Create $20 + $100
+                                boards for SNF, skip Thursday's low-interest
+                                matchup
+                              </p>
+                              <p>
+                                <strong>Fill Rate Alert:</strong> Your $50
+                                boards at 60% - consider promoting or switching
+                                to $20
+                              </p>
+                            </div>
+                            <Button
+                              variant="link"
+                              className="p-0 text-purple-600 mt-2"
+                            >
+                              View detailed analytics →
+                            </Button>
+                          </AlertDescription>
+                        </Alert>
+
+                        <Tabs defaultValue="schedule" className="w-full">
+                          <TabsList className="grid w-full grid-cols-3">
+                            <TabsTrigger value="schedule">
+                              Game Schedule
+                            </TabsTrigger>
+                            <TabsTrigger value="strategy">
+                              Board Strategy
+                            </TabsTrigger>
+                            <TabsTrigger value="automation">
+                              Automation
+                            </TabsTrigger>
+                          </TabsList>
+
+                          <TabsContent value="schedule" className="space-y-4">
+                            <div className="flex items-center justify-between">
+                              <Label className="text-base font-semibold">
+                                Week 15 Games
+                              </Label>
+                              <div className="flex space-x-2">
+                                <Button variant="outline" size="sm">
+                                  Select All
+                                </Button>
+                                <Button variant="outline" size="sm">
+                                  Primetime Only
+                                </Button>
+                                <Button variant="outline" size="sm">
+                                  Rivalry Games
+                                </Button>
+                              </div>
+                            </div>
+
+                            <div className="space-y-2 max-h-60 overflow-y-auto">
+                              <div className="flex items-center justify-between p-3 border rounded">
+                                <div className="flex items-center space-x-3">
+                                  <Checkbox id="game1" defaultChecked />
+                                  <div>
+                                    <p className="font-medium">
+                                      Chiefs @ Raiders
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                      Sunday 4:25 PM • Rivalry Game
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Badge className="bg-green-100 text-green-800">
+                                    OC-Phil Recommends
+                                  </Badge>
+                                  <Badge variant="outline">High Interest</Badge>
+                                </div>
+                              </div>
+                              <div className="flex items-center justify-between p-3 border rounded">
+                                <div className="flex items-center space-x-3">
+                                  <Checkbox id="game2" />
+                                  <div>
+                                    <p className="font-medium">
+                                      Titans @ Jaguars
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                      Thursday 8:15 PM
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Badge
+                                    variant="outline"
+                                    className="text-yellow-600"
+                                  >
+                                    Low Interest
+                                  </Badge>
+                                </div>
+                              </div>
+                            </div>
+                          </TabsContent>
+
+                          <TabsContent value="strategy" className="space-y-4">
+                            <div>
+                              <Label className="text-base font-semibold">
+                                Game Type Matrix
+                              </Label>
+                              <div className="mt-2 p-4 border rounded-lg">
+                                <div className="grid grid-cols-2 gap-6">
+                                  <div>
+                                    <Label className="text-sm font-medium">
+                                      Available Game Types
+                                    </Label>
+                                    <div className="space-y-2 mt-2">
+                                      <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                          id="fc-forwards-only"
+                                          defaultChecked
+                                        />
+                                        <Label
+                                          htmlFor="fc-forwards-only"
+                                          className="text-sm"
+                                        >
+                                          Forwards Only
+                                        </Label>
+                                      </div>
+                                      <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                          id="fc-f-and-b"
+                                          defaultChecked
+                                        />
+                                        <Label
+                                          htmlFor="fc-f-and-b"
+                                          className="text-sm"
+                                        >
+                                          Forwards & Backwards
+                                        </Label>
+                                      </div>
+                                      <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                          id="fc-f-b-5f"
+                                          defaultChecked
+                                        />
+                                        <Label
+                                          htmlFor="fc-f-b-5f"
+                                          className="text-sm"
+                                        >
+                                          F & B + 5th Forward
+                                        </Label>
+                                      </div>
+                                      <div className="flex items-center space-x-2">
+                                        <Checkbox id="fc-f-b-5b" />
+                                        <Label
+                                          htmlFor="fc-f-b-5b"
+                                          className="text-sm"
+                                        >
+                                          F & B + 5th Backward
+                                        </Label>
+                                      </div>
+                                      <div className="flex items-center space-x-2">
+                                        <Checkbox id="fc-custom" />
+                                        <Label
+                                          htmlFor="fc-custom"
+                                          className="text-sm"
+                                        >
+                                          Custom Combinations
+                                        </Label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <Label className="text-sm font-medium">
+                                      Auto-Selection Rules
+                                    </Label>
+                                    <div className="space-y-2 mt-2">
+                                      <div className="p-2 bg-gray-50 rounded text-xs">
+                                        <strong>Regular Games:</strong> Forwards
+                                        Only + F&B
+                                      </div>
+                                      <div className="p-2 bg-purple-50 rounded text-xs">
+                                        <strong>Primetime:</strong> All selected
+                                        types
+                                      </div>
+                                      <div className="p-2 bg-green-50 rounded text-xs">
+                                        <strong>Rivalry Games:</strong> Full
+                                        suite including 5th options
+                                      </div>
+                                      <div className="p-2 bg-blue-50 rounded text-xs">
+                                        <strong>OC-Phil Override:</strong>{' '}
+                                        Data-driven selections
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div>
+                              <Label className="text-base font-semibold">
+                                Multi-Tier Strategy
+                              </Label>
+                              <div className="grid grid-cols-2 gap-4 mt-2">
+                                <div>
+                                  <Label>Regular Games</Label>
+                                  <div className="space-y-2">
+                                    <div className="flex items-center space-x-2">
+                                      <Checkbox id="reg-10" defaultChecked />
+                                      <Label htmlFor="reg-10">$10 boards</Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                      <Checkbox id="reg-50" />
+                                      <Label htmlFor="reg-50">$50 boards</Label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div>
+                                  <Label>Primetime/Rivalry Games</Label>
+                                  <div className="space-y-2">
+                                    <div className="flex items-center space-x-2">
+                                      <Checkbox id="prime-20" defaultChecked />
+                                      <Label htmlFor="prime-20">
+                                        $20 boards
+                                      </Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                      <Checkbox id="prime-100" defaultChecked />
+                                      <Label htmlFor="prime-100">
+                                        $100 VIP boards
+                                      </Label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </TabsContent>
+
+                          <TabsContent value="automation" className="space-y-4">
+                            <div>
+                              <Label className="text-base font-semibold">
+                                Smart Automation Rules
+                              </Label>
+                              <div className="space-y-3 mt-2">
+                                <div className="flex items-center justify-between p-3 border rounded">
+                                  <div>
+                                    <p className="font-medium">
+                                      Auto-cancel low-fill boards
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                      Cancel if &lt;50% filled 2 hours before
+                                      game
+                                    </p>
+                                  </div>
+                                  <Switch defaultChecked />
+                                </div>
+                                <div className="flex items-center justify-between p-3 border rounded">
+                                  <div>
+                                    <p className="font-medium">
+                                      OC-Phil recommendations
+                                    </p>
+                                    <p className="text-sm text-muted-foreground">
+                                      Auto-implement Phil's game plan
+                                      suggestions
+                                    </p>
+                                  </div>
+                                  <Switch defaultChecked />
+                                </div>
+                              </div>
+                            </div>
+                          </TabsContent>
+                        </Tabs>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* General Settings Card */}
                   <Card>
                     <CardHeader>
-                      <CardTitle>Community Settings</CardTitle>
+                      <CardTitle>General Settings</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
@@ -2425,15 +2861,6 @@ function CBLDashboard() {
                             <SelectItem value="unlimited">Unlimited</SelectItem>
                           </SelectContent>
                         </Select>
-                      </div>
-                      <div>
-                        <Label htmlFor="auto-create">Auto-create boards</Label>
-                        <div className="flex items-center space-x-2">
-                          <Switch id="auto-create" defaultChecked />
-                          <span className="text-sm">
-                            Automatically create boards for upcoming games
-                          </span>
-                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -2486,6 +2913,31 @@ function CBLDashboard() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Board Boost Modal */}
+      {selectedBoardForBoost && (
+        <BoardBoostModal
+          isOpen={isBoostModalOpen}
+          onClose={() => {
+            setIsBoostModalOpen(false);
+            setSelectedBoardForBoost(null);
+          }}
+          board={selectedBoardForBoost}
+          onBoost={async (duration: number, amount: number) => {
+            if (!isReady) {
+              throw new Error('Wallet not connected');
+            }
+
+            await boostBoard({
+              boardId: selectedBoardForBoost.id,
+              durationDays: duration as 1 | 3 | 7,
+              gameId: parseInt(
+                selectedBoardForBoost.id.split('-').pop() || '1',
+              ),
+            });
+          }}
+        />
+      )}
     </div>
   );
 }
