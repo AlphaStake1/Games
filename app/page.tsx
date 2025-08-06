@@ -160,7 +160,7 @@ function HomeContent() {
                 </div>
 
                 {/* Game Type Selection Cards */}
-                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
                   {/* Season-Long Play */}
                   <Card className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300">
                     <CardHeader>
@@ -227,6 +227,47 @@ function HomeContent() {
                       </Button>
                     </CardContent>
                   </Card>
+                </div>
+
+                {/* Free Play Banner - Subtle but discoverable */}
+                <div className="mb-16">
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="bg-purple-100 dark:bg-purple-900/50 p-2 rounded-lg">
+                          <svg
+                            className="w-5 h-5 text-purple-600 dark:text-purple-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"
+                            />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900 dark:text-white">
+                            New to Football Squares?
+                          </p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Try our free play mode to learn the game risk-free
+                          </p>
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300"
+                        onClick={() => (window.location.href = '/free-board')}
+                      >
+                        Play Free →
+                      </Button>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Quick Join Section */}

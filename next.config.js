@@ -9,7 +9,14 @@ const nextConfig = {
     // Exclude agents directory from compilation
     config.module.rules.push({
       test: /\.tsx?$/,
-      exclude: [/node_modules/, /agents/, /scripts/, /programs/],
+      exclude: [
+        /node_modules/,
+        /agents/,
+        /scripts/,
+        /programs/,
+        /indexer/,
+        /tests/,
+      ],
     });
 
     // Prevent bundling of server-side modules on the client
