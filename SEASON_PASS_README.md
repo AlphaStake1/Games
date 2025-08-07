@@ -28,15 +28,26 @@ app/page.tsx                             # Updated main page routing
 ### 2. **Conference System**
 
 - **100-Player Capacity**: Each conference accommodates exactly 100 players
-- **5 Tier Levels**: $100, $200, $300, $400, $500 conferences
+- **5 Tier Levels**: $50, $100, $250, $500, $1000 conferences
 - **Sequential Filling**: Conferences fill in order, cycling through tiers
 - **Independent Leaderboards**: Each conference has its own competition
 
 ### 3. **Season Types**
 
-- **Full-Season Pass**: Weeks 1-18 + playoffs, 1 pass per wallet
-- **Half-Season Pass**: Weeks 10-18 + playoffs, up to 5 passes per wallet
-- **Scaling Prices**: Half-season passes scale: 1x, 1.1x, 1.2x, 1.3x, 1.4x
+#### Full-Season Pass (Conference System)
+
+- **Duration**: Weeks 1-18 + playoffs
+- **Limit**: 1 pass per wallet
+- **Structure**: 5 Conference tiers ($50, $100, $250, $500, $1000)
+- **Naming**: Eastern, Southern, Northern, Western, South-East Conferences
+
+#### Half-Season Pass (Division System)
+
+- **Duration**: Weeks 10-18 + playoffs
+- **Limit**: Up to 5 passes per wallet
+- **Structure**: 3 Division tiers ($150, $350, $700)
+- **Naming**: NFL Divisions (AFC East, NFC North, etc.)
+- **Scaling Prices**: Multiple passes scale: 1x, 1.1x, 1.2x, 1.3x, 1.4x
 
 ### 4. **Green Points Scoring System**
 
@@ -47,16 +58,35 @@ app/page.tsx                             # Updated main page routing
 - **Playoff Multipliers**: Wild Card (1.5x), Divisional (2.0x), Conference (3.5x), Super Bowl (5.0x)
 - **Precision**: Calculated to 2 decimals to minimize ties
 - **Overtime Support**: Each OT period independent, full point calculation
-  - **Explanation**: Each overtime period awards 200 base points × hit pattern percentage × playoff multiplier.
+  - **Explanation**: Q2 & Q4 award 250 base points, while Q1, Q3, and each OT period award 200 base points.
     - Example: Forward hit in Divisional OT = 200 × 0.45 × 2.0 = 180.00 pts
     - Example: Super Bowl Q4 Forward hit = 250 × 0.45 × 5.0 = 562.50 pts
     - No reduction or decay - overtime periods maintain full scoring value
 
 ### 5. **Prize Distribution**
 
-- **7-Tier Payout**: Top 7 finishers per conference
-- **Percentage-Based**: 50%, 20%, 10%, 5%, 5%, 5%, 5%
-- **Automatic Distribution**: Smart contract handles prize payouts
+- **21-Player Payout**: Top 21 finishers per conference/division share the prize pool.
+- **90/10 Split**: 90% of the total pot is paid out to players. The remaining 10% is retained by the protocol for operational costs and prize bonuses.
+
+#### Full-Season Conference Example (Tier 4 - $500 buy-in):
+
+- **1st**: $14,000
+- **2nd**: $9,000
+- **3rd**: $7,000
+- **4th-7th**: $1,518 each
+- **8th-14th**: $750 each (1.5x return)
+- **15th-21st**: $525 each (1.05x return)
+
+#### Half-Season Division Example (Tier 2 - $350 buy-in):
+
+- **1st**: $8,400
+- **2nd**: $4,900
+- **3rd**: $3,500
+- **4th-7th**: $2,114 each
+- **8th-14th**: $525 each (1.5x return)
+- **15th-21st**: $367 each (1.048x return)
+
+- **Automatic Distribution**: Smart contract handles prize payouts.
 
 ## 🛠 Technical Implementation
 
@@ -155,7 +185,7 @@ const getGameTypeConfig = (gameType: string) => {
 ### Conference Pricing
 
 ```rust
-const CONFERENCE_PRICES: [u64; 5] = [100, 200, 300, 400, 500];
+const CONFERENCE_PRICES: [u64; 5] = [50, 100, 250, 500, 1000];
 ```
 
 ### Quarter Base Points

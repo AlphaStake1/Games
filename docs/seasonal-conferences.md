@@ -10,11 +10,11 @@ Season Pass Conferences represent a fundamental shift from weekly Football Squar
 
 | Tier | Conference Names                                                 | Season Pass Price | Target Pool (Full) | 1st Place Max | Players |
 | ---- | ---------------------------------------------------------------- | ----------------- | ------------------ | ------------- | ------- |
-| 1    | Eastern → Central → Atlantic → Lakes → Prairie                   | $25               | $2,500             | ~$875         | 100     |
-| 2    | Southern → Mountain → Desert → Delta → Plateau                   | $50               | $5,000             | ~$1,750       | 100     |
-| 3    | Northern → Gulf of America → Great Lakes → Heartland → Badlands  | $100              | $10,000            | ~$3,500       | 100     |
-| 4    | Western → Pacific → Sierra → Cascades → Rockies                  | $200              | $20,000            | ~$7,000       | 100     |
-| 5    | South-East → South-West → North-East → North-West → Mid-Atlantic | $500              | $50,000            | ~$17,500      | 100     |
+| 1    | Eastern → Central → Atlantic → Lakes → Prairie                   | $50               | $5,000             | ~$1,400       | 100     |
+| 2    | Southern → Mountain → Desert → Delta → Plateau                   | $100              | $10,000            | ~$2,800       | 100     |
+| 3    | Northern → Gulf of America → Great Lakes → Heartland → Badlands  | $250              | $25,000            | ~$7,000       | 100     |
+| 4    | Western → Pacific → Sierra → Cascades → Rockies                  | $500              | $50,000            | ~$14,000      | 100     |
+| 5    | South-East → South-West → North-East → North-West → Mid-Atlantic | $1,000            | $100,000           | ~$28,000      | 100     |
 
 ### Conference Lifecycle
 

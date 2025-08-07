@@ -46,45 +46,80 @@ const SeasonPassLandingPage = () => {
   );
 
   // Conference data based on tier system from comprehensive docs
-  const conferences: Conference[] = [
+  const fullSeasonConferences: Conference[] = [
     {
       id: 1,
       name: 'Eastern Conference',
-      price: 25,
+      price: 50,
       filled: 87,
       capacity: 100,
     },
     {
       id: 2,
       name: 'Southern Conference',
-      price: 50,
+      price: 100,
       filled: 65,
       capacity: 100,
     },
     {
       id: 3,
       name: 'Northern Conference',
-      price: 100,
+      price: 250,
       filled: 43,
       capacity: 100,
     },
     {
       id: 4,
       name: 'Western Conference',
-      price: 200,
+      price: 500,
       filled: 22,
       capacity: 100,
     },
   ];
 
-  const featuredConference: Conference = {
+  const fullSeasonFeaturedConference: Conference = {
     id: 5,
     name: 'South-East Conference',
-    price: 500,
+    price: 1000,
     filled: 8,
     capacity: 100,
     featured: true,
   };
+
+  // Half-Season Division data
+  const halfSeasonDivisions: Conference[] = [
+    {
+      id: 6,
+      name: 'AFC East Division',
+      price: 150,
+      filled: 72,
+      capacity: 100,
+    },
+    {
+      id: 7,
+      name: 'NFC North Division',
+      price: 350,
+      filled: 48,
+      capacity: 100,
+    },
+  ];
+
+  const halfSeasonFeaturedDivision: Conference = {
+    id: 8,
+    name: 'AFC West Division',
+    price: 700,
+    filled: 15,
+    capacity: 100,
+    featured: true,
+  };
+
+  // Select conferences based on pass type
+  const conferences =
+    selectedPassType === 'full' ? fullSeasonConferences : halfSeasonDivisions;
+  const featuredConference =
+    selectedPassType === 'full'
+      ? fullSeasonFeaturedConference
+      : halfSeasonFeaturedDivision;
 
   const handleMintPass = () => {
     router.push('/season-pass/conferences');
@@ -96,7 +131,7 @@ const SeasonPassLandingPage = () => {
     const isFull = fillPercentage >= 100;
 
     const cardClasses = conference.featured
-      ? 'relative transition-all duration-300 hover:shadow-lg bg-gradient-to-br from-indigo-100 to-purple-100 border-indigo-300 dark:from-indigo-900/80 dark:to-purple-900/80 dark:border-indigo-400/50 shadow-lg'
+      ? 'relative transition-all duration-300 hover:shadow-lg bg-gradient-to-br from-purple-100 to-pink-100 border-purple-300 dark:from-purple-900/80 dark:to-pink-900/80 dark:border-purple-400/50 shadow-xl ring-2 ring-purple-400/50'
       : 'relative transition-all duration-300 hover:shadow-lg bg-white/70 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg';
 
     return (
@@ -110,8 +145,8 @@ const SeasonPassLandingPage = () => {
                 {conference.name}
               </CardTitle>
               {conference.featured && (
-                <Badge className="mt-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-0">
-                  ⭐ FEATURED
+                <Badge className="mt-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0 font-bold">
+                  ⭐ PREMIUM TIER
                 </Badge>
               )}
             </div>
@@ -195,8 +230,7 @@ const SeasonPassLandingPage = () => {
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto">
-            Mint once, play every game. Score on every NFL game and compete for
-            a share of $2.5K--$50K prize pools.
+            Starting at $50 for Full Season or $150 for Half Season
           </p>
 
           <Button
@@ -373,20 +407,36 @@ const SeasonPassLandingPage = () => {
           {/* Available Conferences */}
           <div className="mb-12">
             <h3 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-              Available Conferences
+              {selectedPassType === 'full'
+                ? 'Available Conferences'
+                : 'Available Divisions'}
             </h3>
 
-            {/* Regular conferences grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {conferences.map((conference) => (
-                <ConferenceCard key={conference.id} conference={conference} />
-              ))}
-            </div>
-
-            {/* Featured conference - full width */}
-            <div className="max-w-2xl mx-auto">
-              <ConferenceCard conference={featuredConference} />
-            </div>
+            {/* Conference/Division grid */}
+            {selectedPassType === 'full' ? (
+              <>
+                {/* Full Season: 4 regular + 1 featured below */}
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  {conferences.map((conference) => (
+                    <ConferenceCard
+                      key={conference.id}
+                      conference={conference}
+                    />
+                  ))}
+                </div>
+                <div className="max-w-2xl mx-auto">
+                  <ConferenceCard conference={featuredConference} />
+                </div>
+              </>
+            ) : (
+              /* Half Season: All 3 divisions in one row */
+              <div className="grid md:grid-cols-3 gap-6">
+                {conferences.map((conference) => (
+                  <ConferenceCard key={conference.id} conference={conference} />
+                ))}
+                <ConferenceCard conference={featuredConference} />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -395,50 +445,75 @@ const SeasonPassLandingPage = () => {
       <section className="py-16 px-4 bg-gray-50 dark:bg-black/20">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
-            Season-Long Payout Ladder
+            {selectedPassType === 'full'
+              ? 'Season-Long Payout Ladder'
+              : 'Half-Season Payout Ladder'}
           </h2>
 
           <Card className="bg-white/80 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg">
             <CardHeader>
               <CardTitle className="text-center text-gray-900 dark:text-white">
-                Tier 5 Conference Example: $500 × 100 = $50,000 pot (80% to
-                players)
+                {selectedPassType === 'full'
+                  ? 'Tier 4 Conference Example: $500 × 100 = $50,000 pot'
+                  : 'Tier 2 Division Example: $350 × 100 = $35,000 pot'}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {[
-                  {
-                    place: '1st',
-                    payout: '~$14,000',
-                    percentage: '35% of Band A',
-                  },
-                  {
-                    place: '2nd',
-                    payout: '~$9,200',
-                    percentage: '23% of Band A',
-                  },
-                  {
-                    place: '3rd',
-                    payout: '~$7,200',
-                    percentage: '18% of Band A',
-                  },
-                  {
-                    place: '4th-7th',
-                    payout: '~$2,400 each',
-                    percentage: '6% of Band A each',
-                  },
-                  {
-                    place: '8th-14th',
-                    payout: '~$750 each',
-                    percentage: '1.5x return',
-                  },
-                  {
-                    place: '15th-21st',
-                    payout: '~$525 each',
-                    percentage: '1.05x return',
-                  },
-                ].map((tier, index) => (
+                {(selectedPassType === 'full'
+                  ? [
+                      {
+                        place: '1st',
+                        payout: '$14,000',
+                      },
+                      {
+                        place: '2nd',
+                        payout: '$9,000',
+                      },
+                      {
+                        place: '3rd',
+                        payout: '$7,000',
+                      },
+                      {
+                        place: '4th-7th',
+                        payout: '$1,518 each',
+                      },
+                      {
+                        place: '8th-14th',
+                        payout: '$750 each',
+                      },
+                      {
+                        place: '15th-21st',
+                        payout: '$525 each',
+                      },
+                    ]
+                  : [
+                      {
+                        place: '1st',
+                        payout: '$8,400',
+                      },
+                      {
+                        place: '2nd',
+                        payout: '$4,900',
+                      },
+                      {
+                        place: '3rd',
+                        payout: '$3,500',
+                      },
+                      {
+                        place: '4th-7th',
+                        payout: '$2,114 each',
+                      },
+                      {
+                        place: '8th-14th',
+                        payout: '$525 each',
+                      },
+                      {
+                        place: '15th-21st',
+                        payout: '$367 each',
+                      },
+                    ]
+                ).map((tier, index) => (
                   <div
                     key={index}
                     className="flex justify-between items-center py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0"
@@ -447,12 +522,9 @@ const SeasonPassLandingPage = () => {
                       <Badge variant={index === 0 ? 'default' : 'secondary'}>
                         {tier.place}
                       </Badge>
-                      <span className="text-lg font-semibold text-gray-900 dark:text-white">
-                        {tier.payout}
-                      </span>
                     </div>
-                    <span className="text-gray-600 dark:text-gray-400">
-                      {tier.percentage}
+                    <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {tier.payout}
                     </span>
                   </div>
                 ))}
@@ -462,14 +534,13 @@ const SeasonPassLandingPage = () => {
                 <p className="text-sm text-center text-yellow-800 dark:text-yellow-300">
                   <Info className="w-4 h-4 inline mr-1" />
                   All Season-Pass game payouts are distributed in Solana-based
-                  USDC. Protocol retains 20% for weekly boards and operations.
+                  USDC. Protocol retains 10% for operations and prize bonuses.
                 </p>
               </div>
               <div className="mt-3 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">
                 <p className="text-sm text-center text-blue-800 dark:text-blue-300">
                   <Info className="w-4 h-4 inline mr-1" />
-                  Top 21 players receive payouts. Tier-specific pool totals:
-                  $2.5K/$5K/$10K/$20K/$50K.
+                  Top 21 players receive payouts. Pool sizes vary by tier.
                 </p>
               </div>
             </CardContent>
@@ -582,9 +653,8 @@ const SeasonPassLandingPage = () => {
                 <div className="mt-4 p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-700">
                   <p className="text-sm text-yellow-800 dark:text-yellow-300">
                     <Zap className="w-4 h-4 inline mr-1" />
-                    Each OT period awards 200 base points × hit pattern
-                    percentage × playoff multiplier. Q2 & Q4 get bonus points
-                    (250 vs 200).
+                    Q2 & Q4 award 250 base points, while Q1, Q3, and each OT
+                    period award 200 base points.
                   </p>
                 </div>
                 <div className="mt-3 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">

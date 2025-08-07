@@ -14,11 +14,11 @@ Season Pass Conferences transform weekly Football Squares into season-long compe
 
 | Tier | Conference Names                                                 | Season Pass | Target Pool | 1st Place Max | Protocol Share |
 | ---- | ---------------------------------------------------------------- | ----------- | ----------- | ------------- | -------------- |
-| 1    | Eastern → Central → Atlantic → Lakes → Prairie                   | $25         | $2,500      | ~$700         | ~$500          |
-| 2    | Southern → Mountain → Desert → Delta → Plateau                   | $50         | $5,000      | ~$1,400       | ~$1,000        |
-| 3    | Northern → Gulf of America → Great Lakes → Heartland → Badlands  | $100        | $10,000     | ~$2,800       | ~$2,000        |
-| 4    | Western → Pacific → Sierra → Cascades → Rockies                  | $200        | $20,000     | ~$5,600       | ~$4,000        |
-| 5    | South-East → South-West → North-East → North-West → Mid-Atlantic | $500        | $50,000     | ~$14,000      | ~$10,000       |
+| 1    | Eastern → Central → Atlantic → Lakes → Prairie                   | $50         | $5,000      | ~$1,400       | ~$500          |
+| 2    | Southern → Mountain → Desert → Delta → Plateau                   | $100        | $10,000     | ~$2,800       | ~$1,000        |
+| 3    | Northern → Gulf of America → Great Lakes → Heartland → Badlands  | $250        | $25,000     | ~$7,000       | ~$2,500        |
+| 4    | Western → Pacific → Sierra → Cascades → Rockies                  | $500        | $50,000     | ~$14,000      | ~$5,000        |
+| 5    | South-East → South-West → North-East → North-West → Mid-Atlantic | $1,000      | $100,000    | ~$28,000      | ~$10,000       |
 
 **Green Points Scoring Examples**:
 
