@@ -120,6 +120,25 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
     return 100; // Free boards
   };
 
+  // Helper function to calculate time until kickoff
+  const getTimeUntilKickoff = (
+    gameDate: Date,
+  ): { hours: number; minutes: number; isLocked: boolean } => {
+    const now = new Date();
+    const kickoffTime = new Date(gameDate);
+    const diffMs = kickoffTime.getTime() - now.getTime();
+
+    if (diffMs <= 0) {
+      return { hours: 0, minutes: 0, isLocked: true };
+    }
+
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const isLocked = hours < 1; // Lock 1 hour before kickoff
+
+    return { hours, minutes, isLocked };
+  };
+
   // Helper function to get board availability for a specific tier
   const getBoardAvailabilityForTier = (
     tierId: string,
@@ -242,7 +261,15 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
         <CardHeader className="pb-3">
           <div className="flex justify-between items-start">
             <div>
-              <CardTitle className="text-lg">{tier.displayName}</CardTitle>
+              <div className="flex items-center gap-2 mb-1">
+                <CardTitle className="text-lg">{tier.displayName}</CardTitle>
+                <Badge variant="secondary" className="text-xs">
+                  ${tier.pricePerSquare}/sq
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  {tier.rake}% rake
+                </Badge>
+              </div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 {tier.description}
               </p>
@@ -257,6 +284,38 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
         </CardHeader>
 
         <CardContent className="space-y-4">
+          {/* Kickoff Countdown */}
+          {(() => {
+            const kickoffTime = getTimeUntilKickoff(game.gameDate);
+            if (!kickoffTime.isLocked && kickoffTime.hours > 0) {
+              return (
+                <div className="bg-yellow-50 dark:bg-yellow-950 rounded-lg p-2 border border-yellow-200 dark:border-yellow-800">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-1 text-yellow-700 dark:text-yellow-300">
+                      <Clock className="w-4 h-4" />
+                      Kickoff in:
+                    </span>
+                    <span className="font-bold text-yellow-800 dark:text-yellow-200">
+                      {kickoffTime.hours}h {kickoffTime.minutes}m
+                    </span>
+                  </div>
+                </div>
+              );
+            } else if (kickoffTime.isLocked) {
+              return (
+                <div className="bg-red-50 dark:bg-red-950 rounded-lg p-2 border border-red-200 dark:border-red-800">
+                  <div className="flex items-center gap-1 text-sm text-red-700 dark:text-red-300">
+                    <Lock className="w-4 h-4" />
+                    <span className="font-medium">
+                      Board locked - Game started
+                    </span>
+                  </div>
+                </div>
+              );
+            }
+            return null;
+          })()}
+
           {/* Board Availability */}
           <div>
             <div className="flex justify-between text-sm mb-2">

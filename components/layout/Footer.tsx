@@ -83,6 +83,13 @@ export default function Footer() {
               <span className="text-lg font-bold text-white">
                 Football Squares
               </span>
+              {process.env.NEXT_PUBLIC_SOLANA_NETWORK !== 'mainnet-beta' && (
+                <span className="px-2 py-1 text-xs font-medium bg-yellow-500/20 text-yellow-400 rounded-full border border-yellow-500/30">
+                  {process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'testnet'
+                    ? 'Testnet'
+                    : 'Devnet'}
+                </span>
+              )}
             </div>
             <p className="text-sm text-gray-400 mb-4">
               The ultimate destination for NFL squares games. Win big, play

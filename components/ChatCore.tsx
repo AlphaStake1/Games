@@ -38,8 +38,20 @@ interface ChatCoreProps {
 
 const ChatCore = ({ config }: ChatCoreProps) => {
   const [isClient, setIsClient] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('chatCore_isOpen');
+      return saved ? JSON.parse(saved) : false;
+    }
+    return false;
+  });
+  const [isMinimized, setIsMinimized] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('chatCore_isMinimized');
+      return saved ? JSON.parse(saved) : false;
+    }
+    return false;
+  });
   const [imageError, setImageError] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -53,10 +65,37 @@ const ChatCore = ({ config }: ChatCoreProps) => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsMinimized(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('chatCore_isOpen', JSON.stringify(isOpen));
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('chatCore_isMinimized', JSON.stringify(isMinimized));
+    }
+  }, [isMinimized]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -82,8 +121,11 @@ const ChatCore = ({ config }: ChatCoreProps) => {
     setInputText('');
     setIsTyping(true);
 
-    // Simulate typing delay
-    setTimeout(
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(
       () => {
         const response = config.getResponse(inputText);
         const botMessage: Message = {
@@ -96,8 +138,8 @@ const ChatCore = ({ config }: ChatCoreProps) => {
         setMessages((prev) => [...prev, botMessage]);
         setIsTyping(false);
       },
-      1000 + Math.random() * 1000,
-    ); // Random delay between 1-2 seconds
+      500 + Math.random() * 400,
+    ); // Reduced delay between 500-900ms
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -121,6 +163,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
             onMouseLeave={() => setIsHovering(false)}
             className={`bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} hover:from-blue-700 hover:to-purple-700 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 group`}
             size="lg"
+            aria-label={`Open ${config.name} chat`}
           >
             <div className="flex items-center gap-3">
               {!imageError ? (
@@ -216,6 +259,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                 size="sm"
                 onClick={() => setIsMinimized(!isMinimized)}
                 className="text-white hover:bg-white/20 p-1"
+                aria-label={isMinimized ? 'Expand chat' : 'Minimize chat'}
               >
                 <Minimize2 className="h-4 w-4" />
               </Button>
@@ -224,6 +268,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                 size="sm"
                 onClick={() => setIsOpen(false)}
                 className="text-white hover:bg-white/20 p-1"
+                aria-label="Close chat"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -234,7 +279,12 @@ const ChatCore = ({ config }: ChatCoreProps) => {
         {!isMinimized && (
           <>
             <CardContent className="flex-1 overflow-hidden p-0">
-              <div className="h-72 overflow-y-auto p-4 space-y-4">
+              <div
+                className="h-72 overflow-y-auto p-4 space-y-4"
+                role="log"
+                aria-live="polite"
+                aria-label="Chat messages"
+              >
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -292,6 +342,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                   disabled={!inputText.trim() || isTyping}
                   className="bg-blue-600 hover:bg-blue-700 text-white"
                   size="sm"
+                  aria-label="Send message"
                 >
                   <Send className="h-4 w-4" />
                 </Button>
