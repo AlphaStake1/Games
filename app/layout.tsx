@@ -24,7 +24,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${recursive.variable} font-sans`}>
+    <html
+      lang="en"
+      className={`${recursive.variable} font-sans`}
+      suppressHydrationWarning
+    >
       <body>
         <Providers>
           <WalletConnectionProvider>

@@ -581,7 +581,7 @@ const VRFProofModal: React.FC<VRFProofModalProps> = ({
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-3 h-14">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <Eye className="w-4 h-4" />
               Overview

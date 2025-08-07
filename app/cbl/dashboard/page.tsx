@@ -627,7 +627,7 @@ function CBLDashboard() {
           className="space-y-6"
         >
           <TabsList
-            className={`grid w-full ${isPlayerView ? 'grid-cols-5' : 'grid-cols-5'}`}
+            className={`grid w-full h-14 ${isPlayerView ? 'grid-cols-5' : 'grid-cols-5'}`}
           >
             <TabsTrigger value="overview">Overview</TabsTrigger>
             {isPlayerView ? (
@@ -2391,7 +2391,7 @@ function CBLDashboard() {
                             Additional Teams (Choose 2)
                           </Label>
                           <Tabs defaultValue="teams" className="mt-2">
-                            <TabsList className="grid w-full grid-cols-2">
+                            <TabsList className="grid w-full grid-cols-2 h-14">
                               <TabsTrigger value="teams">
                                 Specific Teams
                               </TabsTrigger>
@@ -2597,7 +2597,7 @@ function CBLDashboard() {
                         </Alert>
 
                         <Tabs defaultValue="schedule" className="w-full">
-                          <TabsList className="grid w-full grid-cols-3">
+                          <TabsList className="grid w-full grid-cols-3 h-14">
                             <TabsTrigger value="schedule">
                               Game Schedule
                             </TabsTrigger>

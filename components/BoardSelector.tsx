@@ -120,24 +120,6 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
     return 100; // Free boards
   };
 
-  // Helper function to get the dollar range for each pricing tier
-  const getPriceRangeDisplay = (pricePerSquare: number): string => {
-    if (pricePerSquare >= 1 && pricePerSquare <= 5)
-      return `${formatCurrency(1)} - ${formatCurrency(5)}`;
-    if (pricePerSquare >= 6 && pricePerSquare <= 10)
-      return `${formatCurrency(6)} - ${formatCurrency(10)}`;
-    if (pricePerSquare >= 11 && pricePerSquare <= 20)
-      return `${formatCurrency(11)} - ${formatCurrency(20)}`;
-    if (pricePerSquare >= 21 && pricePerSquare <= 50)
-      return `${formatCurrency(21)} - ${formatCurrency(50)}`;
-    if (pricePerSquare >= 51 && pricePerSquare <= 100)
-      return `${formatCurrency(51)} - ${formatCurrency(100)}`;
-    if (pricePerSquare >= 101 && pricePerSquare <= 250)
-      return `${formatCurrency(101)} - ${formatCurrency(250)}`;
-    if (pricePerSquare >= 251) return `${formatCurrency(251)}+`;
-    return formatCurrency(pricePerSquare); // Fallback to single price
-  };
-
   // Helper function to get board availability for a specific tier
   const getBoardAvailabilityForTier = (
     tierId: string,
@@ -220,6 +202,9 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
       };
     };
 
+    const rake = tier.isVIPOnly ? 0.08 : 0.05;
+    const totalWinnings = tier.pricePerSquare * 100 * (1 - rake);
+
     return (
       <Card
         className={`relative transition-all duration-200 hover:shadow-md ${
@@ -264,9 +249,9 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
             </div>
             <div className="text-right">
               <p className="text-2xl font-bold text-green-600">
-                {getPriceRangeDisplay(tier.pricePerSquare)}
+                {formatCurrency(totalWinnings)}
               </p>
-              <p className="text-xs text-gray-500">per square range</p>
+              <p className="text-xs text-gray-500">total winnings</p>
             </div>
           </div>
         </CardHeader>
@@ -666,7 +651,7 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
                       </h4>
                       <p className="text-sm text-yellow-700 dark:text-yellow-300">
                         Upgrade to VIP for a 5% bonus on all winnings, unlimited
-                        squares, $250-$1000 boards, and all teams access.
+                        squares, premium boards, and all teams access.
                       </p>
                     </div>
                   </div>

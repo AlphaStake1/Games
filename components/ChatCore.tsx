@@ -37,6 +37,7 @@ interface ChatCoreProps {
 }
 
 const ChatCore = ({ config }: ChatCoreProps) => {
+  const [isClient, setIsClient] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -53,13 +54,19 @@ const ChatCore = ({ config }: ChatCoreProps) => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (isClient) {
+      scrollToBottom();
+    }
+  }, [messages, isClient]);
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
@@ -100,6 +107,10 @@ const ChatCore = ({ config }: ChatCoreProps) => {
     }
   };
 
+  if (!isClient) {
+    return null;
+  }
+
   if (!isOpen) {
     return (
       <div className="fixed bottom-6 left-6 z-50">
@@ -120,6 +131,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                   height={60}
                   className="rounded-full group-hover:scale-110 transition-transform duration-300"
                   onError={() => setImageError(true)}
+                  style={{ height: 'auto' }}
                 />
               ) : (
                 <div
@@ -147,6 +159,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                     height={120}
                     className="rounded-full mx-auto mb-2"
                     onError={() => setImageError(true)}
+                    style={{ height: 'auto' }}
                   />
                   <div className="text-sm font-semibold text-gray-900 dark:text-white">
                     {config.name}
@@ -183,6 +196,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                   height={48}
                   className="rounded-full"
                   onError={() => setImageError(true)}
+                  style={{ height: 'auto' }}
                 />
               ) : (
                 <div

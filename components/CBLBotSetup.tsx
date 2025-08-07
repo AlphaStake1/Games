@@ -254,7 +254,7 @@ const CBLBotSetup: React.FC<CBLBotSetupProps> = ({
 
         <div className="p-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-4 h-14">
               <TabsTrigger value="template">Template</TabsTrigger>
               <TabsTrigger value="personality">Personality</TabsTrigger>
               <TabsTrigger value="branding">Branding</TabsTrigger>

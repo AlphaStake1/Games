@@ -448,7 +448,7 @@ const MyNFTsContent = () => {
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-white dark:bg-[#002244] border border-gray-200 dark:border-[#004953] rounded-xl p-1 transition-colors duration-300">
+          <TabsList className="grid w-full grid-cols-3 h-14 bg-white dark:bg-[#002244] border border-gray-200 dark:border-[#004953] rounded-xl p-1 transition-colors duration-300">
             <TabsTrigger
               value="collection"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#ed5925] data-[state=active]:to-[#96abdc] data-[state=active]:text-white rounded-lg font-semibold transition-all duration-200"

@@ -13,6 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 3. **Consult `/research/*`** – scrape pages live only if documentation is missing there.
 4. **Sacred truths**
    - Primary orchestrator model: `claude-opus-4-20241218` (for building larger tasks).
+   - Assistant orchestrator model: `claude-opus-4-1-20250805` (for complex multi-step tasks).
    - Supporting Claude model: `claude-sonnet-4-20250514` (for focused tasks).
    - Supporting OpenAI model: `gpt-4.1`. **Never rename or swap models.**
    - CRON / scheduler = **Clockwork**.

@@ -208,7 +208,7 @@ const SeasonPassRulesPage = () => {
 
       <div className="max-w-6xl mx-auto p-6">
         <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-          <TabsList className="grid w-full grid-cols-5 bg-gray-800 border border-gray-700 mb-8">
+          <TabsList className="grid w-full grid-cols-5 h-14 bg-gray-800 border border-gray-700 mb-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="onboarding">Onboarding</TabsTrigger>
             <TabsTrigger value="scoring">Scoring</TabsTrigger>
@@ -788,7 +788,7 @@ const SeasonPassRulesPage = () => {
                   </p>
 
                   <Tabs defaultValue="100" className="w-full">
-                    <TabsList className="grid w-full grid-cols-5">
+                    <TabsList className="grid w-full grid-cols-5 h-14">
                       <TabsTrigger value="100">$100</TabsTrigger>
                       <TabsTrigger value="200">$200</TabsTrigger>
                       <TabsTrigger value="300">$300</TabsTrigger>

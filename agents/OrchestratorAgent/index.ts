@@ -9,6 +9,7 @@ import { WinnerAgent } from '../WinnerAgent';
 import { EmailAgent } from '../EmailAgent';
 import { DocumentationAgent } from '../DocumentationAgent';
 import { CodeReviewAgent } from '../CodeReviewAgent';
+import { TempoChronosAgent } from '../TempoChronosAgent';
 import { EventEmitter } from 'events';
 import * as dotenv from 'dotenv';
 
@@ -112,6 +113,7 @@ Available Agents:
 - OracleAgent: fetch_scores, poll_game_status
 - WinnerAgent: settle_winner, calculate_payout
 - EmailAgent: send_winner_notification, send_game_updates
+- TempoChronosAgent: monitor_fill_rates, evaluate_release, manage_board_queue
 
 Based on the current state, determine what tasks need to be executed next. Consider:
 1. Game flow progression
@@ -241,6 +243,9 @@ Respond with a JSON object containing:
       case 'EmailAgent':
         await this.executeEmailTask(task);
         break;
+      case 'TempoChronosAgent':
+        await this.executeTempoChronosTask(task);
+        break;
       default:
         console.warn(`Unknown agent: ${task.agent}`);
     }
@@ -346,6 +351,49 @@ Respond with a JSON object containing:
         break;
       default:
         console.warn(`Unknown email action: ${task.action}`);
+    }
+  }
+
+  private async executeTempoChronosTask(task: any): Promise<void> {
+    const tempoChronosAgent = new TempoChronosAgent(
+      this.connection,
+      this.provider,
+      this.program,
+    );
+
+    switch (task.action) {
+      case 'monitor_fill_rates':
+        await tempoChronosAgent.startMonitoring(task.args.intervalMs || 60000);
+        break;
+      case 'evaluate_release':
+        const decision = await tempoChronosAgent.evaluateBoardForRelease(
+          task.args.gameId,
+        );
+        console.log(`Release decision for game ${task.args.gameId}:`, decision);
+        break;
+      case 'manage_board_queue':
+        await tempoChronosAgent.addBoard({
+          gameId: task.args.gameId,
+          boardPda: task.args.boardPda,
+          fillRate: task.args.fillRate || 0,
+          isVIP: task.args.isVIP || false,
+          gameType: task.args.gameType || 'Sunday',
+          week: task.args.week || 1,
+        });
+        break;
+      case 'update_player_metrics':
+        tempoChronosAgent.updatePlayerMetrics({
+          activePlayerCount: task.args.activePlayerCount,
+          treasuryBalance: task.args.treasuryBalance,
+        });
+        break;
+      case 'generate_status_report':
+        const report = await tempoChronosAgent.generateStatusReport();
+        console.log(report);
+        this.emit('tempoChronosReport', report);
+        break;
+      default:
+        console.warn(`Unknown Tempo Chronos action: ${task.action}`);
     }
   }
 
@@ -465,6 +513,7 @@ Respond with a JSON object containing:
         ['OracleAgent', OracleAgent],
         ['WinnerAgent', WinnerAgent],
         ['EmailAgent', EmailAgent],
+        ['TempoChronosAgent', TempoChronosAgent],
       ]),
       developmentAgents: new Map([
         ['DocumentationAgent', DocumentationAgent],

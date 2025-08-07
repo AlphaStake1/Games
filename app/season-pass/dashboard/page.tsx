@@ -436,7 +436,7 @@ const SeasonPassDashboard = () => {
           onValueChange={(value) => setSelectedTab(value as typeof selectedTab)}
           className="mb-8"
         >
-          <TabsList className="grid w-full grid-cols-3 bg-gray-800 border border-gray-700">
+          <TabsList className="grid w-full grid-cols-3 h-14 bg-gray-800 border border-gray-700">
             <TabsTrigger
               value="season-pass"
               className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-400 data-[state=active]:to-orange-500 data-[state=active]:text-black"

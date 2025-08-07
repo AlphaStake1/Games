@@ -103,6 +103,7 @@
     "encoding": "^0.1.13",
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.1",
+    "framer-motion": "^12.23.12",
     "input-otp": "^1.2.4",
     "key-did-provider-ed25519": "^4.0.2",
     "key-did-resolver": "^4.0.0",

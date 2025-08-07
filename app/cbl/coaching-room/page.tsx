@@ -270,7 +270,7 @@ const CBLCoachingRoom = () => {
 
         {/* Main Content Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-4 h-14">
             <TabsTrigger value="discussion" className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4" />
               Discussion

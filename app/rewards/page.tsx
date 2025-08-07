@@ -161,45 +161,67 @@ const RewardsSystemPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-blue-100 rounded-full">
-              <Trophy className="h-8 w-8 text-blue-600" />
+            <div className="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
+              <Trophy className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900">Rewards System</h1>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+              Rewards System
+            </h1>
           </div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Earn Blue Points for gameplay and Orange Points for community
             activities. Build your rewards while competing in NFL squares!
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="blue-points">Blue Points</TabsTrigger>
-            <TabsTrigger value="orange-points">Orange Points</TabsTrigger>
-            <TabsTrigger value="vip">VIP Benefits</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-4 mb-8 h-14 bg-white dark:bg-gray-800 shadow-lg border-2 border-gray-200 dark:border-gray-700">
+            <TabsTrigger
+              value="overview"
+              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-md text-base font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-300 dark:data-[state=active]:text-white transition-all"
+            >
+              Overview
+            </TabsTrigger>
+            <TabsTrigger
+              value="blue-points"
+              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-md text-base font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-300 dark:data-[state=active]:text-white transition-all"
+            >
+              Blue Points
+            </TabsTrigger>
+            <TabsTrigger
+              value="orange-points"
+              className="data-[state=active]:bg-orange-600 data-[state=active]:text-white data-[state=active]:shadow-md text-base font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-300 dark:data-[state=active]:text-white transition-all"
+            >
+              Orange Points
+            </TabsTrigger>
+            <TabsTrigger
+              value="vip"
+              className="data-[state=active]:bg-yellow-600 data-[state=active]:text-white data-[state=active]:shadow-md text-base font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-300 dark:data-[state=active]:text-white transition-all"
+            >
+              VIP Benefits
+            </TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-8">
             <div className="grid md:grid-cols-2 gap-8">
               {/* Blue Points Overview */}
-              <Card className="border-blue-200 bg-blue-50/50">
+              <Card className="border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/20">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-blue-800">
-                    <div className="p-2 bg-blue-600 rounded-lg">
+                  <CardTitle className="flex items-center gap-2 text-blue-800 dark:text-blue-200">
+                    <div className="p-2 bg-blue-600 dark:bg-blue-500 rounded-lg">
                       <Target className="h-5 w-5 text-white" />
                     </div>
                     Blue Points
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-blue-700 mb-4">
+                  <p className="text-blue-700 dark:text-blue-300 mb-4">
                     Earned through gameplay participation. Higher board prices =
                     more points!
                   </p>
@@ -228,17 +250,17 @@ const RewardsSystemPage = () => {
               </Card>
 
               {/* Orange Points Overview */}
-              <Card className="border-orange-200 bg-orange-50/50">
+              <Card className="border-orange-200 dark:border-orange-800 bg-orange-50/50 dark:bg-orange-900/20">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-orange-800">
-                    <div className="p-2 bg-orange-600 rounded-lg">
+                  <CardTitle className="flex items-center gap-2 text-orange-800 dark:text-orange-200">
+                    <div className="p-2 bg-orange-600 dark:bg-orange-500 rounded-lg">
                       <Users className="h-5 w-5 text-white" />
                     </div>
                     Orange Points
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-orange-700 mb-4">
+                  <p className="text-orange-700 dark:text-orange-300 mb-4">
                     Earned through social activities and community engagement.
                   </p>
                   <div className="space-y-2 text-sm">
@@ -267,40 +289,45 @@ const RewardsSystemPage = () => {
             </div>
 
             {/* Example Earnings */}
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="h-6 w-6 text-purple-600" />
+                <CardTitle className="flex items-center gap-2 dark:text-white">
+                  <Sparkles className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                   Weekly Earning Examples
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-3 gap-6">
                   {exampleEarnings.map((example, index) => (
-                    <div key={index} className="border rounded-lg p-4">
-                      <h4 className="font-semibold text-lg mb-2">
+                    <div
+                      key={index}
+                      className="border dark:border-gray-600 rounded-lg p-4 dark:bg-gray-700"
+                    >
+                      <h4 className="font-semibold text-lg mb-2 dark:text-white">
                         {example.type}
                       </h4>
-                      <p className="text-sm text-gray-600 mb-3">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                         {example.description}
                       </p>
                       <div className="space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-blue-600">Blue Points:</span>
-                          <span className="font-semibold">
+                          <span className="text-blue-600 dark:text-blue-400">
+                            Blue Points:
+                          </span>
+                          <span className="font-semibold dark:text-white">
                             {example.bluePoints}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-orange-600">
+                          <span className="text-orange-600 dark:text-orange-400">
                             Orange Points:
                           </span>
-                          <span className="font-semibold">
+                          <span className="font-semibold dark:text-white">
                             {example.orangePoints}
                           </span>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500 mt-2">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                         {example.activity}
                       </p>
                     </div>
@@ -312,10 +339,10 @@ const RewardsSystemPage = () => {
 
           {/* Blue Points Tab */}
           <TabsContent value="blue-points" className="space-y-8">
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Target className="h-6 w-6 text-blue-600" />
+                <CardTitle className="flex items-center gap-2 dark:text-white">
+                  <Target className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                   Blue Points Earning Structure
                 </CardTitle>
               </CardHeader>
@@ -360,22 +387,29 @@ const RewardsSystemPage = () => {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
               <CardHeader>
-                <CardTitle>Multipliers & Bonuses</CardTitle>
+                <CardTitle className="dark:text-white">
+                  Multipliers & Bonuses
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-6">
                   {multipliers.map((multiplier, index) => (
-                    <div key={index} className="border rounded-lg p-4">
+                    <div
+                      key={index}
+                      className="border dark:border-gray-600 rounded-lg p-4 dark:bg-gray-700"
+                    >
                       <div className="flex items-center gap-2 mb-2">
-                        <CheckCircle className="h-5 w-5 text-green-600" />
-                        <h4 className="font-semibold">{multiplier.name}</h4>
+                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+                        <h4 className="font-semibold dark:text-white">
+                          {multiplier.name}
+                        </h4>
                       </div>
-                      <p className="text-lg font-bold text-blue-600 mb-1">
+                      <p className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-1">
                         {multiplier.effect}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
                         {multiplier.requirement}
                       </p>
                     </div>
@@ -387,10 +421,10 @@ const RewardsSystemPage = () => {
 
           {/* Orange Points Tab */}
           <TabsContent value="orange-points" className="space-y-8">
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-6 w-6 text-orange-600" />
+                <CardTitle className="flex items-center gap-2 dark:text-white">
+                  <Users className="h-6 w-6 text-orange-600 dark:text-orange-400" />
                   Orange Points Activities
                 </CardTitle>
               </CardHeader>
@@ -431,14 +465,14 @@ const RewardsSystemPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-orange-50/50 border-orange-200">
+            <Card className="bg-orange-50/50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800">
               <CardHeader>
-                <CardTitle className="text-orange-800">
+                <CardTitle className="text-orange-800 dark:text-orange-200">
                   Community Board Leaders (CBL)
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-orange-700 mb-4">
+                <p className="text-orange-700 dark:text-orange-300 mb-4">
                   CBLs earn additional Orange Points for community building
                   activities:
                 </p>
@@ -463,21 +497,23 @@ const RewardsSystemPage = () => {
 
           {/* VIP Benefits Tab */}
           <TabsContent value="vip" className="space-y-8">
-            <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
+            <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/30 border-yellow-200 dark:border-yellow-800">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-yellow-800">
+                <CardTitle className="flex items-center gap-2 text-yellow-800 dark:text-yellow-200">
                   <Crown className="h-6 w-6" />
                   VIP Season Pass
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="text-3xl font-bold text-yellow-600">$97</div>
+                  <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
+                    $97
+                  </div>
                   <div>
-                    <div className="text-sm text-gray-500 line-through">
+                    <div className="text-sm text-gray-500 dark:text-gray-400 line-through">
                       Regular $299
                     </div>
-                    <div className="text-sm text-green-600 font-semibold">
+                    <div className="text-sm text-green-600 dark:text-green-400 font-semibold">
                       Save $202!
                     </div>
                   </div>
@@ -485,53 +521,69 @@ const RewardsSystemPage = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-lg">Core Benefits</h4>
+                    <h4 className="font-semibold text-lg dark:text-white">
+                      Core Benefits
+                    </h4>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <Zap className="h-5 w-5 text-yellow-600" />
-                        <span>
+                        <Zap className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                        <span className="dark:text-white">
                           <strong>1.5×</strong> Blue Points multiplier
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Target className="h-5 w-5 text-yellow-600" />
-                        <span>Access to premium boards ($100+)</span>
+                        <Target className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                        <span className="dark:text-white">
+                          Access to premium boards ($100+)
+                        </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Users className="h-5 w-5 text-yellow-600" />
-                        <span>Franchise Community Boards</span>
+                        <Users className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                        <span className="dark:text-white">
+                          Franchise Community Boards
+                        </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Gift className="h-5 w-5 text-yellow-600" />
-                        <span>100 Orange Points bonus</span>
+                        <Gift className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                        <span className="dark:text-white">
+                          100 Orange Points bonus
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-lg">Coming Soon</h4>
+                    <h4 className="font-semibold text-lg dark:text-white">
+                      Coming Soon
+                    </h4>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <Star className="h-5 w-5 text-gray-400" />
-                        <span className="text-gray-600">Early NFT drops</span>
+                        <Star className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+                        <span className="text-gray-600 dark:text-gray-400">
+                          Early NFT drops
+                        </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Award className="h-5 w-5 text-gray-400" />
-                        <span className="text-gray-600">
+                        <Award className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+                        <span className="text-gray-600 dark:text-gray-400">
                           Free square placements
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Sparkles className="h-5 w-5 text-gray-400" />
-                        <span className="text-gray-600">Exclusive events</span>
+                        <Sparkles className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+                        <span className="text-gray-600 dark:text-gray-400">
+                          Exclusive events
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-6 p-4 bg-yellow-100 rounded-lg">
-                  <h5 className="font-semibold mb-2">VIP Earning Example</h5>
-                  <p className="text-sm text-gray-700">
+                <div className="mt-6 p-4 bg-yellow-100 dark:bg-yellow-900/40 rounded-lg">
+                  <h5 className="font-semibold mb-2 dark:text-white">
+                    VIP Earning Example
+                  </h5>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
                     A VIP player buying 3 squares on a $100 board earns{' '}
                     <strong>4,500 Blue Points</strong>
                     (3,000 base × 1.5 multiplier) compared to 3,000 for regular
@@ -539,7 +591,7 @@ const RewardsSystemPage = () => {
                   </p>
                 </div>
 
-                <Button className="w-full mt-6 bg-yellow-600 hover:bg-yellow-700">
+                <Button className="w-full mt-6 bg-yellow-600 hover:bg-yellow-700 dark:bg-yellow-500 dark:hover:bg-yellow-600">
                   Upgrade to VIP <Crown className="h-4 w-4 ml-2" />
                 </Button>
               </CardContent>

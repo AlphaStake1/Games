@@ -748,7 +748,7 @@ const CreateBoardPage = () => {
           onValueChange={setActiveTab}
           className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-4 h-14">
             <TabsTrigger value="select-games">Select Games</TabsTrigger>
             <TabsTrigger value="configure-boards">Configure Boards</TabsTrigger>
             <TabsTrigger value="review-publish">Review & Publish</TabsTrigger>
