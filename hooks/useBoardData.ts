@@ -85,6 +85,14 @@ export function useBoardData(options: UseBoardDataOptions): UseBoardDataResult {
   const refreshTimerRef = useRef<NodeJS.Timeout | null>(null);
   const mountedRef = useRef(true);
 
+  // Debounce/jitter smoothing for inbound WS updates
+  const updateQueueRef = useRef<{
+    newAvailableSquares?: number;
+    fillPercentage?: number;
+  } | null>(null);
+  const applyTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const lastSquaresRefreshAtRef = useRef<number>(0);
+
   // WebSocket event handlers
   const handleBoardUpdate = useCallback(
     (event: BoardUpdateEvent) => {
@@ -93,30 +101,48 @@ export function useBoardData(options: UseBoardDataOptions): UseBoardDataResult {
       setLastUpdate(new Date());
 
       switch (event.type) {
-        case 'square_purchased':
-          // Update board availability and squares data
-          if (
-            boardAvailability &&
-            event.data.newAvailableSquares !== undefined
-          ) {
-            setBoardAvailability((prev) =>
-              prev
-                ? {
-                    ...prev,
-                    availableSquares: event.data.newAvailableSquares,
-                    totalSquaresSold: 100 - event.data.newAvailableSquares,
-                    fillPercentage:
-                      event.data.fillPercentage ||
-                      ((100 - event.data.newAvailableSquares) / 100) * 100,
-                  }
-                : null,
-            );
+        case 'square_purchased': {
+          // Queue compacted updates to avoid UI jitter
+          if (event.data) {
+            updateQueueRef.current = {
+              newAvailableSquares: event.data.newAvailableSquares,
+              fillPercentage: event.data.fillPercentage,
+            };
           }
-          // Refresh squares data to get latest ownership
-          if (boardId) {
-            refreshBoardSquares();
+
+          if (!applyTimerRef.current) {
+            applyTimerRef.current = setTimeout(() => {
+              applyTimerRef.current = null;
+              const queued = updateQueueRef.current;
+              updateQueueRef.current = null;
+
+              if (!queued) return;
+
+              if (queued.newAvailableSquares !== undefined) {
+                setBoardAvailability((prev) =>
+                  prev
+                    ? {
+                        ...prev,
+                        availableSquares: queued.newAvailableSquares!,
+                        totalSquaresSold: 100 - queued.newAvailableSquares!,
+                        fillPercentage:
+                          queued.fillPercentage ??
+                          ((100 - queued.newAvailableSquares!) / 100) * 100,
+                      }
+                    : null,
+                );
+              }
+
+              // Rate-limit squares refresh to at most once per second
+              const now = Date.now();
+              if (boardId && now - lastSquaresRefreshAtRef.current > 1000) {
+                lastSquaresRefreshAtRef.current = now;
+                refreshBoardSquares();
+              }
+            }, 250); // 250ms debounce window
           }
           break;
+        }
 
         case 'board_locked':
           setBoardAvailability((prev) =>
@@ -209,6 +235,7 @@ export function useBoardData(options: UseBoardDataOptions): UseBoardDataResult {
 
   // Refresh board squares (separate function for WebSocket updates)
   const refreshBoardSquares = useCallback(async (): Promise<void> => {
+    lastSquaresRefreshAtRef.current = Date.now();
     await fetchBoardSquares();
   }, [fetchBoardSquares]);
 
@@ -388,6 +415,10 @@ export function useBoardData(options: UseBoardDataOptions): UseBoardDataResult {
       mountedRef.current = false;
       if (refreshTimerRef.current) {
         clearInterval(refreshTimerRef.current);
+      }
+      if (applyTimerRef.current) {
+        clearTimeout(applyTimerRef.current);
+        applyTimerRef.current = null;
       }
     };
   }, []);

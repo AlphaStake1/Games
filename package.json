@@ -37,7 +37,11 @@
     "eliza:dev": "ts-node scripts/start-eliza-v2.ts",
     "eliza:migrate": "drizzle-kit push:pg",
     "eliza:migrate:generate": "drizzle-kit generate:pg",
-    "calculator:test": "ts-node agents/Calculator/test.ts"
+    "calculator:test": "ts-node agents/Calculator/test.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.3",

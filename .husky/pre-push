@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run security scans before push
+echo "🔒 Running security checks..."
+
+# Frontend security scan
+echo "Scanning frontend code..."
+pnpm run security:frontend
+
+# Check for secrets
+echo "Checking for secrets..."
+pnpm run security:secrets
+
+# TypeScript check
+echo "Running TypeScript check..."
+pnpm run lint && tsc --noEmit
+
+echo "✅ Security checks passed!"

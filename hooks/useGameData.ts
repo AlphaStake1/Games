@@ -283,41 +283,39 @@ export function useGameData(
     refreshGameStatuses,
   ]);
 
-  // WebSocket connection - Disabled for development with mock data
+  // WebSocket connection
   useEffect(() => {
     if (!enableRealTime) return;
 
-    // For development with mock data, simulate connection status
-    setIsConnected(true);
+    const connectionHandler = (connected: boolean) => {
+      if (!mountedRef.current) return;
+      setIsConnected(connected);
+      if (connected) {
+        setLastUpdate(new Date());
+      }
+    };
 
-    // In production, uncomment below:
-    // const connectionHandler = (connected: boolean) => {
-    //   setIsConnected(connected);
-    // };
-    //
-    // websocketService.addConnectionHandler(connectionHandler);
-    // websocketService.connect();
-    //
-    // return () => {
-    //   websocketService.removeConnectionHandler(connectionHandler);
-    // };
+    websocketService.addConnectionHandler(connectionHandler);
+    websocketService.connect();
+
+    return () => {
+      websocketService.removeConnectionHandler(connectionHandler);
+    };
   }, [enableRealTime]);
 
-  // WebSocket game subscriptions - Disabled for development with mock data
+  // WebSocket game subscriptions
   useEffect(() => {
     if (!enableRealTime || games.length === 0) return;
 
-    // For development with mock data, skip WebSocket subscriptions
-    // In production, uncomment below:
-    // games.forEach((game) => {
-    //   websocketService.subscribeToGame(game.gameId, handleGameUpdate);
-    // });
-    //
-    // return () => {
-    //   games.forEach((game) => {
-    //     websocketService.unsubscribeFromGame(game.gameId, handleGameUpdate);
-    //   });
-    // };
+    games.forEach((game) => {
+      websocketService.subscribeToGame(game.gameId, handleGameUpdate);
+    });
+
+    return () => {
+      games.forEach((game) => {
+        websocketService.unsubscribeFromGame(game.gameId, handleGameUpdate);
+      });
+    };
   }, [enableRealTime, games, handleGameUpdate]);
 
   // Cleanup

@@ -24,15 +24,27 @@ export class WebSocketService {
   private errorHandlers: Set<WebSocketErrorHandler> = new Set();
   private connectionHandlers: Set<WebSocketConnectionHandler> = new Set();
 
+  // Outbound message buffering when socket is not yet open
+  private pendingMessages: string[] = [];
+
+  // Connection state
+  private reconnectAttempts = 0;
+  private isConnecting = false;
+  private isIntentionallyClosed = false;
+  private isOnline: boolean =
+    typeof navigator !== 'undefined' ? navigator.onLine : true;
+
+  // Heartbeat diagnostics
+  private lastPingAt: number | null = null;
+  private lastPongAt: number | null = null;
+
   private readonly WS_URL =
     process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3001/ws';
   private readonly RECONNECT_INTERVAL = 5000; // 5 seconds
   private readonly HEARTBEAT_INTERVAL = 30000; // 30 seconds
   private readonly MAX_RECONNECT_ATTEMPTS = 10;
 
-  private reconnectAttempts = 0;
-  private isConnecting = false;
-  private isIntentionallyClosed = false;
+  // (moved to declaration block above)
 
   static getInstance(): WebSocketService {
     if (!WebSocketService.instance) {
@@ -41,8 +53,56 @@ export class WebSocketService {
     return WebSocketService.instance;
   }
 
+  // Lifecycle and environment hooks
+  constructor() {
+    if (typeof window !== 'undefined') {
+      this.isOnline = navigator.onLine;
+
+      window.addEventListener('online', () => {
+        this.isOnline = true;
+        this.scheduleReconnect(true);
+      });
+
+      window.addEventListener('offline', () => {
+        this.isOnline = false;
+        this.clearTimers();
+        if (this.ws) {
+          try {
+            this.ws.close(1001, 'Network offline');
+          } catch {}
+        }
+        this.notifyConnectionHandlers(false);
+      });
+
+      // Reduce background noise; kick a heartbeat when returning to foreground
+      document.addEventListener?.('visibilitychange', () => {
+        if (
+          typeof document !== 'undefined' &&
+          document.visibilityState === 'visible' &&
+          this.isConnected()
+        ) {
+          try {
+            this.ws!.send(
+              JSON.stringify({
+                type: 'ping',
+                timestamp: new Date().toISOString(),
+              }),
+            );
+          } catch {}
+        }
+      });
+    }
+  }
+
   // Connect to WebSocket server
   connect(): void {
+    if (typeof window === 'undefined') return; // SSR/Node guard
+
+    if (!this.isOnline) {
+      // Wait until we are back online; online listener will trigger reconnect
+      return;
+    }
+
     if (
       this.isConnecting ||
       (this.ws && this.ws.readyState === WebSocket.CONNECTING)
@@ -63,7 +123,9 @@ export class WebSocketService {
     } catch (error) {
       this.handleError(
         new Error(
-          `Failed to create WebSocket connection: ${error instanceof Error ? error.message : String(error)}`,
+          `Failed to create WebSocket connection: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
         ),
       );
       this.scheduleReconnect();
@@ -222,6 +284,19 @@ export class WebSocketService {
       this.notifyConnectionHandlers(true);
       this.startHeartbeat();
       this.resubscribeAll();
+
+      // Flush any queued messages
+      if (this.pendingMessages.length > 0) {
+        const queued = this.pendingMessages.splice(0);
+        for (const msg of queued) {
+          try {
+            this.ws!.send(msg);
+          } catch (e) {
+            // If send fails, break to avoid infinite loop
+            break;
+          }
+        }
+      }
     };
 
     this.ws.onclose = (event) => {
@@ -229,7 +304,7 @@ export class WebSocketService {
       this.notifyConnectionHandlers(false);
       this.stopHeartbeat();
 
-      if (!this.isIntentionallyClosed) {
+      if (!this.isIntentionallyClosed && this.isOnline) {
         this.scheduleReconnect();
       }
     };
@@ -242,11 +317,20 @@ export class WebSocketService {
     this.ws.onmessage = (event) => {
       try {
         const message: WebSocketMessage = JSON.parse(event.data);
+
+        // Heartbeat response
+        if (message.type === 'pong') {
+          this.lastPongAt = Date.now();
+          return;
+        }
+
         this.handleMessage(message);
       } catch (error) {
         this.handleError(
           new Error(
-            `Failed to parse WebSocket message: ${error instanceof Error ? error.message : String(error)}`,
+            `Failed to parse WebSocket message: ${
+              error instanceof Error ? error.message : String(error)
+            }`,
           ),
         );
       }
@@ -310,24 +394,32 @@ export class WebSocketService {
   }
 
   private sendSubscription(subscription: WebSocketSubscription): void {
+    const message = {
+      type: 'subscribe',
+      data: subscription,
+      timestamp: new Date().toISOString(),
+    };
+    const payload = JSON.stringify(message);
+
     if (this.isConnected()) {
-      const message = {
-        type: 'subscribe',
-        data: subscription,
-        timestamp: new Date().toISOString(),
-      };
-      this.ws!.send(JSON.stringify(message));
+      this.ws!.send(payload);
+    } else {
+      this.pendingMessages.push(payload);
     }
   }
 
   private sendUnsubscription(subscription: WebSocketSubscription): void {
+    const message = {
+      type: 'unsubscribe',
+      data: subscription,
+      timestamp: new Date().toISOString(),
+    };
+    const payload = JSON.stringify(message);
+
     if (this.isConnected()) {
-      const message = {
-        type: 'unsubscribe',
-        data: subscription,
-        timestamp: new Date().toISOString(),
-      };
-      this.ws!.send(JSON.stringify(message));
+      this.ws!.send(payload);
+    } else {
+      this.pendingMessages.push(payload);
     }
   }
 
@@ -359,19 +451,28 @@ export class WebSocketService {
     });
   }
 
-  private scheduleReconnect(): void {
-    if (
-      this.isIntentionallyClosed ||
-      this.reconnectAttempts >= this.MAX_RECONNECT_ATTEMPTS
-    ) {
+  private scheduleReconnect(forceImmediate: boolean = false): void {
+    if (this.isIntentionallyClosed || !this.isOnline) {
       return;
     }
 
-    this.reconnectAttempts++;
-    const delay = Math.min(
-      this.RECONNECT_INTERVAL * this.reconnectAttempts,
-      30000,
-    );
+    if (forceImmediate) {
+      this.reconnectAttempts = 0;
+    }
+
+    if (this.reconnectAttempts >= this.MAX_RECONNECT_ATTEMPTS) {
+      return;
+    }
+
+    const attempt = this.reconnectAttempts++;
+    const base = this.RECONNECT_INTERVAL;
+    const exp = Math.min(base * Math.pow(2, attempt), 30000); // capped exponential
+    const jitter = Math.random() * exp; // full jitter
+    const delay = forceImmediate ? 0 : jitter;
+
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer);
+    }
 
     this.reconnectTimer = setTimeout(() => {
       this.connect();
@@ -379,14 +480,33 @@ export class WebSocketService {
   }
 
   private startHeartbeat(): void {
+    if (this.heartbeatTimer) {
+      clearInterval(this.heartbeatTimer);
+    }
+
     this.heartbeatTimer = setInterval(() => {
-      if (this.isConnected()) {
-        this.ws!.send(
-          JSON.stringify({
-            type: 'ping',
-            timestamp: new Date().toISOString(),
-          }),
-        );
+      if (this.isConnected() && this.isOnline) {
+        const visible =
+          typeof document === 'undefined'
+            ? true
+            : document.visibilityState === 'visible';
+        if (!visible) return;
+
+        this.lastPingAt = Date.now();
+
+        try {
+          this.ws!.send(
+            JSON.stringify({
+              type: 'ping',
+              timestamp: new Date().toISOString(),
+            }),
+          );
+        } catch {
+          // Force reconnect path on send failure
+          try {
+            this.ws?.close();
+          } catch {}
+        }
       }
     }, this.HEARTBEAT_INTERVAL);
   }

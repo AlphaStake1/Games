@@ -27,14 +27,37 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  // Network can be set to 'devnet', 'testnet', or 'mainnet-beta'
-  const network = WalletAdapterNetwork.Devnet;
+  // Network selection based on environment variable
+  const network = useMemo(() => {
+    const networkName = process.env.NEXT_PUBLIC_SOLANA_NETWORK;
+    switch (networkName) {
+      case 'mainnet-beta':
+        return WalletAdapterNetwork.Mainnet;
+      case 'testnet':
+        return WalletAdapterNetwork.Testnet;
+      case 'devnet':
+        return WalletAdapterNetwork.Devnet;
+      default:
+        console.warn(`Unknown network: ${networkName}, defaulting to testnet`);
+        return WalletAdapterNetwork.Testnet;
+    }
+  }, []);
 
-  // RPC endpoint
-  const endpoint = useMemo(
-    () => process.env.NEXT_PUBLIC_RPC_ENDPOINT || clusterApiUrl(network),
-    [network],
-  );
+  // RPC endpoint with fallback priority
+  const endpoint = useMemo(() => {
+    // First priority: explicit RPC URL
+    if (process.env.NEXT_PUBLIC_SOLANA_RPC_URL) {
+      return process.env.NEXT_PUBLIC_SOLANA_RPC_URL;
+    }
+
+    // Second priority: legacy RPC endpoint
+    if (process.env.NEXT_PUBLIC_RPC_ENDPOINT) {
+      return process.env.NEXT_PUBLIC_RPC_ENDPOINT;
+    }
+
+    // Fallback to cluster API URL
+    return clusterApiUrl(network);
+  }, [network]);
 
   // Configure wallet adapters
   const wallets = useMemo(
