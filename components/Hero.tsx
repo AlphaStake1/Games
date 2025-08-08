@@ -1,97 +1,157 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Play } from 'lucide-react';
-import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
+import { Trophy, ArrowRight, Play } from 'lucide-react';
+import { useMemo, useEffect, useState } from 'react';
+
+const HERO_MEDIA_URL = process.env.NEXT_PUBLIC_HERO_MEDIA_URL;
+const HERO_MEDIA_ALT = process.env.NEXT_PUBLIC_HERO_MEDIA_ALT;
+const TENOR_POST_ID = process.env.NEXT_PUBLIC_TENOR_POSTID || '15397062';
+const HERO_OBJECT_POSITION =
+  (process.env.NEXT_PUBLIC_HERO_OBJECT_POSITION as string) || '50% 30%'; // focus headroom
+const HERO_ROTATE_MS = parseInt(
+  (process.env.NEXT_PUBLIC_HERO_ROTATE_MS as string) || '12000',
+  10
+);
 
 const Hero = () => {
-  const [isHovered, setIsHovered] = useState(false);
-  const { showPopup } = useWalletConnection();
-  const { connected } = useWallet();
   const router = useRouter();
+  const { connected } = useWallet();
+  const { showPopup } = useWalletConnection();
 
-  const handleJoinGames = () => {
-    console.log('Join Weekly Cash Games clicked - Connected:', connected);
+  const seasonStartsSoon = useMemo(() => true, []);
+  const isVideo =
+    typeof HERO_MEDIA_URL === 'string' &&
+    /\.(mp4|webm|ogg)(\?.*)?$/i.test(HERO_MEDIA_URL);
+
+  // Build media lists and rotate if multiple videos are provided
+  const mediaList = useMemo(
+    () => ([HERO_MEDIA_URL, HERO_MEDIA_ALT].filter(Boolean) as string[]),
+    []
+  );
+  const [activeIdx, setActiveIdx] = useState(0);
+  useEffect(() => {
+    if (mediaList.length < 2) return;
+    const id = setInterval(() => {
+      setActiveIdx((i) => (i + 1) % mediaList.length);
+    }, HERO_ROTATE_MS);
+    return () => clearInterval(id);
+  }, [mediaList.length, HERO_ROTATE_MS]);
+
+  const handleGetSeasonPass = () => {
+    // Drive users straight into the Season Pass funnel
+    router.push('/season-pass');
+  };
+
+  const handleSeeWeekly = () => {
+    // Preserve existing wallet-gated weekly flow
     if (connected) {
-      console.log('Redirecting to boards...');
       router.push('/boards?mode=weekly');
     } else {
-      console.log('Showing wallet popup...');
       showPopup('play-game', { redirectPath: '/boards?mode=weekly' });
     }
   };
 
   return (
-    <section className="bg-black text-white py-20 lg:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Text Content */}
+    <section className="relative overflow-hidden text-white min-h-[58vh] md:min-h-[64vh] lg:min-h-[72vh] xl:min-h-[80vh] flex items-center">
+      {/* Local/Hosted Background Media with optional rotation */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {mediaList.length > 0 ? (
+          <div className="absolute inset-0">
+            {mediaList.map((src, i) => {
+              const isVideo = /\.(mp4|webm|ogg)(\?.*)?$/i.test(src);
+              return isVideo ? (
+                <video
+                  key={i}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${activeIdx === i ? 'opacity-100' : 'opacity-0'}`}
+                  src={src}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={{ objectPosition: HERO_OBJECT_POSITION as any }}
+                />
+              ) : (
+                <img
+                  key={i}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${activeIdx === i ? 'opacity-100' : 'opacity-0'}`}
+                  src={src}
+                  alt="Hero background"
+                  style={{ objectPosition: HERO_OBJECT_POSITION as any }}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0b1220] via-[#0b162c] to-[#0b1220]" />
+        )}
+        {/* Readability overlay */}
+        <div className="absolute inset-0 bg-black/30" />
+        {/* Vignette overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(0,0,0,0.7) 100%)',
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+        <div className="grid grid-cols-1 gap-12 items-center">
+          {/* Copy */}
           <div className="text-center lg:text-left">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Weekly Cash Games{' '}
-              <span className="text-blue-500">Start Here</span>
-            </h1>
-            <p className="text-xl sm:text-2xl text-gray-400 mb-8 leading-relaxed">
-              Join Football Board Games with payouts for every quarter!
-            </p>
-            <button
-              onClick={handleJoinGames}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-xl inline-flex items-center gap-3"
-              aria-label="Join weekly cash games"
-            >
-              <Play className="w-6 h-6" />
-              Join Weekly Cash Games
-            </button>
-          </div>
-
-          {/* Minimalist Illustration */}
-          <div className="flex justify-center lg:justify-end">
-            <div
-              className={`relative transition-transform duration-500 ${
-                isHovered ? 'scale-110' : 'scale-100'
-              }`}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              {/* Grid Background */}
-              <div className="w-80 h-80 bg-gray-900 rounded-lg relative overflow-hidden border border-gray-700 shadow-2xl">
-                {/* Grid Lines */}
-                <div className="absolute inset-0">
-                  {/* Vertical lines */}
-                  {[...Array(9)].map((_, i) => (
-                    <div
-                      key={`v-${i}`}
-                      className="absolute h-full w-px bg-gray-600 opacity-30"
-                      style={{ left: `${(i + 1) * 10}%` }}
-                    />
-                  ))}
-                  {/* Horizontal lines */}
-                  {[...Array(9)].map((_, i) => (
-                    <div
-                      key={`h-${i}`}
-                      className="absolute w-full h-px bg-gray-600 opacity-30"
-                      style={{ top: `${(i + 1) * 10}%` }}
-                    />
-                  ))}
-                </div>
-
-                {/* Center Trophy */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-6xl">🏆</div>
-                </div>
-
-                {/* Corner Accents */}
-                <div className="absolute top-4 left-4 w-2 h-2 bg-blue-500 rounded-full"></div>
-                <div className="absolute top-4 right-4 w-2 h-2 bg-blue-500 rounded-full"></div>
-                <div className="absolute bottom-4 left-4 w-2 h-2 bg-blue-500 rounded-full"></div>
-                <div className="absolute bottom-4 right-4 w-2 h-2 bg-blue-500 rounded-full"></div>
+            {seasonStartsSoon && (
+              <div className="mb-4 flex items-center justify-center lg:justify-start gap-2">
+                <span className="inline-flex items-center rounded-full bg-yellow-400/20 text-yellow-300 px-3 py-1 text-xs font-semibold ring-1 ring-yellow-300/30">
+                  Season starts soon
+                </span>
+                <span className="hidden sm:inline-flex items-center rounded-full bg-emerald-400/15 text-emerald-300 px-3 py-1 text-xs font-semibold ring-1 ring-emerald-300/30">
+                  Limited passes available
+                </span>
               </div>
+            )}
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+              Climb the{' '}
+              <span className="bg-gradient-to-r from-yellow-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">
+                Leaderboards
+              </span>
+            </h1>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-3 justify-center lg:justify-start">
+              <button
+                onClick={handleGetSeasonPass}
+                className="group inline-flex items-center gap-3 rounded-lg px-7 py-4 text-lg font-bold text-black bg-gradient-to-r from-yellow-400 to-orange-500 shadow-[0_8px_30px_rgb(255,200,0,0.25)] hover:from-yellow-300 hover:to-orange-400 transition-all focus:outline-none focus-visible:ring-2 ring-black/70"
+                aria-label="Get Season Pass"
+              >
+                <Trophy className="w-6 h-6" />
+                Get Season Pass
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
+              </button>
+
+              <button
+                onClick={handleSeeWeekly}
+                className="inline-flex items-center gap-2 rounded-lg px-6 py-4 text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/5 transition-all"
+                aria-label="See Weekly Games"
+              >
+                <Play className="w-5 h-5" />
+                See Weekly Games
+              </button>
             </div>
+
+            {/* Reduced copy */}
           </div>
+
+          {/* Visual intentionally removed: GIF background covers entire hero */}
         </div>
       </div>
+
+      {/* Component-scoped styles (intentionally minimal) */}
+      <style jsx>{``}</style>
     </section>
   );
 };
