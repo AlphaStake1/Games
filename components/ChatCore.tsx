@@ -29,6 +29,10 @@ export interface ChatbotConfig {
   initialMessage: string;
   gradientFrom: string;
   gradientTo: string;
+  // Optional presentation tweaks for the closed chat button
+  avatarButtonSize?: number;       // px, default 60
+  avatarButtonOffsetY?: number;    // px, negative to "pop out" above pill, default 0
+  avatarButtonRounded?: boolean;   // default true
   getResponse: (userMessage: string) => KnowledgeResponse;
 }
 
@@ -149,6 +153,12 @@ const ChatCore = ({ config }: ChatCoreProps) => {
     }
   };
 
+  // Avatar presentation customization for the closed chat button
+  const buttonAvatarSize = config.avatarButtonSize ?? 60;
+  const buttonAvatarRounded =
+    config.avatarButtonRounded !== undefined ? config.avatarButtonRounded : true;
+  const buttonAvatarOffsetY = config.avatarButtonOffsetY ?? 0;
+
   if (!isClient) {
     return null;
   }
@@ -167,14 +177,19 @@ const ChatCore = ({ config }: ChatCoreProps) => {
           >
             <div className="flex items-center gap-3">
               {!imageError ? (
-                <Image
-                  src={config.avatarSrc}
-                  alt={config.avatarAlt}
-                  width={60}
-                  height={60}
-                  className="rounded-full group-hover:scale-110 transition-transform duration-300 object-cover"
-                  onError={() => setImageError(true)}
-                />
+                <div
+                  className="shrink-0"
+                  style={{ transform: `translateY(${buttonAvatarOffsetY}px)` }}
+                >
+                  <Image
+                    src={config.avatarSrc}
+                    alt={config.avatarAlt}
+                    width={buttonAvatarSize}
+                    height={buttonAvatarSize}
+                    className={`${buttonAvatarRounded ? 'rounded-full object-cover' : 'object-contain'} group-hover:scale-110 transition-transform duration-300`}
+                    onError={() => setImageError(true)}
+                  />
+                </div>
               ) : (
                 <div
                   className={`w-14 h-14 bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} rounded-full flex items-center justify-center text-white font-bold text-2xl group-hover:scale-110 transition-transform duration-300`}

@@ -17,6 +17,7 @@ const ChatbotProvider = ({ children }: ChatbotProviderProps) => {
     pathname.startsWith('/cbl') || pathname === '/board-leader';
 
   const isWalletGuide = pathname === '/wallet-guide';
+  const isNFTInfo = pathname.startsWith('/what-are-nfts');
 
   return (
     <>
@@ -24,7 +25,7 @@ const ChatbotProvider = ({ children }: ChatbotProviderProps) => {
       {/* Route-based chatbot injection */}
       {isCBLRoute ? (
         <OCPhilWidget />
-      ) : isWalletGuide ? (
+      ) : isWalletGuide || isNFTInfo ? (
         <Coach101Chatbot />
       ) : (
         <CoachBChatbot />

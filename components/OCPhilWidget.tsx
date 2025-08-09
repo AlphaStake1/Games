@@ -185,6 +185,10 @@ const ocPhilConfig: ChatbotConfig = {
     "Alright rookie, you're **1st-and-10** on your own 20 — let's drive this board to the end-zone! 🚀\n\nI'm **Offensive Coordinator Phil** (OC-Phil), your OC for CBL success! Got your playbook ready for board creation, Blue-Points tracking, rake splits, and All-Star achievement paths.\n\nWhat play are we calling first, QB?",
   gradientFrom: 'from-purple-600',
   gradientTo: 'to-blue-600',
+  // Make avatar larger and offset upward so it pops out of the pill
+  avatarButtonSize: 76,
+  avatarButtonOffsetY: -10,
+  avatarButtonRounded: false,
   getResponse: getOCPhilResponse,
 };
 
