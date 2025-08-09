@@ -23,10 +23,16 @@ function getCSPDirectives(): CSPDirectives {
     process.env.NEXT_PUBLIC_BASE_URL || 'https://footballsquares.app';
   const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
   const wsUrl = process.env.NEXT_PUBLIC_WS_URL || '';
+  const heroMediaUrl = process.env.NEXT_PUBLIC_HERO_MEDIA_URL || '';
+  const heroMediaAltUrl = process.env.NEXT_PUBLIC_HERO_MEDIA_ALT || '';
 
   // Extract domains from URLs
   const apiDomain = apiUrl ? new URL(apiUrl).origin : '';
   const wsDomain = wsUrl ? new URL(wsUrl).origin.replace('http', 'ws') : '';
+  const heroMediaOrigin = heroMediaUrl ? new URL(heroMediaUrl).origin : '';
+  const heroMediaAltOrigin = heroMediaAltUrl
+    ? new URL(heroMediaAltUrl).origin
+    : '';
 
   return {
     'default-src': ["'self'"],
@@ -39,6 +45,8 @@ function getCSPDirectives(): CSPDirectives {
       // Wallet adapters and blockchain libraries
       'https://cdn.jsdelivr.net',
       'https://unpkg.com',
+      // Embeds
+      'https://tenor.com',
       // Analytics (if used)
       'https://www.google-analytics.com',
       'https://www.googletagmanager.com',
@@ -54,6 +62,7 @@ function getCSPDirectives(): CSPDirectives {
       // CDN stylesheets
       'https://cdn.jsdelivr.net',
       'https://unpkg.com',
+      ...(heroMediaOrigin ? [heroMediaOrigin] : []),
     ],
 
     'img-src': [
@@ -71,6 +80,11 @@ function getCSPDirectives(): CSPDirectives {
       // CDN images
       'https://cdn.jsdelivr.net',
       'https://unpkg.com',
+      // Tenor media CDN
+      'https://*.tenor.com',
+      // Hero media origins
+      ...(heroMediaOrigin ? [heroMediaOrigin] : []),
+      ...(heroMediaAltOrigin ? [heroMediaAltOrigin] : []),
     ],
 
     'connect-src': [
@@ -112,9 +126,12 @@ function getCSPDirectives(): CSPDirectives {
     'media-src': [
       "'self'",
       baseUrl,
+      ...(heroMediaOrigin ? [heroMediaOrigin] : []),
       // Video/audio content
       'https://*.nfl.com',
       'https://*.youtube.com',
+      // Tenor GIF/video variants
+      'https://*.tenor.com',
     ],
 
     'frame-src': [
@@ -124,6 +141,9 @@ function getCSPDirectives(): CSPDirectives {
       // Social media embeds (if needed)
       'https://www.youtube.com',
       'https://twitter.com',
+      // Tenor embed
+      'https://tenor.com',
+      'https://*.tenor.com',
     ],
 
     'worker-src': [
@@ -183,11 +203,13 @@ export function getEnvironmentCSP(): string {
     // More permissive CSP for development
     return [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://tenor.com",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: *",
+      "img-src 'self' data: blob: * https://*.tenor.com",
       "connect-src 'self' ws: wss: *",
       "font-src 'self' data: *",
+      'frame-src https://tenor.com https://*.tenor.com',
+      "media-src 'self' https://*.tenor.com",
     ].join('; ');
   }
 

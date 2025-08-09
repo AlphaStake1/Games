@@ -279,7 +279,7 @@ const SeasonPassLandingPage = () => {
             ].map((step, index) => (
               <Card
                 key={index}
-                className="bg-white/70 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 hover:bg-white/90 dark:hover:bg-gray-800/70 transition-all duration-300 shadow-lg"
+                className="bg-white/70 border-4 border-black dark:border-white dark:bg-gray-800/50 hover:bg-white/90 dark:hover:bg-gray-800/70 transition-all duration-300 shadow-lg"
               >
                 <CardContent className="p-6 text-center">
                   <div className="text-yellow-500 dark:text-yellow-400 mb-4 flex justify-center">
@@ -312,7 +312,7 @@ const SeasonPassLandingPage = () => {
 
           {/* Pass Type Selection */}
           <div className="flex justify-center mb-12">
-            <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg">
+            <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg border-4 border-black dark:border-white shadow-lg">
               <Button
                 variant="ghost"
                 onClick={() => setSelectedPassType('full')}
@@ -340,7 +340,7 @@ const SeasonPassLandingPage = () => {
 
           {/* Pass Type Info */}
           <div className="max-w-4xl mx-auto mb-12">
-            <Card className="bg-white/70 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg">
+            <Card className="bg-white/70 border-4 border-black dark:border-white dark:bg-gray-800/50 shadow-lg">
               <CardContent className="p-6">
                 {selectedPassType === 'full' ? (
                   <div className="space-y-4">
@@ -450,7 +450,7 @@ const SeasonPassLandingPage = () => {
               : 'Half-Season Payout Ladder'}
           </h2>
 
-          <Card className="bg-white/80 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg">
+          <Card className="bg-white/80 border-4 border-black dark:border-white dark:bg-gray-800/50 shadow-lg">
             <CardHeader>
               <CardTitle className="text-center text-gray-900 dark:text-white">
                 {selectedPassType === 'full'
@@ -557,7 +557,7 @@ const SeasonPassLandingPage = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Hit Patterns */}
-            <Card className="bg-white/80 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg">
+            <Card className="bg-white/80 border-4 border-black dark:border-white dark:bg-gray-800/50 shadow-lg">
               <CardHeader>
                 <CardTitle className="text-gray-900 dark:text-white">
                   Hit Patterns
@@ -618,7 +618,7 @@ const SeasonPassLandingPage = () => {
             </Card>
 
             {/* Playoff Multipliers */}
-            <Card className="bg-white/80 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg">
+            <Card className="bg-white/80 border-4 border-black dark:border-white dark:bg-gray-800/50 shadow-lg">
               <CardHeader>
                 <CardTitle className="text-gray-900 dark:text-white">
                   Playoff Multipliers

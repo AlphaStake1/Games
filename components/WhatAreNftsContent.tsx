@@ -267,9 +267,9 @@ export function WhatAreNftsContent() {
                   What Are NFTs?
                 </h1>
                 <p className="text-xl lg:text-2xl text-[#96abdc] mb-8 leading-relaxed">
-                  Discover how Non-Fungible Tokens revolutionize digital
-                  ownership and personalize your Football Squares experience
-                  with unique, blockchain-verified markers.
+                  NFTs are like digital trading cards you truly own - each one
+                  unique, yours to keep or trade, and perfect for personalizing
+                  your game squares.
                 </p>
               </div>
 
@@ -318,69 +318,6 @@ export function WhatAreNftsContent() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* My NFTs Page Link - Prominent Above the Fold */}
-        <div className="mb-16">
-          <Card className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] border-0 text-white overflow-hidden relative">
-            <div
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              }}
-            ></div>
-            <CardContent className="relative z-10 p-8 lg:p-12">
-              <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-                <div className="text-center lg:text-left">
-                  <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                    Ready to Create Your NFT Collection?
-                  </h2>
-                  <p className="text-xl lg:text-2xl opacity-90 mb-6">
-                    Visit your NFT dashboard to start minting personalized
-                    square markers
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button
-                      size="lg"
-                      onClick={handleViewCollectionClick}
-                      className="bg-white text-[#ed5925] px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
-                    >
-                      <Grid3X3 className="w-6 h-6 mr-2" />
-                      Go to My NFTs
-                      <ArrowRight className="w-5 h-5 ml-2" />
-                    </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="border-2 border-[#002244] dark:border-white text-[#002244] dark:text-white bg-white/90 dark:bg-transparent px-8 py-4 rounded-full font-bold text-lg hover:bg-[#002244] hover:text-white dark:hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
-                    >
-                      <Sparkles className="w-5 h-5 mr-2" />
-                      Learn More Below
-                      <ChevronDown className="w-5 h-5 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-                <div className="flex-shrink-0">
-                  <div className="w-48 h-48 bg-white/10 backdrop-blur-sm rounded-3xl p-6 flex items-center justify-center">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center animate-pulse">
-                        <Brush className="w-8 h-8" />
-                      </div>
-                      <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center animate-pulse delay-150">
-                        <Star className="w-8 h-8" />
-                      </div>
-                      <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center animate-pulse delay-300">
-                        <ImageIcon className="w-8 h-8" />
-                      </div>
-                      <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center animate-pulse delay-500">
-                        <Zap className="w-8 h-8" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         {/* NFT Basics Section */}

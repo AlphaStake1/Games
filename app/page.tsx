@@ -162,7 +162,7 @@ function HomeContent() {
                 {/* Game Type Selection Cards */}
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
                   {/* Season-Long Play */}
-                  <Card className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300">
+                  <Card className="bg-white dark:bg-black border-4 border-black dark:border-white shadow-sm hover:shadow-md transition-all duration-300">
                     <CardHeader>
                       <CardTitle className="text-gray-900 dark:text-white text-xl flex items-center gap-2">
                         🏆 Season-Long Competition
@@ -194,7 +194,7 @@ function HomeContent() {
                   </Card>
 
                   {/* Weekly Cash Games */}
-                  <Card className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300">
+                  <Card className="bg-white dark:bg-black border-4 border-black dark:border-white shadow-sm hover:shadow-md transition-all duration-300">
                     <CardHeader>
                       <CardTitle className="text-gray-900 dark:text-white text-xl flex items-center gap-2">
                         💰 Weekly Cash Games
@@ -271,7 +271,7 @@ function HomeContent() {
                 </div>
 
                 {/* Quick Join Section */}
-                <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg p-6 shadow-sm">
+                <div className="bg-white dark:bg-black border-4 border-black dark:border-white rounded-lg p-6 shadow-sm">
                   <div className="text-center mb-6">
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                       Have a Game ID?
@@ -357,7 +357,7 @@ function HomeContent() {
                   ].map((feature, index) => (
                     <Card
                       key={index}
-                      className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300"
+                      className="bg-white dark:bg-black border-4 border-black dark:border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)] transition-all duration-300"
                     >
                       <CardContent className="p-6 text-center">
                         <div className="text-4xl mb-4">{feature.icon}</div>
@@ -429,7 +429,7 @@ function HomeContent() {
                   ].map((winner, index) => (
                     <Card
                       key={index}
-                      className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm"
+                      className="bg-white dark:bg-black border-4 border-black dark:border-white shadow-sm"
                     >
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between mb-3">
@@ -511,7 +511,7 @@ function HomeContent() {
                   ].map((testimonial, index) => (
                     <Card
                       key={index}
-                      className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-sm"
+                      className="bg-white dark:bg-black border-4 border-black dark:border-white shadow-sm"
                     >
                       <CardContent className="p-6">
                         <div className="flex items-center mb-4">

@@ -25,6 +25,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import Link from 'next/link';
 
 interface FormData {
   inquiryType: string;
@@ -89,9 +90,37 @@ const BusinessIntakePage = () => {
   };
 
   const handleSubmit = async () => {
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
-    setCurrentStep(5); // Show success message
+    try {
+      const fd = new FormData();
+      fd.append('name', formData.contactName || '');
+      fd.append('company', formData.companyName || '');
+      fd.append('email', formData.email || '');
+      fd.append(
+        'subject',
+        `Business Inquiry - ${formData.inquiryType || 'general'}`,
+      );
+      fd.append('category', 'business-intake');
+      fd.append(
+        'message',
+        [
+          `Inquiry Type: ${formData.inquiryType}`,
+          `Website: ${formData.websiteUrl}`,
+          `Budget: ${formData.budget}`,
+          `Timeline: ${formData.timeline}`,
+          '',
+          `Description: ${formData.description}`,
+          formData.additionalInfo
+            ? `Additional: ${formData.additionalInfo}`
+            : '',
+        ].join('\n'),
+      );
+      await fetch('/api/submissions', { method: 'POST', body: fd });
+    } catch (e) {
+      console.error('Failed to submit intake to /api/submissions', e);
+      // non-blocking; still advance to success view
+    } finally {
+      setCurrentStep(5); // Show success message
+    }
   };
 
   const renderStep = () => {
@@ -464,6 +493,21 @@ const BusinessIntakePage = () => {
                 </p>
               </div>
 
+              <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mt-4">
+                <p className="text-blue-800 dark:text-blue-200 text-sm">
+                  Want to include supporting documents (RFPs, scopes, decks)?
+                  Submit them securely via{' '}
+                  <Link
+                    href="/submissions"
+                    className="text-blue-700 underline dark:text-blue-300"
+                  >
+                    Secure Submissions
+                  </Link>{' '}
+                  to avoid email storage limits. Files are scanned and stored
+                  safely.
+                </p>
+              </div>
+
               <div className="flex gap-3">
                 <Button
                   onClick={handlePrevious}
@@ -595,6 +639,20 @@ const BusinessIntakePage = () => {
                   respond within 4-6 hours during business days. For urgent
                   inquiries, feel free to mention "URGENT" in your email subject
                   line.
+                </p>
+              </div>
+
+              <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg">
+                <p className="text-blue-800 dark:text-blue-200 text-sm">
+                  If you have any attachments to include, please upload them via{' '}
+                  <Link
+                    href="/submissions"
+                    className="text-blue-700 underline dark:text-blue-300"
+                  >
+                    Secure Submissions
+                  </Link>{' '}
+                  and reference your name or company. This helps us screen files
+                  and conserve mailbox storage.
                 </p>
               </div>
 

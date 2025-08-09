@@ -634,23 +634,28 @@ const CBLGuidelinesPage = () => {
           <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <p>
               General inquiries:{' '}
-              <a
-                href="mailto:support@footballsquares.app"
-                className="text-blue-600 hover:underline"
-              >
-                support@footballsquares.app
-              </a>
+              <span className="text-blue-600">
+                Ask OC-Phil right here on this page
+              </span>
             </p>
             <p>
               Security issues:{' '}
               <a
-                href="mailto:security@footballsquares.app"
+                href="mailto:OC-Phil@tutamail.com"
                 className="text-blue-600 hover:underline"
               >
-                security@footballsquares.app
+                OC-Phil@tutamail.com
               </a>
             </p>
-            <p>Appeals: Contact Coach B through your CBL dashboard</p>
+            <p>
+              Appeals: Contact Coach B at{' '}
+              <a
+                href="mailto:Coach-B@tutamail.com"
+                className="text-blue-600 hover:underline"
+              >
+                Coach-B@tutamail.com
+              </a>
+            </p>
           </div>
         </div>
 

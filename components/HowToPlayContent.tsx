@@ -13,7 +13,7 @@ const HowToPlayContent = () => {
           How To Play Football Squares
         </h1>
 
-        <Card className="mb-8">
+        <Card className="mb-8 border-4 border-black dark:border-white">
           <CardHeader>
             <CardTitle>Getting Started</CardTitle>
           </CardHeader>
@@ -54,7 +54,7 @@ const HowToPlayContent = () => {
           </CardContent>
         </Card>
 
-        <Card className="mb-8">
+        <Card className="mb-8 border-4 border-black dark:border-white">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               Game Rules
@@ -86,7 +86,7 @@ const HowToPlayContent = () => {
           </CardContent>
         </Card>
 
-        <Card className="mb-8">
+        <Card className="mb-8 border-4 border-black dark:border-white">
           <CardHeader>
             <CardTitle>Strategy & Tips</CardTitle>
           </CardHeader>

@@ -89,7 +89,7 @@ const LeaderboardPage = () => {
 
     const cardClasses = conference.featured
       ? 'relative transition-all duration-300 hover:shadow-lg bg-gradient-to-br from-indigo-100 to-purple-100 border-indigo-300 dark:from-indigo-900/80 dark:to-purple-900/80 dark:border-indigo-400/50 shadow-lg'
-      : 'relative transition-all duration-300 hover:shadow-lg bg-white/70 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700 shadow-lg';
+      : 'relative transition-all duration-300 hover:shadow-lg bg-white/70 border-4 border-black dark:border-white dark:bg-gray-800/50 shadow-lg';
 
     return (
       <Card className={`${cardClasses} ${isFull ? 'opacity-60' : ''}`}>

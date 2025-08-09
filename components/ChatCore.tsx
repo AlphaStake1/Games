@@ -155,7 +155,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 left-6 z-50">
+      <div className="fixed bottom-6 right-6 z-50">
         <div className="relative">
           <Button
             onClick={() => setIsOpen(true)}
@@ -172,9 +172,8 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                   alt={config.avatarAlt}
                   width={60}
                   height={60}
-                  className="rounded-full group-hover:scale-110 transition-transform duration-300"
+                  className="rounded-full group-hover:scale-110 transition-transform duration-300 object-cover"
                   onError={() => setImageError(true)}
-                  style={{ height: 'auto' }}
                 />
               ) : (
                 <div
@@ -192,7 +191,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
 
           {/* Hover Preview */}
           {isHovering && !imageError && (
-            <div className="absolute bottom-full left-0 mb-4 transform transition-all duration-300 ease-in-out">
+            <div className="absolute bottom-full right-0 mb-4 transform transition-all duration-300 ease-in-out">
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-2xl border border-gray-200 dark:border-gray-600">
                 <div className="text-center">
                   <Image
@@ -200,9 +199,8 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                     alt={`${config.name} Preview`}
                     width={120}
                     height={120}
-                    className="rounded-full mx-auto mb-2"
+                    className="rounded-full mx-auto mb-2 object-cover"
                     onError={() => setImageError(true)}
-                    style={{ height: 'auto' }}
                   />
                   <div className="text-sm font-semibold text-gray-900 dark:text-white">
                     {config.name}
@@ -222,7 +220,7 @@ const ChatCore = ({ config }: ChatCoreProps) => {
   }
 
   return (
-    <div className="fixed bottom-6 left-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50">
       <Card
         className={`w-96 bg-white dark:bg-gray-900 shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 ${isMinimized ? 'h-16' : 'h-96'}`}
       >
@@ -237,9 +235,8 @@ const ChatCore = ({ config }: ChatCoreProps) => {
                   alt={config.avatarAlt}
                   width={48}
                   height={48}
-                  className="rounded-full"
+                  className="rounded-full object-cover"
                   onError={() => setImageError(true)}
-                  style={{ height: 'auto' }}
                 />
               ) : (
                 <div

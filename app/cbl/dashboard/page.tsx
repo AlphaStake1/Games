@@ -461,7 +461,7 @@ function CBLDashboard() {
           className={`rounded-lg p-6 transition-all duration-300 ${
             isPlayerView
               ? 'bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/20 dark:to-teal-950/20 border-2 border-emerald-200 dark:border-emerald-800'
-              : 'bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-950/20 dark:to-indigo-950/20 border-2 border-purple-200 dark:border-purple-800'
+              : 'bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-950/20 dark:to-indigo-950/20 border-2 border-4 border-black dark:border-white'
           }`}
         >
           <div className="flex items-center justify-between">
@@ -564,7 +564,7 @@ function CBLDashboard() {
                 <div className="flex items-center space-x-2">
                   {/* Period Toggle - Only for Player View */}
                   {isPlayerView && (
-                    <div className="flex items-center space-x-1 p-1 rounded-lg bg-gradient-to-r from-blue-100 to-green-100 dark:from-blue-900/30 dark:to-green-900/30 border-2 border-blue-200 dark:border-blue-700">
+                    <div className="flex items-center space-x-1 p-1 rounded-lg bg-gradient-to-r from-blue-100 to-green-100 dark:from-blue-900/30 dark:to-green-900/30 border-2 border-4 border-black dark:border-white dark:border-blue-700">
                       <button
                         onClick={() => setDashboardPeriod('weekly')}
                         className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
@@ -1478,7 +1478,7 @@ function CBLDashboard() {
               </div>
 
               {/* Enhanced Board Scheduling Widget */}
-              <Card className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20 border-purple-200 dark:border-purple-800">
+              <Card className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20 border-4 border-black dark:border-white">
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between text-purple-800 dark:text-purple-200">
                     <div className="flex items-center">
@@ -1925,7 +1925,7 @@ function CBLDashboard() {
               <h2 className="text-2xl font-bold">Community Communications</h2>
 
               {/* Telegram Integration Card */}
-              <Card className="bg-gradient-to-r from-blue-50 to-orange-50 dark:from-blue-950/20 dark:to-orange-950/20 border-blue-200 dark:border-blue-800">
+              <Card className="bg-gradient-to-r from-blue-50 to-orange-50 dark:from-blue-950/20 dark:to-orange-950/20 border-4 border-black dark:border-white dark:border-blue-800">
                 <CardHeader>
                   <CardTitle className="flex items-center text-blue-800 dark:text-blue-200">
                     <MessageSquare className="h-5 w-5 mr-2" />
@@ -2230,7 +2230,7 @@ function CBLDashboard() {
                 {/* Tiered Auto Create Boards System */}
                 <div className="space-y-6">
                   {cblTier === 'first-stream' && (
-                    <Card className="border-blue-200">
+                    <Card className="border-4 border-black dark:border-white">
                       <CardHeader>
                         <CardTitle className="flex items-center">
                           <Home className="h-5 w-5 mr-2 text-blue-600" />
@@ -2353,7 +2353,7 @@ function CBLDashboard() {
                   )}
 
                   {cblTier === 'drive-maker' && (
-                    <Card className="border-green-200">
+                    <Card className="border-4 border-black dark:border-white">
                       <CardHeader>
                         <CardTitle className="flex items-center">
                           <Target className="h-5 w-5 mr-2 text-green-600" />
@@ -2544,7 +2544,7 @@ function CBLDashboard() {
                   )}
 
                   {cblTier === 'franchise' && (
-                    <Card className="border-purple-200">
+                    <Card className="border-4 border-black dark:border-white">
                       <CardHeader>
                         <CardTitle className="flex items-center justify-between">
                           <div className="flex items-center">
@@ -2566,7 +2566,7 @@ function CBLDashboard() {
                       </CardHeader>
                       <CardContent className="space-y-6">
                         {/* OC-Phil Recommendation Widget */}
-                        <Alert className="bg-purple-50 border-purple-200">
+                        <Alert className="bg-purple-50 border-4 border-black dark:border-white">
                           <Bot className="h-4 w-4" />
                           <AlertTitle>OC-Phil's Weekly Game Plan</AlertTitle>
                           <AlertDescription className="mt-2">

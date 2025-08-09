@@ -229,7 +229,7 @@ const SeasonPassDashboard = () => {
     subtitle?: string;
     trend?: 'up' | 'down' | 'neutral';
   }) => (
-    <Card className="bg-gray-800/50 border-gray-700">
+    <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -263,7 +263,7 @@ const SeasonPassDashboard = () => {
     const config = getGameTypeConfig(hit.gameType);
 
     return (
-      <Card className="bg-gray-800/30 border-gray-700 hover:bg-gray-800/50 transition-colors">
+      <Card className="bg-gray-800/30 border-4 border-black dark:border-white hover:bg-gray-800/50 transition-colors">
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3">
@@ -436,7 +436,7 @@ const SeasonPassDashboard = () => {
           onValueChange={(value) => setSelectedTab(value as typeof selectedTab)}
           className="mb-8"
         >
-          <TabsList className="grid w-full grid-cols-3 h-14 bg-gray-800 border border-gray-700">
+          <TabsList className="grid w-full grid-cols-3 h-14 bg-gray-800 border border-4 border-black dark:border-white">
             <TabsTrigger
               value="season-pass"
               className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-400 data-[state=active]:to-orange-500 data-[state=active]:text-black"
@@ -495,7 +495,7 @@ const SeasonPassDashboard = () => {
             </div>
 
             {/* Season Progress */}
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
@@ -518,7 +518,7 @@ const SeasonPassDashboard = () => {
             </Card>
 
             {/* Conference Leaderboard */}
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="w-5 h-5" />
@@ -561,7 +561,7 @@ const SeasonPassDashboard = () => {
               />
             </div>
 
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="text-green-400">
                   Weekly Cash Games
@@ -601,7 +601,7 @@ const SeasonPassDashboard = () => {
               />
             </div>
 
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="text-blue-400">Free Play Games</CardTitle>
               </CardHeader>
@@ -615,7 +615,7 @@ const SeasonPassDashboard = () => {
         </Tabs>
 
         {/* Recent Activity - Shows across all tabs */}
-        <Card className="bg-gray-800/50 border-gray-700">
+        <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Zap className="w-5 h-5" />

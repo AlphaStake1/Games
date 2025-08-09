@@ -272,7 +272,7 @@ const MyNFTsContent = () => {
             replace the standard black signature (first name and last initial)
             with your unique design on every square you purchase.
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-4 flex-wrap">
             <Link href="/create-nft/custom-signature">
               <Button className="bg-gradient-to-r from-[#ed5925] to-[#96abdc] text-white px-8 py-3 rounded-full font-bold hover:from-[#d14a1f] hover:to-[#7a95d1] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 inline-flex items-center gap-2">
                 <Plus className="w-5 h-5" />
@@ -286,6 +286,15 @@ const MyNFTsContent = () => {
               <Wallet className="w-5 h-5" />
               Connect Wallet
             </Button>
+            <Link href="/locker/demo">
+              <Button
+                variant="outline"
+                className="px-8 py-3 rounded-full font-bold border-2 border-[#ed5925] text-[#ed5925] dark:text-[#ed5925] hover:bg-[#ed5925] hover:text-white transition-all duration-200 inline-flex items-center gap-2"
+              >
+                <Trophy className="w-5 h-5" />
+                View My Locker
+              </Button>
+            </Link>
           </div>
         </div>
 

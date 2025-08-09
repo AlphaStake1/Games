@@ -178,7 +178,7 @@ const ConferencesPageContent = () => {
       : `cursor-pointer transition-all duration-300 hover:shadow-lg border-2 ${
           isSelected
             ? 'border-yellow-400 bg-yellow-50/5'
-            : 'border-gray-700 hover:border-gray-600'
+            : 'border-4 border-black dark:border-white hover:border-gray-600'
         } ${isFull ? 'opacity-60' : ''}`;
 
     return (
@@ -281,7 +281,7 @@ const ConferencesPageContent = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
       {/* Header */}
-      <div className="p-6 border-b border-gray-800">
+      <div className="p-6 border-b border-4 border-black dark:border-white">
         <div className="max-w-6xl mx-auto">
           <Button
             variant="ghost"
@@ -339,7 +339,7 @@ const ConferencesPageContent = () => {
 
           {/* Minting Panel */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-6 bg-gray-800/50 border-gray-700">
+            <Card className="sticky top-6 bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Crown className="w-5 h-5 text-yellow-400" />

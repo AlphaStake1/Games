@@ -211,6 +211,68 @@ const CBLEconomicsPage = () => {
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-8">
+            {/* CBL Tier System Overview */}
+            <Card className="border-purple-200 bg-gradient-to-r from-purple-50 to-indigo-50 dark:border-purple-800 dark:from-purple-950/50 dark:to-indigo-950/50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-purple-800 dark:text-purple-200">
+                  <Crown className="h-6 w-6" />
+                  CBL Tier System
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                  Our economics scale with your community leadership level:
+                </p>
+                <div className="space-y-3 mb-4">
+                  <div className="flex items-start gap-2">
+                    <Badge className="bg-gray-600 mt-0.5">Entry</Badge>
+                    <div>
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        First Stream CBL
+                      </span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
+                        – Entry level with Blue Points accrual, custom board
+                        skins & rules
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Badge className="bg-blue-600 mt-0.5">Active</Badge>
+                    <div>
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        Drive Maker CBL
+                      </span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
+                        – 3% rake share (unlock: 3 filled boards in any 7-day
+                        window)
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Badge className="bg-purple-600 mt-0.5">Elite</Badge>
+                    <div>
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        Franchise CBL
+                      </span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
+                        – 5% rake + 1.5× multiplier (unlock: 50 boards/season or
+                        4,000 squares)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-3 border-t border-purple-200 dark:border-purple-700">
+                  <Link
+                    href="/board-leader#cbl-levels"
+                    className="inline-flex items-center text-sm font-medium text-purple-700 hover:text-purple-900 dark:text-purple-400 dark:hover:text-purple-300"
+                  >
+                    View full tier requirements & milestones
+                    <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+
             <div className="grid md:grid-cols-3 gap-8">
               {/* Blue Points Card */}
               <Card className="border-blue-200 bg-blue-50/50 dark:border-blue-800 dark:bg-blue-950/50">

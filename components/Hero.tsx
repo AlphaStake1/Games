@@ -13,7 +13,7 @@ const HERO_OBJECT_POSITION =
   (process.env.NEXT_PUBLIC_HERO_OBJECT_POSITION as string) || '50% 30%'; // focus headroom
 const HERO_ROTATE_MS = parseInt(
   (process.env.NEXT_PUBLIC_HERO_ROTATE_MS as string) || '12000',
-  10
+  10,
 );
 
 const Hero = () => {
@@ -28,8 +28,8 @@ const Hero = () => {
 
   // Build media lists and rotate if multiple videos are provided
   const mediaList = useMemo(
-    () => ([HERO_MEDIA_URL, HERO_MEDIA_ALT].filter(Boolean) as string[]),
-    []
+    () => [HERO_MEDIA_URL, HERO_MEDIA_ALT].filter(Boolean) as string[],
+    [],
   );
   const [activeIdx, setActiveIdx] = useState(0);
   useEffect(() => {

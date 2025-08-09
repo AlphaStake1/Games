@@ -229,7 +229,7 @@ export default function FreeBoardPage() {
             <div className="space-y-6">
               {/* Dashboard Prompt */}
               {showDashboardPrompt && (
-                <Card className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border-green-200 dark:border-green-800 animate-pulse">
+                <Card className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border-4 border-black dark:border-white animate-pulse">
                   <CardContent className="p-6">
                     <TrendingUp className="w-12 h-12 text-green-600 dark:text-green-400 mb-4" />
                     <h3 className="font-bold text-lg mb-2">
@@ -292,7 +292,7 @@ export default function FreeBoardPage() {
               </Card>
 
               {/* CBL Community Promo */}
-              <Card className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200 dark:border-purple-800">
+              <Card className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-4 border-black dark:border-white">
                 <CardContent className="p-6">
                   <Users className="w-12 h-12 text-purple-600 dark:text-purple-400 mb-4" />
                   <h3 className="font-bold text-lg mb-2">CBL Communities</h3>

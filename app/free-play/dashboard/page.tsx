@@ -278,7 +278,7 @@ export default function FreePlayerDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200 dark:border-blue-800">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-4 border-black dark:border-white">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -413,7 +413,7 @@ export default function FreePlayerDashboard() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Upgrade CTA */}
-            <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-yellow-200 dark:border-yellow-800">
+            <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-4 border-black dark:border-white">
               <CardContent className="p-6">
                 <Sparkles className="w-12 h-12 text-yellow-600 dark:text-yellow-400 mb-4" />
                 <h3 className="font-bold text-lg mb-2">Ready for More?</h3>
@@ -464,7 +464,7 @@ export default function FreePlayerDashboard() {
               </h3>
 
               {/* Cowboys Nation CBL */}
-              <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200 dark:border-blue-800">
+              <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-4 border-black dark:border-white">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">⭐</div>
@@ -490,7 +490,7 @@ export default function FreePlayerDashboard() {
               </Card>
 
               {/* Eagles Community */}
-              <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-green-200 dark:border-green-800">
+              <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-4 border-black dark:border-white">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">🦅</div>
@@ -516,7 +516,7 @@ export default function FreePlayerDashboard() {
               </Card>
 
               {/* Fantasy Masters CBL */}
-              <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-purple-200 dark:border-purple-800">
+              <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-4 border-black dark:border-white">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">🏆</div>
@@ -542,7 +542,7 @@ export default function FreePlayerDashboard() {
               </Card>
 
               {/* Family-Style CBL */}
-              <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-orange-200 dark:border-orange-800">
+              <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-4 border-black dark:border-white">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">👨‍👩‍👧‍👦</div>

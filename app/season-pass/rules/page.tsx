@@ -59,7 +59,7 @@ const SeasonPassRulesPage = () => {
     points: number;
     description: string;
   }) => (
-    <div className="bg-gray-800/30 p-4 rounded-lg border border-gray-700">
+    <div className="bg-gray-800/30 p-4 rounded-lg border border-4 border-black dark:border-white">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-4">
           <div className="text-2xl font-bold text-white">
@@ -92,7 +92,7 @@ const SeasonPassRulesPage = () => {
     description: string;
     icon: React.ReactNode;
   }) => (
-    <div className="flex gap-4 p-4 bg-gray-800/30 rounded-lg border border-gray-700">
+    <div className="flex gap-4 p-4 bg-gray-800/30 rounded-lg border border-4 border-black dark:border-white">
       <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-black font-bold">
         {step}
       </div>
@@ -172,7 +172,7 @@ const SeasonPassRulesPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
       {/* Header */}
-      <div className="p-6 border-b border-gray-800">
+      <div className="p-6 border-b border-4 border-black dark:border-white">
         <div className="max-w-6xl mx-auto">
           <Button
             variant="ghost"
@@ -208,7 +208,7 @@ const SeasonPassRulesPage = () => {
 
       <div className="max-w-6xl mx-auto p-6">
         <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-          <TabsList className="grid w-full grid-cols-5 h-14 bg-gray-800 border border-gray-700 mb-8">
+          <TabsList className="grid w-full grid-cols-5 h-14 bg-gray-800 border border-4 border-black dark:border-white mb-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="onboarding">Onboarding</TabsTrigger>
             <TabsTrigger value="scoring">Scoring</TabsTrigger>
@@ -218,7 +218,7 @@ const SeasonPassRulesPage = () => {
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-8">
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Crown className="w-6 h-6 text-yellow-400" />
@@ -295,7 +295,7 @@ const SeasonPassRulesPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="w-6 h-6 text-blue-400" />
@@ -358,7 +358,7 @@ const SeasonPassRulesPage = () => {
 
           {/* Onboarding Tab */}
           <TabsContent value="onboarding" className="space-y-8">
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <PlayCircle className="w-6 h-6 text-green-400" />
@@ -412,7 +412,7 @@ const SeasonPassRulesPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <AlertCircle className="w-6 h-6 text-orange-400" />
@@ -469,7 +469,7 @@ const SeasonPassRulesPage = () => {
 
           {/* Scoring Tab */}
           <TabsContent value="scoring" className="space-y-8">
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Target className="w-6 h-6 text-green-400" />
@@ -570,7 +570,7 @@ const SeasonPassRulesPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Zap className="w-6 h-6 text-purple-400" />
@@ -650,7 +650,7 @@ const SeasonPassRulesPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Timer className="w-6 h-6 text-blue-400" />
@@ -678,7 +678,7 @@ const SeasonPassRulesPage = () => {
 
           {/* Conferences Tab */}
           <TabsContent value="conferences" className="space-y-8">
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="w-6 h-6 text-blue-400" />
@@ -772,7 +772,7 @@ const SeasonPassRulesPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Trophy className="w-6 h-6 text-green-400" />
@@ -819,7 +819,7 @@ const SeasonPassRulesPage = () => {
 
           {/* FAQ Tab */}
           <TabsContent value="faq" className="space-y-8">
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-gray-800/50 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Info className="w-6 h-6 text-blue-400" />

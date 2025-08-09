@@ -397,7 +397,13 @@ export default function HelpPage() {
   const handleIssueTypeSelect = (type: string) => {
     setSelectedIssueType(type);
     setStep(1);
-    setForm({});
+    // Initialize form with all fields for this issue type to prevent uncontrolled/controlled warning
+    const fields = ISSUE_TYPES[type as keyof typeof ISSUE_TYPES].fields;
+    const initialForm: Record<string, string> = {};
+    fields.forEach((field) => {
+      initialForm[field] = '';
+    });
+    setForm(initialForm);
   };
 
   const handleChange = (

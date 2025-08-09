@@ -211,7 +211,7 @@ const RewardsSystemPage = () => {
           <TabsContent value="overview" className="space-y-8">
             <div className="grid md:grid-cols-2 gap-8">
               {/* Blue Points Overview */}
-              <Card className="border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/20">
+              <Card className="border-4 border-black dark:border-white bg-blue-50/50 dark:bg-blue-900/20">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-blue-800 dark:text-blue-200">
                     <div className="p-2 bg-blue-600 dark:bg-blue-500 rounded-lg">
@@ -250,7 +250,7 @@ const RewardsSystemPage = () => {
               </Card>
 
               {/* Orange Points Overview */}
-              <Card className="border-orange-200 dark:border-orange-800 bg-orange-50/50 dark:bg-orange-900/20">
+              <Card className="border-4 border-black dark:border-white bg-orange-50/50 dark:bg-orange-900/20">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-orange-800 dark:text-orange-200">
                     <div className="p-2 bg-orange-600 dark:bg-orange-500 rounded-lg">
@@ -289,7 +289,7 @@ const RewardsSystemPage = () => {
             </div>
 
             {/* Example Earnings */}
-            <Card className="dark:bg-gray-800 dark:border-gray-700">
+            <Card className="border-4 border-black dark:border-white dark:bg-gray-800">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 dark:text-white">
                   <Sparkles className="h-6 w-6 text-purple-600 dark:text-purple-400" />
@@ -339,7 +339,7 @@ const RewardsSystemPage = () => {
 
           {/* Blue Points Tab */}
           <TabsContent value="blue-points" className="space-y-8">
-            <Card className="dark:bg-gray-800 dark:border-gray-700">
+            <Card className="border-4 border-black dark:border-white dark:bg-gray-800">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 dark:text-white">
                   <Target className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -387,7 +387,7 @@ const RewardsSystemPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="dark:bg-gray-800 dark:border-gray-700">
+            <Card className="border-4 border-black dark:border-white dark:bg-gray-800">
               <CardHeader>
                 <CardTitle className="dark:text-white">
                   Multipliers & Bonuses
@@ -421,7 +421,7 @@ const RewardsSystemPage = () => {
 
           {/* Orange Points Tab */}
           <TabsContent value="orange-points" className="space-y-8">
-            <Card className="dark:bg-gray-800 dark:border-gray-700">
+            <Card className="border-4 border-black dark:border-white dark:bg-gray-800">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 dark:text-white">
                   <Users className="h-6 w-6 text-orange-600 dark:text-orange-400" />
@@ -465,7 +465,7 @@ const RewardsSystemPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-orange-50/50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800">
+            <Card className="bg-orange-50/50 dark:bg-orange-900/20 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="text-orange-800 dark:text-orange-200">
                   Community Board Leaders (CBL)
@@ -497,7 +497,7 @@ const RewardsSystemPage = () => {
 
           {/* VIP Benefits Tab */}
           <TabsContent value="vip" className="space-y-8">
-            <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/30 border-yellow-200 dark:border-yellow-800">
+            <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/30 border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-yellow-800 dark:text-yellow-200">
                   <Crown className="h-6 w-6" />
@@ -601,7 +601,7 @@ const RewardsSystemPage = () => {
 
         {/* Call to Action */}
         <div className="text-center mt-12">
-          <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+          <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-4 border-black dark:border-white">
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4">
                 Ready to Start Earning?

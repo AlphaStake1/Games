@@ -162,7 +162,7 @@ const BoardLeaderContent = () => {
       </Card>
 
       {/* CBL Levels & Season Milestones */}
-      <div className="mb-12">
+      <div className="mb-12" id="cbl-levels">
         <div className="border border-gray-200 dark:border-gray-800 rounded-lg">
           <div className="px-6 py-4">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">

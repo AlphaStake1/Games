@@ -451,7 +451,7 @@ function PlayerDashboard() {
             {viewMode === 'beginner' && (
               <div className="space-y-6">
                 {/* Welcome Message for Beginners */}
-                <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border-blue-200 dark:border-blue-800">
+                <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border-4 border-black dark:border-white">
                   <CardContent className="pt-6">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-full">
@@ -486,7 +486,7 @@ function PlayerDashboard() {
                 {/* Simple Key Stats - Only Essential Info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Total Winnings - Most Important */}
-                  <Card className="bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800">
+                  <Card className="bg-green-50 dark:bg-green-950/20 border-4 border-black dark:border-white">
                     <CardContent className="pt-6">
                       <div className="flex items-center justify-between">
                         <div>
@@ -607,7 +607,7 @@ function PlayerDashboard() {
                 >
                   {/* Green Points Card - Featured First for Seasonal Players */}
                   {dashboardPeriod === 'seasonal' && (
-                    <Card className="col-span-full bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 border-2 border-green-200 dark:border-green-700">
+                    <Card className="col-span-full bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 border-4 border-black dark:border-white">
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <div className="flex items-center">
                           <CardTitle className="text-lg font-bold text-green-700 dark:text-green-300">

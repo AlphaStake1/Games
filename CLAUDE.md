@@ -48,3 +48,5 @@ pnpm lint && tsc --noEmit           # ESLint + TS type-check
 - Always consider performance implications and potential scalability challenges
 - Implement robust error handling and comprehensive logging mechanisms
 - Conduct thorough code reviews and maintain high test coverage
+
+- 3 for now, we can revisit a more detailed look before launch.

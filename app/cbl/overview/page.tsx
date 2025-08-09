@@ -34,7 +34,7 @@ export default function CBLOverviewPage() {
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {/* Why Lead Section */}
           {whySection && (
-            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border-blue-200 dark:border-blue-800">
+            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border-4 border-black dark:border-white">
               <CardContent className="p-6">
                 <MarkdownRenderer content={whySection} />
               </CardContent>
@@ -43,7 +43,7 @@ export default function CBLOverviewPage() {
 
           {/* 3-Step CBL Path Section */}
           {stepsSection && (
-            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950/30 dark:to-orange-900/30 border-orange-200 dark:border-orange-800">
+            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950/30 dark:to-orange-900/30 border-4 border-black dark:border-white">
               <CardContent className="p-6">
                 <MarkdownRenderer content={stepsSection} />
               </CardContent>
@@ -92,7 +92,7 @@ export default function CBLOverviewPage() {
         </Card>
 
         {/* Rewards Section */}
-        <Card className="mb-8 bg-gradient-to-r from-blue-50 to-orange-50 dark:from-blue-950/20 dark:to-orange-950/20 border-blue-200 dark:border-blue-800">
+        <Card className="mb-8 bg-gradient-to-r from-blue-50 to-orange-50 dark:from-blue-950/20 dark:to-orange-950/20 border-4 border-black dark:border-white">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               🎁 CBL Rewards & Points System

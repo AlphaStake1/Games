@@ -287,7 +287,7 @@ const BoardsPageContent: React.FC = () => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <Card>
+            <Card className="border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle className="flex items-center justify-center gap-2 text-2xl">
                   <Wallet className="w-8 h-8" />
@@ -369,7 +369,7 @@ const BoardsPageContent: React.FC = () => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <Card>
+            <Card className="border-4 border-black dark:border-white">
               <CardContent className="py-12">
                 <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
                 <p className="text-lg">Loading your preferences...</p>
@@ -386,7 +386,7 @@ const BoardsPageContent: React.FC = () => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <Card>
+            <Card className="border-4 border-black dark:border-white">
               <CardContent className="py-12">
                 <p className="text-lg text-red-600">
                   Error loading user preferences
@@ -487,7 +487,7 @@ const BoardsPageContent: React.FC = () => {
         {seasonalMode ? (
           /* Conference Selection Mode */
           <div className="max-w-6xl mx-auto">
-            <Card className="mb-6">
+            <Card className="mb-6 border-4 border-black dark:border-white">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl">
                   Choose Your Conference
@@ -539,7 +539,7 @@ const BoardsPageContent: React.FC = () => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {/* Eastern Conference - Tier 1 */}
-                  <Card className="border-green-200 hover:border-green-400 transition-colors cursor-pointer">
+                  <Card className="border-4 border-black dark:border-white hover:border-green-400 transition-colors cursor-pointer">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-lg text-green-700">
@@ -602,7 +602,7 @@ const BoardsPageContent: React.FC = () => {
                   </Card>
 
                   {/* Southern Conference - Tier 2 */}
-                  <Card className="border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                  <Card className="border-4 border-black dark:border-white hover:border-blue-400 transition-colors cursor-pointer">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-lg text-blue-700">
@@ -663,7 +663,7 @@ const BoardsPageContent: React.FC = () => {
                   </Card>
 
                   {/* Northern Conference - Tier 3 */}
-                  <Card className="border-purple-200 hover:border-purple-400 transition-colors cursor-pointer">
+                  <Card className="border-4 border-black dark:border-white hover:border-purple-400 transition-colors cursor-pointer">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-lg text-purple-700">
@@ -728,7 +728,7 @@ const BoardsPageContent: React.FC = () => {
                   </Card>
 
                   {/* Western Conference - Tier 4 */}
-                  <Card className="border-orange-200 hover:border-orange-400 transition-colors cursor-pointer">
+                  <Card className="border-4 border-black dark:border-white hover:border-orange-400 transition-colors cursor-pointer">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-lg text-orange-700">
@@ -793,7 +793,7 @@ const BoardsPageContent: React.FC = () => {
                   </Card>
 
                   {/* South-East Conference - Tier 5 */}
-                  <Card className="border-yellow-200 hover:border-yellow-400 transition-colors cursor-pointer lg:col-span-2">
+                  <Card className="border-4 border-black dark:border-white hover:border-yellow-400 transition-colors cursor-pointer lg:col-span-2">
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-lg text-yellow-700">
@@ -860,7 +860,7 @@ const BoardsPageContent: React.FC = () => {
             </Card>
 
             {/* How It Works */}
-            <Card>
+            <Card className="border-4 border-black dark:border-white">
               <CardHeader>
                 <CardTitle>How Season Pass Conferences Work</CardTitle>
               </CardHeader>
