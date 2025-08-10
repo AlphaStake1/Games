@@ -40,7 +40,7 @@ interface LockerData {
   username: string;
   walletAddress?: string;
   displayName: string;
-  lockerStyle: 'rookie' | 'pro' | 'allstar' | 'halloffame' | 'vip';
+  lockerStyle: 'rookie' | 'pro' | 'mvp' | 'allstar' | 'halloffame';
   teamColors: {
     primary: string;
     secondary: string;

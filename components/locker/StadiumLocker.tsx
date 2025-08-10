@@ -31,7 +31,7 @@ interface NFT {
 interface StadiumLockerProps {
   username: string;
   displayName: string;
-  lockerStyle: 'rookie' | 'pro' | 'allstar' | 'halloffame' | 'vip';
+  lockerStyle: 'rookie' | 'pro' | 'mvp' | 'allstar' | 'halloffame';
   jerseyNumber?: string;
   nfts: NFT[];
   featuredNft?: NFT;
@@ -57,6 +57,14 @@ const LOCKER_MATERIALS = {
     nameplate: 'linear-gradient(135deg, #b45309 0%, #92400e 100%)',
     accent: '#d97706',
   },
+  mvp: {
+    frame:
+      'linear-gradient(135deg, #a855f7 0%, #9333ea 30%, #7c3aed 70%, #6d28d9 100%)',
+    interior:
+      'linear-gradient(180deg, #faf5ff 0%, #f3e8ff 30%, #e9d5ff 70%, #d8b4fe 100%)',
+    nameplate: 'linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #a855f7 100%)',
+    accent: '#a855f7',
+  },
   allstar: {
     frame: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)',
     interior: 'linear-gradient(180deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%)',
@@ -70,14 +78,6 @@ const LOCKER_MATERIALS = {
       'linear-gradient(180deg, #fffbeb 0%, #fef3c7 30%, #fde68a 70%, #fcd34d 100%)',
     nameplate: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
     accent: '#fbbf24',
-  },
-  vip: {
-    frame:
-      'linear-gradient(135deg, #a855f7 0%, #9333ea 30%, #7c3aed 70%, #6d28d9 100%)',
-    interior:
-      'linear-gradient(180deg, #faf5ff 0%, #f3e8ff 30%, #e9d5ff 70%, #d8b4fe 100%)',
-    nameplate: 'linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #a855f7 100%)',
-    accent: '#a855f7',
   },
 };
 
