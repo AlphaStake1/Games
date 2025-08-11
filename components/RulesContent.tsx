@@ -86,10 +86,10 @@ const RulesContent = () => {
                     Eastern → Central → Atlantic → Lakes → Prairie
                   </TableCell>
                   <TableCell>
-                    <strong>$25</strong>
+                    <strong>$50</strong>
                   </TableCell>
-                  <TableCell>$2,500</TableCell>
-                  <TableCell>~$700</TableCell>
+                  <TableCell>$5,000</TableCell>
+                  <TableCell>~$1,400</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
@@ -99,10 +99,10 @@ const RulesContent = () => {
                     Southern → Mountain → Desert → Delta → Plateau
                   </TableCell>
                   <TableCell>
-                    <strong>$50</strong>
+                    <strong>$100</strong>
                   </TableCell>
-                  <TableCell>$5,000</TableCell>
-                  <TableCell>~$1,400</TableCell>
+                  <TableCell>$10,000</TableCell>
+                  <TableCell>~$2,800</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
@@ -113,10 +113,10 @@ const RulesContent = () => {
                     Badlands
                   </TableCell>
                   <TableCell>
-                    <strong>$100</strong>
+                    <strong>$250</strong>
                   </TableCell>
-                  <TableCell>$10,000</TableCell>
-                  <TableCell>~$2,800</TableCell>
+                  <TableCell>$25,000</TableCell>
+                  <TableCell>~$7,000</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
@@ -126,10 +126,10 @@ const RulesContent = () => {
                     Western → Pacific → Sierra → Cascades → Rockies
                   </TableCell>
                   <TableCell>
-                    <strong>$200</strong>
+                    <strong>$500</strong>
                   </TableCell>
-                  <TableCell>$20,000</TableCell>
-                  <TableCell>~$5,600</TableCell>
+                  <TableCell>$50,000</TableCell>
+                  <TableCell>~$14,000</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
@@ -140,37 +140,92 @@ const RulesContent = () => {
                     Mid-Atlantic
                   </TableCell>
                   <TableCell>
-                    <strong>$500</strong>
+                    <strong>$1,000</strong>
                   </TableCell>
-                  <TableCell>$50,000</TableCell>
-                  <TableCell>~$14,000</TableCell>
+                  <TableCell>$100,000</TableCell>
+                  <TableCell>~$28,000</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
 
             <h3 className="text-2xl font-semibold">
-              1.4 Green Points Accumulation
+              1.3 Green Points — Scoring
             </h3>
             <p>
-              Players earn Green Points for quarter-end score matches, with
-              bonuses and multipliers building throughout the season:
+              Green Points are awarded at the end of each quarter (and each OT period) when the score's last digits match your square under any scoring pattern.
+              Points = <strong>Base (by period)</strong> × <strong>Category Split</strong> × <strong>Playoff Multiplier</strong>. Scores are kept to two decimals.
             </p>
 
-            <h4 className="text-xl font-semibold">Base Point Events</h4>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <strong>Quarter Score Match:</strong> Base points for correct
-                quarter-end combinations
-              </li>
-              <li>
-                <strong>Halftime Bonus:</strong> +25% multiplier for 2nd quarter
-                matches
-              </li>
-              <li>
-                <strong>Overtime Bonus:</strong> +20% per OT period (treated as
-                extra quarters)
-              </li>
-            </ul>
+            <h4 className="text-xl font-semibold">Base Points by Period</h4>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Period</TableHead>
+                  <TableHead>Base Points</TableHead>
+                  <TableHead>Notes</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Q1</TableCell>
+                  <TableCell>200</TableCell>
+                  <TableCell>Quarter-end score</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Q2 (Halftime)</TableCell>
+                  <TableCell>250</TableCell>
+                  <TableCell>Halftime score</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Q3</TableCell>
+                  <TableCell>200</TableCell>
+                  <TableCell>Quarter-end score</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Q4 (Final)</TableCell>
+                  <TableCell>250</TableCell>
+                  <TableCell>End of regulation</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>OT</TableCell>
+                  <TableCell>200</TableCell>
+                  <TableCell>Each OT period is independent</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+
+            <h4 className="text-xl font-semibold">Category Split (Pattern Rarity)</h4>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Pattern</TableHead>
+                  <TableHead>Share</TableHead>
+                  <TableHead>Definition</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Forward</TableCell>
+                  <TableCell>45%</TableCell>
+                  <TableCell>(Home, Away)</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Backward</TableCell>
+                  <TableCell>30%</TableCell>
+                  <TableCell>(Away, Home)</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Forward +5</TableCell>
+                  <TableCell>15%</TableCell>
+                  <TableCell>((H+5) mod 10, (A+5) mod 10)</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Backward +5</TableCell>
+                  <TableCell>10%</TableCell>
+                  <TableCell>((A+5) mod 10, (H+5) mod 10)</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
 
             <h4 className="text-xl font-semibold">Playoff Multipliers</h4>
             <Table>
@@ -194,13 +249,13 @@ const RulesContent = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell>Divisional</TableCell>
-                  <TableCell>×2.5</TableCell>
-                  <TableCell>150% boost</TableCell>
+                  <TableCell>×2.0</TableCell>
+                  <TableCell>100% boost</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Conference Championships</TableCell>
-                  <TableCell>×3.7</TableCell>
-                  <TableCell>270% boost</TableCell>
+                  <TableCell>×3.5</TableCell>
+                  <TableCell>250% boost</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
@@ -215,50 +270,64 @@ const RulesContent = () => {
             </Table>
 
             <h3 className="text-2xl font-semibold">
-              1.4 Top 21 Payout Structure
+              1.4 Season-Long Payout Structure (Top 21)
             </h3>
             <p>
-              Winners are determined by final Green Points standings, with
-              prizes distributed to the top 21 performers (~80% of pool to
-              players, ~20% to protocol):
+              Final Green Points standings determine payouts. Full-season conferences allocate
+              <strong> 90% of the total pot to players</strong> (10% protocol). The <strong>Top 21</strong> are paid as follows:
             </p>
 
-            <h4 className="text-xl font-semibold">Payout Bands</h4>
+            <h4 className="text-xl font-semibold">Bands & Rules</h4>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                <strong>Band B (Places 8-14):</strong> Flat <strong>1.5×</strong> the season-pass price.
+              </li>
+              <li>
+                <strong>Band C (Places 15-21):</strong> Flat <strong>1.05×</strong> the season-pass price.
+              </li>
+              <li>
+                <strong>Band A (Places 1-7):</strong> Premium winners, paid from the remaining player pool:
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>1st: <strong>~28%</strong> of total pot</li>
+                  <li>2nd: <strong>~18%</strong> of total pot</li>
+                  <li>3rd: <strong>~14%</strong> of total pot</li>
+                  <li>4th–7th: Split the <em>remaining player pool</em> after Bands B & C and places 1–3, paid <strong>equally</strong></li>
+                </ul>
+              </li>
+            </ul>
+
+            <h4 className="text-xl font-semibold">Example — Tier 4 ($500 pass, $50,000 pot, $45,000 to players)</h4>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Band</TableHead>
-                  <TableHead>Places</TableHead>
-                  <TableHead>Structure</TableHead>
-                  <TableHead>Example (Tier 2: $50 pass)</TableHead>
+                  <TableHead>Place</TableHead>
+                  <TableHead>Payout</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 <TableRow>
-                  <TableCell>
-                    <strong>Band A</strong>
-                  </TableCell>
-                  <TableCell>1-7</TableCell>
-                  <TableCell>Premium Winners (progressive)</TableCell>
-                  <TableCell>
-                    1st: $1,750, 2nd: $1,250, 3rd: $960, 4-7th: $700 each
-                  </TableCell>
+                  <TableCell>1st</TableCell>
+                  <TableCell>$14,000</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>
-                    <strong>Band B</strong>
-                  </TableCell>
-                  <TableCell>8-14</TableCell>
-                  <TableCell>1.5× pass cost</TableCell>
-                  <TableCell>$75 each</TableCell>
+                  <TableCell>2nd</TableCell>
+                  <TableCell>$9,000</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>
-                    <strong>Band C</strong>
-                  </TableCell>
-                  <TableCell>15-21</TableCell>
-                  <TableCell>1.05× pass cost (break-even+)</TableCell>
-                  <TableCell>$52.50 each</TableCell>
+                  <TableCell>3rd</TableCell>
+                  <TableCell>$7,000</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>4th–7th</TableCell>
+                  <TableCell>$1,518 each</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>8th–14th</TableCell>
+                  <TableCell>$750 each</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>15th–21st</TableCell>
+                  <TableCell>$525 each</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -287,7 +356,92 @@ const RulesContent = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              2. Weekly Football Squares
+              2. Half-Season Divisions (Separate Leaderboards)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <p>
+              Half-Season passes let players join mid-season with their own divisions, leaderboards, and prize pools.
+              Coverage starts <strong>Week 10 through the Super Bowl</strong>, with up to <strong>5 passes per wallet</strong>{' '}
+              using <strong>scaling prices</strong> (1x, 1.1x, 1.2x, 1.3x, 1.4x).
+            </p>
+
+            <h3 className="text-2xl font-semibold">2.1 Eligibility & Minting</h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Opens at NFL Week 10; mints remain open until division fills (100 players)</li>
+              <li>Up to 5 passes per wallet per division</li>
+              <li>Divisions are named after NFL divisions (e.g., AFC East, NFC North)</li>
+              <li>Squares auto-assigned before each game; digits redrawn via VRF</li>
+            </ul>
+
+            <h3 className="text-2xl font-semibold">2.2 Scoring & Multipliers</h3>
+            <p>
+              Uses the <strong>same Green Points system</strong> as Full-Season (see 1.3). Points begin accruing at Week 10;
+              playoff multipliers apply normally through the Super Bowl.
+            </p>
+
+            <h3 className="text-2xl font-semibold">2.3 Payout Structure (Top 21)</h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>90/10 split:</strong> 90% of the total pot to players (10% protocol)</li>
+              <li><strong>Places 8–14:</strong> 1.5× division pass price (flat)</li>
+              <li><strong>Places 15–21:</strong> 1.05× division pass price (flat)</li>
+              <li>
+                <strong>Places 1–7:</strong> Premium winners paid from the remaining player pool using Half-Season ratios:
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>1st: <strong>~24%</strong> of total pot</li>
+                  <li>2nd: <strong>~14%</strong> of total pot</li>
+                  <li>3rd: <strong>~10%</strong> of total pot</li>
+                  <li>4th–7th: Split the remainder of the player pool <strong>equally</strong> after Bands B & C and places 1–3</li>
+                </ul>
+              </li>
+            </ul>
+
+            <h4 className="text-xl font-semibold">Example — Tier 2 Division ($350 pass, $35,000 pot, $31,500 to players)</h4>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Place</TableHead>
+                  <TableHead>Payout</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>1st</TableCell>
+                  <TableCell>$8,400</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2nd</TableCell>
+                  <TableCell>$4,900</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>3rd</TableCell>
+                  <TableCell>$3,500</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>4th–7th</TableCell>
+                  <TableCell>$2,114 each</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>8th–14th</TableCell>
+                  <TableCell>$525 each</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>15th–21st</TableCell>
+                  <TableCell>$367 each</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+
+            <p className="text-sm text-muted-foreground">
+              All Season-Pass payouts are distributed in Solana-based USDC. Prize pools shown are net amounts after protocol fees.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-3xl">
+              3. Weekly Football Squares
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -299,7 +453,7 @@ const RulesContent = () => {
             </p>
 
             <h3 className="text-2xl font-semibold">
-              2.1 Weekly Timeline & Game Flow
+              3.1 Weekly Timeline & Game Flow
             </h3>
             <Table>
               <TableHeader>
@@ -378,7 +532,7 @@ const RulesContent = () => {
             </Table>
 
             <h3 className="text-2xl font-semibold">
-              2.2 Tier Structure & Economics
+              3.2 Tier Structure & Economics
             </h3>
             <Table>
               <TableHeader>
@@ -452,7 +606,7 @@ const RulesContent = () => {
             </Table>
 
             <h3 className="text-2xl font-semibold">
-              2.3 Payout Schedule (Forward-Only)
+              3.3 Payout Schedule (Forward-Only)
             </h3>
             <Table>
               <TableHeader>
@@ -499,7 +653,7 @@ const RulesContent = () => {
             </p>
 
             <h3 className="text-2xl font-semibold">
-              2.4 VIP Rules & Square Caps
+              3.4 VIP Rules & Square Caps
             </h3>
             <ul className="list-disc pl-6 space-y-2">
               <li>
@@ -521,7 +675,7 @@ const RulesContent = () => {
             </ul>
 
             <h3 className="text-2xl font-semibold">
-              2.5 Board Variants (House-Configurable)
+              3.5 Board Variants (House-Configurable)
             </h3>
             <Table>
               <TableHeader>
@@ -578,7 +732,7 @@ const RulesContent = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              3. Community Board Leader (CBL) Program
+              4. Community Board Leader (CBL) Program
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -590,7 +744,7 @@ const RulesContent = () => {
             </p>
 
             <h3 className="text-2xl font-semibold">
-              3.1 CBL Activity Requirements
+              4.1 CBL Activity Requirements
             </h3>
             <p>
               CBLs must maintain active engagement to preserve their leadership
@@ -620,7 +774,7 @@ const RulesContent = () => {
             </ul>
 
             <h3 className="text-2xl font-semibold">
-              3.2 Player Attribution & Mobility
+              4.2 Player Attribution & Mobility
             </h3>
             <p>
               Players maintain freedom of movement while preserving CBL
@@ -649,7 +803,7 @@ const RulesContent = () => {
             </ul>
 
             <h3 className="text-2xl font-semibold">
-              3.3 CBL Tier Progression & Benefits
+              4.3 CBL Tier Progression & Benefits
             </h3>
             <Table>
               <TableHeader>
@@ -689,7 +843,7 @@ const RulesContent = () => {
             </Table>
 
             <h3 className="text-2xl font-semibold">
-              3.4 Board Scheduling & Templates
+              4.4 Board Scheduling & Templates
             </h3>
             <p>
               CBLs have access to automated board creation tools and
@@ -715,7 +869,7 @@ const RulesContent = () => {
             </ul>
 
             <h3 className="text-2xl font-semibold">
-              3.5 Commission Structure & Payouts
+              4.5 Commission Structure & Payouts
             </h3>
             <Table>
               <TableHeader>
@@ -758,7 +912,7 @@ const RulesContent = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl">4. Free-to-Play Games</CardTitle>
+            <CardTitle className="text-3xl">5. Free-to-Play Games</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <p>
@@ -784,7 +938,7 @@ const RulesContent = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              5. General Rules & Fair Play
+              6. General Rules & Fair Play
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -899,7 +1053,7 @@ const RulesContent = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              6. Eligibility & Legal Compliance
+              7. Eligibility & Legal Compliance
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -969,7 +1123,7 @@ const RulesContent = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              7. Scoring Pattern Examples
+              8. Scoring Pattern Examples
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -1028,7 +1182,7 @@ const RulesContent = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              8. Frequently Asked Questions
+              9. Frequently Asked Questions
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
