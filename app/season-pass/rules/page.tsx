@@ -59,7 +59,7 @@ const SeasonPassRulesPage = () => {
     points: number;
     description: string;
   }) => (
-    <div className="bg-gray-800/30 p-4 rounded-lg border border-4 border-black dark:border-white">
+    <div className="bg-gray-800/30 p-4 rounded-lg border-2 border-gray-700">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-4">
           <div className="text-2xl font-bold text-white">
@@ -107,24 +107,72 @@ const SeasonPassRulesPage = () => {
   );
 
   const PrizeStructure = ({ conferencePrice }: { conferencePrice: number }) => {
-    const prizePool = conferencePrice * 100;
+    const totalPot = conferencePrice * 100;
+    const rake = totalPot * 0.1; // 10% protocol share (90/10 split)
+    const prizePool = totalPot - rake;
+
+    // Fixed payouts for places 8-21
+    const place8to14Payout = conferencePrice * 1.5; // 1.5x pass cost
+    const place15to21Payout = conferencePrice * 1.05; // 1.05x pass cost
+
+    // Calculate payouts using percentage formula - round down to whole numbers
+    const first = Math.floor(totalPot * 0.28); // 28% of total pot
+    const second = Math.floor(totalPot * 0.18); // 18% of total pot
+    const third = Math.floor(totalPot * 0.14); // 14% of total pot
+
+    // Round fixed payouts to whole numbers
+    const place8to14PayoutRounded = Math.floor(place8to14Payout);
+    const place15to21PayoutRounded = Math.floor(place15to21Payout);
+
+    // Calculate remainder for 4th-7th after all fixed payouts
+    const remainder =
+      prizePool -
+      first -
+      second -
+      third -
+      place8to14PayoutRounded * 7 -
+      place15to21PayoutRounded * 7;
+    const fourth = Math.floor(remainder / 4);
+
+    const fixedPayouts = { first, second, third, fourth };
+
     const prizes = [
-      { place: '1st', percentage: 50, amount: prizePool * 0.5 },
-      { place: '2nd', percentage: 20, amount: prizePool * 0.2 },
-      { place: '3rd', percentage: 10, amount: prizePool * 0.1 },
-      { place: '4th', percentage: 5, amount: prizePool * 0.05 },
-      { place: '5th', percentage: 5, amount: prizePool * 0.05 },
-      { place: '6th', percentage: 5, amount: prizePool * 0.05 },
-      { place: '7th', percentage: 5, amount: prizePool * 0.05 },
+      { place: '1st', percentage: null, amount: fixedPayouts.first },
+      { place: '2nd', percentage: null, amount: fixedPayouts.second },
+      { place: '3rd', percentage: null, amount: fixedPayouts.third },
+      { place: '4th', percentage: null, amount: fixedPayouts.fourth },
+      { place: '5th', percentage: null, amount: fixedPayouts.fourth },
+      { place: '6th', percentage: null, amount: fixedPayouts.fourth },
+      { place: '7th', percentage: null, amount: fixedPayouts.fourth },
+      { place: '8th', percentage: null, amount: place8to14PayoutRounded },
+      { place: '9th', percentage: null, amount: place8to14PayoutRounded },
+      { place: '10th', percentage: null, amount: place8to14PayoutRounded },
+      { place: '11th', percentage: null, amount: place8to14PayoutRounded },
+      { place: '12th', percentage: null, amount: place8to14PayoutRounded },
+      { place: '13th', percentage: null, amount: place8to14PayoutRounded },
+      { place: '14th', percentage: null, amount: place8to14PayoutRounded },
+      { place: '15th', percentage: null, amount: place15to21PayoutRounded },
+      { place: '16th', percentage: null, amount: place15to21PayoutRounded },
+      { place: '17th', percentage: null, amount: place15to21PayoutRounded },
+      { place: '18th', percentage: null, amount: place15to21PayoutRounded },
+      { place: '19th', percentage: null, amount: place15to21PayoutRounded },
+      { place: '20th', percentage: null, amount: place15to21PayoutRounded },
+      { place: '21st', percentage: null, amount: place15to21PayoutRounded },
     ];
 
     return (
       <div className="space-y-3">
         <div className="text-center mb-4">
-          <h3 className="text-lg font-semibold text-green-400">
-            ${conferencePrice} Conference = ${prizePool.toLocaleString()} Prize
-            Pool
-          </h3>
+          <div className="space-y-1">
+            <h3 className="text-lg font-semibold text-green-400">
+              ${conferencePrice} Conference = ${totalPot.toLocaleString()} Total
+              Pot
+            </h3>
+            <p className="text-sm text-gray-400">
+              ${prizePool.toLocaleString()} Prize Pool (after 10% protocol
+              share)
+            </p>
+          </div>
         </div>
         {prizes.map((prize, index) => (
           <div
@@ -161,7 +209,6 @@ const SeasonPassRulesPage = () => {
               <div className="text-lg font-bold text-green-400">
                 ${prize.amount.toLocaleString()}
               </div>
-              <div className="text-xs text-gray-500">{prize.percentage}%</div>
             </div>
           </div>
         ))}
@@ -377,7 +424,7 @@ const SeasonPassRulesPage = () => {
                   <StepCard
                     step={2}
                     title="Choose Your Conference"
-                    description="Select from 5 conference tiers ($100-$500) based on your preferred competition level and prize pool size."
+                    description="Select from 5 conference tiers ($50-$1,000) based on your preferred competition level and prize pool size."
                     icon={<Users className="w-5 h-5" />}
                   />
 
@@ -705,35 +752,37 @@ const SeasonPassRulesPage = () => {
                             <Badge className="bg-orange-600">Bronze</Badge>
                             <span>Entry Level</span>
                           </div>
-                          <span className="font-bold text-green-400">$100</span>
+                          <span className="font-bold text-green-400">$50</span>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <div className="flex items-center gap-2">
                             <Badge className="bg-gray-400">Silver</Badge>
                             <span>Intermediate</span>
                           </div>
-                          <span className="font-bold text-green-400">$200</span>
+                          <span className="font-bold text-green-400">$100</span>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <div className="flex items-center gap-2">
                             <Badge className="bg-yellow-500">Gold</Badge>
                             <span>Advanced</span>
                           </div>
-                          <span className="font-bold text-green-400">$300</span>
+                          <span className="font-bold text-green-400">$250</span>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <div className="flex items-center gap-2">
                             <Badge className="bg-purple-500">Platinum</Badge>
                             <span>Expert</span>
                           </div>
-                          <span className="font-bold text-green-400">$400</span>
+                          <span className="font-bold text-green-400">$500</span>
                         </div>
                         <div className="flex justify-between items-center p-3 bg-gray-800/30 rounded-lg">
                           <div className="flex items-center gap-2">
                             <Badge className="bg-blue-500">Diamond</Badge>
                             <span>Elite</span>
                           </div>
-                          <span className="font-bold text-green-400">$500</span>
+                          <span className="font-bold text-green-400">
+                            $1,000
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -782,34 +831,34 @@ const SeasonPassRulesPage = () => {
               <CardContent>
                 <div className="space-y-6">
                   <p className="text-gray-300">
-                    Each conference distributes prizes to the top 7 finishers
+                    Each conference distributes prizes to the top 21 finishers
                     using a fixed percentage structure that scales with the
                     conference&apos;s total prize pool.
                   </p>
 
                   <Tabs defaultValue="100" className="w-full">
                     <TabsList className="grid w-full grid-cols-5 h-14">
+                      <TabsTrigger value="50">$50</TabsTrigger>
                       <TabsTrigger value="100">$100</TabsTrigger>
-                      <TabsTrigger value="200">$200</TabsTrigger>
-                      <TabsTrigger value="300">$300</TabsTrigger>
-                      <TabsTrigger value="400">$400</TabsTrigger>
+                      <TabsTrigger value="250">$250</TabsTrigger>
                       <TabsTrigger value="500">$500</TabsTrigger>
+                      <TabsTrigger value="1000">$1,000</TabsTrigger>
                     </TabsList>
 
+                    <TabsContent value="50">
+                      <PrizeStructure conferencePrice={50} />
+                    </TabsContent>
                     <TabsContent value="100">
                       <PrizeStructure conferencePrice={100} />
                     </TabsContent>
-                    <TabsContent value="200">
-                      <PrizeStructure conferencePrice={200} />
-                    </TabsContent>
-                    <TabsContent value="300">
-                      <PrizeStructure conferencePrice={300} />
-                    </TabsContent>
-                    <TabsContent value="400">
-                      <PrizeStructure conferencePrice={400} />
+                    <TabsContent value="250">
+                      <PrizeStructure conferencePrice={250} />
                     </TabsContent>
                     <TabsContent value="500">
                       <PrizeStructure conferencePrice={500} />
+                    </TabsContent>
+                    <TabsContent value="1000">
+                      <PrizeStructure conferencePrice={1000} />
                     </TabsContent>
                   </Tabs>
                 </div>
@@ -905,7 +954,7 @@ const SeasonPassRulesPage = () => {
                       When and how are prizes distributed?
                     </AccordionTrigger>
                     <AccordionContent>
-                      Prizes are distributed in USDC to the top 7 finishers in
+                      Prizes are distributed in USDC to the top 21 finishers in
                       each conference after the Super Bowl concludes.
                       Distribution happens automatically through smart contracts
                       within 48 hours of the final game.
