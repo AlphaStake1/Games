@@ -8,6 +8,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Info, AlertCircle } from 'lucide-react';
 
 const RulesContent = () => {
   return (
@@ -15,13 +17,124 @@ const RulesContent = () => {
       <h1 className="text-4xl font-bold text-center mb-8">
         🏈 Football Squares — Official Rules & Variations
       </h1>
-      <p className="text-center text-muted-foreground mb-12">
+      <p className="text-center text-muted-foreground mb-8">
         X-axis = <strong>Home-team</strong> last digit | Y-axis ={' '}
         <strong>Away-team</strong> last digit
       </p>
 
+      {/* Navigation Table of Contents */}
+      <Card className="mb-12">
+        <CardHeader>
+          <CardTitle>Quick Navigation</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <a href="#quick-start" className="text-blue-600 hover:underline">
+              → Quick Start Guide
+            </a>
+            <a href="#season-pass" className="text-blue-600 hover:underline">
+              1. Season Pass (Green Points)
+            </a>
+            <a href="#half-season" className="text-blue-600 hover:underline">
+              2. Half-Season Divisions
+            </a>
+            <a href="#weekly-squares" className="text-blue-600 hover:underline">
+              3. Weekly Squares
+            </a>
+            <a href="#cbl-program" className="text-blue-600 hover:underline">
+              4. CBL Program
+            </a>
+            <a href="#free-play" className="text-blue-600 hover:underline">
+              5. Free-to-Play
+            </a>
+            <a href="#points-systems" className="text-blue-600 hover:underline">
+              6. Blue & Orange Points
+            </a>
+            <a href="#general-rules" className="text-blue-600 hover:underline">
+              7. General Rules
+            </a>
+            <a
+              href="#scoring-examples"
+              className="text-blue-600 hover:underline"
+            >
+              8. Scoring Examples
+            </a>
+            <a href="#faq" className="text-blue-600 hover:underline">
+              9. FAQ
+            </a>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Start Guide */}
+      <Card className="mb-12" id="quick-start">
+        <CardHeader>
+          <CardTitle className="text-3xl">Quick Start Guide</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <h3 className="text-xl font-semibold">Getting Started in 3 Steps</h3>
+          <ol className="list-decimal pl-6 space-y-4">
+            <li>
+              <strong>Connect Your Wallet:</strong> Use Phantom, Solflare, or
+              any Solana-compatible wallet. Fund it with SOL for gas fees and
+              USDC for purchases.
+            </li>
+            <li>
+              <strong>Choose Your Game Mode:</strong>
+              <ul className="list-disc pl-6 mt-2 space-y-1">
+                <li>
+                  <strong>Season Pass:</strong> One purchase for entire NFL
+                  season (285+ games)
+                </li>
+                <li>
+                  <strong>Half-Season:</strong> Join mid-season starting Week 10
+                </li>
+                <li>
+                  <strong>Weekly Squares:</strong> Single-game entries ($5-$500)
+                </li>
+                <li>
+                  <strong>Free-to-Play:</strong> Practice with sponsored boards
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Purchase & Play:</strong> Select your tier, complete
+              purchase, and watch scores update automatically. Payouts are
+              instant after game completion.
+            </li>
+          </ol>
+
+          <Alert>
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              <strong>New Players:</strong> Start with Free-to-Play or low-tier
+              Weekly Squares to learn the system.
+            </AlertDescription>
+          </Alert>
+
+          <h3 className="text-xl font-semibold mt-6">Payment & Payouts</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>
+              <strong>Accepted Payment:</strong> USDC on Solana blockchain
+            </li>
+            <li>
+              <strong>Payout Timeline:</strong> Weekly games pay within 5
+              minutes of final score
+            </li>
+            <li>
+              <strong>Season Payouts:</strong> Distributed within 24 hours after
+              Super Bowl
+            </li>
+            <li>
+              <strong>Minimum Balance:</strong> Keep 0.01 SOL for transaction
+              fees
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+
       <div className="space-y-12">
-        <Card>
+        <Card id="season-pass">
           <CardHeader>
             <CardTitle className="text-3xl">
               1. Season Pass Conferences (Green Points System)
@@ -29,35 +142,48 @@ const RulesContent = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             <p>
-              Season Pass Conferences transform weekly squares into season-long
-              competition. Players purchase a single season pass granting one
-              permanent square for every NFL game (Week 1 → Super Bowl),
-              competing within tier-matched conferences of exactly 100 players.
+              <strong>Season Pass: One purchase, entire season.</strong> Your
+              NFT grants one square per game (285+ games) in a 100-player
+              conference at your chosen tier.
             </p>
+
+            <Alert className="my-4">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                <strong>85% Activation Rule:</strong> Conferences activate at
+                85% capacity (85 players). The House covers unfilled squares—if
+                they hit, points are burned (not awarded to any player). Payouts
+                remain proportional to actual entries collected.
+              </AlertDescription>
+            </Alert>
 
             <h3 className="text-2xl font-semibold">
               1.1 Double-Random Fairness System
             </h3>
             <p>
-              Before each NFL game, two randomization events occur via
-              Verifiable Random Function (VRF):
+              Two VRF randomizations before each game ensure complete fairness:
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>NFT Marker Shuffle (T-minus 90 minutes):</strong> All
-                100 season pass NFTs are randomly redistributed across the 10×10
-                coordinate grid, eliminating permanent positional advantages.
+                <strong>Step 1 (T-90 min):</strong> NFT positions shuffle across
+                the 10×10 grid
               </li>
               <li>
-                <strong>Row/Column Digit Redraw:</strong> Fresh 0-9 digits
-                assigned to X-axis and Y-axis immediately after shuffle,
-                creating new scoring combinations for each game.
+                <strong>Step 2 (T-85 min):</strong> Home/Away digits (0-9)
+                randomly assigned to axes
               </li>
               <li>
-                <strong>Fairness Guarantee:</strong> Every player experiences
-                ~285 different square positions over the full season.
+                <strong>Result:</strong> 285+ unique positions throughout the
+                season (one per game)
               </li>
             </ul>
+            <Alert className="mt-4">
+              <Info className="h-4 w-4" />
+              <AlertDescription>
+                The 90-minute lock time allows both randomization steps to
+                complete on-chain before kickoff.
+              </AlertDescription>
+            </Alert>
 
             <h3 className="text-2xl font-semibold">
               1.2 Conference Tier Structure & Pricing
@@ -149,11 +275,14 @@ const RulesContent = () => {
             </Table>
 
             <h3 className="text-2xl font-semibold">
-              1.3 Green Points — Scoring
+              1.3 Green Points Scoring System
             </h3>
             <p>
-              Green Points are awarded at the end of each quarter (and each OT period) when the score's last digits match your square under any scoring pattern.
-              Points = <strong>Base (by period)</strong> × <strong>Category Split</strong> × <strong>Playoff Multiplier</strong>. Scores are kept to two decimals.
+              Earn points when quarter-end scores match your square digits.
+              <strong>
+                {' '}
+                Formula: Base Points × Pattern Rarity × Playoff Multiplier
+              </strong>
             </p>
 
             <h4 className="text-xl font-semibold">Base Points by Period</h4>
@@ -194,7 +323,9 @@ const RulesContent = () => {
               </TableBody>
             </Table>
 
-            <h4 className="text-xl font-semibold">Category Split (Pattern Rarity)</h4>
+            <h4 className="text-xl font-semibold">
+              Category Split (Pattern Rarity)
+            </h4>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -270,33 +401,36 @@ const RulesContent = () => {
             </Table>
 
             <h3 className="text-2xl font-semibold">
-              1.4 Season-Long Payout Structure (Top 21)
+              1.4 Season Payouts (Top 21 Players)
             </h3>
             <p>
-              Final Green Points standings determine payouts. Full-season conferences allocate
-              <strong> 90% of the total pot to players</strong> (10% protocol). The <strong>Top 21</strong> are paid as follows:
+              <strong>90% to players, 10% protocol.</strong> Payouts are
+              proportional to entries collected.
             </p>
 
-            <h4 className="text-xl font-semibold">Bands & Rules</h4>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <strong>Band B (Places 8-14):</strong> Flat <strong>1.5×</strong> the season-pass price.
-              </li>
-              <li>
-                <strong>Band C (Places 15-21):</strong> Flat <strong>1.05×</strong> the season-pass price.
-              </li>
-              <li>
-                <strong>Band A (Places 1-7):</strong> Premium winners, paid from the remaining player pool:
-                <ul className="list-disc pl-6 mt-2 space-y-1">
-                  <li>1st: <strong>~28%</strong> of total pot</li>
-                  <li>2nd: <strong>~18%</strong> of total pot</li>
-                  <li>3rd: <strong>~14%</strong> of total pot</li>
-                  <li>4th–7th: Split the <em>remaining player pool</em> after Bands B & C and places 1–3, paid <strong>equally</strong></li>
+            <div className="grid md:grid-cols-3 gap-4 my-4">
+              <div className="border rounded p-4">
+                <h4 className="font-semibold">Band A (1st-7th)</h4>
+                <ul className="text-sm space-y-1 mt-2">
+                  <li>1st: ~28% of pot</li>
+                  <li>2nd: ~18% of pot</li>
+                  <li>3rd: ~14% of pot</li>
+                  <li>4th-7th: Split remainder</li>
                 </ul>
-              </li>
-            </ul>
+              </div>
+              <div className="border rounded p-4">
+                <h4 className="font-semibold">Band B (8th-14th)</h4>
+                <p className="text-sm mt-2">1.5× pass price</p>
+              </div>
+              <div className="border rounded p-4">
+                <h4 className="font-semibold">Band C (15th-21st)</h4>
+                <p className="text-sm mt-2">1.05× pass price</p>
+              </div>
+            </div>
 
-            <h4 className="text-xl font-semibold">Example — Tier 4 ($500 pass, $50,000 pot, $45,000 to players)</h4>
+            <h4 className="text-xl font-semibold">
+              Example — Tier 4 ($500 pass, $50,000 pot, $45,000 to players)
+            </h4>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -332,71 +466,101 @@ const RulesContent = () => {
               </TableBody>
             </Table>
 
-            <h4 className="text-xl font-semibold">Green Points Tie-Breaking</h4>
-            <p>In order of precedence:</p>
+            <h4 className="text-xl font-semibold">Tie-Breaking Order</h4>
             <ol className="list-decimal pl-6 space-y-1">
-              <li>
-                <strong>Primary:</strong> Total Green Points accumulated
-              </li>
-              <li>
-                <strong>Secondary:</strong> Most squares won throughout season
-              </li>
-              <li>
-                <strong>Tertiary:</strong> Earliest mint block (first to join
-                conference)
-              </li>
-              <li>
-                <strong>Final:</strong> VRF-seeded deterministic random using
-                season start seed
-              </li>
+              <li>Total Green Points</li>
+              <li>Most squares won</li>
+              <li>Earliest mint block</li>
+              <li>VRF randomization</li>
             </ol>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card id="half-season">
           <CardHeader>
-            <CardTitle className="text-3xl">
-              2. Half-Season Divisions (Separate Leaderboards)
-            </CardTitle>
+            <CardTitle className="text-3xl">2. Half-Season Divisions</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <p>
-              Half-Season passes let players join mid-season with their own divisions, leaderboards, and prize pools.
-              Coverage starts <strong>Week 10 through the Super Bowl</strong>, with up to <strong>5 passes per wallet</strong>{' '}
-              using <strong>scaling prices</strong> (1x, 1.1x, 1.2x, 1.3x, 1.4x).
+              <strong>Join mid-season (Week 10+)</strong> with separate
+              divisions and prize pools. Up to 5 passes per wallet at scaling
+              prices (1×, 1.1×, 1.2×, 1.3×, 1.4×).
             </p>
 
-            <h3 className="text-2xl font-semibold">2.1 Eligibility & Minting</h3>
+            <Alert className="my-4">
+              <Info className="h-4 w-4" />
+              <AlertDescription>
+                Divisions also activate at 85% capacity with proportional
+                payouts.
+              </AlertDescription>
+            </Alert>
+
+            <h3 className="text-2xl font-semibold">
+              2.1 Eligibility & Minting
+            </h3>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Opens at NFL Week 10; mints remain open until division fills (100 players)</li>
+              <li>
+                Opens at NFL Week 10; mints remain open until division fills
+                (100 players)
+              </li>
               <li>Up to 5 passes per wallet per division</li>
-              <li>Divisions are named after NFL divisions (e.g., AFC East, NFC North)</li>
-              <li>Squares auto-assigned before each game; digits redrawn via VRF</li>
+              <li>
+                Divisions are named after NFL divisions (e.g., AFC East, NFC
+                North)
+              </li>
+              <li>
+                Squares auto-assigned before each game; digits redrawn via VRF
+              </li>
             </ul>
 
-            <h3 className="text-2xl font-semibold">2.2 Scoring & Multipliers</h3>
+            <h3 className="text-2xl font-semibold">
+              2.2 Scoring & Multipliers
+            </h3>
             <p>
-              Uses the <strong>same Green Points system</strong> as Full-Season (see 1.3). Points begin accruing at Week 10;
-              playoff multipliers apply normally through the Super Bowl.
+              Uses the <strong>same Green Points system</strong> as Full-Season
+              (see 1.3). Points begin accruing at Week 10; playoff multipliers
+              apply normally through the Super Bowl.
             </p>
 
-            <h3 className="text-2xl font-semibold">2.3 Payout Structure (Top 21)</h3>
+            <h3 className="text-2xl font-semibold">
+              2.3 Payout Structure (Top 21)
+            </h3>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>90/10 split:</strong> 90% of the total pot to players (10% protocol)</li>
-              <li><strong>Places 8–14:</strong> 1.5× division pass price (flat)</li>
-              <li><strong>Places 15–21:</strong> 1.05× division pass price (flat)</li>
               <li>
-                <strong>Places 1–7:</strong> Premium winners paid from the remaining player pool using Half-Season ratios:
+                <strong>90/10 split:</strong> 90% of the total pot to players
+                (10% protocol)
+              </li>
+              <li>
+                <strong>Places 8–14:</strong> 1.5× division pass price (flat)
+              </li>
+              <li>
+                <strong>Places 15–21:</strong> 1.05× division pass price (flat)
+              </li>
+              <li>
+                <strong>Places 1–7:</strong> Premium winners paid from the
+                remaining player pool using Half-Season ratios:
                 <ul className="list-disc pl-6 mt-2 space-y-1">
-                  <li>1st: <strong>~24%</strong> of total pot</li>
-                  <li>2nd: <strong>~14%</strong> of total pot</li>
-                  <li>3rd: <strong>~10%</strong> of total pot</li>
-                  <li>4th–7th: Split the remainder of the player pool <strong>equally</strong> after Bands B & C and places 1–3</li>
+                  <li>
+                    1st: <strong>~24%</strong> of total pot
+                  </li>
+                  <li>
+                    2nd: <strong>~14%</strong> of total pot
+                  </li>
+                  <li>
+                    3rd: <strong>~10%</strong> of total pot
+                  </li>
+                  <li>
+                    4th–7th: Split the remainder of the player pool{' '}
+                    <strong>equally</strong> after Bands B & C and places 1–3
+                  </li>
                 </ul>
               </li>
             </ul>
 
-            <h4 className="text-xl font-semibold">Example — Tier 2 Division ($350 pass, $35,000 pot, $31,500 to players)</h4>
+            <h4 className="text-xl font-semibold">
+              Example — Tier 2 Division ($350 pass, $35,000 pot, $31,500 to
+              players)
+            </h4>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -433,12 +597,13 @@ const RulesContent = () => {
             </Table>
 
             <p className="text-sm text-muted-foreground">
-              All Season-Pass payouts are distributed in Solana-based USDC. Prize pools shown are net amounts after protocol fees.
+              All Season-Pass payouts are distributed in Solana-based USDC.
+              Prize pools shown are net amounts after protocol fees.
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card id="weekly-squares">
           <CardHeader>
             <CardTitle className="text-3xl">
               3. Weekly Football Squares
@@ -446,11 +611,18 @@ const RulesContent = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             <p>
-              Weekly Football Squares are single-game NFT squares without
-              season-long commitment. Five entry tiers ($5 → $100) serve casual
-              through high-roller audiences, with VIP status unlocking higher
-              tiers and bigger square caps.
+              <strong>Single-game entries:</strong> $5 to $500 tiers. No season
+              commitment required.
             </p>
+
+            <Alert className="my-4">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                <strong>95% Fill Rule:</strong> Boards with ≥95% sold auto-fill
+                remaining squares. Boards {'<'}95% sold cancel with full
+                refunds.
+              </AlertDescription>
+            </Alert>
 
             <h3 className="text-2xl font-semibold">
               3.1 Weekly Timeline & Game Flow
@@ -484,7 +656,7 @@ const RulesContent = () => {
                   </TableCell>
                   <TableCell>Kickoff-60 min</TableCell>
                   <TableCell>
-                    Contract stops purchases; reservations expire
+                    Sales close (60 min allows for single VRF draw)
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -729,7 +901,7 @@ const RulesContent = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card id="cbl-program">
           <CardHeader>
             <CardTitle className="text-3xl">
               4. Community Board Leader (CBL) Program
@@ -737,68 +909,48 @@ const RulesContent = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             <p>
-              Community Board Leaders (CBLs) are authorized organizers who
-              create and manage boards for their communities, earning
-              commissions from platform activity while providing personalized
-              gaming experiences.
+              <strong>Become a CBL:</strong> Create boards for your community
+              and earn commissions.
             </p>
 
             <h3 className="text-2xl font-semibold">
-              4.1 CBL Activity Requirements
+              4.1 Stay Active Requirements
             </h3>
-            <p>
-              CBLs must maintain active engagement to preserve their leadership
-              status and player access:
-            </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>3 Sunday Rule:</strong> CBLs who miss creating boards
-                for 3 consecutive Sundays enter "Inactive" status, triggering
-                player migration to House boards.
+                <strong>3 Sunday Rule:</strong> Miss 3 consecutive Sundays =
+                Inactive status
               </li>
               <li>
-                <strong>Tuesday Grace Period:</strong> CBLs have until Tuesday
-                11:59 PM ET following each missed Sunday to create a board and
-                reset their streak.
+                <strong>Grace Period:</strong> Until Tuesday 11:59 PM ET to
+                create board
               </li>
               <li>
-                <strong>Activity Notifications:</strong> Progressive alerts warn
-                CBLs of approaching deadlines (Info → Warning → Critical
-                status).
+                <strong>Auto-Reactivation:</strong> Create a board to instantly
+                reactivate
               </li>
               <li>
-                <strong>Automatic Reactivation:</strong> Inactive CBLs
-                immediately return to active status upon creating their next
-                board.
+                <strong>Player Access:</strong> Your players can always join
+                House boards if you're inactive
               </li>
             </ul>
 
-            <h3 className="text-2xl font-semibold">
-              4.2 Player Attribution & Mobility
-            </h3>
+            <h3 className="text-2xl font-semibold">4.2 Commission Structure</h3>
             <p>
-              Players maintain freedom of movement while preserving CBL
-              attribution for commissions:
+              Players can join any board while their original CBL keeps
+              commission rights:
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>Original Referrer Attribution:</strong> Players remain
-                attributed to their original referring CBL for NFT commission
-                purposes (30% of platform fees).
+                <strong>Board Creation:</strong> 3% rake on boards you create
               </li>
               <li>
-                <strong>Board Creator Rake:</strong> CBLs earn 3% rake from
-                boards they personally create, regardless of player attribution.
+                <strong>NFT Referrals:</strong> 30% of platform fees from your
+                attributed players
               </li>
               <li>
-                <strong>House Board Access:</strong> When a CBL becomes
-                inactive, their attributed players can seamlessly access
-                House-operated boards without interruption.
-              </li>
-              <li>
-                <strong>Player Choice:</strong> Players may participate in any
-                active CBL's boards while maintaining their original
-                attribution.
+                <strong>Attribution:</strong> Permanent to original referring
+                CBL
               </li>
             </ul>
 
@@ -910,57 +1062,172 @@ const RulesContent = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card id="free-play">
           <CardHeader>
             <CardTitle className="text-3xl">5. Free-to-Play Games</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <p>
-              Free-to-play games are offered on sponsored or promotional boards.
-              Players compete for points and prizes rather than cash.
+              <strong>Practice for free</strong> on sponsored boards. Compete
+              for prizes, not cash.
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>Entry:</strong> Free, available to all users.
+                <strong>Entry:</strong> Free for all users
               </li>
               <li>
-                <strong>Scoring:</strong> Uses the same Green Points system as
-                Season Pass games, but on a separate (🔵 Blue) leaderboard.
+                <strong>Minimum Players:</strong> 85% filled (85 players) to
+                activate
               </li>
               <li>
-                <strong>Prizes:</strong> Prizes are announced per board and may
-                include merchandise, NFTs, or other rewards.
+                <strong>Scoring:</strong> Blue Points (separate from Green
+                Points)
+              </li>
+              <li>
+                <strong>Prizes:</strong> Merchandise, NFTs, or sponsor rewards
               </li>
             </ul>
           </CardContent>
         </Card>
 
-        <Card>
+        {/* New Blue & Orange Points Section */}
+        <Card id="points-systems">
           <CardHeader>
             <CardTitle className="text-3xl">
-              6. General Rules & Fair Play
+              6. Blue & Orange Points Systems
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <h3 className="text-2xl font-semibold">Board Lock & Timing</h3>
+            <h3 className="text-2xl font-semibold">Point System Overview</h3>
+            <p>
+              Three distinct point systems track different types of gameplay:
+            </p>
+
+            <div className="grid md:grid-cols-3 gap-4 my-6">
+              <div className="border border-green-600 rounded p-4 bg-green-900/20">
+                <h4 className="font-semibold text-green-400">
+                  🟢 Green Points
+                </h4>
+                <p className="text-sm mt-2 text-gray-300">
+                  Season Pass & Half-Season paid competitions
+                </p>
+                <ul className="text-sm mt-2 space-y-1 text-gray-400">
+                  <li>• Cash prizes</li>
+                  <li>• Top 21 payouts</li>
+                  <li>• Playoff multipliers</li>
+                </ul>
+              </div>
+              <div className="border border-blue-600 rounded p-4 bg-blue-900/20">
+                <h4 className="font-semibold text-blue-400">🔵 Blue Points</h4>
+                <p className="text-sm mt-2 text-gray-300">
+                  Free-to-Play sponsored competitions
+                </p>
+                <ul className="text-sm mt-2 space-y-1 text-gray-400">
+                  <li>• No entry fee</li>
+                  <li>• Sponsor prizes</li>
+                  <li>• Practice mode</li>
+                </ul>
+              </div>
+              <div className="border border-orange-600 rounded p-4 bg-orange-900/20">
+                <h4 className="font-semibold text-orange-400">
+                  🟠 Orange Points
+                </h4>
+                <p className="text-sm mt-2 text-gray-300">
+                  Special events & promotions
+                </p>
+                <ul className="text-sm mt-2 space-y-1 text-gray-400">
+                  <li>• Limited-time events</li>
+                  <li>• Bonus rewards</li>
+                  <li>• Community challenges</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 className="text-2xl font-semibold">Blue Points Details</h3>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>Season Pass Boards:</strong> All season pass conferences
-                close for new entries exactly{' '}
-                <strong>90 minutes prior to kickoff</strong>
-                to allow for the double-random VRF process.
+                <strong>Scoring:</strong> Same formula as Green Points (Base ×
+                Pattern × Multiplier)
               </li>
               <li>
-                <strong>Weekly Boards:</strong> Registration closes{' '}
-                <strong>60 minutes prior to kickoff</strong>, with VRF digit
-                assignment at 40 minutes before.
+                <strong>Leaderboards:</strong> Separate from paid competitions
               </li>
               <li>
-                <strong>Auto-fill Threshold:</strong> Weekly boards with ≥95%
-                squares sold are auto-filled by the House. Boards {'<'}95% sold
-                are cancelled with full refunds.
+                <strong>Seasons:</strong> May run shorter promotional periods
+              </li>
+              <li>
+                <strong>Prizes:</strong> Non-cash rewards determined by sponsors
               </li>
             </ul>
+
+            <h3 className="text-2xl font-semibold">Orange Points Details</h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                <strong>Activation:</strong> Special events (playoffs, holidays,
+                milestones)
+              </li>
+              <li>
+                <strong>Earning:</strong> Bonus multipliers on specific games or
+                achievements
+              </li>
+              <li>
+                <strong>Rewards:</strong> Exclusive NFTs, VIP status, or
+                platform benefits
+              </li>
+              <li>
+                <strong>Stacking:</strong> Can be earned alongside Green or Blue
+                points
+              </li>
+            </ul>
+
+            <Alert className="mt-4">
+              <Info className="h-4 w-4" />
+              <AlertDescription>
+                Points never transfer between systems. Each color maintains
+                independent leaderboards and prizes.
+              </AlertDescription>
+            </Alert>
+          </CardContent>
+        </Card>
+
+        <Card id="general-rules">
+          <CardHeader>
+            <CardTitle className="text-3xl">
+              7. General Rules & Fair Play
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <h3 className="text-2xl font-semibold">Lock Times & Thresholds</h3>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Game Type</TableHead>
+                  <TableHead>Lock Time</TableHead>
+                  <TableHead>Minimum Fill</TableHead>
+                  <TableHead>Reason</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Season Pass</TableCell>
+                  <TableCell>90 min before</TableCell>
+                  <TableCell>85%</TableCell>
+                  <TableCell>Double VRF randomization</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Weekly Squares</TableCell>
+                  <TableCell>60 min before</TableCell>
+                  <TableCell>95%</TableCell>
+                  <TableCell>Single VRF randomization</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Free Play</TableCell>
+                  <TableCell>60 min before</TableCell>
+                  <TableCell>85%</TableCell>
+                  <TableCell>Single VRF randomization</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
             <Separator />
 
             <h3 className="text-2xl font-semibold">
@@ -999,31 +1266,38 @@ const RulesContent = () => {
             </ul>
             <Separator />
 
-            <h3 className="text-2xl font-semibold">
-              Emergency Scenarios & Refunds
-            </h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <strong>Season Cancellation:</strong> In case of NFL season
-                suspension, pro-rata refunds based on games played: (unplayed
-                games / total games) × pass price.
-              </li>
-              <li>
-                <strong>Unfilled Weekly Boards:</strong> Boards {'<'}95% sold by
-                lock time are cancelled with exact paid-amount refunds
-                (in-kind). Automatic refunds are sent to the purchasing wallet
-                within 24 hours with gas fees covered by the House.
-              </li>
-              <li>
-                <strong>Technical Errors:</strong> All disputes resolved by
-                on-chain data. Smart contract includes emergency pause
-                functionality.
-              </li>
-              <li>
-                <strong>Conference Minimum:</strong> Season pass conferences
-                need ≥85 players to proceed; below this triggers auto-refund.
-              </li>
-            </ul>
+            <h3 className="text-2xl font-semibold">Refunds & Edge Cases</h3>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Scenario</TableHead>
+                  <TableHead>Resolution</TableHead>
+                  <TableHead>Timeline</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Weekly board {'<'}95% filled</TableCell>
+                  <TableCell>Full refund to wallet</TableCell>
+                  <TableCell>Within 24 hours</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Season conference {'<'}85% filled</TableCell>
+                  <TableCell>Full refund or House fills</TableCell>
+                  <TableCell>Before Week 1</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>NFL season suspended</TableCell>
+                  <TableCell>Pro-rata refund</TableCell>
+                  <TableCell>Within 7 days</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Game cancelled ({'<'}55 min played)</TableCell>
+                  <TableCell>Full refund for that game</TableCell>
+                  <TableCell>Within 48 hours</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
             <Separator />
 
             <h3 className="text-2xl font-semibold">
@@ -1050,80 +1324,76 @@ const RulesContent = () => {
           </CardContent>
         </Card>
 
+        {/* Merged Eligibility & Compliance */}
         <Card>
           <CardHeader>
             <CardTitle className="text-3xl">
-              7. Eligibility & Legal Compliance
+              8. Eligibility, Compliance & Technical Requirements
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <h3 className="text-2xl font-semibold">Player Eligibility</h3>
+            <h3 className="text-2xl font-semibold">Player Requirements</h3>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>Age Requirement:</strong> Only individuals 18+ (or the
-                legal gaming age in their jurisdiction) may purchase squares.
+                <strong>Age:</strong> 18+ or legal gaming age in your
+                jurisdiction
               </li>
               <li>
-                <strong>KYC & Multiple Wallets:</strong> The project reserves
-                the right to request KYC or to disqualify multiple wallets
-                reasonably believed to be controlled by the same individual.
+                <strong>Wallet:</strong> Solana-compatible (Phantom, Solflare,
+                etc.)
               </li>
               <li>
-                <strong>NFL Affiliation:</strong> Football Squares is not
-                sponsored by or affiliated with the National Football League,
-                its teams, or players.
+                <strong>Browser:</strong> Chrome, Firefox, Safari, Edge (latest
+                versions)
+              </li>
+              <li>
+                <strong>Mobile:</strong> Responsive web app (native apps coming
+                soon)
               </li>
             </ul>
-            <Separator />
 
-            <h3 className="text-2xl font-semibold">Season-Long Tie-Breaking</h3>
-            <p>
-              If two or more wallets finish level on total Green Points after
-              the Super Bowl, ties are broken in this order:
-            </p>
-            <ol className="list-decimal pl-6 space-y-1">
-              <li>
-                <strong>Most 'Forward' hits</strong> throughout the season
-              </li>
-              <li>
-                <strong>Most total hits</strong> across all scoring patterns
-              </li>
-              <li>
-                <strong>Earliest timestamp</strong> of first hit in the season
-              </li>
-              <li>
-                <strong>VRF-seeded random</strong> using season start seed
-              </li>
-            </ol>
-            <Separator />
-
-            <h3 className="text-2xl font-semibold">
-              Game Cancellations & Edge Cases
-            </h3>
+            <h3 className="text-2xl font-semibold mt-6">Compliance</h3>
             <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <strong>Cancelled/Shortened Games:</strong> If the NFL
-                officially voids or does not finish a game, all squares for that
-                matchup are refunded unless 55 minutes of game time were
-                completed.
-              </li>
-              <li>
-                <strong>Kickoff Delays:</strong> The registration lock time is
-                based on the originally published kickoff time; subsequent
-                league delays do not reopen sales.
-              </li>
-              <li>
-                <strong>Season Cancellation:</strong> Pro-rata refunds based on
-                completed games: (unplayed games / total games) × pass price.
-              </li>
+              <li>KYC may be required for large payouts</li>
+              <li>Multiple wallets per person may be disqualified</li>
+              <li>Not affiliated with the NFL or its teams</li>
+              <li>Players must comply with local laws</li>
             </ul>
+
+            <h3 className="text-2xl font-semibold mt-6">Payout Timeline</h3>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Game Type</TableHead>
+                  <TableHead>Payout Timing</TableHead>
+                  <TableHead>Method</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Weekly Squares</TableCell>
+                  <TableCell>5 min after final</TableCell>
+                  <TableCell>Auto to wallet</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Season Pass</TableCell>
+                  <TableCell>24 hrs after Super Bowl</TableCell>
+                  <TableCell>Auto to wallet</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Free Play</TableCell>
+                  <TableCell>Per sponsor terms</TableCell>
+                  <TableCell>Varies</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card id="scoring-examples">
           <CardHeader>
             <CardTitle className="text-3xl">
-              8. Scoring Pattern Examples
+              9. Scoring Pattern Examples
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -1179,10 +1449,10 @@ const RulesContent = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card id="faq">
           <CardHeader>
             <CardTitle className="text-3xl">
-              9. Frequently Asked Questions
+              10. Frequently Asked Questions
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -1202,10 +1472,20 @@ const RulesContent = () => {
                   What if my square never hits all season?
                 </h4>
                 <p className="text-muted-foreground">
-                  Season pass holders who don't accumulate any Green Points
-                  throughout the season receive no payout. However, the
-                  double-random VRF system ensures every player has
-                  mathematically equal chances across ~285 different positions.
+                  No points = no payout. But with 285+ games and double
+                  randomization, every player has equal mathematical chances to
+                  win throughout the season.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-semibold mb-2">
+                  How do score updates work during games?
+                </h4>
+                <p className="text-muted-foreground">
+                  Live scores update every 30 seconds via oracle feeds.
+                  Quarter-end scores are locked and points awarded within 2
+                  minutes of each period ending.
                 </p>
               </div>
 
@@ -1262,9 +1542,9 @@ const RulesContent = () => {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              <strong>Rules v1.4 – effective July 29, 2025.</strong> Changes
-              will be announced on-chain and via Discord 72 hours before taking
-              effect. The most current version is always available at this URL.
+              <strong>Rules v1.5 – effective January 2025.</strong> Changes
+              announced 72 hours in advance via Discord and on-chain. Always
+              check this page for the latest version.
             </p>
           </CardContent>
         </Card>
