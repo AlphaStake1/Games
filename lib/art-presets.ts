@@ -10,10 +10,10 @@ export const SUBJECT_LABELS: Record<SubjectType, string> = {
 };
 
 export const SUBJECT_THUMBNAILS: Record<SubjectType, string> = {
-  character: '/assets/thumbnails/character-referee.png',
-  object: '/assets/thumbnails/object-helmet.png',
-  food: '/assets/thumbnails/food-hotdog.png',
-  emblem: '/assets/thumbnails/emblem-88.png',
+  character: '/assets/style-previews/Ref 2.png',
+  object: '/assets/style-previews/Shoulder pads.png',
+  food: '/assets/style-previews/Stadium hotdog.png',
+  emblem: '/assets/style-previews/Number college block.png',
 };
 
 export const ART_STYLES = [
@@ -22,30 +22,35 @@ export const ART_STYLES = [
     label: 'Sticker Toon',
     description: 'Bold outline, flat color',
     prompt: 'bold outlines, flat colors, sticker style',
+    thumbnail: '/assets/thumbnails/Ref sticker.png',
   },
   {
     id: 'chibi',
     label: 'Chibi Anime',
     description: 'Cute, saturated',
     prompt: 'chibi anime, cute proportions, saturated colors',
+    thumbnail: '/assets/thumbnails/Ref Chibi.png',
   },
   {
     id: 'sketch',
     label: 'Line Sketch',
     description: 'Ink + light wash',
     prompt: 'ink line art, light watercolor wash',
+    thumbnail: '/assets/thumbnails/Ref sketch.png',
   },
   {
     id: 'pixel',
     label: 'Retro Pixel',
     description: '8-bit/pixel grid',
     prompt: '8-bit pixel art, limited palette',
+    thumbnail: '/assets/thumbnails/Ref 16-bit.png',
   },
   {
     id: 'fantasy',
     label: 'Fantasy Poster',
     description: 'Soft painterly',
     prompt: 'soft painterly lighting, gentle gradients',
+    thumbnail: '/assets/thumbnails/Ref reto poster.png',
   },
 ] as const;
 
@@ -117,6 +122,12 @@ export const FINISH_OPTIONS = [
 ];
 
 export const PALETTE_PRESETS = [
+  {
+    id: 'dali-choice',
+    label: 'Let Dali Choose',
+    colors: ['#FF00FF', '#00FFFF', '#FFFF00', '#FF00FF'],
+    special: true,
+  },
   {
     id: 'gridiron',
     label: 'Gridiron Classic',
