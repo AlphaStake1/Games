@@ -192,10 +192,10 @@ function calculateGreenPoints({
   /** Baseline points per period */
   const base: Record<Quarter, number> = {
     Q1: 200,
-    Q2: 250, // Halftime bonus
+    Q2: 250, // 250-point base award (not a percentage multiplier)
     Q3: 200,
-    Q4: 250, // End-of-game bonus
-    OT: 200, // Each OT period is independent
+    Q4: 250, // 250-point base award
+    OT: 200, // Each OT period is its own 200-point distribution
   };
 
   /** Category percentage split - determines relative rarity/reward */

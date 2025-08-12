@@ -137,7 +137,7 @@ const getDaliPaletteResponse = (userMessage: string): KnowledgeResponse => {
 const daliPaletteConfig: ChatbotConfig = {
   name: 'Dali Palette',
   title: 'NFT Art Assistant',
-  description: 'Helps with creating and minting NFT art',
+  description: "Let's Create Fun",
   avatarSrc: '/Assets/Dali_Palette.png',
   avatarAlt: 'Dali Palette',
   fallbackInitial: 'DP',
@@ -145,9 +145,8 @@ const daliPaletteConfig: ChatbotConfig = {
     "Hello — I'm Dali Palette! 🎨 I can help you create, format, and mint NFTs. Tell me what you're working on (AI prompts, files, or metadata) and I'll guide you through it.",
   gradientFrom: 'from-amber-500',
   gradientTo: 'to-pink-600',
-  avatarButtonSize: 76,
-  avatarButtonOffsetY: -10,
-  avatarButtonRounded: false,
+  avatarButtonSize: 80,
+  avatarButtonOffsetY: -20,
   getResponse: getDaliPaletteResponse,
 };
 

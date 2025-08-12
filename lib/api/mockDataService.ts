@@ -65,7 +65,7 @@ export class MockDataService {
     // For development, use current date as base and spread games around it
     const now = new Date();
     const seasonStartDate = new Date(now);
-    seasonStartDate.setDate(now.getDate() - 7); // Start season a week ago
+    seasonStartDate.setDate(now.getDate() + 1); // Start season tomorrow
     const daysFromSeasonStart = (week - 1) * 7; // Each week is 7 days apart
     const gameDate = new Date(seasonStartDate);
     gameDate.setDate(gameDate.getDate() + daysFromSeasonStart);

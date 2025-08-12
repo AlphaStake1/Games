@@ -56,10 +56,10 @@ Points = **Quarter Base** × **Hit Pattern %** × **Playoff Multiplier**
 ### Quarter Base Points
 
 - **Q1**: 200 points
-- **Q2**: 250 points (Halftime bonus)
+- **Q2**: 250 points
 - **Q3**: 200 points
-- **Q4**: 250 points (End-of-game bonus)
-- **OT**: 200 points (Each OT period independent)
+- **Q4**: 250 points
+- **OT**: 200 points
 
 ### Hit Pattern Distribution
 

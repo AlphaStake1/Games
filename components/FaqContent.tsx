@@ -782,7 +782,7 @@ const FaqContent = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="mailto:support@footballsquares.com"
+            href="mailto:Coach-B@tutamail.com"
             className="bg-[#ed5925] hover:bg-[#d14513] text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
           >
             Email Support

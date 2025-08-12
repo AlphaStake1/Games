@@ -68,23 +68,62 @@ app/page.tsx                             # Updated main page routing
 - **21-Player Payout**: Top 21 finishers per conference/division share the prize pool.
 - **90/10 Split**: 90% of the total pot is paid out to players. The remaining 10% is retained by the protocol for operational costs and prize bonuses.
 
-#### Full-Season Conference Example (Tier 4 - $500 buy-in):
+#### Full-Season Conference Payout Structures
 
-- **1st**: $14,000
-- **2nd**: $9,000
-- **3rd**: $7,000
-- **4th-7th**: $1,518 each
+**Formula:**
+
+- **Prize Pool**: 90% of total pot (10% protocol share)
+- **1st Place**: 28% of total pot
+- **2nd Place**: 18% of total pot
+- **3rd Place**: 14% of total pot
+- **4th-7th Place**: Remainder split evenly among 4 players
+- **8th-14th Place**: 1.5x buy-in amount
+- **15th-21st Place**: 1.05x buy-in amount
+
+**Tier 1 ($50 buy-in, $5,000 pot, $4,500 to players):**
+
+- **1st**: $1,400 (28% of total pot)
+- **2nd**: $900 (18% of total pot)
+- **3rd**: $700 (14% of total pot)
+- **4th-7th**: $151 each (remainder split)
+- **8th-14th**: $75 each (1.5x return)
+- **15th-21st**: $52 each (1.05x return)
+
+**Tier 2 ($100 buy-in, $10,000 pot, $9,000 to players):**
+
+- **1st**: $2,800 (28% of total pot)
+- **2nd**: $1,800 (18% of total pot)
+- **3rd**: $1,400 (14% of total pot)
+- **4th-7th**: $303 each (remainder split)
+- **8th-14th**: $150 each (1.5x return)
+- **15th-21st**: $105 each (1.05x return)
+
+**Tier 3 ($250 buy-in, $25,000 pot, $22,500 to players):**
+
+- **1st**: $7,000 (28% of total pot)
+- **2nd**: $4,500 (18% of total pot)
+- **3rd**: $3,500 (14% of total pot)
+- **4th-7th**: $759 each (remainder split)
+- **8th-14th**: $375 each (1.5x return)
+- **15th-21st**: $262 each (1.05x return)
+
+**Tier 4 ($500 buy-in, $50,000 pot, $45,000 to players):**
+
+- **1st**: $14,000 (28% of total pot)
+- **2nd**: $9,000 (18% of total pot)
+- **3rd**: $7,000 (14% of total pot)
+- **4th-7th**: $1,518 each (remainder split)
 - **8th-14th**: $750 each (1.5x return)
 - **15th-21st**: $525 each (1.05x return)
 
-#### Half-Season Division Example (Tier 2 - $350 buy-in):
+**Tier 5 ($1,000 buy-in, $100,000 pot, $90,000 to players):**
 
-- **1st**: $8,400
-- **2nd**: $4,900
-- **3rd**: $3,500
-- **4th-7th**: $2,114 each
-- **8th-14th**: $525 each (1.5x return)
-- **15th-21st**: $367 each (1.048x return)
+- **1st**: $28,000 (28% of total pot)
+- **2nd**: $18,000 (18% of total pot)
+- **3rd**: $14,000 (14% of total pot)
+- **4th-7th**: $3,037 each (remainder split)
+- **8th-14th**: $1,500 each (1.5x return)
+- **15th-21st**: $1,050 each (1.05x return)
 
 - **Automatic Distribution**: Smart contract handles prize payouts.
 

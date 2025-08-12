@@ -239,9 +239,9 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
         }`}
       >
         {/* Status Badges */}
-        <div className="absolute -top-2 -right-2 z-10 flex gap-1">
+        <div className="absolute top-2 right-2 z-10 flex gap-1">
           {isVIPTier && (
-            <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900">
+            <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900 text-xs">
               <Crown className="w-3 h-3 mr-1" />
               VIP
             </Badge>
@@ -262,17 +262,10 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
           <div className="flex justify-between items-start">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <CardTitle className="text-lg">{tier.displayName}</CardTitle>
-                <Badge variant="secondary" className="text-xs">
+                <CardTitle className="text-2xl font-bold">
                   ${tier.pricePerSquare}/sq
-                </Badge>
-                <Badge variant="outline" className="text-xs">
-                  {tier.rake}% rake
-                </Badge>
+                </CardTitle>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                {tier.description}
-              </p>
             </div>
             <div className="text-right">
               <p className="text-2xl font-bold text-green-600">
@@ -328,7 +321,7 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
             <Progress value={fillPercentage} className="h-2" />
             <div className="flex justify-between items-center mt-1">
               <p className="text-xs text-gray-500">
-                {board.availableSquares} squares remaining
+                {board.availableSquares} squares available
               </p>
               <p className="text-xs font-medium">
                 {fillPercentage.toFixed(1)}% filled
@@ -452,12 +445,13 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
                 <AlertTriangle className="w-4 h-4 mr-2" />
                 Board Cancelled
               </Button>
-            ) : availability.boardState === BoardState.LOCKED ? (
+            ) : availability.boardState === BoardState.LOCKED ||
+              board.availableSquares === 0 ? (
               <Button variant="outline" className="w-full" disabled>
                 <Lock className="w-4 h-4 mr-2" />
-                Board Locked
+                Board Full
               </Button>
-            ) : !board.isActive || board.availableSquares === 0 ? (
+            ) : !board.isActive ? (
               <Button variant="outline" className="w-full" disabled>
                 <AlertTriangle className="w-4 h-4 mr-2" />
                 Board Full

@@ -454,8 +454,8 @@ const SeasonPassLandingPage = () => {
             <CardHeader>
               <CardTitle className="text-center text-gray-900 dark:text-white">
                 {selectedPassType === 'full'
-                  ? 'Tier 4 Conference Example: $500 × 100 = $50,000 pot'
-                  : 'Tier 2 Division Example: $350 × 100 = $35,000 pot'}
+                  ? 'Tier 4 Conference Example: $500 × 100 = $45,000 prize pool'
+                  : 'Tier 2 Division Example: $350 × 100 = $31,500 prize pool'}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -530,11 +530,11 @@ const SeasonPassLandingPage = () => {
                 ))}
               </div>
 
-              <div className="mt-6 p-4 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-700">
-                <p className="text-sm text-center text-yellow-800 dark:text-yellow-300">
+              <div className="mt-6 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">
+                <p className="text-sm text-center text-blue-800 dark:text-blue-300">
                   <Info className="w-4 h-4 inline mr-1" />
                   All Season-Pass game payouts are distributed in Solana-based
-                  USDC. Protocol retains 10% for operations and prize bonuses.
+                  USDC. Prize pools shown are net amounts after protocol fees.
                 </p>
               </div>
               <div className="mt-3 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">

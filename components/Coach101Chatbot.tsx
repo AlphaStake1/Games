@@ -228,7 +228,7 @@ const Coach101Chatbot = () => {
   const coach101Config: ChatbotConfig = {
     name: 'Coach 101',
     title: 'Wallet Setup Guide',
-    description: 'Your personal onboarding assistant',
+    description: 'Covering the Basics',
     avatarSrc: '/Assets/Coach101_headset.png',
     avatarAlt: 'Coach 101',
     fallbackInitial: '101',
@@ -236,6 +236,8 @@ const Coach101Chatbot = () => {
       "Hey! I'm Coach 101, your personal wallet guide! 🎯 I'll help you get set up with SOL in just a few minutes. Where are you in the process?\n\n1️⃣ Need to install a wallet\n2️⃣ Have wallet, need SOL\n3️⃣ Ready to connect and play\n\nJust type a number or tell me what you need!",
     gradientFrom: 'from-green-600',
     gradientTo: 'to-blue-600',
+    avatarButtonSize: 80,
+    avatarButtonOffsetY: -20,
     getResponse: getCoach101Response,
   };
 

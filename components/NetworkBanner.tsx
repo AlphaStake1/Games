@@ -19,6 +19,10 @@ export function NetworkBanner() {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    if (!status.rpcUrl) {
+      setIsVisible(false);
+      return;
+    }
     const checkConnection = async () => {
       const startTime = Date.now();
       try {

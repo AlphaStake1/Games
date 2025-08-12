@@ -22,6 +22,7 @@ import {
 import { NFLTeam } from '@/lib/nflTeams';
 import { mockDataService } from '@/lib/api/mockDataService';
 import { formatCurrency } from '@/lib/utils';
+import TeamColorStrip from './TeamColorStrip';
 
 interface WeeklyGamesProjectionProps {
   userTeam: NFLTeam;
@@ -185,12 +186,19 @@ const WeeklyGamesProjection: React.FC<WeeklyGamesProjectionProps> = ({
           {projection.games.map((game, index) => (
             <Card
               key={game.gameId}
-              className={`transition-all duration-200 ${
+              className={`transition-all duration-200 overflow-hidden ${
                 selectedGame === game.gameId
                   ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-950'
                   : ''
               }`}
             >
+              {/* Team Color Strip */}
+              <TeamColorStrip
+                homeTeam={game.isHome ? userTeam : game.opponent}
+                awayTeam={game.isHome ? game.opponent : userTeam}
+                separator="V"
+                height="h-3"
+              />
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">

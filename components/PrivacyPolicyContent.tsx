@@ -312,7 +312,7 @@ export default function PrivacyPolicyContent() {
       <blockquote>
         <p>
           <strong>Email:</strong>{' '}
-          <a href="mailto:coachb@protonmail.com">coachb@protonmail.com</a>
+          <a href="mailto:Coach-B@tutamail.com">Coach-B@tutamail.com</a>
           <br />
           <strong>Postal Mail:</strong> Football Squares, Attn: Coach B
           (Privacy), 1234 Market St., Houston, TX 77002, USA

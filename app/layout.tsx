@@ -15,8 +15,7 @@ const recursive = Recursive({
 
 export const metadata: Metadata = {
   title: 'Football Squares',
-  description:
-    'The ultimate destination for NFL squares games and fantasy football resources.',
+  description: 'Platform for NFL squares games and fantasy football resources.',
 };
 
 export default function RootLayout({

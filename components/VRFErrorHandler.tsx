@@ -175,7 +175,7 @@ const VRFErrorHandler: React.FC<VRFErrorHandlerProps> = ({
                 size="sm"
                 variant="ghost"
                 onClick={() =>
-                  window.open('mailto:support@footballsquares.app', '_blank')
+                  window.open('mailto:Coach-B@tutamail.com', '_blank')
                 }
                 className="h-8"
               >

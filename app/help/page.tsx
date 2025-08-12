@@ -40,9 +40,9 @@ const RevivaBot = ({
 }) => {
   const getStepMessage = () => {
     const messages = {
-      0: "Hey there, I'm Trainer Reviva! 🌱 I'm here to help heal your journey. First, what type of issue are you experiencing?",
+      0: "Hey there, I'm Trainer Reviva! 🌱 What type of issue are you experiencing?",
       1: "Perfect! Now, what's your name so I can personalize your support experience?",
-      2: 'Awesome, thank you! Could you share your email? Coach B will use it to follow up with healing solutions.',
+      2: 'Thanks! Could you share your email so Coach B can follow up?',
       3:
         issueType === 'wallet'
           ? 'Great! Which wallet are you using? (Phantom, Solflare, etc.)'
@@ -53,8 +53,8 @@ const RevivaBot = ({
               : issueType === 'account'
                 ? "Got it! What's your username or account identifier?"
                 : "Understood! Let's get some more details about your situation.",
-      4: "Almost there! Please describe what happened in detail. I'll prepare a comprehensive digital med-kit for Coach B.",
-      5: "All set! 🎯 I've logged your info and created a healing plan. Coach B will reach out from Coach-B@tutamail.com soon. Remember: every challenge is just growth in disguise! ✨",
+      4: 'Almost there — please describe what happened in detail so we can prepare a full ticket for Coach B.',
+      5: "All set! 🎯 We've logged your request and will follow up from Coach-B@tutamail.com. Expect a response in about 2–4 hours.",
     };
     return messages[step as keyof typeof messages] || messages[0];
   };
@@ -323,7 +323,7 @@ const DynamicField = ({
         label: 'Describe Your Issue',
         type: 'textarea',
         placeholder:
-          "Please provide detailed information about the problem you're experiencing...",
+          'Describe the issue and include any relevant details (steps to reproduce, transaction hash, screenshots, links).',
       },
     };
     return (
@@ -461,10 +461,10 @@ export default function HelpPage() {
       <div className="help-page">
         <div className="container">
           <div className="header">
-            <h1>🏥 Technical Support Center</h1>
+            <h1>Technical Support</h1>
             <p className="subtitle">
-              Get personalized help from Trainer Reviva and our support team.
-              We're here to heal your digital journey!
+              Get help from Trainer Reviva and our support team. We're here to
+              resolve your account, wallet, and gameplay issues.
             </p>
           </div>
 
@@ -519,7 +519,7 @@ export default function HelpPage() {
                 ))}
 
                 <button type="submit" className="submit-btn">
-                  🚀 Submit Support Request
+                  Submit Support Request
                 </button>
               </form>
             </div>
@@ -528,16 +528,15 @@ export default function HelpPage() {
           {submitted && (
             <div className="success-message">
               <div className="success-icon">✅</div>
-              <h2>Support Request Submitted!</h2>
+              <h2>Support request submitted</h2>
               <p>
-                Thank you! Trainer Reviva has received your{' '}
-                <strong>{selectedIssueType}</strong> support request. Coach B
-                will contact you at <strong>{form.email}</strong> with healing
-                solutions.
+                Thank you — we've received your{' '}
+                <strong>{selectedIssueType}</strong> request. Coach B will
+                contact you at <strong>{form.email}</strong> to follow up.
               </p>
               <p className="ticket-info">
-                Your ticket has been logged and prioritized based on the issue
-                type. Average response time: <strong>2-4 hours</strong>
+                Your ticket is logged and prioritized by issue type. Expected
+                response time: <strong>2–4 hours</strong>.
               </p>
               <button className="new-ticket-btn" onClick={resetForm}>
                 Submit Another Ticket

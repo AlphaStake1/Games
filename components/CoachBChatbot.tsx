@@ -145,7 +145,7 @@ const getCoachBResponse = (userMessage: string): KnowledgeResponse => {
 const coachBConfig: ChatbotConfig = {
   name: 'Coach B',
   title: 'Football Squares Maestro',
-  description: 'Football Squares Maestro',
+  description: 'Crypto Squares Maestro',
   avatarSrc: '/Assets/Coach B with light red shirt.png',
   avatarAlt: 'Coach B',
   fallbackInitial: 'B',
@@ -153,10 +153,8 @@ const coachBConfig: ChatbotConfig = {
     "Hey there! I'm Coach B, your Football Squares assistant! 🏈 I can help you with cryptocurrency, wallet setup, token transfers, how our Squares game works, and general fantasy football questions. What would you like to know?",
   gradientFrom: 'from-blue-600',
   gradientTo: 'to-purple-600',
-  // Elevate avatar so it "pops out" of the pill like Coach 101
-  avatarButtonSize: 76,
-  avatarButtonOffsetY: -10,
-  avatarButtonRounded: false,
+  avatarButtonSize: 80,
+  avatarButtonOffsetY: -20,
   getResponse: getCoachBResponse,
 };
 

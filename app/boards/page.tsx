@@ -500,35 +500,35 @@ const BoardsPageContent: React.FC = () => {
                   <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
                     <div
                       className="flex items-center gap-1"
-                      title="Tier 1 - $25 season pass"
+                      title="Tier 1 - $50 season pass"
                     >
                       <div className="w-3 h-3 bg-green-600 rounded shadow-sm"></div>
                       <span>Tier 1</span>
                     </div>
                     <div
                       className="flex items-center gap-1"
-                      title="Tier 2 - $50 season pass"
+                      title="Tier 2 - $100 season pass"
                     >
                       <div className="w-3 h-3 bg-blue-600 rounded shadow-sm"></div>
                       <span>Tier 2</span>
                     </div>
                     <div
                       className="flex items-center gap-1"
-                      title="Tier 3 - $100 season pass"
+                      title="Tier 3 - $250 season pass"
                     >
                       <div className="w-3 h-3 bg-purple-600 rounded shadow-sm"></div>
                       <span>Tier 3</span>
                     </div>
                     <div
                       className="flex items-center gap-1"
-                      title="Tier 4 - $200 season pass"
+                      title="Tier 4 - $500 season pass"
                     >
                       <div className="w-3 h-3 bg-orange-600 rounded shadow-sm"></div>
                       <span>Tier 4</span>
                     </div>
                     <div
                       className="flex items-center gap-1"
-                      title="Tier 5 - $500 season pass"
+                      title="Tier 5 - $1,000 season pass"
                     >
                       <div className="w-3 h-3 bg-yellow-600 rounded shadow-sm"></div>
                       <span>Tier 5</span>
@@ -552,13 +552,13 @@ const BoardsPageContent: React.FC = () => {
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-green-600">$25</p>
+                        <p className="text-2xl font-bold text-green-600">$50</p>
                         <p className="text-sm text-gray-500">season pass</p>
                       </div>
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
                           <span>Current Pool:</span>
-                          <span className="font-bold">$1,675</span>
+                          <span className="font-bold">$3,350</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Passes Sold:</span>
@@ -573,7 +573,7 @@ const BoardsPageContent: React.FC = () => {
                         <div className="flex justify-between">
                           <span>1st Place @ Full Board:</span>
                           <span className="font-bold text-green-600">
-                            ~$875
+                            ~$1,400
                           </span>
                         </div>
                         <div className="flex justify-between">
@@ -589,7 +589,7 @@ const BoardsPageContent: React.FC = () => {
                         >
                           {isLocalProcessing
                             ? 'Loading...'
-                            : 'Buy Eastern Pass – $25'}
+                            : 'Buy Eastern Pass – $50'}
                         </Button>
                         <a
                           href="/season-pass/leaderboard/1"
@@ -613,13 +613,13 @@ const BoardsPageContent: React.FC = () => {
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-blue-600">$50</p>
+                        <p className="text-2xl font-bold text-blue-600">$100</p>
                         <p className="text-sm text-gray-500">season pass</p>
                       </div>
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
                           <span>Current Pool:</span>
-                          <span className="font-bold">$2,150</span>
+                          <span className="font-bold">$4,300</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Passes Sold:</span>
@@ -634,7 +634,7 @@ const BoardsPageContent: React.FC = () => {
                         <div className="flex justify-between">
                           <span>1st Place @ Full Board:</span>
                           <span className="font-bold text-blue-600">
-                            ~$1,750
+                            ~$2,800
                           </span>
                         </div>
                         <div className="flex justify-between">
@@ -650,7 +650,7 @@ const BoardsPageContent: React.FC = () => {
                         >
                           {isLocalProcessing
                             ? 'Loading...'
-                            : 'Buy Southern Pass – $50'}
+                            : 'Buy Southern Pass – $100'}
                         </Button>
                         <a
                           href="/season-pass/leaderboard/2"
@@ -677,14 +677,14 @@ const BoardsPageContent: React.FC = () => {
                     <CardContent className="space-y-3">
                       <div className="text-center">
                         <p className="text-2xl font-bold text-purple-600">
-                          $100
+                          $250
                         </p>
                         <p className="text-sm text-gray-500">season pass</p>
                       </div>
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
                           <span>Current Pool:</span>
-                          <span className="font-bold">$2,800</span>
+                          <span className="font-bold">$7,000</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Passes Sold:</span>
@@ -699,7 +699,7 @@ const BoardsPageContent: React.FC = () => {
                         <div className="flex justify-between">
                           <span>1st Place @ Full Board:</span>
                           <span className="font-bold text-purple-600">
-                            ~$3,500
+                            ~$7,000
                           </span>
                         </div>
                         <div className="flex justify-between">
@@ -715,7 +715,7 @@ const BoardsPageContent: React.FC = () => {
                         >
                           {isLocalProcessing
                             ? 'Loading...'
-                            : 'Buy Northern Pass – $100'}
+                            : 'Buy Northern Pass – $250'}
                         </Button>
                         <a
                           href="/season-pass/leaderboard/3"
@@ -742,14 +742,14 @@ const BoardsPageContent: React.FC = () => {
                     <CardContent className="space-y-3">
                       <div className="text-center">
                         <p className="text-2xl font-bold text-orange-600">
-                          $200
+                          $500
                         </p>
                         <p className="text-sm text-gray-500">season pass</p>
                       </div>
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
                           <span>Current Pool:</span>
-                          <span className="font-bold">$3,000</span>
+                          <span className="font-bold">$7,500</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Passes Sold:</span>
@@ -764,7 +764,7 @@ const BoardsPageContent: React.FC = () => {
                         <div className="flex justify-between">
                           <span>1st Place @ Full Board:</span>
                           <span className="font-bold text-orange-600">
-                            ~$7,000
+                            ~$14,000
                           </span>
                         </div>
                         <div className="flex justify-between">
@@ -780,7 +780,7 @@ const BoardsPageContent: React.FC = () => {
                         >
                           {isLocalProcessing
                             ? 'Loading...'
-                            : 'Buy Western Pass – $200'}
+                            : 'Buy Western Pass – $500'}
                         </Button>
                         <a
                           href="/season-pass/leaderboard/4"
@@ -808,7 +808,7 @@ const BoardsPageContent: React.FC = () => {
                     <CardContent className="space-y-3">
                       <div className="text-center">
                         <p className="text-3xl font-bold text-yellow-600">
-                          $500
+                          $1,000
                         </p>
                         <p className="text-sm text-gray-500">season pass</p>
                       </div>
@@ -816,7 +816,7 @@ const BoardsPageContent: React.FC = () => {
                         <div className="space-y-1">
                           <div className="flex justify-between">
                             <span>Current Pool:</span>
-                            <span className="font-semibold">$3,500</span>
+                            <span className="font-semibold">$7,000</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Passes Sold:</span>
@@ -827,7 +827,7 @@ const BoardsPageContent: React.FC = () => {
                           <div className="flex justify-between">
                             <span>1st Place @ Full Board:</span>
                             <span className="font-bold text-yellow-600">
-                              ~$17,500
+                              ~$28,000
                             </span>
                           </div>
                           <div className="flex justify-between">
@@ -844,7 +844,7 @@ const BoardsPageContent: React.FC = () => {
                         >
                           {isLocalProcessing
                             ? 'Loading...'
-                            : 'Buy South-East Pass – $500'}
+                            : 'Buy South-East Pass – $1,000'}
                         </Button>
                         <a
                           href="/season-pass/leaderboard/5"

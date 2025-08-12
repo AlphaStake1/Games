@@ -152,10 +152,10 @@ function HomeContent() {
               <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-12">
                   <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-                    Ready to Play?
+                    Ready to play?
                   </h2>
                   <p className="text-lg text-gray-600 dark:text-gray-400">
-                    Choose your path to football squares excitement
+                    Choose how you'd like to play
                   </p>
                 </div>
 
@@ -168,8 +168,7 @@ function HomeContent() {
                         🏆 Season-Long Competition
                       </CardTitle>
                       <CardDescription className="text-gray-600 dark:text-gray-400">
-                        Compete all season long and accumulate points to win big
-                        prizes
+                        Compete all season and earn points to win prizes
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -179,8 +178,8 @@ function HomeContent() {
                         </p>
                         <ul className="text-sm space-y-1 text-gray-600 dark:text-gray-400">
                           <li>• One square per game automatically assigned</li>
-                          <li>• Points accumulate across entire season</li>
-                          <li>• Playoff multipliers increase your score</li>
+                          <li>• Points accumulate across the season</li>
+                          <li>• Playoff multipliers increase points</li>
                           <li>• Compete in conference leaderboards</li>
                         </ul>
                       </div>
@@ -200,8 +199,8 @@ function HomeContent() {
                         💰 Weekly Cash Games
                       </CardTitle>
                       <CardDescription className="text-gray-600 dark:text-gray-400">
-                        Join individual games with payouts 5 minutes after game
-                        end
+                        Join single games; payouts processed 5 minutes after
+                        official game end
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -212,11 +211,11 @@ function HomeContent() {
                         <ul className="text-sm space-y-1 text-gray-600 dark:text-gray-400">
                           <li>• Choose your own squares (up to 5 per board)</li>
                           <li>
-                            • Payouts initiated 5 minutes after official game
+                            • Payouts processed 5 minutes after official game
                             end
                           </li>
                           <li>• No long-term commitment required</li>
-                          <li>• VIP Membership available to get MORE</li>
+                          <li>• VIP membership available for extra benefits</li>
                         </ul>
                       </div>
                       <Button
@@ -254,7 +253,7 @@ function HomeContent() {
                             New to Football Squares?
                           </p>
                           <p className="text-sm text-gray-600 dark:text-gray-400">
-                            Try our free play mode to learn the game risk-free
+                            Try Free Play to learn risk-free
                           </p>
                         </div>
                       </div>
@@ -277,7 +276,7 @@ function HomeContent() {
                       Have a Game ID?
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400">
-                      Join a specific game by entering the game ID below
+                      Enter it below to join
                     </p>
                   </div>
                   <div className="max-w-md mx-auto flex gap-2">
@@ -285,7 +284,7 @@ function HomeContent() {
                       type="text"
                       value={gameId}
                       onChange={(e) => setGameId(e.target.value)}
-                      placeholder="Enter game ID (e.g., 1234)"
+                      placeholder="Enter Game ID (e.g., 1234)"
                       className="bg-white dark:bg-black border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500"
                     />
                     <Button
@@ -323,13 +322,13 @@ function HomeContent() {
                       icon: '🔐',
                       title: 'Verifiable Randomness',
                       description:
-                        'Using Switchboard VRF for provably fair number generation',
+                        'Powered by Switchboard VRF for provably fair results',
                     },
                     {
                       icon: '⚡',
                       title: 'Secure Payouts',
                       description:
-                        'Winners are paid automatically via smart contract 5 minutes after official game end',
+                        'Payouts processed by smart contract 5 minutes after official game end',
                     },
                     {
                       icon: '📊',
@@ -568,8 +567,8 @@ function HomeContent() {
                 <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
                   <h2 className="text-3xl font-bold mb-4">Stay in the Game</h2>
                   <p className="text-lg mb-6 opacity-90">
-                    Get weekly NFL insights, game alerts, and exclusive tips
-                    delivered to your inbox
+                    Get weekly NFL insights, game alerts, and exclusive tips in
+                    your inbox
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
                     <Input
@@ -582,7 +581,7 @@ function HomeContent() {
                     </Button>
                   </div>
                   <p className="text-sm opacity-75 mt-3">
-                    No spam, unsubscribe anytime. We respect your privacy.
+                    No spam — unsubscribe anytime
                   </p>
                 </div>
               </div>

@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletConnection } from '@/contexts/WalletConnectionProvider';
 import { Trophy, ArrowRight, Play } from 'lucide-react';
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useState, useRef } from 'react';
 
 const HERO_MEDIA_URL = process.env.NEXT_PUBLIC_HERO_MEDIA_URL;
 const HERO_MEDIA_ALT = process.env.NEXT_PUBLIC_HERO_MEDIA_ALT;
@@ -29,9 +29,10 @@ const Hero = () => {
   // Build media lists and rotate if multiple videos are provided
   const mediaList = useMemo(
     () => [HERO_MEDIA_URL, HERO_MEDIA_ALT].filter(Boolean) as string[],
-    [],
+    [HERO_MEDIA_URL, HERO_MEDIA_ALT],
   );
   const [activeIdx, setActiveIdx] = useState(0);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   useEffect(() => {
     if (mediaList.length < 2) return;
     const id = setInterval(() => {
@@ -39,6 +40,15 @@ const Hero = () => {
     }, HERO_ROTATE_MS);
     return () => clearInterval(id);
   }, [mediaList.length, HERO_ROTATE_MS]);
+
+  useEffect(() => {
+    const video = videoRefs.current[activeIdx];
+    if (video) {
+      video.play().catch((error) => {
+        console.error('Video play failed:', error);
+      });
+    }
+  }, [activeIdx]);
 
   const handleGetSeasonPass = () => {
     // Drive users straight into the Season Pass funnel
@@ -59,11 +69,12 @@ const Hero = () => {
       {/* Local/Hosted Background Media with optional rotation */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {mediaList.length > 0 ? (
-          <div className="absolute inset-0">
+          <div key={activeIdx} className="absolute inset-0">
             {mediaList.map((src, i) => {
               const isVideo = /\.(mp4|webm|ogg)(\?.*)?$/i.test(src);
               return isVideo ? (
                 <video
+                  ref={(el) => (videoRefs.current[i] = el)}
                   key={i}
                   className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${activeIdx === i ? 'opacity-100' : 'opacity-0'}`}
                   src={src}
@@ -135,7 +146,7 @@ const Hero = () => {
 
               <button
                 onClick={handleSeeWeekly}
-                className="inline-flex items-center gap-2 rounded-lg px-6 py-4 text-lg font-semibold border border-white/20 text-white/90 hover:bg-white/5 transition-all"
+                className="inline-flex items-center gap-2 rounded-lg px-6 py-4 text-lg font-semibold border border-white/20 text-white/90 bg-black/20 hover:bg-black/30 transition-all"
                 aria-label="See Weekly Games"
               >
                 <Play className="w-5 h-5" />

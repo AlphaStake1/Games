@@ -30,9 +30,10 @@ export interface ChatbotConfig {
   gradientFrom: string;
   gradientTo: string;
   // Optional presentation tweaks for the closed chat button
-  avatarButtonSize?: number;       // px, default 60
-  avatarButtonOffsetY?: number;    // px, negative to "pop out" above pill, default 0
-  avatarButtonRounded?: boolean;   // default true
+  avatarButtonSize?: number; // px, default 60
+  avatarButtonOffsetY?: number; // px, negative to "pop out" above pill, default 0
+  avatarButtonRounded?: boolean; // default true
+  avatarButtonScale?: number; // scale factor for closed button avatar (default 1)
   getResponse: (userMessage: string) => KnowledgeResponse;
 }
 
@@ -41,17 +42,19 @@ interface ChatCoreProps {
 }
 
 const ChatCore = ({ config }: ChatCoreProps) => {
+  const storageKeyOpen = `chatCore_${config.name}_isOpen`;
+  const storageKeyMin = `chatCore_${config.name}_isMinimized`;
   const [isClient, setIsClient] = useState(false);
   const [isOpen, setIsOpen] = useState(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('chatCore_isOpen');
+      const saved = localStorage.getItem(`chatCore_${config.name}_isOpen`);
       return saved ? JSON.parse(saved) : false;
     }
     return false;
   });
   const [isMinimized, setIsMinimized] = useState(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('chatCore_isMinimized');
+      const saved = localStorage.getItem(`chatCore_${config.name}_isMinimized`);
       return saved ? JSON.parse(saved) : false;
     }
     return false;
@@ -91,15 +94,21 @@ const ChatCore = ({ config }: ChatCoreProps) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('chatCore_isOpen', JSON.stringify(isOpen));
+      localStorage.setItem(
+        `chatCore_${config.name}_isOpen`,
+        JSON.stringify(isOpen),
+      );
     }
-  }, [isOpen]);
+  }, [isOpen, config.name]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('chatCore_isMinimized', JSON.stringify(isMinimized));
+      localStorage.setItem(
+        `chatCore_${config.name}_isMinimized`,
+        JSON.stringify(isMinimized),
+      );
     }
-  }, [isMinimized]);
+  }, [isMinimized, config.name]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -156,8 +165,14 @@ const ChatCore = ({ config }: ChatCoreProps) => {
   // Avatar presentation customization for the closed chat button
   const buttonAvatarSize = config.avatarButtonSize ?? 60;
   const buttonAvatarRounded =
-    config.avatarButtonRounded !== undefined ? config.avatarButtonRounded : true;
+    config.avatarButtonRounded !== undefined
+      ? config.avatarButtonRounded
+      : false;
   const buttonAvatarOffsetY = config.avatarButtonOffsetY ?? 0;
+  const buttonAvatarPopOut = Math.round(buttonAvatarSize * 0.35);
+  // Padding space inside the pill to clear the overlapping avatar
+  const leftPad = Math.max(34, Math.round(buttonAvatarSize * 0.48));
+  const buttonAvatarScale = config.avatarButtonScale ?? 1;
 
   if (!isClient) {
     return null;
@@ -165,44 +180,92 @@ const ChatCore = ({ config }: ChatCoreProps) => {
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-6 right-6 z-50" suppressHydrationWarning>
         <div className="relative">
-          <Button
+          <button
             onClick={() => setIsOpen(true)}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
-            className={`bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} hover:from-blue-700 hover:to-purple-700 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 group`}
-            size="lg"
-            aria-label={`Open ${config.name} chat`}
+            className={`bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 group`}
+            style={{
+              padding: '1px 10px',
+              paddingLeft: `${leftPad}px`,
+              borderRadius: '9999px',
+              width: 'auto',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px',
+              lineHeight: 1.0,
+              position: 'relative',
+              overflow: 'visible',
+              whiteSpace: 'nowrap',
+            }}
+            aria-label="Open chat"
           >
-            <div className="flex items-center gap-3">
-              {!imageError ? (
+            {!imageError ? (
+              <div
+                className="shrink-0 flex items-center justify-center"
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: '50%',
+                  transform: `translate(-${buttonAvatarPopOut}px, calc(-50% + ${buttonAvatarOffsetY}px)) scale(${buttonAvatarScale})`,
+                  width: `${buttonAvatarSize}px`,
+                  height: `${buttonAvatarSize}px`,
+                  zIndex: 1,
+                  pointerEvents: 'none',
+                }}
+              >
+                <Image
+                  src={config.avatarSrc}
+                  alt={config.avatarAlt}
+                  width={buttonAvatarSize}
+                  height={buttonAvatarSize}
+                  className={`${buttonAvatarRounded ? 'rounded-full object-cover' : 'object-contain'} group-hover:scale-110 transition-transform duration-300`}
+                  style={{
+                    width: `${buttonAvatarSize}px`,
+                    height: `${buttonAvatarSize}px`,
+                    filter: buttonAvatarRounded
+                      ? undefined
+                      : 'drop-shadow(0 2px 4px rgba(0,0,0,0.4))',
+                  }}
+                  onError={() => setImageError(true)}
+                />
+              </div>
+            ) : (
+              <div
+                className="shrink-0"
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: '50%',
+                  transform: `translate(-${buttonAvatarPopOut}px, calc(-50% + ${buttonAvatarOffsetY}px))`,
+                  zIndex: 1,
+                  pointerEvents: 'none',
+                }}
+              >
                 <div
-                  className="shrink-0"
-                  style={{ transform: `translateY(${buttonAvatarOffsetY}px)` }}
-                >
-                  <Image
-                    src={config.avatarSrc}
-                    alt={config.avatarAlt}
-                    width={buttonAvatarSize}
-                    height={buttonAvatarSize}
-                    className={`${buttonAvatarRounded ? 'rounded-full object-cover' : 'object-contain'} group-hover:scale-110 transition-transform duration-300`}
-                    onError={() => setImageError(true)}
-                  />
-                </div>
-              ) : (
-                <div
-                  className={`w-14 h-14 bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} rounded-full flex items-center justify-center text-white font-bold text-2xl group-hover:scale-110 transition-transform duration-300`}
+                  className={`bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} rounded-full flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300`}
+                  style={{
+                    width: `${buttonAvatarSize}px`,
+                    height: `${buttonAvatarSize}px`,
+                  }}
                 >
                   {config.fallbackInitial}
                 </div>
-              )}
-              <div className="text-left">
-                <div className="font-semibold">{config.name}</div>
-                <div className="text-xs opacity-90">Ask me anything!</div>
               </div>
+            )}
+            <div
+              className="text-left leading-tight"
+              style={{ lineHeight: 1.05, margin: 0, padding: 0 }}
+            >
+              <div className="font-semibold text-sm">{config.name}</div>
+              <div className="text-xs opacity-90">{config.description}</div>
             </div>
-          </Button>
+          </button>
 
           {/* Hover Preview */}
           {isHovering && !imageError && (

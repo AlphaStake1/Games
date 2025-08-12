@@ -73,7 +73,7 @@ export default function AboutUsPage() {
               <CardContent className="p-8 md:p-12">
                 <div className="text-center mb-8">
                   <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-                    The Ultimate WHY
+                    Our Why
                   </h2>
                   <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
                 </div>
@@ -81,11 +81,11 @@ export default function AboutUsPage() {
                 <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300">
                   <p className="leading-relaxed">
                     <span className="font-semibold text-blue-600 dark:text-blue-400">
-                      Coach B here.
+                      I'm Coach B.
                     </span>{' '}
-                    For years, I've watched the magic that happens when friends
-                    gather around a football squares board. The anticipation,
-                    the cheers, the friendly rivalries—it's pure electricity.
+                    For years I've watched the magic of friends gathering around
+                    a football squares board — the anticipation, the cheers, the
+                    friendly rivalries.
                   </p>
 
                   <p className="leading-relaxed">
@@ -97,17 +97,16 @@ export default function AboutUsPage() {
 
                   <p className="leading-relaxed bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg border-l-4 border-blue-600">
                     <span className="font-bold">Our mission is simple:</span>{' '}
-                    Bring an extra level of fun and excitement to this year's
-                    football season in a format that's easily shareable with
-                    friends—no matter where they are.
+                    Make the football season more fun and easily shareable with
+                    friends, wherever they are.
                   </p>
 
                   <p className="leading-relaxed">
-                    We've taken everything that makes traditional football
-                    squares great and made it better. Instant payouts,
-                    verifiable fairness, and the ability to play with your crew
-                    from anywhere. This isn't just digitizing an old game—it's
-                    reimagining how we connect through football.
+                    We've kept what makes football squares great and improved
+                    it: instant payouts, provable fairness, and the ability to
+                    play with your crew from anywhere. This isn't just
+                    digitizing the game — it's reimagining how we connect
+                    through football.
                   </p>
                 </div>
               </CardContent>

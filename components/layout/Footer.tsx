@@ -50,7 +50,7 @@ export default function Footer() {
     legal: [
       { label: 'Privacy Policy', href: '/privacy', icon: Lock },
       { label: 'Terms of Service', href: '/terms', icon: FileText },
-      { label: 'Contact Us', href: '#contact', icon: Mail },
+      { label: 'Contact Us', href: 'mailto:Coach-B@tutamail.com', icon: Mail },
     ],
     community: [
       { label: 'Host a Board', href: '/cbl/overview' },
