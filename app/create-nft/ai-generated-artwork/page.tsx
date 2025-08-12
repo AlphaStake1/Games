@@ -12,10 +12,12 @@ import {
   Sparkles,
   Wand2,
   Shuffle,
+  Upload,
   User,
   Package,
   Coffee,
   Shield,
+  Download,
 } from 'lucide-react';
 import {
   SUBJECTS,
@@ -32,9 +34,11 @@ import {
 export default function AiGeneratedArtworkNFTPage() {
   const [selectedNFT, setSelectedNFT] = useState<NFTItem | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [activeTab, setActiveTab] = useState<'create' | 'recipes' | 'examples'>(
-    'create',
-  );
+  const [activeTab, setActiveTab] = useState<
+    'create' | 'upload' | 'recipes' | 'examples' | 'drafts'
+  >('create');
+  const [savedDrafts, setSavedDrafts] = useState<NFTItem[]>([]);
+  const [nftsPurchased, setNftsPurchased] = useState(0); // Track purchased NFTs
 
   // Guided creation state
   const [subjectType, setSubjectType] = useState<SubjectType>('character');
@@ -135,6 +139,16 @@ export default function AiGeneratedArtworkNFTPage() {
     setActiveTab('create');
   };
 
+  const saveDraft = (nft: NFTItem) => {
+    const draft = {
+      ...nft,
+      id: `draft-${Date.now()}`,
+      name: `Draft ${savedDrafts.length + 1}`,
+    };
+    setSavedDrafts((prev) => [draft, ...prev]);
+    return draft;
+  };
+
   const handleGenerateNFT = async () => {
     setIsGenerating(true);
 
@@ -155,11 +169,15 @@ export default function AiGeneratedArtworkNFTPage() {
     // Select a random NFT as the "generated" result
     const randomNFT =
       aiGeneratedNFTs[Math.floor(Math.random() * aiGeneratedNFTs.length)];
-    setSelectedNFT({
+    const generatedNFT = {
       ...randomNFT,
       name: 'AI Generated Artwork',
       description: `Generated: ${finalPrompt.substring(0, 100)}...`,
-    });
+    };
+
+    // Auto-save as draft
+    const draft = saveDraft(generatedNFT);
+    setSelectedNFT(draft);
 
     setIsGenerating(false);
   };
@@ -168,6 +186,7 @@ export default function AiGeneratedArtworkNFTPage() {
     if (!selectedNFT) return;
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
+    setNftsPurchased((prev) => prev + 1);
     alert(`NFT "${selectedNFT.name}" created successfully!`);
   };
 
@@ -186,11 +205,11 @@ export default function AiGeneratedArtworkNFTPage() {
       <div className="max-w-6xl mx-auto px-4">
         <CreateNFTNav active="/create-nft/ai-generated-artwork" />
         <h1 className="text-4xl font-bold text-[#8d594d] mb-6 text-center">
-          Create AI-Generated Artwork NFT
+          Your Artwork NFT
         </h1>
         <p className="text-lg text-[#002244] dark:text-white mb-8 text-center max-w-3xl mx-auto">
-          Generate unique NFT artwork with our guided creator or quick recipe
-          cards. Your NFT will appear on your purchased squares.
+          Generate unique NFT artwork with AI or upload your own custom art.
+          Your NFT will appear on your purchased squares.
         </p>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -198,29 +217,47 @@ export default function AiGeneratedArtworkNFTPage() {
           <div className="lg:col-span-2">
             <div className="bg-white dark:bg-[#002244] rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-[#004953]">
               {/* Tabs */}
-              <div className="flex gap-2 mb-6">
+              <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mb-6">
                 <Button
                   variant={activeTab === 'create' ? 'default' : 'outline'}
                   onClick={() => setActiveTab('create')}
-                  className="flex-1"
+                  className="flex items-center justify-center"
                 >
                   <Wand2 className="w-4 h-4 mr-2" />
-                  Guided Creator
+                  <span className="text-xs md:text-sm">AI Create</span>
+                </Button>
+                <Button
+                  variant={activeTab === 'upload' ? 'default' : 'outline'}
+                  onClick={() => setActiveTab('upload')}
+                  className="flex items-center justify-center"
+                >
+                  <Upload className="w-4 h-4 mr-2" />
+                  <span className="text-xs md:text-sm">Upload Art</span>
                 </Button>
                 <Button
                   variant={activeTab === 'recipes' ? 'default' : 'outline'}
                   onClick={() => setActiveTab('recipes')}
-                  className="flex-1"
+                  className="flex items-center justify-center"
                 >
                   <Sparkles className="w-4 h-4 mr-2" />
-                  Recipe Cards
+                  <span className="text-xs md:text-sm">Recipes</span>
+                </Button>
+                <Button
+                  variant={activeTab === 'drafts' ? 'default' : 'outline'}
+                  onClick={() => setActiveTab('drafts')}
+                  className="flex items-center justify-center"
+                >
+                  <Package className="w-4 h-4 mr-2" />
+                  <span className="text-xs md:text-sm">
+                    Drafts ({savedDrafts.length})
+                  </span>
                 </Button>
                 <Button
                   variant={activeTab === 'examples' ? 'default' : 'outline'}
                   onClick={() => setActiveTab('examples')}
-                  className="flex-1"
+                  className="flex items-center justify-center"
                 >
-                  Examples
+                  <span className="text-xs md:text-sm">Examples</span>
                 </Button>
               </div>
 
@@ -460,6 +497,67 @@ export default function AiGeneratedArtworkNFTPage() {
                     </div>
                   )}
                 </div>
+              ) : activeTab === 'upload' ? (
+                <div className="space-y-6">
+                  <div className="text-center py-12 border-2 border-dashed border-[#8d594d]/30 rounded-lg bg-[#8d594d]/5">
+                    <Upload className="w-16 h-16 mx-auto mb-4 text-[#8d594d]" />
+                    <h3 className="text-lg font-semibold mb-2 text-[#004953] dark:text-white">
+                      Upload Your Custom Artwork
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 max-w-md mx-auto">
+                      Upload your own artwork to create a personalized NFT.
+                      Supported formats: PNG, JPG, GIF
+                    </p>
+                    <Button className="bg-gradient-to-r from-[#8d594d] to-[#a66d5d] text-white font-bold">
+                      Choose File
+                    </Button>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-[#004953] dark:text-white">
+                      Upload Guidelines
+                    </h3>
+                    <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="space-y-2">
+                        <div className="flex items-start gap-2">
+                          <span className="text-green-500">✓</span>
+                          <span>High resolution (1000x1000px or higher)</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="text-green-500">✓</span>
+                          <span>Square aspect ratio recommended</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="text-green-500">✓</span>
+                          <span>PNG with transparency supported</span>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex items-start gap-2">
+                          <span className="text-red-500">✗</span>
+                          <span>No copyrighted images</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="text-red-500">✗</span>
+                          <span>No inappropriate content</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="text-red-500">✗</span>
+                          <span>File size limit: 10MB</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {selectedNFT && (
+                    <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                      <p className="text-sm text-green-800 dark:text-green-200">
+                        ✨ Artwork uploaded successfully! Check the preview on
+                        the right.
+                      </p>
+                    </div>
+                  )}
+                </div>
               ) : activeTab === 'recipes' ? (
                 <div>
                   <h3 className="text-lg font-semibold mb-4 text-[#004953] dark:text-white">
@@ -483,6 +581,32 @@ export default function AiGeneratedArtworkNFTPage() {
                       </Button>
                     ))}
                   </div>
+                </div>
+              ) : activeTab === 'drafts' ? (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 text-[#004953] dark:text-white">
+                    Your Saved Drafts ({savedDrafts.length})
+                  </h3>
+                  {savedDrafts.length > 0 ? (
+                    <NFTGallery
+                      items={savedDrafts}
+                      onSelect={(item) => {
+                        setSelectedNFT(item);
+                        setActiveTab('create');
+                      }}
+                      selectedId={selectedNFT?.id}
+                      showCategories={false}
+                      maxColumns={2}
+                    />
+                  ) : (
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+                      <Package className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                      <p>
+                        No drafts saved yet. Generate artwork to save drafts
+                        automatically!
+                      </p>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div>
@@ -532,31 +656,47 @@ export default function AiGeneratedArtworkNFTPage() {
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       {selectedNFT.description}
                     </p>
-                    <div className="flex items-center justify-between">
-                      <span
-                        className={`text-sm font-medium capitalize px-3 py-1 rounded-full bg-gradient-to-r 
-                        ${
-                          selectedNFT.rarity === 'legendary'
-                            ? 'from-amber-100 to-amber-200'
-                            : selectedNFT.rarity === 'epic'
-                              ? 'from-purple-100 to-purple-200'
-                              : selectedNFT.rarity === 'rare'
-                                ? 'from-blue-100 to-blue-200'
-                                : 'from-gray-100 to-gray-200'
-                        }`}
-                      >
-                        {selectedNFT.rarity}
-                      </span>
-                    </div>
                   </div>
 
-                  <Button
-                    onClick={handleCreateNFT}
-                    className="w-full bg-gradient-to-r from-[#004953] to-[#006d7a] hover:from-[#003843] hover:to-[#005862] text-white font-bold py-3"
-                  >
-                    Create NFT
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
+                  <div className="space-y-2">
+                    <Button
+                      onClick={handleCreateNFT}
+                      className="w-full bg-gradient-to-r from-[#004953] to-[#006d7a] hover:from-[#003843] hover:to-[#005862] text-white font-bold py-3"
+                    >
+                      Create NFT
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+
+                    <div className="space-y-2">
+                      <div className="grid grid-cols-2 gap-2">
+                        <Button
+                          variant="outline"
+                          onClick={handleGenerateNFT}
+                          className="text-sm"
+                        >
+                          Try Again
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => setShowAdvanced(true)}
+                          className="text-sm"
+                        >
+                          Modify Prompt
+                        </Button>
+                      </div>
+
+                      {nftsPurchased >= 3 && (
+                        <Button
+                          variant="outline"
+                          onClick={() => alert('Download started!')}
+                          className="w-full text-sm text-green-600 border-green-600 hover:bg-green-50"
+                        >
+                          <Download className="w-4 h-4 mr-2" />
+                          Download Preview
+                        </Button>
+                      )}
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="text-center py-12 text-gray-500 dark:text-gray-400">

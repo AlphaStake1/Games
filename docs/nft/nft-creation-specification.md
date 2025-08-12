@@ -2,10 +2,18 @@
 
 ## Overview
 
-This document outlines the complete NFT creation process for the platform, including generation limits, tier systems, and user workflows for different NFT types.
+This document outlines the complete NFT creation process for the platform, including generation limits, tier systems, user workflows, and the new draft management system for different NFT types.
 
-**Last Updated:** January 2025  
-**Version:** 2.0
+**Last Updated:** August 2025  
+**Version:** 3.0
+
+## Recent Updates (v3.0)
+
+- Removed rarity badges from all NFT types
+- Added automatic draft saving system
+- Implemented "Try Again" and "Modify Prompt" options
+- Added conditional download feature (3+ NFT purchases)
+- Updated pricing structure ($3, $3, $7, $14, $21)
 
 ## NFT Types & Creation Processes
 
@@ -30,13 +38,15 @@ This document outlines the complete NFT creation process for the platform, inclu
 
 ---
 
-### 2. AI-Generated Artwork (No Background)
+### 2. AI-Generated Artwork (Your Artwork - $14)
 
 **Session Management:**
 
 - **Duration:** 60 minutes with countdown timer
 - **Pause Option:** Time-out button to pause session
 - **Session End:** Must choose from generations or select refund/retry
+- **Draft System:** All generations automatically saved as drafts
+- **Draft Library:** Accessible via dedicated "Drafts" tab showing all session generations
 
 **Generation Tiers by Account Type:**
 
@@ -77,15 +87,33 @@ This document outlines the complete NFT creation process for the platform, inclu
 - Automatic background removal
 - No download option unless 3+ minted from batch
 
+**Enhanced Preview Options:**
+
+After each generation, users have access to:
+
+- **Create NFT:** Primary action to mint the current artwork
+- **Try Again:** Regenerate with same parameters (adds to draft library)
+- **Modify Prompt:** Opens Advanced Mode for prompt customization
+- **Download Preview:** Available after 3+ NFT purchases in session
+
+**Draft Management System:**
+
+- **Auto-Save:** Every generation automatically saved as numbered draft
+- **Draft Counter:** Tab shows "Drafts (X)" with current count
+- **Draft Selection:** Click any draft to load it back into preview
+- **Session Persistence:** Drafts retained throughout entire session
+- **Comparison:** Browse all generations to make informed decisions
+
 **Final Selection Process:**
 
-1. User must select at least one image to mint
-2. If no selection made:
+1. User can generate up to limit (40/70) reviewing drafts as they go
+2. Select from draft library to mint preferred generations
+3. If no selection made:
    - Option A: Full refund (all generations discarded)
    - Option B: Try again with new prompt (all generations discarded)
-3. After first mint, Dali Palette encourages second mint
-4. At 3+ mints: Download capability unlocked for session
-5. Non-minted images retained for 60 days (internal policy)
+4. After first mint, Dali Palette encourages second mint
+5. At 3+ mints: Download capability unlocked for session
+6. Non-minted images retained for 60 days (internal policy)
 
 ---
 
@@ -117,7 +145,7 @@ This document outlines the complete NFT creation process for the platform, inclu
 
 ---
 
-### 4. Animated NFTs
+### 4. Premium Animated NFTs ($21)
 
 **Generation Limits:**
 
@@ -127,6 +155,8 @@ This document outlines the complete NFT creation process for the platform, inclu
   - 2nd Down: Premium animator (advanced effects)
   - 3rd Down: Premium+ animator (complex animations)
   - 4th Down: Elite animator (highest quality)
+- **Draft System:** Same auto-save functionality as AI-Generated artwork
+- **Preview Options:** Try Again, Modify Prompt, Download (after 3+ purchases)
 
 **Selection Process:**
 
@@ -176,13 +206,25 @@ This document outlines the complete NFT creation process for the platform, inclu
 - Generation counter: "Attempt 15 of 40"
 - Quality tier indicator: "Using Mid-Tier Model"
 - Time estimates: "~30 seconds remaining"
+- Draft counter in tab: "Drafts (15)"
 
 ### Batch Management:
 
 - Thumbnail grid view for all generations
-- Favorite/star system for marking potential mints
+- Automatic draft saving with numbered labels
 - Comparison mode (side-by-side view)
 - Batch actions (mint multiple, clear all)
+- Draft library for reviewing all session generations
+
+### Enhanced Generation Flow:
+
+- **Immediate Options:** After each generation, users can:
+  - Create NFT immediately
+  - Try Again with same settings
+  - Modify Prompt in Advanced Mode
+  - Download (if 3+ NFTs purchased)
+- **No Rarity System:** Focus on artwork quality, not artificial rarity
+- **Session Flexibility:** Continue generating until satisfied or limit reached
 
 ### Accessibility:
 
@@ -227,13 +269,20 @@ This document outlines the complete NFT creation process for the platform, inclu
 
 ### Pricing & Payment:
 
-1. **Cost Structure:**
+1. **NFT Creation Pricing (Current as of August 2025):**
+   - **Custom Signature:** $3
+   - **Custom Hand-Drawn Symbol:** $3
+   - **Collections (House-Generated):** $7
+   - **Your Artwork (AI-Generated/Upload):** $14
+   - **Premium Animated:** $21
+
+2. **Cost Structure:**
    - One-time purchase for session access (40-70 attempts based on tier)
    - All model tiers included in single purchase
    - Minting fees separate from generation fees
    - Platform covers all gas fees
 
-2. **Refund Policy:**
+3. **Refund Policy:**
    - Full refund if no images selected after all attempts
    - All generations discarded upon refund
    - Option to retry with new prompt (discards all previous)

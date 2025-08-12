@@ -25,11 +25,37 @@ export const ART_STYLES = [
     thumbnail: '/assets/thumbnails/Ref sticker.png',
   },
   {
-    id: 'chibi',
-    label: 'Chibi Anime',
-    description: 'Cute, saturated',
-    prompt: 'chibi anime, cute proportions, saturated colors',
-    thumbnail: '/assets/thumbnails/Ref Chibi.png',
+    id: 'vintage-card',
+    label: 'Vintage Trading Card',
+    description: 'Classic sports card',
+    prompt:
+      'vintage trading card style, retro sports card design, classic borders',
+    thumbnail: '/assets/style-previews/Ref collectors card.png',
+  },
+  {
+    id: 'graffiti',
+    label: 'Graffiti Street Art',
+    description: 'Urban spray paint',
+    prompt:
+      'graffiti street art, urban spray paint style, bold colors, street art aesthetic',
+    thumbnail:
+      '/assets/style-previews/Referee_in_the_style_of_Graffiti_street_artwork.png',
+  },
+  {
+    id: 'neon-synthwave',
+    label: 'Neon Synthwave',
+    description: '80s retro-futuristic',
+    prompt:
+      'neon synthwave, 80s retro-futuristic, glowing outlines, cyberpunk aesthetic',
+    thumbnail: '/assets/style-previews/Ref neon synthwave.png',
+  },
+  {
+    id: 'geometric-block',
+    label: 'Geometric Block',
+    description: 'Minecraft-inspired',
+    prompt:
+      'geometric block style, minecraft-inspired, chunky voxel art, pixelated blocks',
+    thumbnail: '/assets/style-previews/Ref Minecraft blocks.png',
   },
   {
     id: 'sketch',
@@ -276,17 +302,17 @@ export const RECIPE_CARDS: RecipeCard[] = [
     fields: { symbol: '88', style: 'college block' },
   },
   {
-    id: 'ref-on-duty',
-    title: 'Ref on Duty',
-    description: 'Focused referee with whistle',
-    icon: '👨‍⚖️',
+    id: 'game-character',
+    title: 'Game Item',
+    description: 'Energetic cheerleader with pom-poms',
+    icon: '🏈',
     subject: 'character',
     style: 'sticker',
-    palette: 'mono',
+    palette: 'neon',
     background: 'scene',
-    energy: 'balanced',
+    energy: 'hype',
     framing: 'bust',
-    fields: { role: 'referee', prop: 'whistle' },
+    fields: { role: 'cheerleader', prop: 'pom-poms' },
     finish: 'glow',
   },
   {

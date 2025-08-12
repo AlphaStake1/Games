@@ -35,9 +35,9 @@ function AnimatedNFTCreator() {
   const [selectedNFT, setSelectedNFT] = useState<NFTItem | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [activeTab, setActiveTab] = useState<'create' | 'upload' | 'gallery'>(
-    'create',
-  );
+  const [activeTab, setActiveTab] = useState<
+    'create' | 'upload' | 'recipes' | 'gallery'
+  >('create');
 
   // Guided creation state
   const [subjectType, setSubjectType] = useState<SubjectType>('character');
@@ -202,30 +202,38 @@ function AnimatedNFTCreator() {
         <div className="lg:col-span-2">
           <div className="bg-white dark:bg-[#002244] rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-amber-500/20">
             {/* Tabs */}
-            <div className="flex gap-2 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
               <Button
                 variant={activeTab === 'create' ? 'default' : 'outline'}
                 onClick={() => setActiveTab('create')}
-                className="flex-1"
+                className="flex items-center justify-center"
               >
                 <Wand2 className="w-4 h-4 mr-2" />
-                Create Art
+                <span className="text-xs md:text-sm">AI Create</span>
               </Button>
               <Button
                 variant={activeTab === 'upload' ? 'default' : 'outline'}
                 onClick={() => setActiveTab('upload')}
-                className="flex-1"
+                className="flex items-center justify-center"
               >
                 <Upload className="w-4 h-4 mr-2" />
-                Upload Custom
+                <span className="text-xs md:text-sm">Upload Art</span>
+              </Button>
+              <Button
+                variant={activeTab === 'recipes' ? 'default' : 'outline'}
+                onClick={() => setActiveTab('recipes')}
+                className="flex items-center justify-center"
+              >
+                <Sparkles className="w-4 h-4 mr-2" />
+                <span className="text-xs md:text-sm">Recipes</span>
               </Button>
               <Button
                 variant={activeTab === 'gallery' ? 'default' : 'outline'}
                 onClick={() => setActiveTab('gallery')}
-                className="flex-1"
+                className="flex items-center justify-center"
               >
                 <Play className="w-4 h-4 mr-2" />
-                Gallery
+                <span className="text-xs md:text-sm">Gallery</span>
               </Button>
             </div>
 
@@ -396,26 +404,6 @@ function AnimatedNFTCreator() {
                   </div>
                 </div>
 
-                {/* Recipe Cards */}
-                <div>
-                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
-                    Quick Recipes
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {animatedRecipes.map((recipe) => (
-                      <Button
-                        key={recipe.id}
-                        variant="ghost"
-                        onClick={() => handleRecipeSelect(recipe)}
-                        className="flex flex-col items-center p-2 h-auto hover:bg-amber-500/10"
-                      >
-                        <span className="text-xl">{recipe.icon}</span>
-                        <span className="text-xs mt-1">{recipe.title}</span>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
                 {/* Advanced Toggle & Clear */}
                 <div className="flex items-center justify-between pt-2 border-t">
                   <Button
@@ -514,6 +502,30 @@ function AnimatedNFTCreator() {
                   </div>
                 )}
               </div>
+            ) : activeTab === 'recipes' ? (
+              <div>
+                <h3 className="text-lg font-semibold mb-4 text-amber-600 dark:text-amber-400">
+                  Quick Recipe Cards
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {animatedRecipes.map((recipe) => (
+                    <Button
+                      key={recipe.id}
+                      variant="outline"
+                      onClick={() => handleRecipeSelect(recipe)}
+                      className="flex flex-col items-center p-4 h-auto hover:bg-amber-500/10"
+                    >
+                      <span className="text-2xl mb-1">{recipe.icon}</span>
+                      <span className="font-medium text-xs">
+                        {recipe.title}
+                      </span>
+                      <span className="text-xs opacity-70 text-center mt-1">
+                        {recipe.description}
+                      </span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
             ) : (
               <div>
                 <h3 className="text-lg font-semibold mb-4 text-amber-500">
@@ -570,42 +582,45 @@ function AnimatedNFTCreator() {
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {selectedNFT.description}
                   </p>
-
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`text-sm font-medium capitalize px-3 py-1 rounded-full bg-gradient-to-r 
-                      ${
-                        selectedNFT.rarity === 'legendary'
-                          ? 'from-amber-100 to-amber-200'
-                          : selectedNFT.rarity === 'epic'
-                            ? 'from-purple-100 to-purple-200'
-                            : selectedNFT.rarity === 'rare'
-                              ? 'from-blue-100 to-blue-200'
-                              : 'from-gray-100 to-gray-200'
-                      }`}
-                    >
-                      {selectedNFT.rarity}
-                    </span>
-                  </div>
                 </div>
 
-                <Button
-                  onClick={handleCreateNFT}
-                  disabled={isCreating}
-                  className="w-full bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white font-bold py-3"
-                >
-                  {isCreating ? (
-                    <>
-                      <Sparkles className="w-5 h-5 mr-2 animate-spin" />
-                      Creating Animated NFT...
-                    </>
-                  ) : (
-                    <>
-                      Create Animated NFT
-                      <ArrowRight className="w-5 h-5 ml-2" />
-                    </>
-                  )}
-                </Button>
+                <div className="space-y-2">
+                  <Button
+                    onClick={handleCreateNFT}
+                    disabled={isCreating}
+                    className="w-full bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white font-bold py-3"
+                  >
+                    {isCreating ? (
+                      <>
+                        <Sparkles className="w-5 h-5 mr-2 animate-spin" />
+                        Creating Animated NFT...
+                      </>
+                    ) : (
+                      <>
+                        Create Animated NFT
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </>
+                    )}
+                  </Button>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={handleGenerateArt}
+                      disabled={isGenerating}
+                      className="text-sm"
+                    >
+                      Try Again
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowAdvanced(true)}
+                      className="text-sm"
+                    >
+                      Modify Prompt
+                    </Button>
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="text-center py-12 text-gray-500 dark:text-gray-400">
