@@ -24,8 +24,6 @@ import {
   ART_STYLES,
   GUIDED_FIELDS,
   ENERGY_LEVELS,
-  BACKGROUND_OPTIONS,
-  FRAMING_OPTIONS,
   FINISH_OPTIONS,
   PALETTE_PRESETS,
   RECIPE_CARDS,
@@ -44,8 +42,6 @@ export default function AiGeneratedArtworkNFTPage() {
   const [subjectType, setSubjectType] = useState<SubjectType>('character');
   const [artStyle, setArtStyle] = useState('sticker');
   const [energyLevel, setEnergyLevel] = useState('balanced');
-  const [backgroundOption, setBackgroundOption] = useState('scene');
-  const [framingOption, setFramingOption] = useState('bust');
   const [finishOption, setFinishOption] = useState('none');
   const [selectedPalette, setSelectedPalette] = useState('dali-choice');
   const [guidedFields, setGuidedFields] = useState<Record<string, string>>({});
@@ -57,6 +53,19 @@ export default function AiGeneratedArtworkNFTPage() {
 
   const handleFieldChange = (fieldId: string, value: string) => {
     setGuidedFields((prev) => ({ ...prev, [fieldId]: value }));
+  };
+
+  const handleClear = () => {
+    setSubjectType('character');
+    setArtStyle('sticker');
+    setEnergyLevel('balanced');
+    setFinishOption('none');
+    setSelectedPalette('dali-choice');
+    setGuidedFields({});
+    setShowAdvanced(false);
+    setCustomPrompt('');
+    setShowDetails(false);
+    setSelectedNFT(null);
   };
 
   const handleSurpriseMe = () => {
@@ -122,13 +131,6 @@ export default function AiGeneratedArtworkNFTPage() {
     setEnergyLevel(
       ENERGY_LEVELS[Math.floor(Math.random() * ENERGY_LEVELS.length)].id,
     );
-    setBackgroundOption(
-      BACKGROUND_OPTIONS[Math.floor(Math.random() * BACKGROUND_OPTIONS.length)]
-        .id,
-    );
-    setFramingOption(
-      FRAMING_OPTIONS[Math.floor(Math.random() * FRAMING_OPTIONS.length)].id,
-    );
     setFinishOption(
       FINISH_OPTIONS[Math.floor(Math.random() * FINISH_OPTIONS.length)].id,
     );
@@ -141,8 +143,6 @@ export default function AiGeneratedArtworkNFTPage() {
     setSubjectType(recipe.subject);
     setArtStyle(recipe.style);
     setEnergyLevel(recipe.energy || 'balanced');
-    setBackgroundOption(recipe.background || 'scene');
-    setFramingOption(recipe.framing || 'bust');
     setFinishOption(recipe.finish || 'none');
     setSelectedPalette(recipe.palette || 'dali-choice');
     setGuidedFields(recipe.fields || {});
@@ -160,8 +160,8 @@ export default function AiGeneratedArtworkNFTPage() {
             subjectType,
             artStyle,
             energyLevel,
-            backgroundOption,
-            framingOption,
+            'scene', // default background - will be removed automatically
+            'bust', // default framing
             guidedFields,
             selectedPalette,
           );
@@ -340,62 +340,6 @@ export default function AiGeneratedArtworkNFTPage() {
                     </div>
                   </div>
 
-                  {/* Background */}
-                  <div>
-                    <label className="block text-sm font-medium text-[#004953] dark:text-white mb-2">
-                      Background
-                    </label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {BACKGROUND_OPTIONS.map((background) => (
-                        <Button
-                          key={background.id}
-                          variant={
-                            backgroundOption === background.id
-                              ? 'default'
-                              : 'outline'
-                          }
-                          onClick={() => setBackgroundOption(background.id)}
-                          size="sm"
-                          className="flex flex-col items-start p-3 h-auto"
-                        >
-                          <span className="font-medium text-xs">
-                            {background.label}
-                          </span>
-                          <span className="text-xs opacity-70">
-                            {background.description}
-                          </span>
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Framing */}
-                  <div>
-                    <label className="block text-sm font-medium text-[#004953] dark:text-white mb-2">
-                      Framing
-                    </label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {FRAMING_OPTIONS.map((framing) => (
-                        <Button
-                          key={framing.id}
-                          variant={
-                            framingOption === framing.id ? 'default' : 'outline'
-                          }
-                          onClick={() => setFramingOption(framing.id)}
-                          size="sm"
-                          className="flex flex-col items-start p-3 h-auto"
-                        >
-                          <span className="font-medium text-xs">
-                            {framing.label}
-                          </span>
-                          <span className="text-xs opacity-70">
-                            {framing.description}
-                          </span>
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-
                   {/* Finish */}
                   <div>
                     <label className="block text-sm font-medium text-[#004953] dark:text-white mb-2">
@@ -524,7 +468,7 @@ export default function AiGeneratedArtworkNFTPage() {
                     </div>
                   </div>
 
-                  {/* Advanced Toggle */}
+                  {/* Advanced Toggle & Clear */}
                   <div className="flex items-center justify-between pt-2 border-t">
                     <Button
                       variant="ghost"
@@ -533,6 +477,14 @@ export default function AiGeneratedArtworkNFTPage() {
                       className="text-[#8d594d]"
                     >
                       {showAdvanced ? 'Use Guided Mode' : 'Advanced Mode'}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleClear}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      Clear
                     </Button>
                   </div>
 
