@@ -57,7 +57,7 @@ export const ART_STYLES = [
     label: 'Realistic Comic Book',
     description: 'Detailed, dynamic',
     prompt: 'realistic comic book style, detailed shading, dynamic poses',
-    thumbnail: '/assets/thumbnails/Ref reto poster.png', // placeholder until you provide the image
+    thumbnail: '/assets/style-previews/Ref Comic Book Realism.png',
   },
 ] as const;
 
