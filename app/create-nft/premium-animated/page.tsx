@@ -25,8 +25,6 @@ import {
   SUBJECT_THUMBNAILS,
   ART_STYLES,
   GUIDED_FIELDS,
-  ENERGY_LEVELS,
-  FINISH_OPTIONS,
   PALETTE_PRESETS,
   RECIPE_CARDS,
   buildPromptFromFields,
@@ -44,8 +42,6 @@ function AnimatedNFTCreator() {
   // Guided creation state
   const [subjectType, setSubjectType] = useState<SubjectType>('character');
   const [artStyle, setArtStyle] = useState('sticker');
-  const [energyLevel, setEnergyLevel] = useState('balanced');
-  const [finishOption, setFinishOption] = useState('none');
   const [selectedPalette, setSelectedPalette] = useState('dali-choice');
   const [guidedFields, setGuidedFields] = useState<Record<string, string>>({});
 
@@ -61,8 +57,6 @@ function AnimatedNFTCreator() {
   const handleClear = () => {
     setSubjectType('character');
     setArtStyle('sticker');
-    setEnergyLevel('balanced');
-    setFinishOption('none');
     setSelectedPalette('dali-choice');
     setGuidedFields({});
     setShowAdvanced(false);
@@ -131,12 +125,6 @@ function AnimatedNFTCreator() {
 
     setGuidedFields(surpriseValues[subjectType]);
     setArtStyle(ART_STYLES[Math.floor(Math.random() * ART_STYLES.length)].id);
-    setEnergyLevel(
-      ENERGY_LEVELS[Math.floor(Math.random() * ENERGY_LEVELS.length)].id,
-    );
-    setFinishOption(
-      FINISH_OPTIONS[Math.floor(Math.random() * FINISH_OPTIONS.length)].id,
-    );
     setSelectedPalette(
       PALETTE_PRESETS[Math.floor(Math.random() * PALETTE_PRESETS.length)].id,
     );
@@ -145,8 +133,6 @@ function AnimatedNFTCreator() {
   const handleRecipeSelect = (recipe: (typeof RECIPE_CARDS)[0]) => {
     setSubjectType(recipe.subject);
     setArtStyle(recipe.style);
-    setEnergyLevel(recipe.energy || 'balanced');
-    setFinishOption(recipe.finish || 'none');
     setSelectedPalette(recipe.palette || 'dali-choice');
     setGuidedFields(recipe.fields || {});
     setActiveTab('create');
@@ -167,9 +153,6 @@ function AnimatedNFTCreator() {
         : buildPromptFromFields(
             subjectType,
             artStyle,
-            energyLevel,
-            'scene', // default background - will be removed automatically
-            'bust', // default framing
             guidedFields,
             selectedPalette,
           );
@@ -183,7 +166,7 @@ function AnimatedNFTCreator() {
     setSelectedNFT({
       ...randomNFT,
       name: 'AI Generated Animation',
-      description: `Generated: ${finalPrompt.substring(0, 80)}... | Energy: ${energyLevel} | Finish: ${finishOption}`,
+      description: `Generated: ${finalPrompt.substring(0, 120)}...`,
     });
 
     setIsGenerating(false);
@@ -366,60 +349,6 @@ function AnimatedNFTCreator() {
                     )}
                   </div>
                 )}
-
-                {/* Energy Level */}
-                <div>
-                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
-                    Energy Level
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {ENERGY_LEVELS.map((energy) => (
-                      <Button
-                        key={energy.id}
-                        variant={
-                          energyLevel === energy.id ? 'default' : 'outline'
-                        }
-                        onClick={() => setEnergyLevel(energy.id)}
-                        size="sm"
-                        className="flex flex-col items-start p-3 h-auto"
-                      >
-                        <span className="font-medium text-xs">
-                          {energy.label}
-                        </span>
-                        <span className="text-xs opacity-70">
-                          {energy.description}
-                        </span>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Finish Options */}
-                <div>
-                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
-                    Finish
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {FINISH_OPTIONS.map((finish) => (
-                      <Button
-                        key={finish.id}
-                        variant={
-                          finishOption === finish.id ? 'default' : 'outline'
-                        }
-                        onClick={() => setFinishOption(finish.id)}
-                        size="sm"
-                        className="flex flex-col items-start p-2 h-auto"
-                      >
-                        <span className="font-medium text-xs">
-                          {finish.label}
-                        </span>
-                        <span className="text-xs opacity-70">
-                          {finish.description}
-                        </span>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
 
                 {/* Color Palette */}
                 <div>
@@ -641,31 +570,6 @@ function AnimatedNFTCreator() {
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {selectedNFT.description}
                   </p>
-
-                  {energyLevel && (
-                    <div className="flex items-center gap-2 text-xs">
-                      <span className="font-medium text-amber-600">
-                        Energy:
-                      </span>
-                      <span className="px-2 py-1 bg-amber-100 dark:bg-amber-900/30 rounded">
-                        {ENERGY_LEVELS.find((e) => e.id === energyLevel)?.label}
-                      </span>
-                    </div>
-                  )}
-
-                  {finishOption && finishOption !== 'none' && (
-                    <div className="flex items-center gap-2 text-xs">
-                      <span className="font-medium text-amber-600">
-                        Finish:
-                      </span>
-                      <span className="px-2 py-1 bg-amber-100 dark:bg-amber-900/30 rounded">
-                        {
-                          FINISH_OPTIONS.find((f) => f.id === finishOption)
-                            ?.label
-                        }
-                      </span>
-                    </div>
-                  )}
 
                   <div className="flex items-center justify-between">
                     <span

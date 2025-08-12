@@ -52,6 +52,13 @@ export const ART_STYLES = [
     prompt: 'soft painterly lighting, gentle gradients',
     thumbnail: '/assets/thumbnails/Ref reto poster.png',
   },
+  {
+    id: 'realistic-comic',
+    label: 'Realistic Comic Book',
+    description: 'Detailed, dynamic',
+    prompt: 'realistic comic book style, detailed shading, dynamic poses',
+    thumbnail: '/assets/thumbnails/Ref reto poster.png', // placeholder until you provide the image
+  },
 ] as const;
 
 export const ENERGY_LEVELS = [
@@ -344,17 +351,10 @@ export const RECIPE_CARDS: RecipeCard[] = [
 export function buildPromptFromFields(
   subject: SubjectType,
   style: string,
-  energy: string,
-  background: string,
-  framing: string,
   fields: Record<string, string>,
   palette?: string,
 ): string {
   const styleData = ART_STYLES.find((s) => s.id === style);
-  const energyData = ENERGY_LEVELS.find((e) => e.id === energy);
-  const framingData = FRAMING_OPTIONS.find((f) => f.id === framing);
-  const backgroundData = BACKGROUND_OPTIONS.find((b) => b.id === background);
-
   const fieldValues = Object.values(fields).filter((v) => v.trim());
 
   let basePrompt = '';
@@ -375,25 +375,8 @@ export function buildPromptFromFields(
     basePrompt += fieldValues.join(' ') + ', ';
   }
 
-  // Add energy
-  if (energyData) {
-    basePrompt += energyData.prompt + ', ';
-  }
-
-  // Add framing
-  if (framingData) {
-    basePrompt += framingData.prompt + ', ';
-  }
-
-  // Add background
-  if (background === 'scene') {
-    basePrompt += SCENE_BACKGROUNDS[subject] + ', ';
-  } else if (backgroundData) {
-    basePrompt += backgroundData.prompt + ', ';
-  }
-
   // Add palette hint if provided
-  if (palette) {
+  if (palette && palette !== 'dali-choice') {
     const paletteData = PALETTE_PRESETS.find((p) => p.id === palette);
     if (paletteData) {
       basePrompt += `${paletteData.label.toLowerCase()} color palette, `;

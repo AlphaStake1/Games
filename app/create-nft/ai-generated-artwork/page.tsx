@@ -23,8 +23,6 @@ import {
   SUBJECT_THUMBNAILS,
   ART_STYLES,
   GUIDED_FIELDS,
-  ENERGY_LEVELS,
-  FINISH_OPTIONS,
   PALETTE_PRESETS,
   RECIPE_CARDS,
   buildPromptFromFields,
@@ -41,8 +39,6 @@ export default function AiGeneratedArtworkNFTPage() {
   // Guided creation state
   const [subjectType, setSubjectType] = useState<SubjectType>('character');
   const [artStyle, setArtStyle] = useState('sticker');
-  const [energyLevel, setEnergyLevel] = useState('balanced');
-  const [finishOption, setFinishOption] = useState('none');
   const [selectedPalette, setSelectedPalette] = useState('dali-choice');
   const [guidedFields, setGuidedFields] = useState<Record<string, string>>({});
 
@@ -58,8 +54,6 @@ export default function AiGeneratedArtworkNFTPage() {
   const handleClear = () => {
     setSubjectType('character');
     setArtStyle('sticker');
-    setEnergyLevel('balanced');
-    setFinishOption('none');
     setSelectedPalette('dali-choice');
     setGuidedFields({});
     setShowAdvanced(false);
@@ -128,12 +122,6 @@ export default function AiGeneratedArtworkNFTPage() {
 
     setGuidedFields(surpriseValues[subjectType]);
     setArtStyle(ART_STYLES[Math.floor(Math.random() * ART_STYLES.length)].id);
-    setEnergyLevel(
-      ENERGY_LEVELS[Math.floor(Math.random() * ENERGY_LEVELS.length)].id,
-    );
-    setFinishOption(
-      FINISH_OPTIONS[Math.floor(Math.random() * FINISH_OPTIONS.length)].id,
-    );
     setSelectedPalette(
       PALETTE_PRESETS[Math.floor(Math.random() * PALETTE_PRESETS.length)].id,
     );
@@ -142,8 +130,6 @@ export default function AiGeneratedArtworkNFTPage() {
   const handleRecipeSelect = (recipe: (typeof RECIPE_CARDS)[0]) => {
     setSubjectType(recipe.subject);
     setArtStyle(recipe.style);
-    setEnergyLevel(recipe.energy || 'balanced');
-    setFinishOption(recipe.finish || 'none');
     setSelectedPalette(recipe.palette || 'dali-choice');
     setGuidedFields(recipe.fields || {});
     setActiveTab('create');
@@ -159,9 +145,6 @@ export default function AiGeneratedArtworkNFTPage() {
         : buildPromptFromFields(
             subjectType,
             artStyle,
-            energyLevel,
-            'scene', // default background - will be removed automatically
-            'bust', // default framing
             guidedFields,
             selectedPalette,
           );
@@ -308,60 +291,6 @@ export default function AiGeneratedArtworkNFTPage() {
                               {style.description}
                             </span>
                           </div>
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Energy Level */}
-                  <div>
-                    <label className="block text-sm font-medium text-[#004953] dark:text-white mb-2">
-                      Energy Level
-                    </label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {ENERGY_LEVELS.map((energy) => (
-                        <Button
-                          key={energy.id}
-                          variant={
-                            energyLevel === energy.id ? 'default' : 'outline'
-                          }
-                          onClick={() => setEnergyLevel(energy.id)}
-                          size="sm"
-                          className="flex flex-col items-start p-3 h-auto"
-                        >
-                          <span className="font-medium text-xs">
-                            {energy.label}
-                          </span>
-                          <span className="text-xs opacity-70">
-                            {energy.description}
-                          </span>
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Finish */}
-                  <div>
-                    <label className="block text-sm font-medium text-[#004953] dark:text-white mb-2">
-                      Finish
-                    </label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {FINISH_OPTIONS.map((finish) => (
-                        <Button
-                          key={finish.id}
-                          variant={
-                            finishOption === finish.id ? 'default' : 'outline'
-                          }
-                          onClick={() => setFinishOption(finish.id)}
-                          size="sm"
-                          className="flex flex-col items-start p-2 h-auto"
-                        >
-                          <span className="font-medium text-xs">
-                            {finish.label}
-                          </span>
-                          <span className="text-xs opacity-70">
-                            {finish.description}
-                          </span>
                         </Button>
                       ))}
                     </div>
