@@ -3,13 +3,37 @@
 import { useState } from 'react';
 import CreateNFTNav from '@/components/CreateNFTNav';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles, Upload, Play } from 'lucide-react';
+import {
+  ArrowRight,
+  Sparkles,
+  Upload,
+  Play,
+  Wand2,
+  Shuffle,
+  User,
+  Package,
+  Coffee,
+  Shield,
+} from 'lucide-react';
 import NFTGallery from '@/components/NFTGallery';
 import { animatedNFTs } from '@/lib/mockNFTData';
 import { NFTItem } from '@/components/NFTGallery';
 import Image from 'next/image';
-
-import { Wand2 } from 'lucide-react';
+import {
+  SUBJECTS,
+  SUBJECT_LABELS,
+  SUBJECT_THUMBNAILS,
+  ART_STYLES,
+  GUIDED_FIELDS,
+  ENERGY_LEVELS,
+  BACKGROUND_OPTIONS,
+  FRAMING_OPTIONS,
+  FINISH_OPTIONS,
+  PALETTE_PRESETS,
+  RECIPE_CARDS,
+  buildPromptFromFields,
+  type SubjectType,
+} from '@/lib/art-presets';
 
 function AnimatedNFTCreator() {
   const [selectedNFT, setSelectedNFT] = useState<NFTItem | null>(null);
@@ -18,7 +42,114 @@ function AnimatedNFTCreator() {
   const [activeTab, setActiveTab] = useState<'create' | 'upload' | 'gallery'>(
     'create',
   );
-  const [prompt, setPrompt] = useState('');
+
+  // Guided creation state
+  const [subjectType, setSubjectType] = useState<SubjectType>('character');
+  const [artStyle, setArtStyle] = useState('sticker');
+  const [energyLevel, setEnergyLevel] = useState('balanced');
+  const [backgroundOption, setBackgroundOption] = useState('scene');
+  const [framingOption, setFramingOption] = useState('bust');
+  const [finishOption, setFinishOption] = useState('none');
+  const [selectedPalette, setSelectedPalette] = useState('gridiron');
+  const [guidedFields, setGuidedFields] = useState<Record<string, string>>({});
+
+  // Advanced mode
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [customPrompt, setCustomPrompt] = useState('');
+
+  const handleFieldChange = (fieldId: string, value: string) => {
+    setGuidedFields((prev) => ({ ...prev, [fieldId]: value }));
+  };
+
+  const handleSurpriseMe = () => {
+    const surpriseValues: Record<SubjectType, Record<string, string>> = {
+      character: {
+        role: ['QB', 'mascot', 'coach', 'fan'][Math.floor(Math.random() * 4)],
+        action: ['throwing', 'cheering', 'running', 'celebrating'][
+          Math.floor(Math.random() * 4)
+        ],
+        mood: ['confident', 'excited', 'determined', 'joyful'][
+          Math.floor(Math.random() * 4)
+        ],
+        prop: ['football', 'trophy', 'foam finger', 'none'][
+          Math.floor(Math.random() * 4)
+        ],
+      },
+      object: {
+        item: ['helmet', 'football', 'cleats', 'trophy'][
+          Math.floor(Math.random() * 4)
+        ],
+        condition: ['pristine', 'vintage', 'battle-worn', 'gleaming'][
+          Math.floor(Math.random() * 4)
+        ],
+        vibe: ['professional', 'rugged', 'classic', 'modern'][
+          Math.floor(Math.random() * 4)
+        ],
+        context: ['on field', 'locker room', 'spotlight', 'grass'][
+          Math.floor(Math.random() * 4)
+        ],
+      },
+      food: {
+        item: ['hotdog', 'nachos', 'popcorn', 'beer'][
+          Math.floor(Math.random() * 4)
+        ],
+        topping: ['loaded', 'classic', 'extra cheese', 'spicy'][
+          Math.floor(Math.random() * 4)
+        ],
+        temp: ['steaming', 'fresh', 'ice cold', 'hot'][
+          Math.floor(Math.random() * 4)
+        ],
+        container: ['paper tray', 'helmet cup', 'bucket', 'box'][
+          Math.floor(Math.random() * 4)
+        ],
+      },
+      emblem: {
+        symbol: ['number 7', 'star', 'lightning bolt', 'shield'][
+          Math.floor(Math.random() * 4)
+        ],
+        style: ['neon', 'chrome', 'vintage', 'holographic'][
+          Math.floor(Math.random() * 4)
+        ],
+        pattern: ['gradient', 'solid', 'textured', 'metallic'][
+          Math.floor(Math.random() * 4)
+        ],
+        background: ['none', 'circle', 'shield', 'burst'][
+          Math.floor(Math.random() * 4)
+        ],
+      },
+    };
+
+    setGuidedFields(surpriseValues[subjectType]);
+    setArtStyle(ART_STYLES[Math.floor(Math.random() * ART_STYLES.length)].id);
+    setEnergyLevel(
+      ENERGY_LEVELS[Math.floor(Math.random() * ENERGY_LEVELS.length)].id,
+    );
+    setBackgroundOption(
+      BACKGROUND_OPTIONS[Math.floor(Math.random() * BACKGROUND_OPTIONS.length)]
+        .id,
+    );
+    setFramingOption(
+      FRAMING_OPTIONS[Math.floor(Math.random() * FRAMING_OPTIONS.length)].id,
+    );
+    setFinishOption(
+      FINISH_OPTIONS[Math.floor(Math.random() * FINISH_OPTIONS.length)].id,
+    );
+    setSelectedPalette(
+      PALETTE_PRESETS[Math.floor(Math.random() * PALETTE_PRESETS.length)].id,
+    );
+  };
+
+  const handleRecipeSelect = (recipe: (typeof RECIPE_CARDS)[0]) => {
+    setSubjectType(recipe.subject);
+    setArtStyle(recipe.style);
+    setEnergyLevel(recipe.energy || 'balanced');
+    setBackgroundOption(recipe.background || 'scene');
+    setFramingOption(recipe.framing || 'bust');
+    setFinishOption(recipe.finish || 'none');
+    setSelectedPalette(recipe.palette || 'gridiron');
+    setGuidedFields(recipe.fields || {});
+    setActiveTab('create');
+  };
 
   const handleSelect = (item: NFTItem) => {
     setSelectedNFT(item);
@@ -26,19 +157,32 @@ function AnimatedNFTCreator() {
   };
 
   const handleGenerateArt = async () => {
-    if (!prompt.trim()) return;
-
     setIsGenerating(true);
-    // Simulate AI generation process
+
+    // Build prompt from guided fields or use custom
+    const finalPrompt =
+      showAdvanced && customPrompt
+        ? customPrompt
+        : buildPromptFromFields(
+            subjectType,
+            artStyle,
+            energyLevel,
+            backgroundOption,
+            framingOption,
+            guidedFields,
+            selectedPalette,
+          );
+
+    // Simulate AI generation
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    // Select a random NFT from examples as the "generated" result
+    // Select a random animated NFT as the "generated" result
     const randomNFT =
       animatedNFTs[Math.floor(Math.random() * animatedNFTs.length)];
     setSelectedNFT({
       ...randomNFT,
       name: 'AI Generated Animation',
-      description: `Generated from prompt: "${prompt}" with premium animation`,
+      description: `Generated: ${finalPrompt.substring(0, 80)}... | Energy: ${energyLevel} | Finish: ${finishOption}`,
     });
 
     setIsGenerating(false);
@@ -48,12 +192,24 @@ function AnimatedNFTCreator() {
     if (!selectedNFT) return;
 
     setIsCreating(true);
-    // Simulate NFT creation process
     await new Promise((resolve) => setTimeout(resolve, 3000));
     setIsCreating(false);
 
     alert(`Animated NFT "${selectedNFT.name}" created successfully!`);
   };
+
+  const getSubjectIcon = (subject: SubjectType) => {
+    const icons = {
+      character: <User className="w-4 h-4" />,
+      object: <Package className="w-4 h-4" />,
+      food: <Coffee className="w-4 h-4" />,
+      emblem: <Shield className="w-4 h-4" />,
+    };
+    return icons[subject];
+  };
+
+  // Get available recipe cards for animated NFTs
+  const animatedRecipes = RECIPE_CARDS.slice(0, 6); // Show first 6 recipe cards
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -91,54 +247,291 @@ function AnimatedNFTCreator() {
 
             {activeTab === 'create' ? (
               <div className="space-y-6">
+                {/* Subject Type Selector */}
                 <div>
                   <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
-                    Describe your animated NFT vision
+                    What are you animating?
                   </label>
-                  <textarea
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder="Example: A dynamic football player with lightning effects, morphing between action poses with particle effects..."
-                    className="w-full p-3 border border-amber-300 dark:border-amber-600 rounded-lg bg-white dark:bg-[#1a1a2e] text-[#002244] dark:text-white resize-none"
-                    rows={4}
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-amber-500">
-                    Animation Settings
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-[#004953] dark:text-white mb-2">
-                        Animation Style
-                      </label>
-                      <select className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-[#1a1a2e] text-[#002244] dark:text-white">
-                        <option value="particles">Particle Effects</option>
-                        <option value="glow">Glow Animation</option>
-                        <option value="rotation">3D Rotation</option>
-                        <option value="morph">Shape Morphing</option>
-                        <option value="pulse">Pulse & Breathing</option>
-                        <option value="liquid">Liquid Motion</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-[#004953] dark:text-white mb-2">
-                        Speed
-                      </label>
-                      <select className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-[#1a1a2e] text-[#002244] dark:text-white">
-                        <option value="slow">Slow & Smooth</option>
-                        <option value="medium">Medium Pace</option>
-                        <option value="fast">Fast & Dynamic</option>
-                        <option value="variable">Variable Speed</option>
-                      </select>
-                    </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    {SUBJECTS.map((subject) => (
+                      <Button
+                        key={subject}
+                        variant={
+                          subjectType === subject ? 'default' : 'outline'
+                        }
+                        onClick={() => {
+                          setSubjectType(subject);
+                          setGuidedFields({});
+                        }}
+                        className="flex items-center justify-center gap-2"
+                      >
+                        {getSubjectIcon(subject)}
+                        <span className="text-xs">
+                          {SUBJECT_LABELS[subject]}
+                        </span>
+                      </Button>
+                    ))}
                   </div>
                 </div>
 
+                {/* Art Style Selector */}
+                <div>
+                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
+                    Art Style
+                  </label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {ART_STYLES.map((style) => (
+                      <Button
+                        key={style.id}
+                        variant={artStyle === style.id ? 'default' : 'outline'}
+                        onClick={() => setArtStyle(style.id)}
+                        size="sm"
+                        className="flex flex-col items-start p-3 h-auto"
+                      >
+                        <span className="font-medium text-xs">
+                          {style.label}
+                        </span>
+                        <span className="text-xs opacity-70">
+                          {style.description}
+                        </span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Guided Fields */}
+                {!showAdvanced && (
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="text-sm font-medium text-amber-600 dark:text-amber-400">
+                        Details
+                      </label>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleSurpriseMe}
+                        className="text-amber-500"
+                      >
+                        <Shuffle className="w-3 h-3 mr-1" />
+                        Surprise me
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {GUIDED_FIELDS[subjectType].map((field) => (
+                        <div key={field.id}>
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                            {field.label}
+                          </label>
+                          <input
+                            type="text"
+                            value={guidedFields[field.id] || ''}
+                            onChange={(e) =>
+                              handleFieldChange(field.id, e.target.value)
+                            }
+                            placeholder={field.placeholder}
+                            className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-[#1a1a2e] text-[#002244] dark:text-white"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Energy Level */}
+                <div>
+                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
+                    Energy Level
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {ENERGY_LEVELS.map((energy) => (
+                      <Button
+                        key={energy.id}
+                        variant={
+                          energyLevel === energy.id ? 'default' : 'outline'
+                        }
+                        onClick={() => setEnergyLevel(energy.id)}
+                        size="sm"
+                        className="flex flex-col items-start p-3 h-auto"
+                      >
+                        <span className="font-medium text-xs">
+                          {energy.label}
+                        </span>
+                        <span className="text-xs opacity-70">
+                          {energy.description}
+                        </span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Background */}
+                <div>
+                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
+                    Background
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {BACKGROUND_OPTIONS.map((background) => (
+                      <Button
+                        key={background.id}
+                        variant={
+                          backgroundOption === background.id
+                            ? 'default'
+                            : 'outline'
+                        }
+                        onClick={() => setBackgroundOption(background.id)}
+                        size="sm"
+                        className="flex flex-col items-start p-3 h-auto"
+                      >
+                        <span className="font-medium text-xs">
+                          {background.label}
+                        </span>
+                        <span className="text-xs opacity-70">
+                          {background.description}
+                        </span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Framing */}
+                <div>
+                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
+                    Framing
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {FRAMING_OPTIONS.map((framing) => (
+                      <Button
+                        key={framing.id}
+                        variant={
+                          framingOption === framing.id ? 'default' : 'outline'
+                        }
+                        onClick={() => setFramingOption(framing.id)}
+                        size="sm"
+                        className="flex flex-col items-start p-3 h-auto"
+                      >
+                        <span className="font-medium text-xs">
+                          {framing.label}
+                        </span>
+                        <span className="text-xs opacity-70">
+                          {framing.description}
+                        </span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Finish Options */}
+                <div>
+                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
+                    Finish
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {FINISH_OPTIONS.map((finish) => (
+                      <Button
+                        key={finish.id}
+                        variant={
+                          finishOption === finish.id ? 'default' : 'outline'
+                        }
+                        onClick={() => setFinishOption(finish.id)}
+                        size="sm"
+                        className="flex flex-col items-start p-2 h-auto"
+                      >
+                        <span className="font-medium text-xs">
+                          {finish.label}
+                        </span>
+                        <span className="text-xs opacity-70">
+                          {finish.description}
+                        </span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Color Palette */}
+                <div>
+                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
+                    Color Palette
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {PALETTE_PRESETS.map((palette) => (
+                      <Button
+                        key={palette.id}
+                        variant={
+                          selectedPalette === palette.id ? 'default' : 'outline'
+                        }
+                        onClick={() => setSelectedPalette(palette.id)}
+                        size="sm"
+                        className="flex items-center gap-2"
+                      >
+                        <div className="flex gap-1">
+                          {palette.colors.map((color, i) => (
+                            <div
+                              key={i}
+                              className="w-3 h-3 rounded-full border border-gray-300"
+                              style={{ backgroundColor: color }}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-xs">{palette.label}</span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Recipe Cards */}
+                <div>
+                  <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
+                    Quick Recipes
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {animatedRecipes.map((recipe) => (
+                      <Button
+                        key={recipe.id}
+                        variant="ghost"
+                        onClick={() => handleRecipeSelect(recipe)}
+                        className="flex flex-col items-center p-2 h-auto hover:bg-amber-500/10"
+                      >
+                        <span className="text-xl">{recipe.icon}</span>
+                        <span className="text-xs mt-1">{recipe.title}</span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Advanced Toggle */}
+                <div className="flex items-center justify-between pt-2 border-t">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowAdvanced(!showAdvanced)}
+                    className="text-amber-500"
+                  >
+                    {showAdvanced ? 'Use Guided Mode' : 'Advanced Mode'}
+                  </Button>
+                </div>
+
+                {/* Advanced Prompt (if enabled) */}
+                {showAdvanced && (
+                  <div>
+                    <label className="block text-sm font-medium text-amber-600 dark:text-amber-400 mb-2">
+                      Custom Animation Prompt
+                    </label>
+                    <textarea
+                      value={customPrompt}
+                      onChange={(e) => setCustomPrompt(e.target.value)}
+                      placeholder="Describe your animated NFT vision in detail..."
+                      className="w-full p-3 border border-amber-300 dark:border-amber-600 rounded-lg bg-white dark:bg-[#1a1a2e] text-[#002244] dark:text-white resize-none"
+                      rows={4}
+                    />
+                  </div>
+                )}
+
                 <Button
                   onClick={handleGenerateArt}
-                  disabled={!prompt.trim() || isGenerating}
+                  disabled={
+                    isGenerating ||
+                    (!showAdvanced && Object.keys(guidedFields).length === 0)
+                  }
                   className="w-full bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white font-bold py-3"
                 >
                   {isGenerating ? (
@@ -154,7 +547,7 @@ function AnimatedNFTCreator() {
                   )}
                 </Button>
 
-                {selectedNFT && prompt && (
+                {selectedNFT && (
                   <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
                     <p className="text-sm text-green-800 dark:text-green-200">
                       ✨ Animated artwork generated! Check the preview on the
@@ -183,32 +576,10 @@ function AnimatedNFTCreator() {
                   <h3 className="text-lg font-semibold text-amber-500">
                     Upload Animation Settings
                   </h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-[#004953] dark:text-white mb-2">
-                        Animation Style
-                      </label>
-                      <select className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-[#1a1a2e] text-[#002244] dark:text-white">
-                        <option value="particles">Particle Effects</option>
-                        <option value="glow">Glow Animation</option>
-                        <option value="rotation">3D Rotation</option>
-                        <option value="morph">Shape Morphing</option>
-                        <option value="pulse">Pulse & Breathing</option>
-                        <option value="liquid">Liquid Motion</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-[#004953] dark:text-white mb-2">
-                        Speed
-                      </label>
-                      <select className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-[#1a1a2e] text-[#002244] dark:text-white">
-                        <option value="slow">Slow & Smooth</option>
-                        <option value="medium">Medium Pace</option>
-                        <option value="fast">Fast & Dynamic</option>
-                        <option value="variable">Variable Speed</option>
-                      </select>
-                    </div>
-                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    After uploading, you can apply motion effects and finishes
+                    to your artwork
+                  </p>
                 </div>
 
                 {selectedNFT && (
@@ -265,7 +636,7 @@ function AnimatedNFTCreator() {
                     />
                   )}
                   <div className="absolute top-2 left-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
-                    ANIMATED VIP
+                    PREMIUM ANIMATED
                   </div>
                 </div>
 
@@ -276,6 +647,32 @@ function AnimatedNFTCreator() {
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {selectedNFT.description}
                   </p>
+
+                  {energyLevel && (
+                    <div className="flex items-center gap-2 text-xs">
+                      <span className="font-medium text-amber-600">
+                        Energy:
+                      </span>
+                      <span className="px-2 py-1 bg-amber-100 dark:bg-amber-900/30 rounded">
+                        {ENERGY_LEVELS.find((e) => e.id === energyLevel)?.label}
+                      </span>
+                    </div>
+                  )}
+
+                  {finishOption && finishOption !== 'none' && (
+                    <div className="flex items-center gap-2 text-xs">
+                      <span className="font-medium text-amber-600">
+                        Finish:
+                      </span>
+                      <span className="px-2 py-1 bg-amber-100 dark:bg-amber-900/30 rounded">
+                        {
+                          FINISH_OPTIONS.find((f) => f.id === finishOption)
+                            ?.label
+                        }
+                      </span>
+                    </div>
+                  )}
+
                   <div className="flex items-center justify-between">
                     <span
                       className={`text-sm font-medium capitalize px-3 py-1 rounded-full bg-gradient-to-r 
@@ -315,7 +712,7 @@ function AnimatedNFTCreator() {
             ) : (
               <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                 <Play className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>Upload custom artwork or select from premium gallery</p>
+                <p>Create artwork or select from gallery</p>
               </div>
             )}
           </div>
@@ -334,9 +731,8 @@ export default function PremiumAnimatedNFTPage() {
           Create Premium Animated NFT
         </h1>
         <p className="text-lg text-[#002244] dark:text-white mb-8 text-center">
-          Upload your custom or original art and have it converted to an
-          animated NFT with premium features. This NFT will appear on your
-          purchased squares.
+          Generate or upload artwork with premium animation effects. Your
+          animated NFT will appear on your purchased squares.
         </p>
 
         <AnimatedNFTCreator />
