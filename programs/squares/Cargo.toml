@@ -17,5 +17,4 @@ default = []
 
 [dependencies]
 anchor-lang = "0.31.1"
-switchboard-solana = "0.29.0"
 anchor-spl = "0.31.1"
