@@ -425,7 +425,7 @@ ${this.generateRecommendations()}
   private findRelevantTestSuites(changedFiles: string[]): TestSuite[] {
     const relevantSuites: TestSuite[] = [];
 
-    for (const suite of this.activeSuites.values()) {
+    for (const suite of Array.from(this.activeSuites.values())) {
       const isRelevant = suite.files.some((pattern) =>
         changedFiles.some((file) => this.matchesPattern(file, pattern)),
       );

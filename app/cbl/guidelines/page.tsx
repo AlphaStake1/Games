@@ -215,10 +215,10 @@ const CBLGuidelinesPage = () => {
                     ✓ Good Examples:
                   </p>
                   <ul className="list-disc list-inside space-y-1 text-sm text-green-700 dark:text-green-300">
-                    <li>"Thanks for joining the board!"</li>
-                    <li>"Let me clarify that rule for you"</li>
-                    <li>"I understand your concern"</li>
-                    <li>"Please keep comments game-related"</li>
+                    <li>&quot;Thanks for joining the board!&quot;</li>
+                    <li>&quot;Let me clarify that rule for you&quot;</li>
+                    <li>&quot;I understand your concern&quot;</li>
+                    <li>&quot;Please keep comments game-related&quot;</li>
                   </ul>
                 </div>
                 <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">

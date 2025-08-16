@@ -457,7 +457,7 @@ ${cached
   } {
     const byType: Record<string, number> = {};
 
-    for (const doc of this.documentationCache.values()) {
+    for (const doc of Array.from(this.documentationCache.values())) {
       const type = doc.title.includes('Program')
         ? 'anchor_program'
         : doc.title.includes('Agent')

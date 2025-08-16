@@ -631,7 +631,7 @@ Keep it concise but actionable.
     let totalScore = 0;
     const issueDistribution: Record<string, number> = {};
 
-    for (const reviews of this.reviewHistory.values()) {
+    for (const reviews of Array.from(this.reviewHistory.values())) {
       totalReviews += reviews.length;
 
       for (const review of reviews) {

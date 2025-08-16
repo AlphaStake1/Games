@@ -31,7 +31,7 @@ interface NFT {
 interface StadiumLockerProps {
   username: string;
   displayName: string;
-  lockerStyle: 'rookie' | 'pro' | 'mvp' | 'allstar' | 'halloffame';
+  lockerStyle: 'rookie' | 'pro' | 'allstar' | 'halloffame' | 'vip';
   jerseyNumber?: string;
   nfts: NFT[];
   featuredNft?: NFT;
@@ -57,7 +57,7 @@ const LOCKER_MATERIALS = {
     nameplate: 'linear-gradient(135deg, #b45309 0%, #92400e 100%)',
     accent: '#d97706',
   },
-  mvp: {
+  vip: {
     frame:
       'linear-gradient(135deg, #a855f7 0%, #9333ea 30%, #7c3aed 70%, #6d28d9 100%)',
     interior:

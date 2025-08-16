@@ -317,5 +317,7 @@ export function getNextReleaseBatch(
     ].some((team) => game.matchup.includes(team)),
   );
 
-  return [nfcGame?.matchup, afcGame?.matchup].filter(Boolean);
+  return [nfcGame?.matchup, afcGame?.matchup].filter(
+    (matchup): matchup is string => Boolean(matchup),
+  );
 }

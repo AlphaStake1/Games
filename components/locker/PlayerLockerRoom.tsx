@@ -40,7 +40,7 @@ interface LockerData {
   username: string;
   walletAddress?: string;
   displayName: string;
-  lockerStyle: 'rookie' | 'pro' | 'mvp' | 'allstar' | 'halloffame';
+  lockerStyle: 'rookie' | 'pro' | 'allstar' | 'halloffame' | 'vip';
   teamColors: {
     primary: string;
     secondary: string;
@@ -465,7 +465,7 @@ function LockerPrivate({ username }: { username: string }) {
         <Lock className="w-16 h-16 mx-auto mb-4 text-gray-400" />
         <h2 className="text-2xl font-bold mb-2">Private Locker</h2>
         <p className="text-gray-600 dark:text-gray-400 mb-6">
-          @{username}'s locker is currently private
+          @{username}&apos;s locker is currently private
         </p>
         <Link href="/">
           <Button>Return Home</Button>

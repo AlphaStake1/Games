@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "db:init": "ts-node scripts/init-db.ts",
     "dev:ws": "ts-node server/websocket.ts",
     "dev:agents": "ts-node scripts/run-agents.ts",
     "anchor:build": "anchor build",
@@ -41,7 +42,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
-    "test:e2e:report": "playwright show-report"
+    "test:e2e:report": "playwright show-report",
+    "test:persistence": "ts-node scripts/test-persistence.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.3",
@@ -87,6 +89,7 @@
     "@solana/wallet-adapter-wallets": "^0.19.32",
     "@solana/web3.js": "^1.95.3",
     "@types/node": "20.6.2",
+    "@types/node-fetch": "^2.6.13",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
     "assert": "^2.1.0",
@@ -106,6 +109,7 @@
     "encoding": "^0.1.13",
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.1",
+    "form-data": "^4.0.4",
     "framer-motion": "^12.23.12",
     "input-otp": "^1.2.4",
     "key-did-provider-ed25519": "^4.0.2",
@@ -113,6 +117,7 @@
     "lucide-react": "^0.446.0",
     "next": "15.4.5",
     "next-themes": "^0.3.0",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.14",
     "openai": "^4.67.1",
     "pg": "^8.11.0",

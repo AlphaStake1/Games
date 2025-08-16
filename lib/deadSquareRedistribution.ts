@@ -97,11 +97,12 @@ export class DeadSquareRedistributionService {
   ): CommunityBoardConfiguration {
     const fundsRaised = squaresSold * tier.pricePerSquare;
     const totalRake =
-      fundsRaised * BOARD_RULES.COMMUNITY_BOARDS.TOTAL_RAKE_PERCENTAGE;
+      fundsRaised *
+      BOARD_RULES.COMMUNITY_BOARDS.NON_PREMIUM.TOTAL_RAKE_PERCENTAGE;
     const cblRakeAmount =
-      fundsRaised * BOARD_RULES.COMMUNITY_BOARDS.RAKE_SPLIT.CBL_PERCENTAGE;
+      fundsRaised * BOARD_RULES.COMMUNITY_BOARDS.NON_PREMIUM.CBL_PERCENTAGE;
     const houseRakeAmount =
-      fundsRaised * BOARD_RULES.COMMUNITY_BOARDS.RAKE_SPLIT.HOUSE_PERCENTAGE;
+      fundsRaised * BOARD_RULES.COMMUNITY_BOARDS.NON_PREMIUM.HOUSE_PERCENTAGE;
     const playerPool = fundsRaised - totalRake;
 
     return {
@@ -110,7 +111,8 @@ export class DeadSquareRedistributionService {
       tier,
       squaresSold,
       fundsRaised,
-      communityRakeRate: BOARD_RULES.COMMUNITY_BOARDS.TOTAL_RAKE_PERCENTAGE,
+      communityRakeRate:
+        BOARD_RULES.COMMUNITY_BOARDS.NON_PREMIUM.TOTAL_RAKE_PERCENTAGE,
       cblRakeShare: cblRakeAmount,
       houseRakeShare: houseRakeAmount,
       playerPool,

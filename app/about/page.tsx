@@ -81,18 +81,18 @@ export default function AboutUsPage() {
                 <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300">
                   <p className="leading-relaxed">
                     <span className="font-semibold text-blue-600 dark:text-blue-400">
-                      I'm Coach B.
+                      I&apos;m Coach B.
                     </span>{' '}
-                    For years I've watched the magic of friends gathering around
-                    a football squares board — the anticipation, the cheers, the
-                    friendly rivalries.
+                    For years I&apos;ve watched the magic of friends gathering
+                    around a football squares board — the anticipation, the
+                    cheers, the friendly rivalries.
                   </p>
 
                   <p className="leading-relaxed">
-                    But here's the thing: not everyone could join in. Distance,
-                    timing, trust issues with payment—too many barriers kept
-                    people from experiencing this thrill. That's when I knew we
-                    had to do something different.
+                    But here&apos;s the thing: not everyone could join in.
+                    Distance, timing, trust issues with payment—too many
+                    barriers kept people from experiencing this thrill.
+                    That&apos;s when I knew we had to do something different.
                   </p>
 
                   <p className="leading-relaxed bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg border-l-4 border-blue-600">
@@ -102,11 +102,11 @@ export default function AboutUsPage() {
                   </p>
 
                   <p className="leading-relaxed">
-                    We've kept what makes football squares great and improved
-                    it: instant payouts, provable fairness, and the ability to
-                    play with your crew from anywhere. This isn't just
-                    digitizing the game — it's reimagining how we connect
-                    through football.
+                    We&apos;ve kept what makes football squares great and
+                    improved it: instant payouts, provable fairness, and the
+                    ability to play with your crew from anywhere. This
+                    isn&apos;t just digitizing the game — it&apos;s reimagining
+                    how we connect through football.
                   </p>
                 </div>
               </CardContent>
@@ -124,7 +124,7 @@ export default function AboutUsPage() {
                 Meet the Team
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-400">
-                Powered by ElizaOS agents, guided by Coach B's vision
+                Powered by ElizaOS agents, guided by Coach B&apos;s vision
               </p>
             </div>
 
@@ -158,7 +158,7 @@ export default function AboutUsPage() {
                       </p>
                       <div className="border-t border-gray-200 dark:border-gray-800 pt-4">
                         <p className="text-sm italic text-gray-500 dark:text-gray-500">
-                          "{member.quote}"
+                          &quot;{member.quote}&quot;
                         </p>
                       </div>
                     </div>
@@ -274,8 +274,8 @@ export default function AboutUsPage() {
                   Get in Touch
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  Have questions? Want to share your experience? We'd love to
-                  hear from you!
+                  Have questions? Want to share your experience? We&apos;d love
+                  to hear from you!
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button

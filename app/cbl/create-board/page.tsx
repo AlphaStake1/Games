@@ -735,11 +735,11 @@ const CreateBoardPage = () => {
         <Alert className="mb-6 border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/20">
           <TrendingUp className="h-4 w-4" />
           <AlertDescription className="dark:text-green-100">
-            <strong>Drive Maker Strategy (Teams Choice):</strong> You've chosen
-            to host 3 teams - your primary team (Chiefs) plus 2 additional teams
-            (Broncos, Raiders). Players will see 3 team banners in your
-            Community Sports Lounge. Focus on 8-15 boards per week to maximize
-            your $5,000 revenue goal.
+            <strong>Drive Maker Strategy (Teams Choice):</strong> You&apos;ve
+            chosen to host 3 teams - your primary team (Chiefs) plus 2
+            additional teams (Broncos, Raiders). Players will see 3 team banners
+            in your Community Sports Lounge. Focus on 8-15 boards per week to
+            maximize your $5,000 revenue goal.
           </AlertDescription>
         </Alert>
 

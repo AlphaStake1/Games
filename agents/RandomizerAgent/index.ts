@@ -36,15 +36,16 @@ export class RandomizerAgent extends EventEmitter {
       throw new Error('OPENAI_API_KEY is required');
     }
 
-    if (!process.env.SWITCHBOARD_VRF_QUEUE) {
-      throw new Error('SWITCHBOARD_VRF_QUEUE is required');
-    }
+    // Use Switchboard's permissionless devnet queue if not specified
+    const vrfQueueAddress =
+      process.env.SWITCHBOARD_VRF_QUEUE ||
+      'F8ce7MsckeZAbAGmxjJNetxYXQa9mKr9nnrC3qKubyYy';
 
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    this.vrfQueue = new PublicKey(process.env.SWITCHBOARD_VRF_QUEUE);
+    this.vrfQueue = new PublicKey(vrfQueueAddress);
 
     console.log('RandomizerAgent initialized with GPT-4 and Switchboard VRF');
   }

@@ -72,10 +72,10 @@ export class HouseBoardSystem {
   private static readonly HOUSE_NFT_IDENTIFIER = 'HOUSE_NFT';
 
   // All constants now reference BOARD_RULES for consistency
-  private static getHouseRules(isVIP: boolean) {
-    return isVIP
-      ? BOARD_RULES.HOUSE_BOARDS.VIP
-      : BOARD_RULES.HOUSE_BOARDS.NON_VIP;
+  private static getHouseRules(isPremium: boolean) {
+    return isPremium
+      ? BOARD_RULES.HOUSE_BOARDS.PREMIUM
+      : BOARD_RULES.HOUSE_BOARDS.STANDARD;
   }
 
   private static readonly DEFAULT_HOUSE_NFT_STYLE: HouseNftStyle = {
@@ -94,10 +94,10 @@ export class HouseBoardSystem {
       boardId,
       boardType: 'house',
       tier,
-      houseRakePercentage: this.DEFAULT_HOUSE_RAKE,
-      maxDeadSquares: this.MAX_DEAD_SQUARES,
+      houseRakePercentage: BOARD_RULES.HOUSE_BOARDS.STANDARD.RAKE_PERCENTAGE,
+      maxDeadSquares: BOARD_RULES.HOUSE_BOARDS.STANDARD.MAX_DEAD_SQUARES,
       guaranteedPayouts: true,
-      vipBonusRate: this.VIP_BONUS_RATE,
+      vipBonusRate: BOARD_RULES.HOUSE_BOARDS.STANDARD.VIP_BONUS_PERCENTAGE,
       houseNftStyle: {
         ...this.DEFAULT_HOUSE_NFT_STYLE,
         ...customNftStyle,

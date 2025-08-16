@@ -166,7 +166,7 @@ const WalletGuideContent = () => {
             {primaryCTA.text}
           </Button>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Once connected, we'll show you exactly what to do next
+            Once connected, we&apos;ll show you exactly what to do next
           </p>
         </div>
       </div>

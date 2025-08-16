@@ -373,7 +373,7 @@ export class SubagentFactory extends EventEmitter {
   getAgentsByType<T = any>(agentType: string): T[] {
     const agents: T[] = [];
 
-    for (const instance of this.instances.values()) {
+    for (const instance of Array.from(this.instances.values())) {
       if (instance.type === agentType) {
         agents.push(instance.instance as T);
       }
@@ -471,7 +471,7 @@ export class SubagentFactory extends EventEmitter {
     let oldestInstance: AgentInstance | null = null;
     let newestInstance: AgentInstance | null = null;
 
-    for (const instance of this.instances.values()) {
+    for (const instance of Array.from(this.instances.values())) {
       // Count by type
       instancesByType[instance.type] =
         (instancesByType[instance.type] || 0) + 1;

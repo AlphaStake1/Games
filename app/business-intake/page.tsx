@@ -130,19 +130,19 @@ const BusinessIntakePage = () => {
           <Card className="w-full max-w-2xl mx-auto">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl text-gray-900 dark:text-white">
-                Welcome! I'm Morgan Reese
+                Welcome! I&apos;m Morgan Reese
               </CardTitle>
               <CardDescription className="text-lg text-gray-600 dark:text-gray-400">
                 Thank you for your interest in partnering with Football Squares.
-                I'll help you find the perfect collaboration opportunity for
-                your business.
+                I&apos;ll help you find the perfect collaboration opportunity
+                for your business.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg">
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Let's start by understanding what type of business opportunity
-                  you're looking for:
+                  Let&apos;s start by understanding what type of business
+                  opportunity you&apos;re looking for:
                 </p>
               </div>
               <div className="grid gap-4">
@@ -224,7 +224,7 @@ const BusinessIntakePage = () => {
                 {formData.inquiryType === 'whitelabel' &&
                   'Our white label platform lets you offer Football Squares under your brand. Perfect for sports media companies, casinos, or entertainment platforms.'}
                 {formData.inquiryType === 'other' &&
-                  "I love hearing creative ideas! Whether it's a new technology integration, content collaboration, or something entirely different, let's discuss it."}
+                  'I love hearing creative ideas! Whether it&apos;s a new technology integration, content collaboration, or something entirely different, let&apos;s discuss it.'}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -312,7 +312,7 @@ const BusinessIntakePage = () => {
           <Card className="w-full max-w-2xl mx-auto">
             <CardHeader>
               <CardTitle className="text-xl text-gray-900 dark:text-white">
-                Let's talk budget and timeline
+                Let&apos;s talk budget and timeline
               </CardTitle>
               <CardDescription>
                 This information helps me prepare realistic proposals and set
@@ -423,8 +423,8 @@ const BusinessIntakePage = () => {
                 Contact Information
               </CardTitle>
               <CardDescription>
-                I'll personally review your request and respond within 24 hours
-                with a customized proposal.
+                I&apos;ll personally review your request and respond within 24
+                hours with a customized proposal.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">

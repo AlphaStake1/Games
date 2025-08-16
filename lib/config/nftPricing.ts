@@ -108,10 +108,23 @@ export const NFT_PRICING_TIERS = {
       'Priority support',
     ],
   },
+  free: {
+    name: 'Free',
+    price: 'Free',
+    aiGenerations: -1,
+    animationAttempts: 0,
+    uploadLimit: -1,
+    description: 'Free tier for testing',
+    features: [
+      'Unlimited AI generation attempts',
+      'No animated NFT attempts',
+      'Unlimited image uploads',
+    ],
+  },
 } as const;
 
 export const getNFTLimitsMessage = (
-  tier: keyof typeof NFT_PRICING_TIERS = 'free',
+  tier: keyof typeof NFT_PRICING_TIERS = 'standard',
 ) => {
   const tierInfo = NFT_PRICING_TIERS[tier];
   const generations =

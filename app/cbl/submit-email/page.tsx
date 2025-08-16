@@ -179,8 +179,8 @@ export default function CBLEmailSubmissionPage() {
               Email Submitted Successfully!
             </CardTitle>
             <CardDescription>
-              Your email has been securely added to OC-Phil's CBL communications
-              database.
+              Your email has been securely added to OC-Phil&apos;s CBL
+              communications database.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -189,21 +189,24 @@ export default function CBLEmailSubmissionPage() {
                 What happens next:
               </h4>
               <ul className="text-sm text-blue-800 space-y-1">
-                <li>• You'll receive a verification email within 10 minutes</li>
+                <li>
+                  • You&apos;ll receive a verification email within 10 minutes
+                </li>
                 <li>• Click the verification link to confirm your email</li>
                 <li>
-                  • Once verified, you'll start receiving CBL communications
+                  • Once verified, you&apos;ll start receiving CBL
+                  communications
                 </li>
                 <li>
-                  • Check your spam folder if you don't see the verification
-                  email
+                  • Check your spam folder if you don&apos;t see the
+                  verification email
                 </li>
               </ul>
             </div>
 
             <div className="p-4 bg-amber-50 rounded-lg text-left">
               <h4 className="font-semibold text-amber-900 mb-2">
-                Email Types You'll Receive:
+                Email Types You&apos;ll Receive:
               </h4>
               <ul className="text-sm text-amber-800 space-y-1">
                 <li>• Milestone achievement notifications and rewards</li>
@@ -239,8 +242,8 @@ export default function CBLEmailSubmissionPage() {
             Submit Your CBL Email
           </h1>
           <p className="mt-2 text-lg text-gray-600">
-            Join OC-Phil's secure email list for CBL updates, milestones, and
-            exclusive communications
+            Join OC-Phil&apos;s secure email list for CBL updates, milestones,
+            and exclusive communications
           </p>
         </div>
 

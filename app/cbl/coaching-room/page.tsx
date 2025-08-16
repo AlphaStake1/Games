@@ -524,7 +524,7 @@ const CBLCoachingRoom = () => {
                     <div className="p-3 bg-white dark:bg-gray-800 rounded-lg">
                       <div className="font-medium">Educational Series</div>
                       <div className="text-gray-600 dark:text-gray-400">
-                        "Squares 101" content for newcomers
+                        &quot;Squares 101&quot; content for newcomers
                       </div>
                     </div>
                   </div>
@@ -681,8 +681,8 @@ const CBLCoachingRoom = () => {
                               OC Phil
                             </div>
                             <div className="text-blue-700 dark:text-blue-300 mt-1">
-                              Welcome to the coaching staff room! I'm here to
-                              provide advanced strategies and insights
+                              Welcome to the coaching staff room! I&apos;m here
+                              to provide advanced strategies and insights
                               exclusively for CBLs. What can I help you optimize
                               today?
                             </div>

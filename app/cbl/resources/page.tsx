@@ -348,8 +348,8 @@ Thanks everyone for a great game! Next board coming soon.`,
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-bold mb-4">Need More Help?</h2>
         <p className="text-gray-600 dark:text-gray-400 mb-6">
-          Can't find what you're looking for? Our team is here to help you
-          create custom materials for your community.
+          Can&apos;t find what you&apos;re looking for? Our team is here to help
+          you create custom materials for your community.
         </p>
         <div className="flex gap-4">
           <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 font-medium">

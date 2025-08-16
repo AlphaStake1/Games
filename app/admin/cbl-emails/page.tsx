@@ -200,7 +200,7 @@ const WalletAuth: React.FC<WalletAuthProps> = ({ onAuthenticated }) => {
           </Button>
 
           <p className="text-xs text-gray-500 text-center">
-            Only OC-Phil's verified wallet address can access this system
+            Only OC-Phil&apos;s verified wallet address can access this system
           </p>
         </CardContent>
       </Card>

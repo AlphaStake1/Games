@@ -109,7 +109,7 @@ export class TempoChronosAgent extends EventEmitter {
    */
   private async checkAllBoards(): Promise<void> {
     try {
-      for (const [gameId, board] of this.activeBoards) {
+      for (const [gameId, board] of Array.from(this.activeBoards)) {
         const decision = await this.evaluateBoardForRelease(gameId);
 
         // Update board status based on fill rate

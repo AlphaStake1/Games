@@ -12,6 +12,7 @@ import { CodeReviewAgent } from '../CodeReviewAgent';
 import { TempoChronosAgent } from '../TempoChronosAgent';
 import { EventEmitter } from 'events';
 import * as dotenv from 'dotenv';
+import pool from '../../lib/db';
 
 dotenv.config();
 
@@ -51,8 +52,8 @@ interface SubagentTask {
 }
 
 interface SubagentRegistry {
-  gameAgents: Map<string, any>;
-  developmentAgents: Map<string, any>;
+  gameAgents: Map<string, new (...args: any[]) => any>;
+  developmentAgents: Map<string, new (...args: any[]) => any>;
 }
 
 export class OrchestratorAgent extends EventEmitter {
@@ -65,7 +66,7 @@ export class OrchestratorAgent extends EventEmitter {
   private isProcessing: boolean = false;
 
   // Subagent system
-  private subagentRegistry: SubagentRegistry;
+  private subagentRegistry!: SubagentRegistry;
   private subagentTasks: Map<string, SubagentTask> = new Map();
   private developmentQueue: SubagentTask[] = [];
   private isProcessingDevelopment: boolean = false;
@@ -160,7 +161,7 @@ Respond with a JSON object containing:
   }
 
   private generateFallbackPlan(context: GameContext): TaskPlan {
-    const tasks = [];
+    const tasks: TaskPlan['tasks'] = [];
 
     switch (context.gameState) {
       case 'created':
@@ -448,13 +449,40 @@ Respond with a JSON object containing:
 
   async addGame(gameId: number): Promise<void> {
     const context = await this.fetchGameContext(gameId);
-    this.activeGames.set(gameId, context);
-    console.log(`Added game ${gameId} to active games`);
+    const client = await pool.connect();
+    try {
+      await client.query(
+        `INSERT INTO games (game_id, board_pda, game_state, home_score, away_score, quarter, total_pot, players_count)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [
+          context.gameId,
+          context.boardPda.toString(),
+          context.gameState,
+          context.currentScore.home,
+          context.currentScore.away,
+          context.currentScore.quarter,
+          context.totalPot,
+          context.playersCount,
+        ],
+      );
+      console.log(`Added game ${gameId} to the database`);
+    } catch (error) {
+      console.error('Error adding game to database:', error);
+    } finally {
+      client.release();
+    }
   }
 
   async removeGame(gameId: number): Promise<void> {
-    this.activeGames.delete(gameId);
-    console.log(`Removed game ${gameId} from active games`);
+    const client = await pool.connect();
+    try {
+      await client.query('DELETE FROM games WHERE game_id = $1', [gameId]);
+      console.log(`Removed game ${gameId} from the database`);
+    } catch (error) {
+      console.error('Error removing game from database:', error);
+    } finally {
+      client.release();
+    }
   }
 
   private startProcessingLoop(): void {
@@ -462,10 +490,12 @@ Respond with a JSON object containing:
       if (this.isProcessing) return;
 
       this.isProcessing = true;
+      const client = await pool.connect();
       try {
-        for (const [gameId, context] of Array.from(
-          this.activeGames.entries(),
-        )) {
+        const res = await client.query('SELECT game_id FROM games');
+        const activeGames = res.rows.map((row) => row.game_id);
+
+        for (const gameId of activeGames) {
           const taskPlan = await this.planTasks(gameId);
           if (taskPlan.tasks.length > 0) {
             await this.executeTaskPlan(taskPlan);
@@ -475,6 +505,7 @@ Respond with a JSON object containing:
         console.error('Error in processing loop:', error);
       } finally {
         this.isProcessing = false;
+        client.release();
       }
     }, 30000); // Run every 30 seconds
   }
@@ -507,18 +538,18 @@ Respond with a JSON object containing:
    */
   private initializeSubagentRegistry(): void {
     this.subagentRegistry = {
-      gameAgents: new Map([
+      gameAgents: new Map<string, new (...args: any[]) => any>([
         ['BoardAgent', BoardAgent],
         ['RandomizerAgent', RandomizerAgent],
         ['OracleAgent', OracleAgent],
         ['WinnerAgent', WinnerAgent],
         ['EmailAgent', EmailAgent],
         ['TempoChronosAgent', TempoChronosAgent],
-      ]),
-      developmentAgents: new Map([
+      ] as any),
+      developmentAgents: new Map<string, new (...args: any[]) => any>([
         ['DocumentationAgent', DocumentationAgent],
         ['CodeReviewAgent', CodeReviewAgent],
-      ]),
+      ] as any),
     };
 
     console.log(
@@ -536,32 +567,33 @@ Respond with a JSON object containing:
     task: Omit<SubagentTask, 'id' | 'createdAt' | 'status'>,
   ): Promise<string> {
     const taskId = `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-    const subagentTask: SubagentTask = {
-      ...task,
-      id: taskId,
-      status: 'pending',
-      createdAt: new Date(),
-    };
-
-    this.subagentTasks.set(taskId, subagentTask);
-
-    if (
-      task.type === 'development' ||
-      task.type === 'documentation' ||
-      task.type === 'review'
-    ) {
-      this.developmentQueue.push(subagentTask);
-    } else {
-      this.taskQueue.push(subagentTask);
+    const client = await pool.connect();
+    try {
+      await client.query(
+        `INSERT INTO tasks (id, type, agent, action, args, status, priority, dependencies)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [
+          taskId,
+          task.type,
+          task.agent,
+          task.action,
+          task.args,
+          'pending',
+          task.priority,
+          task.dependencies,
+        ],
+      );
+      this.emit('taskDelegated', { taskId, task });
+      console.log(
+        `Task delegated to ${task.agent}: ${task.action} (ID: ${taskId})`,
+      );
+      return taskId;
+    } catch (error) {
+      console.error('Error delegating task to subagent:', error);
+      throw error;
+    } finally {
+      client.release();
     }
-
-    this.emit('taskDelegated', { taskId, task: subagentTask });
-
-    console.log(
-      `Task delegated to ${task.agent}: ${task.action} (ID: ${taskId})`,
-    );
-    return taskId;
   }
 
   /**
@@ -645,21 +677,25 @@ Respond with a JSON object containing:
    */
   private async startDevelopmentProcessingLoop(): Promise<void> {
     setInterval(async () => {
-      if (this.isProcessingDevelopment || this.developmentQueue.length === 0) {
+      if (this.isProcessingDevelopment) {
         return;
       }
 
       this.isProcessingDevelopment = true;
-
+      const client = await pool.connect();
       try {
-        const task = this.developmentQueue.shift();
-        if (task) {
+        const res = await client.query(
+          `SELECT * FROM tasks WHERE status = 'pending' AND type IN ('development', 'documentation', 'review') ORDER BY priority DESC LIMIT 1`,
+        );
+        if (res.rows.length > 0) {
+          const task = res.rows[0] as SubagentTask;
           await this.executeDevelopmentTask(task);
         }
       } catch (error) {
         console.error('Error in development processing loop:', error);
       } finally {
         this.isProcessingDevelopment = false;
+        client.release();
       }
     }, 5000); // Process every 5 seconds
   }
@@ -668,9 +704,12 @@ Respond with a JSON object containing:
    * Execute development-related tasks (documentation, code review)
    */
   private async executeDevelopmentTask(task: SubagentTask): Promise<void> {
+    const client = await pool.connect();
     try {
-      task.status = 'in_progress';
-      this.subagentTasks.set(task.id, task);
+      await client.query(
+        `UPDATE tasks SET status = 'in_progress' WHERE id = $1`,
+        [task.id],
+      );
 
       console.log(`Executing development task: ${task.agent}.${task.action}`);
 
@@ -687,23 +726,25 @@ Respond with a JSON object containing:
           throw new Error(`Unknown development agent: ${task.agent}`);
       }
 
-      task.status = 'completed';
-      task.completedAt = new Date();
-      task.result = result;
-
-      this.subagentTasks.set(task.id, task);
+      await client.query(
+        `UPDATE tasks SET status = 'completed', completed_at = NOW(), result = $1 WHERE id = $2`,
+        [JSON.stringify(result), task.id],
+      );
       this.emit('developmentTaskCompleted', { task, result });
 
       console.log(`Development task completed: ${task.id}`);
     } catch (error) {
-      task.status = 'failed';
-      task.error = error instanceof Error ? error.message : String(error);
-      task.completedAt = new Date();
-
-      this.subagentTasks.set(task.id, task);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      await client.query(
+        `UPDATE tasks SET status = 'failed', error = $1, completed_at = NOW() WHERE id = $2`,
+        [errorMessage, task.id],
+      );
       this.emit('developmentTaskFailed', { task, error });
 
       console.error(`Development task failed: ${task.id}`, error);
+    } finally {
+      client.release();
     }
   }
 
@@ -759,47 +800,119 @@ Respond with a JSON object containing:
   /**
    * Get task status and results
    */
-  getTaskStatus(taskId: string): SubagentTask | undefined {
-    return this.subagentTasks.get(taskId);
+  async getTaskStatus(taskId: string): Promise<SubagentTask | undefined> {
+    const client = await pool.connect();
+    try {
+      const res = await client.query('SELECT * FROM tasks WHERE id = $1', [
+        taskId,
+      ]);
+      return res.rows[0];
+    } catch (error) {
+      console.error('Error getting task status:', error);
+      return undefined;
+    } finally {
+      client.release();
+    }
   }
 
   /**
    * Get all tasks for a specific agent
    */
-  getTasksByAgent(agentName: string): SubagentTask[] {
-    return Array.from(this.subagentTasks.values()).filter(
-      (task) => task.agent === agentName,
-    );
+  async getTasksByAgent(agentName: string): Promise<SubagentTask[]> {
+    const client = await pool.connect();
+    try {
+      const res = await client.query('SELECT * FROM tasks WHERE agent = $1', [
+        agentName,
+      ]);
+      return res.rows;
+    } catch (error) {
+      console.error('Error getting tasks by agent:', error);
+      return [];
+    } finally {
+      client.release();
+    }
   }
 
   /**
    * Get development queue status
    */
-  getDevelopmentQueueStatus(): {
+  async getDevelopmentQueueStatus(): Promise<{
     pending: number;
     inProgress: number;
     completed: number;
     failed: number;
-  } {
-    const allTasks = Array.from(this.subagentTasks.values());
-    const devTasks = allTasks.filter(
-      (task) =>
-        task.type === 'development' ||
-        task.type === 'documentation' ||
-        task.type === 'review',
-    );
-
-    return {
-      pending: devTasks.filter((t) => t.status === 'pending').length,
-      inProgress: devTasks.filter((t) => t.status === 'in_progress').length,
-      completed: devTasks.filter((t) => t.status === 'completed').length,
-      failed: devTasks.filter((t) => t.status === 'failed').length,
-    };
+  }> {
+    const client = await pool.connect();
+    try {
+      const res = await client.query(
+        `SELECT status, COUNT(*) as count FROM tasks WHERE type IN ('development', 'documentation', 'review') GROUP BY status`,
+      );
+      const statusCounts = {
+        pending: 0,
+        in_progress: 0,
+        completed: 0,
+        failed: 0,
+      };
+      res.rows.forEach((row) => {
+        const status = row.status as keyof typeof statusCounts;
+        statusCounts[status] = parseInt(row.count, 10);
+      });
+      return {
+        pending: statusCounts.pending,
+        inProgress: statusCounts.in_progress,
+        completed: statusCounts.completed,
+        failed: statusCounts.failed,
+      };
+    } catch (error) {
+      console.error('Error getting development queue status:', error);
+      return {
+        pending: 0,
+        inProgress: 0,
+        completed: 0,
+        failed: 0,
+      };
+    } finally {
+      client.release();
+    }
   }
 
   /**
    * Simple topological sort for task dependencies
    */
+  async addConversationMessage(
+    sessionId: string,
+    sender: string,
+    message: string,
+  ): Promise<void> {
+    const client = await pool.connect();
+    try {
+      await client.query(
+        'INSERT INTO conversations (session_id, sender, message) VALUES ($1, $2, $3)',
+        [sessionId, sender, message],
+      );
+    } catch (error) {
+      console.error('Error adding conversation message:', error);
+    } finally {
+      client.release();
+    }
+  }
+
+  async getConversationHistory(sessionId: string): Promise<any[]> {
+    const client = await pool.connect();
+    try {
+      const res = await client.query(
+        'SELECT * FROM conversations WHERE session_id = $1 ORDER BY timestamp ASC',
+        [sessionId],
+      );
+      return res.rows;
+    } catch (error) {
+      console.error('Error getting conversation history:', error);
+      return [];
+    } finally {
+      client.release();
+    }
+  }
+
   private topologicalSort(
     tasks: Array<Omit<SubagentTask, 'id' | 'createdAt' | 'status'>>,
   ): typeof tasks {

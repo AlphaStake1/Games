@@ -1350,7 +1350,7 @@ function CBLDashboard() {
                           ) : (
                             <div className="text-muted-foreground">
                               <Clock className="h-4 w-4 inline mr-1" />
-                              Game hasn't started yet
+                              Game hasn&apos;t started yet
                             </div>
                           )}
                         </div>

@@ -45,15 +45,17 @@ export class OracleAgent extends EventEmitter {
       throw new Error('OPENAI_API_KEY is required');
     }
 
-    if (!process.env.SWITCHBOARD_SCORE_FEED) {
-      throw new Error('SWITCHBOARD_SCORE_FEED is required');
-    }
+    // For development, we'll use mock data instead of requiring a score feed
+    // In production, you would set up actual Switchboard score feeds
 
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    this.scoreFeed = new PublicKey(process.env.SWITCHBOARD_SCORE_FEED);
+    // Score feed is optional for development
+    this.scoreFeed = process.env.SWITCHBOARD_SCORE_FEED
+      ? new PublicKey(process.env.SWITCHBOARD_SCORE_FEED)
+      : PublicKey.default;
 
     console.log('OracleAgent initialized with GPT-4 and Switchboard Oracle');
   }

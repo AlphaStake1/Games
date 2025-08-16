@@ -254,8 +254,8 @@ const WalletConnectionPopup: React.FC<WalletConnectionPopupProps> = ({
                 </h5>
                 <p className="text-xs text-[#708090] dark:text-[#96abdc] leading-relaxed">
                   Phantom is a free, secure Solana wallet. After installing,
-                  return here and click "Connect Wallet" - we'll remember what
-                  you wanted to do!
+                  return here and click &quot;Connect Wallet&quot; - we&apos;ll
+                  remember what you wanted to do!
                 </p>
               </div>
             </div>

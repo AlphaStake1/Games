@@ -369,7 +369,9 @@ const CBLApplicationPage = () => {
                               **4. Platform Integrity**
                             </h3>
                             <ul className="space-y-1 ml-3 text-xs">
-                              <li>• **Don't exploit** bugs or scrape data</li>
+                              <li>
+                                • **Don&apos;t exploit** bugs or scrape data
+                              </li>
                               <li>• **Report bugs** within 24 h</li>
                               <li>• **Respect IP** – logos, UI, code</li>
                             </ul>
@@ -389,7 +391,7 @@ const CBLApplicationPage = () => {
                           </section>
 
                           <div className="text-xs text-gray-600 dark:text-gray-400 bg-yellow-50 dark:bg-yellow-900/20 p-2 rounded">
-                            Updates may occur; you'll get 3-day notice
+                            Updates may occur; you&apos;ll get 3-day notice
                             (immediate for security fixes).
                           </div>
 
@@ -482,8 +484,8 @@ const CBLApplicationPage = () => {
                   Submit Application
                 </Button>
                 <p className="text-sm text-green-200 text-center mt-3">
-                  You'll receive a decision within the hour via email and in
-                  your dashboard.
+                  You&apos;ll receive a decision within the hour via email and
+                  in your dashboard.
                 </p>
               </div>
             </form>
