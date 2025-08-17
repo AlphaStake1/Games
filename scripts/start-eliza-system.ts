@@ -267,7 +267,7 @@ async function main(): Promise<void> {
       console.log('   • Trainer Reviva: User Support & Technical Help');
       console.log('   • Coach B: Game Rules & Player Onboarding');
       console.log('   • Dean Security: Security & System Monitoring');
-      console.log('   • Commissioner Jerry: Executive Decisions & Escalations');
+      console.log('   • GM Jerry: Executive Management & Strategic Oversight');
       console.log('   • Coach Right: Community Management');
       console.log('   • Morgan Reese: Business Development');
       console.log('   • Patel Neil: Growth & Marketing');
