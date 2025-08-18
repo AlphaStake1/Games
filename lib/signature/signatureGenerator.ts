@@ -152,8 +152,8 @@ export class SignatureGenerator {
 
     const text = `${data.firstName} ${data.lastInitial}.`;
 
-    // Use fallback fonts that work in SVG data URIs
-    const fontFamily = this.getFallbackFontFamily(font.category);
+    // Use actual font with fallbacks
+    const fontFamily = this.getFontFamily(font);
     const fontSize = style.baseSize;
     const x = canvasWidth / 2;
     const y = canvasHeight / 2 + fontSize / 3;
@@ -175,6 +175,41 @@ export class SignatureGenerator {
 </svg>`;
 
     return svg.trim();
+  }
+
+  /**
+   * Get font family with proper fallbacks
+   */
+  private getFontFamily(font: SignatureFont): string {
+    // For SVG, we need actual font names, not CSS variables
+    let fontName = font.family;
+
+    // Convert CSS variables to actual font names for SVG compatibility
+    if (font.family.startsWith('var(--font-')) {
+      switch (font.id) {
+        case 'patrick-hand':
+          fontName = 'Patrick Hand';
+          break;
+        case 'caveat':
+          fontName = 'Caveat';
+          break;
+        case 'shadows-into-light':
+          fontName = 'Shadows Into Light';
+          break;
+        case 'qwigley':
+          fontName = 'Qwigley';
+          break;
+        case 'dancing-script':
+          fontName = 'Dancing Script';
+          break;
+        default:
+          fontName = font.name; // fallback to the font name
+      }
+    }
+
+    // Use the actual font family name with web-safe fallbacks
+    const fallback = this.getFallbackFontFamily(font.category);
+    return `"${fontName}", ${fallback}`;
   }
 
   /**

@@ -1,5 +1,12 @@
 import type { Metadata } from 'next';
-import { Recursive } from 'next/font/google';
+import {
+  Recursive,
+  Caveat,
+  Qwigley,
+  Dancing_Script,
+  Patrick_Hand,
+  Shadows_Into_Light,
+} from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
 import { WalletConnectionProvider } from '@/contexts/WalletConnectionProvider';
@@ -12,6 +19,35 @@ import WalletConnectionWrapper from '@/components/WalletConnectionWrapper';
 const recursive = Recursive({
   subsets: ['latin'],
   variable: '--font-recursive',
+});
+
+// Signature fonts
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-caveat',
+});
+
+const qwigley = Qwigley({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-qwigley',
+});
+
+const dancingScript = Dancing_Script({
+  subsets: ['latin'],
+  variable: '--font-dancing-script',
+});
+
+const patrickHand = Patrick_Hand({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-patrick-hand',
+});
+
+const shadowsIntoLight = Shadows_Into_Light({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-shadows-into-light',
 });
 
 export const metadata: Metadata = {
@@ -27,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${recursive.variable} font-sans`}
+      className={`${recursive.variable} ${caveat.variable} ${qwigley.variable} ${dancingScript.variable} ${patrickHand.variable} ${shadowsIntoLight.variable} font-sans`}
       suppressHydrationWarning
     >
       <body>

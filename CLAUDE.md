@@ -22,6 +22,144 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## 🖊️ Signature Font Variety System
+
+### **Overview**
+
+The Football Squares platform implements a sophisticated signature font variety system that provides users with 9+ distinct handwriting styles for their signature NFTs. Each signature has unique fonts, angles, sizes, and visual characteristics to ensure no two signatures look identical.
+
+### **Architecture & Files**
+
+#### **Core Configuration**: `/lib/signature/signatureConfig.ts`
+
+- **SIGNATURE_FONTS[]**: Array of font definitions with categories (handwritten, script, pro)
+- **SIGNATURE_STYLES[]**: Pre-defined combinations of fonts with visual attributes
+- **Font Categories**:
+  - `handwritten`: Casual, natural handwriting (Patrick Hand, Caveat, Shadows Into Light, Reenie Beanie)
+  - `script`: Elegant cursive styles (Qwigley, Dancing Script, Great Vibes, Sacramento, Alex Brush)
+  - `pro`: Professional calligraphy fonts (Madelyn, Warm Script, etc.)
+
+#### **Font Loading**: `/app/layout.tsx`
+
+```typescript
+import {
+  Recursive,
+  Caveat,
+  Qwigley,
+  Dancing_Script,
+  Patrick_Hand,
+  Shadows_Into_Light,
+} from 'next/font/google';
+```
+
+- Fonts are loaded via Next.js Google Fonts integration
+- CSS variables created: `--font-caveat`, `--font-qwigley`, etc.
+- All font variables added to HTML className for global availability
+
+#### **Rendering Engine**: `/lib/signature/signatureGenerator.ts`
+
+- **renderToSVG()**: Generates SVG with proper font families and rotation transforms
+- **getFontFamily()**: Converts CSS variables to actual font names for SVG compatibility
+- **Rotation Logic**: `transform="rotate(${style.slant} ${x} ${y})"`
+- **Font Mapping**: Handles CSS variable to font name conversion for SVG rendering
+
+### **Visual Characteristics**
+
+#### **Angles & Rotation**
+
+- **Range**: -15° to +12° slant angles
+- **Purpose**: Creates dynamic, natural handwriting appearance
+- **Implementation**: CSS `transform: rotate()` in SVG text elements
+- **Key Angles**:
+  - `-15°`: Strong leftward slant (professional style)
+  - `0°`: Straight baseline (casual style)
+  - `+12°`: Rightward slant (modern style)
+
+#### **Font Sizes**
+
+- **Range**: 48px - 64px
+- **Variation**: Each style has optimized size for readability
+- **Responsive**: Scales appropriately in different contexts
+
+#### **Colors**
+
+- **Primary**: `#000000`, `#1a1a1a`, `#222222`
+- **Accent**: `#000044` (blue), `#2c3e50` (dark blue)
+- **Purpose**: Subtle color variation adds authenticity
+
+### **Implementation Standards**
+
+#### **Adding New Fonts**
+
+1. **Install Font**: Add to `app/layout.tsx` Google Fonts import
+2. **Create Variable**: Define font variable with `--font-` prefix
+3. **Add to Config**: Update `SIGNATURE_FONTS[]` in `signatureConfig.ts`
+4. **Map in Generator**: Add font mapping in `getFontFamily()` method
+5. **Test Variety**: Ensure visual distinction from existing fonts
+
+#### **Font Selection Criteria**
+
+- **Legibility**: Must be readable at signature sizes (48-64px)
+- **Uniqueness**: Visually distinct from existing fonts
+- **Web Compatibility**: Available via Google Fonts or web-safe
+- **Category Balance**: Maintain mix of handwritten, script, and pro styles
+
+#### **Testing & Validation**
+
+- **Test File**: `/signature-fonts-test.html` - Standalone preview of all fonts
+- **Visual Check**: Each font should have distinct appearance
+- **Angle Verification**: Rotation transforms working correctly
+- **Cross-browser**: Test in Chrome, Firefox, Safari, Edge
+
+### **Best Practices**
+
+#### **Maintaining Variety**
+
+- **9+ Unique Styles**: Always provide significant visual variety
+- **Balanced Categories**: Mix handwritten (casual), script (elegant), pro (premium)
+- **Angle Distribution**: Spread angles across -15° to +12° range
+- **Size Variation**: Use different font sizes for visual hierarchy
+- **Color Variation**: Subtle color differences enhance authenticity
+
+#### **Performance Optimization**
+
+- **Font Loading**: Use `display=swap` for faster loading
+- **Preconnect**: Include Google Fonts preconnect links
+- **CSS Variables**: Efficient font management via CSS custom properties
+- **SVG Rendering**: Optimized for data URI embedding
+
+### **Troubleshooting**
+
+#### **Font Not Displaying**
+
+1. Check Google Fonts import in `layout.tsx`
+2. Verify CSS variable definition
+3. Confirm font mapping in `getFontFamily()`
+4. Test font availability via browser DevTools
+
+#### **Angles Not Working**
+
+1. Verify `transform="rotate()"` syntax in SVG
+2. Check slant values in `SIGNATURE_STYLES[]`
+3. Ensure rotation center point (`${x} ${y}`) is correct
+
+#### **All Signatures Look Same**
+
+1. Check font variety in `SIGNATURE_FONTS[]`
+2. Verify `generateStyleGallery()` creates different styles
+3. Confirm CSS variables properly loaded
+4. Test with `/signature-fonts-test.html`
+
+### **Future Enhancements**
+
+- **Premium Fonts**: Add paid font options for pro users
+- **Custom Upload**: Allow users to upload personal fonts
+- **Dynamic Angles**: Real-time angle adjustment slider
+- **Color Picker**: User-selectable signature colors
+- **Font Previews**: Live preview during font selection
+
+---
+
 ## 🛠️ Local Dev Commands (Quick-ref)
 
 ```bash

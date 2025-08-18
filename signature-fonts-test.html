@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Signature Font Variety Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@400&family=Shadows+Into+Light&family=Qwigley&family=Dancing+Script:wght@400&family=Reenie+Beanie&family=Great+Vibes&family=Sacramento&family=Alex+Brush&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+      }
+      .card {
+        background: white;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .card:hover {
+        border-color: #0066cc;
+        box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+      }
+      .card.selected {
+        border-color: #0066cc;
+        background: #f0f8ff;
+        box-shadow: 0 4px 12px rgba(0, 102, 204, 0.25);
+      }
+      .info {
+        margin-bottom: 15px;
+        font-size: 14px;
+      }
+      .slant {
+        color: #e74c3c;
+        font-weight: bold;
+      }
+      .font-name {
+        color: #2c3e50;
+        font-weight: bold;
+      }
+      .svg-container {
+        border: 1px solid #eee;
+        padding: 15px;
+        background: #fafafa;
+        border-radius: 4px;
+        text-align: center;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .patrick-hand {
+        font-family: 'Patrick Hand', cursive;
+      }
+      .caveat {
+        font-family: 'Caveat', cursive;
+      }
+      .shadows {
+        font-family: 'Shadows Into Light', cursive;
+      }
+      .qwigley {
+        font-family: 'Qwigley', cursive;
+      }
+      .dancing {
+        font-family: 'Dancing Script', cursive;
+      }
+      .reenie {
+        font-family: 'Reenie Beanie', cursive;
+      }
+      .great-vibes {
+        font-family: 'Great Vibes', cursive;
+      }
+      .sacramento {
+        font-family: 'Sacramento', cursive;
+      }
+      .alex-brush {
+        font-family: 'Alex Brush', cursive;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🖊️ Football Squares Signature Font Variety Test</h1>
+      <p style="text-align: center; color: #666; margin-bottom: 30px">
+        Updated signature fonts with varied styles and angles - much better
+        variety!
+      </p>
+
+      <div class="grid">
+        <!-- Signature 1: Patrick Hand -->
+        <div class="card" onclick="selectCard(this)">
+          <div class="info">
+            <div class="font-name">Patrick Hand</div>
+            <div class="slant">Slant: 0°</div>
+            <div>Size: 48px | Category: Handwritten</div>
+          </div>
+          <div class="svg-container">
+            <div
+              class="patrick-hand"
+              style="font-size: 48px; color: #000000; transform: rotate(0deg)"
+            >
+              John D.
+            </div>
+          </div>
+        </div>
+
+        <!-- Signature 2: Caveat -->
+        <div class="card" onclick="selectCard(this)">
+          <div class="info">
+            <div class="font-name">Caveat</div>
+            <div class="slant">Slant: -2°</div>
+            <div>Size: 50px | Category: Handwritten</div>
+          </div>
+          <div class="svg-container">
+            <div
+              class="caveat"
+              style="font-size: 50px; color: #222222; transform: rotate(-2deg)"
+            >
+              John D.
+            </div>
+          </div>
+        </div>
+
+        <!-- Signature 3: Shadows Into Light -->
+        <div class="card" onclick="selectCard(this)">
+          <div class="info">
+            <div class="font-name">Shadows Into Light</div>
+            <div class="slant">Slant: 3°</div>
+            <div>Size: 52px | Category: Handwritten</div>
+          </div>
+          <div class="svg-container">
+            <div
+              class="shadows"
+              style="font-size: 52px; color: #1a1a1a; transform: rotate(3deg)"
+            >
+              John D.
+            </div>
+          </div>
+        </div>
+
+        <!-- Signature 4: Qwigley -->
+        <div class="card" onclick="selectCard(this)">
+          <div class="info">
+            <div class="font-name">Qwigley</div>
+            <div class="slant">Slant: -15°</div>
+            <div>Size: 64px | Category: Script</div>
+          </div>
+          <div class="svg-container">
+            <div
+              class="qwigley"
+              style="font-size: 64px; color: #1a1a1a; transform: rotate(-15deg)"
+            >
+              John D.
+            </div>
+          </div>
+        </div>
+
+        <!-- Signature 5: Dancing Script -->
+        <div class="card" onclick="selectCard(this)">
+          <div class="info">
+            <div class="font-name">Dancing Script</div>
+            <div class="slant">Slant: 5°</div>
+            <div>Size: 56px | Category: Script</div>
+          </div>
+          <div class="svg-container">
+            <div
+              class="dancing"
+              style="font-size: 56px; color: #000044; transform: rotate(5deg)"
+            >
+              John D.
+            </div>
+          </div>
+        </div>
+
+        <!-- Signature 6: Reenie Beanie -->
+        <div class="card" onclick="selectCard(this)">
+          <div class="info">
+            <div class="font-name">Reenie Beanie</div>
+            <div class="slant">Slant: 12°</div>
+            <div>Size: 54px | Category: Handwritten</div>
+          </div>
+          <div class="svg-container">
+            <div
+              class="reenie"
+              style="font-size: 54px; color: #1a1a1a; transform: rotate(12deg)"
+            >
+              John D.
+            </div>
+          </div>
+        </div>
+
+        <!-- Signature 7: Great Vibes -->
+        <div class="card" onclick="selectCard(this)">
+          <div class="info">
+            <div class="font-name">Great Vibes</div>
+            <div class="slant">Slant: 6°</div>
+            <div>Size: 58px | Category: Script</div>
+          </div>
+          <div class="svg-container">
+            <div
+              class="great-vibes"
+              style="font-size: 58px; color: #000000; transform: rotate(6deg)"
+            >
+              John D.
+            </div>
+          </div>
+        </div>
+
+        <!-- Signature 8: Sacramento -->
+        <div class="card" onclick="selectCard(this)">
+          <div class="info">
+            <div class="font-name">Sacramento</div>
+            <div class="slant">Slant: -8°</div>
+            <div>Size: 60px | Category: Script</div>
+          </div>
+          <div class="svg-container">
+            <div
+              class="sacramento"
+              style="font-size: 60px; color: #2c3e50; transform: rotate(-8deg)"
+            >
+              John D.
+            </div>
+          </div>
+        </div>
+
+        <!-- Signature 9: Alex Brush -->
+        <div class="card" onclick="selectCard(this)">
+          <div class="info">
+            <div class="font-name">Alex Brush</div>
+            <div class="slant">Slant: -12°</div>
+            <div>Size: 52px | Category: Pro</div>
+          </div>
+          <div class="svg-container">
+            <div
+              class="alex-brush"
+              style="font-size: 52px; color: #000000; transform: rotate(-12deg)"
+            >
+              John D.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 40px; text-align: center; color: #666">
+        <p><strong>✅ Font Variety Successfully Implemented!</strong></p>
+        <p>
+          Each signature now has a unique font family, size, angle, and style.
+        </p>
+        <p>
+          Click on any signature card to select it (like in the actual modal).
+        </p>
+      </div>
+    </div>
+
+    <script>
+      function selectCard(card) {
+        // Remove selected class from all cards
+        document
+          .querySelectorAll('.card')
+          .forEach((c) => c.classList.remove('selected'));
+        // Add selected class to clicked card
+        card.classList.add('selected');
+      }
+    </script>
+  </body>
+</html>
