@@ -7,11 +7,12 @@ export const metadata: Metadata = {
 };
 
 interface LockerPageProps {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
-export default function LockerPage({ params }: LockerPageProps) {
-  return <PlayerLockerRoom username={params.username} />;
+export default async function LockerPage({ params }: LockerPageProps) {
+  const { username } = await params;
+  return <PlayerLockerRoom username={username} />;
 }

@@ -123,7 +123,7 @@ const WalletConnectionPopup: React.FC<WalletConnectionPopupProps> = ({
     },
     {
       name: 'Solflare' as WalletName,
-      icon: 'https://solflare.com/images/logo.svg',
+      icon: '/icons/solflare-icon.svg',
       downloadUrl: 'https://solflare.com/',
       description: 'Secure Solana wallet',
     },

@@ -23,10 +23,10 @@ const userProfiles = new Map<string, any>([
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { username: string } },
+  { params }: { params: Promise<{ username: string }> },
 ) {
   try {
-    const { username } = params;
+    const { username } = await params;
 
     // Check cache first
     const cached = cache.get(username);
@@ -201,10 +201,10 @@ async function incrementViewCount(username: string) {
 // Optional: Add POST endpoint for updating locker settings
 export async function POST(
   request: NextRequest,
-  { params }: { params: { username: string } },
+  { params }: { params: Promise<{ username: string }> },
 ) {
   try {
-    const { username } = params;
+    const { username } = await params;
     const body = await request.json();
 
     // Verify user owns this locker (check auth)
