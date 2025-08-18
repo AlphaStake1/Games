@@ -36,11 +36,11 @@ const simulateAPI = {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     const conferences = {
-      eastern: { name: 'Eastern', price: 25, passesSold: 67, tier: 1 },
-      southern: { name: 'Southern', price: 50, passesSold: 43, tier: 2 },
-      northern: { name: 'Northern', price: 100, passesSold: 28, tier: 3 },
-      western: { name: 'Western', price: 200, passesSold: 15, tier: 4 },
-      'south-east': { name: 'South-East', price: 500, passesSold: 7, tier: 5 },
+      eastern: { name: 'Eastern', price: 50, passesSold: 67, tier: 1 },
+      southern: { name: 'Southern', price: 100, passesSold: 43, tier: 2 },
+      northern: { name: 'Northern', price: 250, passesSold: 28, tier: 3 },
+      western: { name: 'Western', price: 500, passesSold: 15, tier: 4 },
+      'south-east': { name: 'South-East', price: 1000, passesSold: 7, tier: 5 },
     };
 
     const config = conferences[slug as keyof typeof conferences];

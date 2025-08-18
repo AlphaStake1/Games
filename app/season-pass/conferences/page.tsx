@@ -222,19 +222,6 @@ const ConferencesPageContent = () => {
               {conference.description}
             </p>
 
-            <div className="flex justify-between items-center">
-              <span
-                className={`text-sm font-medium ${conference.featured ? 'text-indigo-200' : ''}`}
-              >
-                Prize Pool
-              </span>
-              <span
-                className={`text-lg font-bold ${conference.featured ? 'text-indigo-200' : 'text-green-500'}`}
-              >
-                ${conference.prizePool.toLocaleString()}
-              </span>
-            </div>
-
             <div>
               <div className="flex justify-between text-sm mb-1">
                 <span className={conference.featured ? 'text-indigo-200' : ''}>
@@ -259,15 +246,6 @@ const ConferencesPageContent = () => {
                 <span>Selected</span>
               </div>
             )}
-            <Button
-              variant="outline"
-              className="w-full mt-2"
-              onClick={() =>
-                router.push(`/season-pass/leaderboard/${conference.id}`)
-              }
-            >
-              View Leaderboard
-            </Button>
           </div>
         </CardContent>
       </Card>
@@ -357,62 +335,16 @@ const ConferencesPageContent = () => {
                     {/* Pass Type Selection */}
                     <div>
                       <h3 className="font-semibold mb-3">Pass Type</h3>
-                      <div className="grid grid-cols-2 gap-2">
-                        <Button
-                          variant={
-                            selectedPassType === 'full' ? 'default' : 'outline'
-                          }
-                          onClick={() => setSelectedPassType('full')}
-                          className="text-sm"
-                        >
-                          <Star className="w-4 h-4 mr-1" />
-                          Full-Season
-                        </Button>
-                        <Button
-                          variant={
-                            selectedPassType === 'half' ? 'default' : 'outline'
-                          }
-                          onClick={() => setSelectedPassType('half')}
-                          className="text-sm"
-                        >
-                          <Clock className="w-4 h-4 mr-1" />
-                          Half-Season
-                        </Button>
+                      <div className="p-3 bg-blue-950/30 border border-blue-800 rounded-lg">
+                        <div className="flex items-center">
+                          <Star className="w-4 h-4 mr-2 text-yellow-500" />
+                          <span className="font-medium">Full-Season Pass</span>
+                        </div>
+                        <p className="text-xs text-gray-400 mt-1">
+                          Complete NFL season with playoff multipliers
+                        </p>
                       </div>
                     </div>
-
-                    <Separator className="bg-gray-700" />
-
-                    {/* Pass Count Selection (Half-Season Only) */}
-                    {selectedPassType === 'half' && (
-                      <div>
-                        <h3 className="font-semibold mb-3">Number of Passes</h3>
-                        <div className="space-y-2">
-                          {halfSeasonPricing.map((pricing) => (
-                            <Button
-                              key={pricing.passCount}
-                              variant={
-                                selectedPassCount === pricing.passCount
-                                  ? 'default'
-                                  : 'outline'
-                              }
-                              onClick={() =>
-                                setSelectedPassCount(pricing.passCount)
-                              }
-                              className="w-full justify-between text-sm"
-                            >
-                              <span>
-                                {pricing.passCount} Pass
-                                {pricing.passCount > 1 ? 'es' : ''}
-                              </span>
-                              <span className="font-bold">
-                                ${pricing.price}
-                              </span>
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
 
                     <Separator className="bg-gray-700" />
 
@@ -430,23 +362,7 @@ const ConferencesPageContent = () => {
                         </div>
                         <div className="flex justify-between">
                           <span>Pass Type:</span>
-                          <span className="font-medium capitalize">
-                            {selectedPassType}-Season
-                          </span>
-                        </div>
-                        {selectedPassType === 'half' && (
-                          <div className="flex justify-between">
-                            <span>Pass Count:</span>
-                            <span className="font-medium">
-                              {selectedPassCount}
-                            </span>
-                          </div>
-                        )}
-                        <div className="flex justify-between">
-                          <span>Prize Pool:</span>
-                          <span className="font-medium text-green-400">
-                            ${selectedConference.prizePool.toLocaleString()}
-                          </span>
+                          <span className="font-medium">Full-Season</span>
                         </div>
                       </div>
                     </div>

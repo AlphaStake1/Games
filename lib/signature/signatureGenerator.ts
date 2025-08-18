@@ -151,55 +151,46 @@ export class SignatureGenerator {
     if (!font) throw new Error(`Font ${style.fontId} not found`);
 
     const text = `${data.firstName} ${data.lastInitial}.`;
-    const transform = `rotate(${style.slant})`;
 
-    // Calculate baseline curve if needed
-    let pathD = '';
-    if (style.baseline === 'curved') {
-      const curveHeight = 10;
-      pathD = `M ${padding} ${canvasHeight / 2} Q ${canvasWidth / 2} ${canvasHeight / 2 - curveHeight} ${canvasWidth - padding} ${canvasHeight / 2}`;
-    } else if (style.baseline === 'rising') {
-      const rise = 15;
-      pathD = `M ${padding} ${canvasHeight / 2 + rise / 2} L ${canvasWidth - padding} ${canvasHeight / 2 - rise / 2}`;
-    }
+    // Use fallback fonts that work in SVG data URIs
+    const fontFamily = this.getFallbackFontFamily(font.category);
+    const fontSize = style.baseSize;
+    const x = canvasWidth / 2;
+    const y = canvasHeight / 2 + fontSize / 3;
 
-    const svg = `
-      <svg width="${canvasWidth}" height="${canvasHeight}" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <style>
-            @import url('https://fonts.googleapis.com/css2?family=${font.family.replace(' ', '+')}:wght@${font.weight}&display=swap');
-            .signature-text {
-              font-family: '${font.family}', cursive;
-              font-size: ${style.baseSize}px;
-              font-weight: ${font.weight};
-              letter-spacing: ${style.letterSpacing}em;
-              fill: ${style.color};
-              ${font.features ? `font-feature-settings: ${font.features.map((f) => `'${f}'`).join(', ')};` : ''}
-            }
-          </style>
-          ${style.baseline !== 'straight' ? `<path id="textPath" d="${pathD}" fill="none"/>` : ''}
-        </defs>
-        
-        <g transform="${transform}">
-          ${
-            style.baseline === 'straight'
-              ? `<text x="${canvasWidth / 2}" y="${canvasHeight / 2 + style.baseSize / 3}" 
-                class="signature-text" text-anchor="middle">${text}</text>`
-              : `<text class="signature-text">
-                <textPath href="#textPath" startOffset="50%" text-anchor="middle">${text}</textPath>
-              </text>`
-          }
-        </g>
-        
-        <!-- Seed watermark for verification -->
-        <text x="${canvasWidth - 5}" y="${canvasHeight - 5}" 
-          font-size="8" fill="#cccccc" text-anchor="end" opacity="0.3">
-          ${data.seed.substring(0, 8)}
-        </text>
-      </svg>
-    `;
+    const svg = `<svg width="${canvasWidth}" height="${canvasHeight}" xmlns="http://www.w3.org/2000/svg">
+  <text x="${x}" y="${y}" 
+        font-family="${fontFamily}" 
+        font-size="${fontSize}px" 
+        font-weight="${font.weight}" 
+        letter-spacing="${style.letterSpacing}em" 
+        fill="${style.color}" 
+        text-anchor="middle" 
+        transform="rotate(${style.slant} ${x} ${y})"
+        ${font.italic ? 'font-style="italic"' : ''}>${text}</text>
+  <text x="${canvasWidth - 5}" y="${canvasHeight - 5}" 
+        font-size="8" fill="#cccccc" text-anchor="end" opacity="0.3">
+    ${data.seed.substring(0, 8)}
+  </text>
+</svg>`;
 
     return svg.trim();
+  }
+
+  /**
+   * Get web-safe font family based on category
+   */
+  private getFallbackFontFamily(category: string): string {
+    switch (category) {
+      case 'handwritten':
+        return 'Brush Script MT, cursive';
+      case 'script':
+        return 'Lucida Handwriting, cursive';
+      case 'pro':
+        return 'Edwardian Script ITC, cursive';
+      default:
+        return 'cursive';
+    }
   }
 
   /**

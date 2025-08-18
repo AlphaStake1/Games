@@ -319,10 +319,7 @@ const BoardSelector: React.FC<BoardSelectorProps> = ({
               <span className="font-medium">{board.totalSquaresSold}/100</span>
             </div>
             <Progress value={fillPercentage} className="h-2" />
-            <div className="flex justify-between items-center mt-1">
-              <p className="text-xs text-gray-500">
-                {board.availableSquares} squares available
-              </p>
+            <div className="flex justify-end items-center mt-1">
               <p className="text-xs font-medium">
                 {fillPercentage.toFixed(1)}% filled
               </p>

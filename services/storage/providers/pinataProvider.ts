@@ -20,18 +20,22 @@ export class PinataProvider implements StorageProvider {
   private getHeaders(): HeadersInit {
     if (this.jwt) {
       return {
-        'Authorization': `Bearer ${this.jwt}`,
+        Authorization: `Bearer ${this.jwt}`,
       };
     } else if (this.apiKey && this.apiSecret) {
       return {
-        'pinata_api_key': this.apiKey,
-        'pinata_secret_api_key': this.apiSecret,
+        pinata_api_key: this.apiKey,
+        pinata_secret_api_key: this.apiSecret,
       };
     }
     throw new Error('Pinata credentials not configured');
   }
 
-  async uploadFile(file: Buffer | Uint8Array, filename: string, contentType: string): Promise<string> {
+  async uploadFile(
+    file: Buffer | Uint8Array,
+    filename: string,
+    contentType: string,
+  ): Promise<string> {
     const formData = new FormData();
     const blob = new Blob([file], { type: contentType });
     formData.append('file', blob, filename);
@@ -42,16 +46,19 @@ export class PinataProvider implements StorageProvider {
       keyvalues: {
         type: 'signature',
         timestamp: Date.now().toString(),
-      }
+      },
     });
     formData.append('pinataMetadata', metadata);
 
     // Pin to IPFS via Pinata
-    const response = await fetch('https://api.pinata.cloud/pinning/pinFileToIPFS', {
-      method: 'POST',
-      headers: this.getHeaders(),
-      body: formData,
-    });
+    const response = await fetch(
+      'https://api.pinata.cloud/pinning/pinFileToIPFS',
+      {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: formData,
+      },
+    );
 
     if (!response.ok) {
       const error = await response.text();
@@ -63,23 +70,26 @@ export class PinataProvider implements StorageProvider {
   }
 
   async uploadJSON(data: object): Promise<string> {
-    const response = await fetch('https://api.pinata.cloud/pinning/pinJSONToIPFS', {
-      method: 'POST',
-      headers: {
-        ...this.getHeaders(),
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+      {
+        method: 'POST',
+        headers: {
+          ...this.getHeaders(),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pinataContent: data,
+          pinataMetadata: {
+            name: `metadata_${Date.now()}.json`,
+            keyvalues: {
+              type: 'signature-metadata',
+              timestamp: Date.now().toString(),
+            },
+          },
+        }),
       },
-      body: JSON.stringify({
-        pinataContent: data,
-        pinataMetadata: {
-          name: `metadata_${Date.now()}.json`,
-          keyvalues: {
-            type: 'signature-metadata',
-            timestamp: Date.now().toString(),
-          }
-        }
-      }),
-    });
+    );
 
     if (!response.ok) {
       const error = await response.text();

@@ -560,10 +560,6 @@ const BoardsPageContent: React.FC = () => {
                           <span>Current Pool:</span>
                           <span className="font-bold">$3,350</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span>Passes Sold:</span>
-                          <span className="font-bold">67/100</span>
-                        </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-2">
                           <div
                             className="bg-green-600 h-1.5 rounded-full"
@@ -620,10 +616,6 @@ const BoardsPageContent: React.FC = () => {
                         <div className="flex justify-between">
                           <span>Current Pool:</span>
                           <span className="font-bold">$4,300</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Passes Sold:</span>
-                          <span className="font-bold">43/100</span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-2">
                           <div
@@ -686,10 +678,6 @@ const BoardsPageContent: React.FC = () => {
                           <span>Current Pool:</span>
                           <span className="font-bold">$7,000</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span>Passes Sold:</span>
-                          <span className="font-bold">28/100</span>
-                        </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-2">
                           <div
                             className="bg-purple-600 h-1.5 rounded-full"
@@ -750,10 +738,6 @@ const BoardsPageContent: React.FC = () => {
                         <div className="flex justify-between">
                           <span>Current Pool:</span>
                           <span className="font-bold">$7,500</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Passes Sold:</span>
-                          <span className="font-bold">15/100</span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-2">
                           <div
@@ -817,10 +801,6 @@ const BoardsPageContent: React.FC = () => {
                           <div className="flex justify-between">
                             <span>Current Pool:</span>
                             <span className="font-semibold">$7,000</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Passes Sold:</span>
-                            <span>7/100</span>
                           </div>
                         </div>
                         <div className="space-y-1">

@@ -851,142 +851,314 @@ function PlayerDashboard() {
                   </Card>
                 </div>
 
-                {/* Featured Boards */}
-                <Card className="bg-gradient-to-r from-slate-100 to-gray-100 dark:from-slate-800/50 dark:to-gray-800/50">
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-lg">
-                      <Zap className="h-5 w-5 mr-2 text-yellow-500" />
-                      Featured Boards (Quick Join)
-                    </CardTitle>
-                    <p className="text-sm text-muted-foreground">
-                      Hot games starting soon. Jump right in!
-                    </p>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {/* Example Featured Board Cards - these would be dynamic */}
-                      <div className="border rounded-lg p-4 space-y-2 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                        <div className="font-bold">Eagles vs Cowboys</div>
-                        <div className="text-sm text-muted-foreground">
-                          $20 Tier
+                {/* Featured Boards for Weekly vs Half-Season Promo for Seasonal */}
+                {dashboardPeriod === 'weekly' ? (
+                  <Card className="bg-gradient-to-r from-slate-100 to-gray-100 dark:from-slate-800/50 dark:to-gray-800/50">
+                    <CardHeader>
+                      <CardTitle className="flex items-center text-lg">
+                        <Zap className="h-5 w-5 mr-2 text-yellow-500" />
+                        Featured Boards (Quick Join)
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground">
+                        Hot games starting soon. Jump right in!
+                      </p>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {/* Example Featured Board Cards - these would be dynamic */}
+                        <div className="border rounded-lg p-4 space-y-2 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
+                          <div className="font-bold">Eagles vs Cowboys</div>
+                          <div className="text-sm text-muted-foreground">
+                            $20 Tier
+                          </div>
+                          <Progress value={87} />
+                          <div className="text-xs text-muted-foreground">
+                            87/100 Filled
+                          </div>
+                          <Button
+                            size="sm"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            onClick={() => setActiveTab('find-games')}
+                          >
+                            Join Now
+                          </Button>
                         </div>
-                        <Progress value={87} />
-                        <div className="text-xs text-muted-foreground">
-                          87/100 Filled
+                        <div className="border rounded-lg p-4 space-y-2 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
+                          <div className="font-bold">Chiefs vs Bills</div>
+                          <div className="text-sm text-muted-foreground">
+                            $50 Tier
+                          </div>
+                          <Progress value={42} />
+                          <div className="text-xs text-muted-foreground">
+                            42/100 Filled
+                          </div>
+                          <Button
+                            size="sm"
+                            className="w-full bg-green-600 hover:bg-green-700 text-white"
+                            onClick={() => setActiveTab('find-games')}
+                          >
+                            Join Now
+                          </Button>
                         </div>
-                        <Button
-                          size="sm"
-                          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                          onClick={() => setActiveTab('find-games')}
-                        >
-                          Join Now
-                        </Button>
+                        <div className="border rounded-lg p-4 space-y-2 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors">
+                          <div className="font-bold">49ers vs Rams</div>
+                          <div className="text-sm text-muted-foreground">
+                            $10 Tier
+                          </div>
+                          <Progress value={95} />
+                          <div className="text-xs text-muted-foreground">
+                            95/100 Filled
+                          </div>
+                          <Button
+                            size="sm"
+                            className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                            onClick={() => setActiveTab('find-games')}
+                          >
+                            Join Now
+                          </Button>
+                        </div>
                       </div>
-                      <div className="border rounded-lg p-4 space-y-2 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
-                        <div className="font-bold">Chiefs vs Bills</div>
-                        <div className="text-sm text-muted-foreground">
-                          $50 Tier
+                    </CardContent>
+                  </Card>
+                ) : (
+                  /* Half-Season Opportunities Promo for Seasonal Players */
+                  <Card className="bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 border-2 border-orange-300 dark:border-orange-700">
+                    <CardHeader>
+                      <CardTitle className="flex items-center text-lg">
+                        <Star className="h-5 w-5 mr-2 text-orange-600" />
+                        🏆 Second Half Season Opportunities
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground">
+                        Double down on your success! Playoffs are worth 2-5x
+                        points.
+                      </p>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Upsell to higher tiers based on current tier */}
+                        <div className="border-2 border-dashed border-blue-300 rounded-lg p-4 space-y-3 bg-blue-50 dark:bg-blue-950/20 hover:bg-blue-100 dark:hover:bg-blue-950/30 transition-colors">
+                          <div className="font-bold text-blue-800 dark:text-blue-300">
+                            Southern Conference
+                          </div>
+                          <div className="text-sm text-blue-600 dark:text-blue-400">
+                            Upgrade to $100 Tier 2
+                          </div>
+                          <div className="text-lg font-bold text-blue-800 dark:text-blue-300">
+                            ~$2,800 Final Prize
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            43/100 spots available
+                          </div>
+                          <Button
+                            size="sm"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            onClick={() => openModal('southern')}
+                          >
+                            Upgrade Now
+                          </Button>
                         </div>
-                        <Progress value={42} />
-                        <div className="text-xs text-muted-foreground">
-                          42/100 Filled
+                        <div className="border-2 border-dashed border-purple-300 rounded-lg p-4 space-y-3 bg-purple-50 dark:bg-purple-950/20 hover:bg-purple-100 dark:hover:bg-purple-950/30 transition-colors">
+                          <div className="font-bold text-purple-800 dark:text-purple-300">
+                            Northern Conference
+                          </div>
+                          <div className="text-sm text-purple-600 dark:text-purple-400">
+                            Upgrade to $250 Tier 3
+                          </div>
+                          <div className="text-lg font-bold text-purple-800 dark:text-purple-300">
+                            ~$7,000 Final Prize
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            28/100 spots available
+                          </div>
+                          <Button
+                            size="sm"
+                            className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                            onClick={() => openModal('northern')}
+                          >
+                            Upgrade Now
+                          </Button>
                         </div>
-                        <Button
-                          size="sm"
-                          className="w-full bg-green-600 hover:bg-green-700 text-white"
-                          onClick={() => setActiveTab('find-games')}
-                        >
-                          Join Now
-                        </Button>
+                        <div className="border-2 border-dashed border-orange-300 rounded-lg p-4 space-y-3 bg-orange-50 dark:bg-orange-950/20 hover:bg-orange-100 dark:hover:bg-orange-950/30 transition-colors">
+                          <div className="font-bold text-orange-800 dark:text-orange-300">
+                            Western Conference
+                          </div>
+                          <div className="text-sm text-orange-600 dark:text-orange-400">
+                            Upgrade to $500 Tier 4
+                          </div>
+                          <div className="text-lg font-bold text-orange-800 dark:text-orange-300">
+                            ~$14,000 Final Prize
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            15/100 spots available
+                          </div>
+                          <Button
+                            size="sm"
+                            className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+                            onClick={() => openModal('western')}
+                          >
+                            Upgrade Now
+                          </Button>
+                        </div>
                       </div>
-                      <div className="border rounded-lg p-4 space-y-2 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors">
-                        <div className="font-bold">49ers vs Rams</div>
-                        <div className="text-sm text-muted-foreground">
-                          $10 Tier
-                        </div>
-                        <Progress value={95} />
-                        <div className="text-xs text-muted-foreground">
-                          95/100 Filled
-                        </div>
-                        <Button
-                          size="sm"
-                          className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-                          onClick={() => setActiveTab('find-games')}
-                        >
-                          Join Now
-                        </Button>
+                      <div className="mt-4 p-3 bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg border border-yellow-300 dark:border-yellow-700">
+                        <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300 mb-1">
+                          🔥 Limited Time: Second Half Strategy
+                        </p>
+                        <p className="text-xs text-yellow-700 dark:text-yellow-400">
+                          Playoff games are worth 2x points, Championship games
+                          3x, and Super Bowl 5x points! Add a higher-tier season
+                          pass now to maximize your playoff potential.
+                        </p>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                )}
 
-                {/* Active Positions Summary */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Activity className="h-5 w-5 mr-2" />
-                      Active Positions ({activePositions.length})
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {activePositions.slice(0, 3).map((position, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-between p-3 border rounded-lg"
-                        >
-                          <div className="space-y-1">
-                            <div className="font-medium">
-                              {position.gameInfo}
+                {/* Active Positions Summary - Different for Weekly vs Seasonal */}
+                {dashboardPeriod === 'weekly' ? (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center">
+                        <Activity className="h-5 w-5 mr-2" />
+                        Active Positions ({activePositions.length})
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {activePositions.slice(0, 3).map((position, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-between p-3 border rounded-lg"
+                          >
+                            <div className="space-y-1">
+                              <div className="font-medium">
+                                {position.gameInfo}
+                              </div>
+                              <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                                <span>Square #{position.squarePosition}</span>
+                                {position.numbers ? (
+                                  <span className="font-mono">
+                                    [{position.numbers[0]},{' '}
+                                    {position.numbers[1]}]
+                                  </span>
+                                ) : (
+                                  <span className="text-yellow-600">
+                                    Numbers pending
+                                  </span>
+                                )}
+                                <Badge
+                                  variant={
+                                    position.gameStatus === 'pre-game'
+                                      ? 'secondary'
+                                      : 'default'
+                                  }
+                                >
+                                  {position.gameStatus}
+                                </Badge>
+                              </div>
                             </div>
-                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                              <span>Square #{position.squarePosition}</span>
-                              {position.numbers ? (
-                                <span className="font-mono">
-                                  [{position.numbers[0]}, {position.numbers[1]}]
-                                </span>
-                              ) : (
-                                <span className="text-yellow-600">
-                                  Numbers pending
-                                </span>
-                              )}
-                              <Badge
-                                variant={
-                                  position.gameStatus === 'pre-game'
-                                    ? 'secondary'
-                                    : 'default'
-                                }
-                              >
-                                {position.gameStatus}
-                              </Badge>
+                            <div className="text-right">
+                              <div className="font-medium">
+                                $
+                                {position.potentialPayouts.final.toLocaleString()}
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                max payout
+                              </div>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <div className="font-medium">
-                              {dashboardPeriod === 'weekly'
-                                ? `$${position.potentialPayouts.final.toLocaleString()}`
-                                : `${position.potentialPoints.final} pts`}
+                        ))}
+                        {activePositions.length > 3 && (
+                          <Button
+                            variant="outline"
+                            className="w-full"
+                            onClick={() => setActiveTab('active')}
+                          >
+                            View All Active Positions
+                          </Button>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  /* Seasonal - Show Historical Points Accumulated */
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center">
+                        <Trophy className="h-5 w-5 mr-2" />
+                        Season Performance History
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {/* Recent completed games with points earned */}
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between p-3 border rounded-lg bg-green-50 dark:bg-green-950/20">
+                            <div className="space-y-1">
+                              <div className="font-medium">
+                                Eagles vs Cowboys - Week 15
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                Square #23 • [3, 7] • Q2 Winner
+                              </div>
                             </div>
-                            <div className="text-xs text-muted-foreground">
-                              {dashboardPeriod === 'weekly'
-                                ? 'max payout'
-                                : 'max points'}
+                            <div className="text-right">
+                              <div className="font-medium text-green-600">
+                                +135 pts
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                Final quarter
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between p-3 border rounded-lg">
+                            <div className="space-y-1">
+                              <div className="font-medium">
+                                Chiefs vs Bills - Week 15
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                Square #67 • [0, 4] • No wins
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-medium text-gray-500">
+                                +0 pts
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                No scoring quarters
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between p-3 border rounded-lg bg-blue-50 dark:bg-blue-950/20">
+                            <div className="space-y-1">
+                              <div className="font-medium">
+                                Packers vs Lions - Week 14
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                Square #89 • [8, 9] • Q1, Q3 Winner
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-medium text-blue-600">
+                                +75 pts
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                Two quarters
+                              </div>
                             </div>
                           </div>
                         </div>
-                      ))}
-                      {activePositions.length > 3 && (
                         <Button
                           variant="outline"
                           className="w-full"
-                          onClick={() => setActiveTab('active')}
+                          onClick={() => setActiveTab('history')}
                         >
-                          View All Active Positions
+                          View Complete Season History
                         </Button>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
 
                 {/* Performance Trends - Advanced View Only */}
                 {viewMode === 'advanced' && (
@@ -1028,39 +1200,135 @@ function PlayerDashboard() {
                       </CardContent>
                     </Card>
 
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="flex items-center">
-                          <Users className="h-5 w-5 mr-2" />
-                          Favorite Teams
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-3">
-                          {playerStats.favoriteTeams.map((team, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center justify-between"
-                            >
-                              <div className="flex items-center space-x-2">
-                                <Avatar className="h-8 w-8">
-                                  <AvatarImage
-                                    src={`/team-logos/${team.toLowerCase()}.png`}
-                                  />
-                                  <AvatarFallback>
-                                    {team.slice(0, 2)}
-                                  </AvatarFallback>
-                                </Avatar>
-                                <span className="font-medium">{team}</span>
+                    {/* Different content for Weekly vs Seasonal */}
+                    {dashboardPeriod === 'weekly' ? (
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center">
+                            <Users className="h-5 w-5 mr-2" />
+                            Favorite Teams
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-3">
+                            {playerStats.favoriteTeams.map((team, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center justify-between"
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <Avatar className="h-8 w-8">
+                                    <AvatarImage
+                                      src={`/team-logos/${team.toLowerCase()}.png`}
+                                    />
+                                    <AvatarFallback>
+                                      {team.slice(0, 2)}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <span className="font-medium">{team}</span>
+                                </div>
+                                <div className="text-sm text-muted-foreground">
+                                  #{index + 1} most played
+                                </div>
                               </div>
-                              <div className="text-sm text-muted-foreground">
-                                #{index + 1} most played
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ) : (
+                      /* Season Progress & Leaderboard for Seasonal Players */
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center">
+                            <Trophy className="h-5 w-5 mr-2" />
+                            Season Progress & Ranking
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            {/* Season Progress */}
+                            <div className="space-y-2">
+                              <div className="flex justify-between text-sm">
+                                <span className="text-muted-foreground">
+                                  Season Progress
+                                </span>
+                                <span className="font-medium">
+                                  Week 15 of 18
+                                </span>
+                              </div>
+                              <Progress value={83} className="h-2" />
+                              <div className="text-xs text-muted-foreground">
+                                3 weeks + playoffs remaining
                               </div>
                             </div>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
+
+                            {/* Current Ranking */}
+                            <div className="pt-2 border-t">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-sm font-medium">
+                                  Current Ranking
+                                </span>
+                                <Badge
+                                  variant="secondary"
+                                  className="bg-blue-100 text-blue-800"
+                                >
+                                  #27 of 100
+                                </Badge>
+                              </div>
+                              {/* Conference Selector - for multi-conference players */}
+                              <div className="mb-3">
+                                <select className="text-xs bg-transparent border border-gray-200 dark:border-gray-600 rounded px-2 py-1 text-muted-foreground w-full">
+                                  <option value="eastern">
+                                    Eastern Conference - Top 27%
+                                  </option>
+                                  <option value="southern">
+                                    Southern Conference - Not joined
+                                  </option>
+                                  <option value="northern">
+                                    Northern Conference - Not joined
+                                  </option>
+                                </select>
+                              </div>
+
+                              {/* Leaderboard context */}
+                              <div className="space-y-2 text-xs">
+                                <div className="flex justify-between">
+                                  <span className="text-muted-foreground">
+                                    #1 Leader:
+                                  </span>
+                                  <span className="font-medium">2,845 pts</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span className="text-muted-foreground">
+                                    Your Score:
+                                  </span>
+                                  <span className="font-medium text-green-600">
+                                    1,247 pts
+                                  </span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span className="text-muted-foreground">
+                                    Gap from #100:
+                                  </span>
+                                  <span className="font-medium text-gray-600">
+                                    +189 pts
+                                  </span>
+                                </div>
+                              </div>
+
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="w-full mt-3"
+                                onClick={() => setActiveTab('history')}
+                              >
+                                View Season History
+                              </Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
                   </div>
                 )}
               </div>
@@ -1769,72 +2037,134 @@ function PlayerDashboard() {
             )}
           </TabsContent>
 
-          {/* Analytics Tab */}
+          {/* Analytics Tab - Different for Weekly vs Seasonal */}
           <TabsContent value="analytics" className="space-y-6">
-            {/* Beginner Mode - Simple Analytics */}
-            {viewMode === 'beginner' && (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold">Your Performance</h2>
-                  <p className="text-muted-foreground">
-                    Simple stats to track your progress
-                  </p>
-                </div>
+            {/* Analytics Content Based on Dashboard Period */}
+            {dashboardPeriod === 'weekly' ? (
+              /* Weekly Analytics */
+              <>
+                {/* Beginner Mode - Simple Weekly Analytics */}
+                {viewMode === 'beginner' && (
+                  <div className="space-y-6">
+                    <div className="text-center">
+                      <h2 className="text-2xl font-bold">
+                        Your Weekly Performance
+                      </h2>
+                      <p className="text-muted-foreground">
+                        Simple stats to track your progress
+                      </p>
+                    </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="p-6 text-center">
-                    <div className="text-4xl font-bold text-green-600 mb-2">
-                      {playerStats.winRate}%
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2">
-                      Your Win Rate
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {playerStats.winRate > 25
-                        ? "Great job! You're doing well!"
-                        : 'Keep playing to improve your odds!'}
-                    </p>
-                  </Card>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <Card className="p-6 text-center">
+                        <div className="text-4xl font-bold text-green-600 mb-2">
+                          {playerStats.winRate}%
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2">
+                          Your Win Rate
+                        </h3>
+                        <p className="text-muted-foreground">
+                          {playerStats.winRate > 25
+                            ? "Great job! You're doing well!"
+                            : 'Keep playing to improve your odds!'}
+                        </p>
+                      </Card>
 
-                  <Card className="p-6 text-center">
-                    <div className="text-4xl font-bold text-blue-600 mb-2">
-                      ${playerStats.totalWinnings.toLocaleString()}
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2">Total Won</h3>
-                    <p className="text-muted-foreground">
-                      {playerStats.totalWinnings > 0
-                        ? 'Congratulations on your wins!'
-                        : 'Your first win is coming soon!'}
-                    </p>
-                  </Card>
-                </div>
-
-                <Card className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Quick Tips</h3>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
-                      <span>
-                        Try different price tiers to find your sweet spot
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
-                      <span>
-                        Numbers are random - every square has equal odds
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
-                      <span>Play consistently to increase your chances</span>
+                      <Card className="p-6 text-center">
+                        <div className="text-4xl font-bold text-blue-600 mb-2">
+                          ${playerStats.totalWinnings.toLocaleString()}
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2">
+                          Total Won
+                        </h3>
+                        <p className="text-muted-foreground">
+                          {playerStats.totalWinnings > 0
+                            ? 'Congratulations on your wins!'
+                            : 'Your first win is coming soon!'}
+                        </p>
+                      </Card>
                     </div>
                   </div>
-                </Card>
-              </div>
+                )}
+              </>
+            ) : (
+              /* Seasonal Analytics */
+              <>
+                {/* Beginner Mode - Simple Seasonal Analytics */}
+                {viewMode === 'beginner' && (
+                  <div className="space-y-6">
+                    <div className="text-center">
+                      <h2 className="text-2xl font-bold">
+                        Your Season Performance
+                      </h2>
+                      <p className="text-muted-foreground">
+                        Track your progress through the season
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <Card className="p-6 text-center">
+                        <div className="text-4xl font-bold text-green-600 mb-2">
+                          {playerStats.greenPoints.toLocaleString('en-US', {
+                            minimumFractionDigits: 1,
+                            maximumFractionDigits: 1,
+                          })}
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2">
+                          Green Points
+                        </h3>
+                        <p className="text-muted-foreground">
+                          Your main seasonal ranking metric
+                        </p>
+                      </Card>
+
+                      <Card className="p-6 text-center">
+                        <div className="text-4xl font-bold text-blue-600 mb-2">
+                          #27
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2">
+                          Conference Rank
+                        </h3>
+                        <p className="text-muted-foreground">
+                          Out of 100 in Eastern Conference
+                        </p>
+                      </Card>
+                    </div>
+
+                    <Card className="p-6">
+                      <h3 className="text-lg font-semibold mb-4">
+                        Season Strategy Tips
+                      </h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <span>
+                            Focus on Green Points - they determine your final
+                            ranking
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <span>
+                            Playoff games are worth 2-5x points - save energy
+                            for the end
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <span>
+                            Every game counts - you get one square per game
+                          </span>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                )}
+              </>
             )}
 
-            {/* Advanced Mode - Comprehensive Analytics */}
-            {viewMode === 'advanced' && (
+            {/* Advanced Mode - Comprehensive Analytics - Weekly Only */}
+            {dashboardPeriod === 'weekly' && viewMode === 'advanced' && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div>

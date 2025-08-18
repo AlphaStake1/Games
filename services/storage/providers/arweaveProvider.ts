@@ -7,10 +7,10 @@ export class ArweaveProvider implements StorageProvider {
   private protocol: string;
   private wallet?: string;
 
-  constructor(config: { 
-    host?: string; 
-    port?: number; 
-    protocol?: string; 
+  constructor(config: {
+    host?: string;
+    port?: number;
+    protocol?: string;
     wallet?: string;
   }) {
     this.host = config.host || 'arweave.net';
@@ -25,15 +25,21 @@ export class ArweaveProvider implements StorageProvider {
     return true;
   }
 
-  async uploadFile(file: Buffer | Uint8Array, filename: string, contentType: string): Promise<string> {
+  async uploadFile(
+    file: Buffer | Uint8Array,
+    filename: string,
+    contentType: string,
+  ): Promise<string> {
     // Note: This is a simplified implementation
     // In production, you'd use Arweave SDK and sign transactions with a wallet
-    
+
     try {
       // For development, we'll simulate the upload
       // You'll need to implement actual Arweave integration with bundlr or ardrive
-      console.log(`Would upload ${filename} to Arweave with content-type: ${contentType}`);
-      
+      console.log(
+        `Would upload ${filename} to Arweave with content-type: ${contentType}`,
+      );
+
       // Return a mock Arweave transaction ID
       const mockTxId = `mock_arweave_${Date.now()}_${Math.random().toString(36).substring(7)}`;
       return `ar://${mockTxId}`;

@@ -12,14 +12,14 @@ import {
   signatureNFTService,
   SignatureNFTResult,
 } from '@/services/signatureNFTService';
-import { NftWithToken } from '@metaplex-foundation/js';
+// import { NftWithToken } from '@metaplex-foundation/js'; // Commented out for development
 import { toast } from 'sonner';
 
 export interface UseSignatureNFTReturn {
   // State
   signatureData: SignatureData | null;
   selectedStyle: SignatureStyle | null;
-  userSignatureNFTs: NftWithToken[];
+  userSignatureNFTs: any[];
   isMinting: boolean;
   isLoading: boolean;
   hasExistingSignature: boolean;
@@ -45,9 +45,7 @@ export function useSignatureNFT(): UseSignatureNFTReturn {
   const [selectedStyle, setSelectedStyle] = useState<SignatureStyle | null>(
     null,
   );
-  const [userSignatureNFTs, setUserSignatureNFTs] = useState<NftWithToken[]>(
-    [],
-  );
+  const [userSignatureNFTs, setUserSignatureNFTs] = useState<any[]>([]);
   const [isMinting, setIsMinting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasExistingSignature, setHasExistingSignature] = useState(false);

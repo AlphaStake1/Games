@@ -1,13 +1,17 @@
 export interface StorageProvider {
-  name: 'ipfs' | 'arweave' | 'pinata';
-  uploadFile(file: Buffer | Uint8Array, filename: string, contentType: string): Promise<string>;
+  name: 'ipfs' | 'arweave' | 'pinata' | 'google-cloud';
+  uploadFile(
+    file: Buffer | Uint8Array,
+    filename: string,
+    contentType: string,
+  ): Promise<string>;
   uploadJSON(data: object): Promise<string>;
   getUrl(cid: string): string;
   isConfigured(): boolean;
 }
 
 export interface StorageConfig {
-  provider: 'ipfs' | 'arweave' | 'pinata';
+  provider: 'ipfs' | 'arweave' | 'pinata' | 'google-cloud';
   ipfs?: {
     endpoint?: string;
     projectId?: string;
@@ -23,6 +27,12 @@ export interface StorageConfig {
     apiKey?: string;
     apiSecret?: string;
     jwt?: string;
+  };
+  googleCloud?: {
+    projectId?: string;
+    bucketName?: string;
+    keyFilename?: string;
+    region?: string;
   };
 }
 
@@ -42,8 +52,9 @@ export class StorageService {
    * Load configuration from environment variables
    */
   private loadConfigFromEnv(): StorageConfig {
-    const provider = (process.env.NEXT_PUBLIC_STORAGE_PROVIDER || 'pinata') as 'ipfs' | 'arweave' | 'pinata';
-    
+    const provider = (process.env.NEXT_PUBLIC_STORAGE_PROVIDER ||
+      'google-cloud') as 'ipfs' | 'arweave' | 'pinata' | 'google-cloud';
+
     return {
       provider,
       ipfs: {
@@ -61,6 +72,12 @@ export class StorageService {
         apiKey: process.env.NEXT_PUBLIC_PINATA_API_KEY,
         apiSecret: process.env.PINATA_API_SECRET, // Server-side only
         jwt: process.env.PINATA_JWT, // Server-side only
+      },
+      googleCloud: {
+        projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
+        bucketName: process.env.GOOGLE_CLOUD_BUCKET,
+        keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+        region: process.env.GOOGLE_CLOUD_REGION,
       },
     };
   }
@@ -82,8 +99,21 @@ export class StorageService {
         const { PinataProvider } = await import('./providers/pinataProvider');
         this.provider = new PinataProvider(this.config.pinata || {});
         break;
+      case 'google-cloud':
+        const { GoogleCloudProvider } = await import(
+          './providers/googleCloudProvider'
+        );
+        this.provider = new GoogleCloudProvider(
+          this.config.googleCloud || {
+            projectId: '',
+            bucketName: '',
+          },
+        );
+        break;
       default:
-        throw new Error(`Unsupported storage provider: ${this.config.provider}`);
+        throw new Error(
+          `Unsupported storage provider: ${this.config.provider}`,
+        );
     }
   }
 
@@ -101,20 +131,22 @@ export class StorageService {
    * Upload a file to the storage provider
    */
   async uploadFile(
-    file: Buffer | Uint8Array, 
-    filename: string, 
-    contentType: string = 'application/octet-stream'
+    file: Buffer | Uint8Array,
+    filename: string,
+    contentType: string = 'application/octet-stream',
   ): Promise<string> {
     if (!this.provider) {
       await this.initializeProvider();
     }
-    
+
     if (!this.provider) {
       throw new Error('Storage provider not initialized');
     }
 
     if (!this.provider.isConfigured()) {
-      throw new Error(`${this.config.provider} is not properly configured. Please set the required environment variables.`);
+      throw new Error(
+        `${this.config.provider} is not properly configured. Please set the required environment variables.`,
+      );
     }
 
     try {
@@ -123,7 +155,9 @@ export class StorageService {
       return uri;
     } catch (error) {
       console.error(`Error uploading to ${this.config.provider}:`, error);
-      throw new Error(`Failed to upload file to ${this.config.provider}: ${error}`);
+      throw new Error(
+        `Failed to upload file to ${this.config.provider}: ${error}`,
+      );
     }
   }
 
@@ -134,13 +168,15 @@ export class StorageService {
     if (!this.provider) {
       await this.initializeProvider();
     }
-    
+
     if (!this.provider) {
       throw new Error('Storage provider not initialized');
     }
 
     if (!this.provider.isConfigured()) {
-      throw new Error(`${this.config.provider} is not properly configured. Please set the required environment variables.`);
+      throw new Error(
+        `${this.config.provider} is not properly configured. Please set the required environment variables.`,
+      );
     }
 
     try {
@@ -149,7 +185,9 @@ export class StorageService {
       return uri;
     } catch (error) {
       console.error(`Error uploading JSON to ${this.config.provider}:`, error);
-      throw new Error(`Failed to upload JSON to ${this.config.provider}: ${error}`);
+      throw new Error(
+        `Failed to upload JSON to ${this.config.provider}: ${error}`,
+      );
     }
   }
 
@@ -173,7 +211,10 @@ export class StorageService {
   /**
    * Upload signature SVG
    */
-  async uploadSignatureSVG(svgContent: string, walletAddress: string): Promise<string> {
+  async uploadSignatureSVG(
+    svgContent: string,
+    walletAddress: string,
+  ): Promise<string> {
     const filename = `signature_${walletAddress.substring(0, 8)}_${Date.now()}.svg`;
     const buffer = Buffer.from(svgContent);
     return this.uploadFile(buffer, filename, 'image/svg+xml');

@@ -191,22 +191,13 @@ const SeasonPassLandingPage = () => {
             </div>
 
             <Button
-              className={`w-full ${conference.featured ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white' : ''}`}
+              className={`w-full ${conference.featured ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
               disabled={isFull}
-              onClick={() =>
-                router.push(`/season-pass/leaderboard/${conference.id}`)
-              }
-            >
-              {isFull ? 'Conference Full' : 'View Leaderboard'}
-            </Button>
-            <Button
-              variant="outline"
-              className="w-full mt-2"
               onClick={() =>
                 router.push(`/season-pass/conferences?id=${conference.id}`)
               }
             >
-              Select Conference
+              {isFull ? 'Conference Full' : 'Select Conference'}
             </Button>
           </div>
         </CardContent>

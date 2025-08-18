@@ -117,19 +117,19 @@ const WalletConnectionPopup: React.FC<WalletConnectionPopupProps> = ({
   const availableWallets = [
     {
       name: 'Phantom' as WalletName,
-      icon: 'https://phantom.app/img/phantom-favicon.ico',
+      icon: '/icons/Phantom-Logo-Purple.svg',
       downloadUrl: 'https://phantom.app/',
       description: 'Popular Solana wallet',
     },
     {
       name: 'Solflare' as WalletName,
-      icon: 'https://solflare.com/favicon.ico',
+      icon: 'https://solflare.com/images/logo.svg',
       downloadUrl: 'https://solflare.com/',
       description: 'Secure Solana wallet',
     },
     {
       name: 'Torus' as WalletName,
-      icon: 'https://app.tor.us/img/favicon.ico',
+      icon: '/icons/torus-icon-blue-3.svg',
       downloadUrl: 'https://app.tor.us/',
       description: 'Email-based wallet',
     },
@@ -242,23 +242,6 @@ const WalletConnectionPopup: React.FC<WalletConnectionPopupProps> = ({
                 </div>
               );
             })}
-          </div>
-
-          {/* Info Section */}
-          <div className="bg-[#96abdc]/5 rounded-xl p-4 border border-[#96abdc]/20">
-            <div className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-[#96abdc] flex-shrink-0 mt-0.5" />
-              <div>
-                <h5 className="font-semibold text-[#002244] dark:text-white text-sm mb-1">
-                  New to wallets?
-                </h5>
-                <p className="text-xs text-[#708090] dark:text-[#96abdc] leading-relaxed">
-                  Phantom is a free, secure Solana wallet. After installing,
-                  return here and click &quot;Connect Wallet&quot; - we&apos;ll
-                  remember what you wanted to do!
-                </p>
-              </div>
-            </div>
           </div>
 
           {/* Quick Stats */}

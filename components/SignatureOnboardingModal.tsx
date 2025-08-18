@@ -122,7 +122,7 @@ export default function SignatureOnboardingModal({
     if (style) {
       const updatedData = {
         ...signatureData,
-        selectedStyleId: styleId,
+        selectedStyleId: selectedStyleId,
       };
       setSignatureData(updatedData);
       onComplete(updatedData, style);
@@ -188,10 +188,9 @@ export default function SignatureOnboardingModal({
                         What is a Signature NFT?
                       </h3>
                       <p className="text-sm text-blue-800">
-                        Your signature NFT is a unique, verifiable digital
-                        identity that represents you on the Football Squares
-                        platform. It's generated deterministically from your
-                        name and wallet address, ensuring it's uniquely yours.
+                        A unique digital signature created from your name and
+                        wallet that represents your identity on Football
+                        Squares.
                       </p>
                     </div>
                   </div>
@@ -242,7 +241,7 @@ export default function SignatureOnboardingModal({
             <DialogHeader>
               <DialogTitle>Create Your Signature</DialogTitle>
               <DialogDescription>
-                Enter your name to generate your unique signature styles
+                Enter your name to generate your unique signature style
               </DialogDescription>
             </DialogHeader>
 
@@ -285,14 +284,6 @@ export default function SignatureOnboardingModal({
                   </AlertDescription>
                 </Alert>
               )}
-
-              <Alert>
-                <Info className="h-4 w-4" />
-                <AlertDescription>
-                  Your signature will always look the same when generated with
-                  the same name and wallet combination.
-                </AlertDescription>
-              </Alert>
             </div>
 
             <DialogFooter>
