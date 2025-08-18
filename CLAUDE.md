@@ -49,4 +49,54 @@ pnpm lint && tsc --noEmit           # ESLint + TS type-check
 - Implement robust error handling and comprehensive logging mechanisms
 - Conduct thorough code reviews and maintain high test coverage
 
-- 3 for now, we can revisit a more detailed look before launch.
+---
+
+## 📋 Next.js 15 & Development Guidelines
+
+### Dynamic Routes (CRITICAL)
+
+- **Next.js 15 requirement**: Dynamic route params are now async Promises
+- Always use `params: Promise<{ param: string }>` in route handlers and pages
+- Await params before use: `const { param } = await params;`
+- This applies to both API routes and page components
+
+### Development Server
+
+- **Port**: Dev server runs on port 3001 (3000 often in use)
+- **Public access**: Use ngrok for testing - `./ngrok http 3001 --log=stdout`
+- **Hot reload**: Changes reflect immediately in development mode
+
+### Asset Management
+
+- **Icons**: Store wallet/brand icons in `/public/icons/` as SVG files
+- Use local paths (`/icons/filename.svg`) not external URLs for reliability
+- Standard wallet icons: Phantom, Solflare, Torus
+
+### Signature Styles
+
+- Ensure visual distinction between signature options
+- Use varied fonts, angles (slant), and styles
+- Angle signatures 12-15° for dynamic appearance
+- Font categories: handwritten, script, pro
+
+### Testing & Deployment
+
+- **Build check**: Always run `pnpm run build` before committing
+- **Type checking**: Run `pnpm tsc --noEmit` to verify TypeScript
+- **Lint**: Use `pnpm lint` for code quality
+- **Rust/Anchor**: Ensure `rustup default stable` for builds
+
+### Git Workflow
+
+- **Primary remote**: `coach-b` (main development)
+- **Commit format**: Use conventional commits (feat:, fix:, etc.)
+- **Push**: `git push coach-b main` for primary repository
+
+---
+
+## 🔒 Security Reminders
+
+- Never expose private keys or sensitive data in code
+- Validate all user inputs, especially wallet addresses
+- Use environment variables for API keys and endpoints
+- Implement rate limiting on public API routes
