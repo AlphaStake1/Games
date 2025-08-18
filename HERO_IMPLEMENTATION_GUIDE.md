@@ -1,4 +1,45 @@
-# Stadium Hero Implementation Guide
+# Hero Component Implementation Guide
+
+## Video Hero Configuration
+
+The primary hero component uses a dynamic video background with looping and rotation capabilities.
+
+### Features Implemented:
+
+1.  **Dual Video Rotation**: The component rotates between a primary and secondary video.
+2.  **Seamless Looping**: Each video loops continuously.
+3.  **Smooth Transitions**: A fade effect is applied when switching between videos.
+4.  **Customizable Timing**: The rotation interval can be configured.
+5.  **Focal Point Control**: The video's object position can be adjusted to focus on a specific area.
+
+### Configuration
+
+The video settings are controlled through environment variables in `.env.local`:
+
+```
+NEXT_PUBLIC_HERO_MEDIA_URL=/Assets/dancing-look-back_4k.mp4
+NEXT_PUBLIC_HERO_MEDIA_ALT=/Assets/dancing-feeling-it_4k_1080p_web.mp4
+NEXT_PUBLIC_HERO_ROTATE_MS=12000
+NEXT_PUBLIC_HERO_OBJECT_POSITION=50% 30%
+```
+
+- `NEXT_PUBLIC_HERO_MEDIA_URL`: Path to the primary video file.
+- `NEXT_PUBLIC_HERO_MEDIA_ALT`: Path to the secondary video file.
+- `NEXT_PUBLIC_HERO_ROTATE_MS`: Time in milliseconds between video rotations (e.g., 12000 for 12 seconds).
+- `NEXT_PUBLIC_HERO_OBJECT_POSITION`: Sets the focal point of the video (e.g., "50% 30%").
+
+### Implementation Details
+
+The core logic for the video hero resides in the following locations:
+
+1.  **.env.local**: Environment variables for URLs, timing, and positioning.
+2.  **components/Hero.tsx**: The React component containing the implementation with loop/rotate logic.
+
+The current setup automatically loops each video and rotates between them every 12 seconds with a smooth fade transition.
+
+---
+
+# (Legacy) Stadium Hero Implementation Guide
 
 ## What I've Created
 
