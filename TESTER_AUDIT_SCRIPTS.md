@@ -20,18 +20,18 @@
 
 1. **Homepage Clarity** (2 min)
    - [ ] Can you immediately tell this is about NFL squares?
-   - **Notes**: ******\*\*******\_\_\_\_******\*\*******
+   - **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 2. **Weekly Games Discovery** (3 min)
    - [ ] Find where weekly games are located (hint: check main navigation)
    - [ ] How many clicks to reach weekly game selection?
-   - **Path taken**: ******\*\*******\_\_\_\_******\*\*******
+   - **Path taken**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
    - **Confidence level (1-10)**: \_\_\_
 
 3. **Game Board Understanding** (3 min)
    - [ ] Locate a sample game board
    - [ ] Understand how to select squares
    - [ ] Find game rules/how-to-play
-   - **Notes**: ******\*\*******\_\_\_\_******\*\*******
+   - **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 ### **Wallet & Signature Flow** (10 minutes)
 
@@ -40,7 +40,7 @@
    - [ ] Click through connection flow (don't need real wallet)
    - [ ] Clear instructions provided?
    - **Experience rating (1-10)**: \_\_\_
-   - **Notes**: ******\*\*******\_\_\_\_******\*\*******
+   - **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 5. **Signature Creation** (4 min)
    - [ ] Trigger signature modal (Connect Wallet → proceed)
@@ -48,14 +48,14 @@
    - [ ] Notice angle differences in signatures
    - [ ] Font variety apparent?
    - **Signature variety rating (1-10)**: \_\_\_
-   - **Notes**: ******\*\*******\_\_\_\_******\*\*******
+   - **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 6. **Game Entry Process** (3 min)
    - [ ] Navigate to join a weekly game
    - [ ] Understand square selection process
    - [ ] Find pricing information
    - **Clarity rating (1-10)**: \_\_\_
-   - **Notes**: ******\*\*******\_\_\_\_******\*\*******
+   - **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 ### **Information Architecture** (8 minutes)
 
@@ -81,8 +81,8 @@
 **Overall Confidence Building**:
 
 - Would you feel confident joining a weekly game? **Yes/No**: \_\_\_
-- Most confusing aspect: ******\*\*******\_\_\_\_******\*\*******
-- Best feature: ******\*\*******\_\_\_\_******\*\*******
+- Most confusing aspect: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
+- Best feature: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 - **Overall UX rating (1-10)**: \_\_\_
 
 ---
@@ -102,7 +102,7 @@
    - [ ] Understand season-long concept
    - [ ] Locate "Get Season Pass" button
    - **Discovery ease (1-10)**: \_\_\_
-   - **Notes**: ******\*\*******\_\_\_\_******\*\*******
+   - **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 2. **Benefits Understanding** (3 min)
    - [ ] Identify season pass benefits
@@ -114,7 +114,7 @@
    - [ ] Locate season pass pricing
    - [ ] Understand time commitment
    - [ ] Clear about what's included?
-   - **Notes**: ******\*\*******\_\_\_\_******\*\*******
+   - **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 ### **Leaderboard & Competition** (10 minutes)
 
@@ -161,7 +161,7 @@
 - Would you purchase a season pass? **Yes/No**: \_\_\_
 - Long-term value clear? **Yes/No**: \_\_\_
 - **Season engagement potential (1-10)**: \_\_\_
-- **Notes**: ******\*\*******\_\_\_\_******\*\*******
+- **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 ---
 
@@ -238,7 +238,7 @@
 - Would you consider hosting a board? **Yes/No**: \_\_\_
 - CBL process seems manageable? **Yes/No**: \_\_\_
 - **Host readiness (1-10)**: \_\_\_
-- **Notes**: ******\*\*******\_\_\_\_******\*\*******
+- **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 ---
 
@@ -266,7 +266,7 @@
    - [ ] See size variations
    - [ ] Color differences apparent?
    - **Visual variety rating (1-10)**: \_\_\_
-   - **Notes**: ******\*\*******\_\_\_\_******\*\*******
+   - **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 3. **NFT Understanding** (3 min)
    - [ ] Understand signature as NFT concept
@@ -314,7 +314,7 @@
 - Satisfied with signature variety? **Yes/No**: \_\_\_
 - Would you mint a signature NFT? **Yes/No**: \_\_\_
 - **Art generation system (1-10)**: \_\_\_
-- **Notes**: ******\*\*******\_\_\_\_******\*\*******
+- **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 ---
 
@@ -395,7 +395,7 @@
 - Would you rely on bot for help? **Yes/No**: \_\_\_
 - Bot knowledge level adequate? **Yes/No**: \_\_\_
 - **AI helpfulness (1-10)**: \_\_\_
-- **Notes**: ******\*\*******\_\_\_\_******\*\*******
+- **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 ---
 
@@ -470,7 +470,7 @@
 - Reward structure fair? **Yes/No**: \_\_\_
 - **Points motivation (1-10)**: \_\_\_
 - **Overall points clarity (1-10)**: \_\_\_
-- **Notes**: ******\*\*******\_\_\_\_******\*\*******
+- **Notes**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 ---
 
@@ -478,8 +478,8 @@
 
 ### **Aggregate Feedback**
 
-- **Most positive aspect**: ******\*\*******\_\_\_\_******\*\*******
-- **Biggest concern**: ******\*\*******\_\_\_\_******\*\*******
+- **Most positive aspect**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
+- **Biggest concern**: **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 - **Would recommend to friends?** Yes/No: \_\_\_
 - **Overall confidence in platform (1-10)**: \_\_\_
 

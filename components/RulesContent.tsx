@@ -597,8 +597,9 @@ const RulesContent = () => {
             </Table>
 
             <p className="text-sm text-muted-foreground">
-              All Season-Pass payouts are distributed in Solana-based USDC.
-              Prize pools shown are net amounts after protocol fees.
+              <strong>Overtime:</strong> If OT occurs, Q4 payout splits 50/50
+              between end-Q4 score and final OT score. See the "Key Differences"
+              table in the General Rules section for more details.
             </p>
           </CardContent>
         </Card>
@@ -821,7 +822,8 @@ const RulesContent = () => {
             </Table>
             <p className="text-sm text-muted-foreground">
               <strong>Overtime:</strong> If OT occurs, Q4 payout splits 50/50
-              between end-Q4 score and final OT score.
+              between end-Q4 score and final OT score. See the "Key Differences"
+              table in the General Rules section for more details.
             </p>
 
             <h3 className="text-2xl font-semibold">
@@ -890,14 +892,23 @@ const RulesContent = () => {
               </TableBody>
             </Table>
             <p className="text-sm text-muted-foreground">
-              <strong>Forward & Backward:</strong> 60/40 split between standard
-              (Home-Away) and reversed (Away-Home) digit alignment. If both
-              Forward and Backward hit the same square (e.g., 0-0), the entire
-              pot goes to that single square.
+              <strong>Forward & Backward:</strong> The payout is split (60/40)
+              between the standard (Home-Away) and reversed (Away-Home) winning
+              squares.
               <br />
-              <strong>Forward + 5:</strong> 75% for exact digits, 25% for "+5
-              offset" (either team's digit plus 5, modulo 10).
+              <strong>Forward + 5:</strong> 75% of the payout goes to the exact
+              winning square, and 25% goes to the square that is "+5" away from
+              the winning digits (e.g., if the winning square is 3-7, the "+5"
+              square would be 8-2).
             </p>
+            <Alert className="mt-4">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                <strong>Winner-Take-All Rule:</strong> In "Forward & Backward"
+                games, if the same square wins both payouts (e.g., a 0-0 score),
+                that single square wins the entire pot for that quarter.
+              </AlertDescription>
+            </Alert>
           </CardContent>
         </Card>
 
@@ -937,33 +948,40 @@ const RulesContent = () => {
 
             <h3 className="text-2xl font-semibold">4.2 Commission Structure</h3>
             <p>
-              Players can join any board while their original CBL keeps
-              commission rights:
+              CBLs earn commissions in two ways: by creating boards and by
+              referring new players who mint NFTs.
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>Board Creation:</strong> 3% rake on boards you create
+                <strong>Board Creation:</strong> CBLs earn a 3% commission on
+                the total pot of any board they create.
               </li>
               <li>
-                <strong>NFT Referrals:</strong> 30% of platform fees from your
-                attributed players
+                <strong>NFT Referrals:</strong> CBLs earn a 30% commission on
+                the platform fees from any NFTs minted by their attributed
+                players.
               </li>
               <li>
-                <strong>Attribution:</strong> Permanent to original referring
-                CBL
+                <strong>Player Attribution:</strong> A player is permanently
+                attributed to the CBL who referred them. Players can request to
+                change their attribution by contacting Coach B.
               </li>
             </ul>
 
             <h3 className="text-2xl font-semibold">
               4.3 CBL Tier Progression & Benefits
             </h3>
+            <p>
+              CBLs can advance through tiers by reaching one-time milestones.
+              Once a tier is reached, it is maintained for the entire NFL
+              season.
+            </p>
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Tier</TableHead>
                   <TableHead>Requirements</TableHead>
                   <TableHead>Benefits</TableHead>
-                  <TableHead>Fee Recovery</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -973,23 +991,24 @@ const RulesContent = () => {
                   </TableCell>
                   <TableCell>Entry level</TableCell>
                   <TableCell>Basic board creation, 3% rake</TableCell>
-                  <TableCell>Fill 14 boards under $7 OR 9 NFT mints</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
                     <strong>Drive Maker CBL</strong>
                   </TableCell>
-                  <TableCell>Sustained activity, volume targets</TableCell>
+                  <TableCell>
+                    Fill 50 boards OR refer 25 players who make a purchase
+                  </TableCell>
                   <TableCell>Enhanced tools, priority support</TableCell>
-                  <TableCell>Automatic fee recovery</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
                     <strong>Franchise CBL</strong>
                   </TableCell>
-                  <TableCell>Exceptional performance</TableCell>
+                  <TableCell>
+                    Fill 250 boards OR refer 100 players who make a purchase
+                  </TableCell>
                   <TableCell>VIP player access, advanced features</TableCell>
-                  <TableCell>Premium revenue sharing</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -1020,45 +1039,28 @@ const RulesContent = () => {
               </li>
             </ul>
 
-            <h3 className="text-2xl font-semibold">
-              4.5 Commission Structure & Payouts
-            </h3>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Commission Type</TableHead>
-                  <TableHead>Rate</TableHead>
-                  <TableHead>Source</TableHead>
-                  <TableHead>Attribution</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <strong>Board Creation Rake</strong>
-                  </TableCell>
-                  <TableCell>3%</TableCell>
-                  <TableCell>Boards created by CBL</TableCell>
-                  <TableCell>Board creator only</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <strong>NFT Referral Commission</strong>
-                  </TableCell>
-                  <TableCell>30%</TableCell>
-                  <TableCell>Platform fees from attributed players</TableCell>
-                  <TableCell>Original referring CBL</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <strong>Volume Bonuses</strong>
-                  </TableCell>
-                  <TableCell>Variable</TableCell>
-                  <TableCell>Tier progression rewards</TableCell>
-                  <TableCell>Performance-based</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <h3 className="text-2xl font-semibold">4.6 Onboarding & Support</h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                <strong>CBL Dashboard:</strong> All CBLs have access to a
+                dashboard to track their earnings, player activity, and board
+                performance.
+              </li>
+              <li>
+                <strong>Payouts:</strong> Board commissions are automatically
+                paid out 5 minutes after the end of each game. NFT commissions
+                are paid out instantly at the time of the mint.
+              </li>
+              <li>
+                <strong>Referral Points:</strong> CBLs earn Orange points after
+                their referred player makes their first paid transaction (either
+                an NFT mint or a board entry).
+              </li>
+              <li>
+                <strong>Support:</strong> For any questions or issues, please
+                contact OC-Phil, the dedicated support contact for CBLs.
+              </li>
+            </ul>
           </CardContent>
         </Card>
 
@@ -1264,6 +1266,94 @@ const RulesContent = () => {
                 and the Overtime Final-Score winner.
               </li>
             </ul>
+            <Separator />
+
+            <h3 className="text-2xl font-semibold">
+              Key Differences: Season-Long vs. Weekly
+            </h3>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Feature</TableHead>
+                  <TableHead>Season-Long (Pass & Half-Season)</TableHead>
+                  <TableHead>Weekly Squares</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <strong>Overtime</strong>
+                  </TableCell>
+                  <TableCell>
+                    Each OT period is a new scoring event, awarding full points.
+                  </TableCell>
+                  <TableCell>
+                    Final score payout is split 50/50 between end of Q4 and
+                    final OT score.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Randomization</strong>
+                  </TableCell>
+                  <TableCell>
+                    Double VRF (shuffles NFTs, then assigns digits).
+                  </TableCell>
+                  <TableCell>Single VRF (assigns digits).</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Minimum Fill</strong>
+                  </TableCell>
+                  <TableCell>85%</TableCell>
+                  <TableCell>95%</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+            <Separator />
+
+            <h3 className="text-2xl font-semibold">
+              Key Differences: Season-Long vs. Weekly
+            </h3>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Feature</TableHead>
+                  <TableHead>Season-Long (Pass & Half-Season)</TableHead>
+                  <TableHead>Weekly Squares</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <strong>Overtime</strong>
+                  </TableCell>
+                  <TableCell>
+                    Each OT period is a new scoring event, awarding full points.
+                  </TableCell>
+                  <TableCell>
+                    Final score payout is split 50/50 between end of Q4 and
+                    final OT score.
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Randomization</strong>
+                  </TableCell>
+                  <TableCell>
+                    Double VRF (shuffles NFTs, then assigns digits).
+                  </TableCell>
+                  <TableCell>Single VRF (assigns digits).</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Minimum Fill</strong>
+                  </TableCell>
+                  <TableCell>85%</TableCell>
+                  <TableCell>95%</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
             <Separator />
 
             <h3 className="text-2xl font-semibold">Refunds & Edge Cases</h3>

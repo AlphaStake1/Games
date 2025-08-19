@@ -238,3 +238,5 @@ pnpm lint && tsc --noEmit           # ESLint + TS type-check
 - Validate all user inputs, especially wallet addresses
 - Use environment variables for API keys and endpoints
 - Implement rate limiting on public API routes
+
+- add to memory

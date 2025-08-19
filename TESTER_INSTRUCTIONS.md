@@ -26,7 +26,7 @@ _Note: This is a live testing environment. No real money transactions will occur
 
 ## 👥 **Tester Categories**
 
-**You've been assigned to test**: ******\_\_\_\_******
+**You've been assigned to test**: **\*\***\_\_\_\_**\*\***
 
 ### **Category 1: Weekly Board Play** 🗓️
 

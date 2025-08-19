@@ -1,0 +1,2504 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Football Squares Beta Testing Portal</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .header p {
+        font-size: 1.1em;
+        opacity: 0.9;
+      }
+
+      .instructions {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .instructions h2 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 1.5em;
+      }
+
+      .instructions p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      .quick-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .info-card {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        border-left: 4px solid #007bff;
+      }
+
+      .info-card h3 {
+        color: #007bff;
+        margin-bottom: 8px;
+        font-size: 1.1em;
+      }
+
+      .form-selection {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .form-selection h2 {
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.8em;
+      }
+
+      .forms-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .form-card {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        transition: all 0.2s ease;
+        border: 2px solid #e9ecef;
+        cursor: pointer;
+      }
+
+      .form-card:hover {
+        border-color: #007bff;
+        background: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+      }
+
+      .form-card.selected {
+        border-color: #007bff;
+        background: #e7f3ff;
+      }
+
+      .form-icon {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .form-card h3 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 1.2em;
+      }
+
+      .form-card p {
+        color: #666;
+        font-size: 0.9em;
+        line-height: 1.4;
+        margin-bottom: 10px;
+      }
+
+      .form-meta {
+        font-size: 0.8em;
+        color: #888;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .start-section {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .start-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 15px 40px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: none;
+      }
+
+      .start-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+      }
+
+      .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        opacity: 0.9;
+      }
+
+      .back-link:hover {
+        opacity: 1;
+        text-decoration: underline;
+      }
+
+      /* Testing Form Styles */
+      .testing-form {
+        display: none;
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .testing-form.active {
+        display: block;
+      }
+
+      .form-header {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        color: white;
+        padding: 25px;
+        margin: -30px -30px 30px -30px;
+        border-radius: 12px 12px 0 0;
+        text-align: center;
+      }
+
+      .form-header h2 {
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+
+      .form-header p {
+        font-size: 1.1em;
+        opacity: 0.9;
+      }
+
+      .progress-bar {
+        height: 6px;
+        background: #e9ecef;
+        border-radius: 3px;
+        margin: 20px 0;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #28a745, #20c997);
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      .section {
+        margin-bottom: 30px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .section-header {
+        background: #f8f9fa;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e9ecef;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.2s ease;
+      }
+
+      .section-header:hover {
+        background: #e9ecef;
+      }
+
+      .section-header h3 {
+        color: #495057;
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+
+      .section-toggle {
+        font-size: 1.2em;
+        color: #6c757d;
+        transition: transform 0.2s ease;
+      }
+
+      .section-content {
+        padding: 20px;
+        display: block;
+      }
+
+      .section.collapsed .section-content {
+        display: none;
+      }
+
+      .section.collapsed .section-toggle {
+        transform: rotate(-90deg);
+      }
+
+      .question {
+        margin-bottom: 25px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #007bff;
+      }
+
+      .question-label {
+        font-weight: 600;
+        color: #212529;
+        margin-bottom: 12px;
+        font-size: 1.05em;
+        line-height: 1.4;
+      }
+
+      .required {
+        color: #dc3545;
+      }
+
+      input[type='text'],
+      input[type='email'],
+      input[type='time'],
+      input[type='number'],
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 1em;
+        transition: border-color 0.2s ease;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      }
+
+      textarea {
+        min-height: 100px;
+        resize: vertical;
+        font-family: inherit;
+      }
+
+      .radio-group,
+      .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .radio-option,
+      .checkbox-option {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .radio-option:hover,
+      .checkbox-option:hover {
+        border-color: #007bff;
+        background: #f8f9fa;
+      }
+
+      .radio-option.selected,
+      .checkbox-option.selected {
+        border-color: #007bff;
+        background: #e7f3ff;
+      }
+
+      .radio-option input,
+      .checkbox-option input {
+        margin-right: 10px;
+        width: auto;
+      }
+
+      .scale-container {
+        margin: 15px 0;
+      }
+
+      .scale-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9em;
+        color: #6c757d;
+        margin-bottom: 10px;
+      }
+
+      .scale-options {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .scale-option {
+        width: 40px;
+        height: 40px;
+        border: 2px solid #e9ecef;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 600;
+      }
+
+      .scale-option:hover {
+        border-color: #007bff;
+        background: #f8f9fa;
+      }
+
+      .scale-option.selected {
+        border-color: #007bff;
+        background: #007bff;
+        color: white;
+      }
+
+      .file-upload {
+        border: 2px dashed #007bff;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        background: #f8f9fa;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .file-upload:hover {
+        background: #e9ecef;
+      }
+
+      .file-upload input {
+        display: none;
+      }
+
+      .submit-section {
+        text-align: center;
+        padding: 30px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-top: 30px;
+      }
+
+      .submit-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 15px 40px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+      }
+
+      .back-to-selection {
+        background: #6c757d;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: all 0.2s ease;
+      }
+
+      .back-to-selection:hover {
+        background: #5a6268;
+      }
+
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .forms-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .quick-info {
+          grid-template-columns: 1fr;
+        }
+
+        .scale-options {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🏈 Football Squares Beta Testing</h1>
+        <p>Help us perfect the ultimate NFL squares platform</p>
+        <a href="/" class="back-link">← Back to Main Site</a>
+      </div>
+
+      <!-- Form Selection Page -->
+      <div id="selectionPage">
+        <div class="instructions">
+          <h2>📋 Testing Instructions</h2>
+          <p>
+            Thank you for helping test our platform! Your feedback will directly
+            improve the user experience for all future players.
+          </p>
+
+          <div class="quick-info">
+            <div class="info-card">
+              <h3>⏱️ Time Needed</h3>
+              <p>~30 minutes</p>
+            </div>
+            <div class="info-card">
+              <h3>🌐 Test Site</h3>
+              <p>bore.pub:1143</p>
+            </div>
+            <div class="info-card">
+              <h3>🎯 Focus</h3>
+              <p>User experience</p>
+            </div>
+          </div>
+
+          <p>
+            <strong>What we're looking for:</strong> Ease of navigation, clarity
+            of information, confidence in using features, any technical issues,
+            and your overall experience.
+          </p>
+        </div>
+
+        <div class="form-selection">
+          <h2>Choose Your Testing Category</h2>
+          <p style="text-align: center; color: #666; margin-bottom: 25px">
+            Select the area you'd like to test
+          </p>
+
+          <div class="forms-grid">
+            <div
+              class="form-card"
+              onclick="selectForm(this, 'weekly')"
+              data-form="weekly"
+            >
+              <span class="form-icon">🗓️</span>
+              <h3>Weekly Board Play</h3>
+              <p>
+                Test joining weekly NFL squares games, wallet setup, and
+                signature creation.
+              </p>
+              <div class="form-meta">
+                <span>35 questions</span>
+                <span>Core features</span>
+              </div>
+            </div>
+
+            <div
+              class="form-card"
+              onclick="selectForm(this, 'season')"
+              data-form="season"
+            >
+              <span class="form-icon">🏆</span>
+              <h3>Season-Long Play</h3>
+              <p>
+                Evaluate Season Pass features, leaderboards, and reward systems.
+              </p>
+              <div class="form-meta">
+                <span>24 questions</span>
+                <span>Long-term features</span>
+              </div>
+            </div>
+
+            <div
+              class="form-card"
+              onclick="selectForm(this, 'cbl')"
+              data-form="cbl"
+            >
+              <span class="form-icon">👑</span>
+              <h3>Community Board Leader</h3>
+              <p>Test hosting your own games and management tools.</p>
+              <div class="form-meta">
+                <span>25 questions</span>
+                <span>Host features</span>
+              </div>
+            </div>
+
+            <div
+              class="form-card"
+              onclick="selectForm(this, 'art')"
+              data-form="art"
+            >
+              <span class="form-icon">🎨</span>
+              <h3>Signature & NFT Art</h3>
+              <p>Evaluate signature creation and NFT art generation systems.</p>
+              <div class="form-meta">
+                <span>30 questions</span>
+                <span>Creative features</span>
+              </div>
+            </div>
+
+            <div
+              class="form-card"
+              onclick="selectForm(this, 'ai')"
+              data-form="ai"
+            >
+              <span class="form-icon">🤖</span>
+              <h3>AI Assistant</h3>
+              <p>
+                Test the AI bot's knowledge and helpfulness across platform
+                features.
+              </p>
+              <div class="form-meta">
+                <span>20 questions</span>
+                <span>Support features</span>
+              </div>
+            </div>
+
+            <div
+              class="form-card"
+              onclick="selectForm(this, 'points')"
+              data-form="points"
+            >
+              <span class="form-icon">📊</span>
+              <h3>Points & Rewards</h3>
+              <p>Evaluate points earning, redemption, and reward mechanics.</p>
+              <div class="form-meta">
+                <span>23 questions</span>
+                <span>Reward system</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="start-section">
+            <button class="start-btn" id="startTestBtn" onclick="startTest()">
+              Start Testing
+            </button>
+            <p style="margin-top: 15px; color: #666; font-size: 0.9em">
+              Please select a testing category above
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testing Form Container -->
+      <div id="testingForm" class="testing-form">
+        <div class="form-header">
+          <h2 id="formTitle">Testing Form</h2>
+          <p id="formDescription">Testing description</p>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <form id="actualForm">
+          <!-- Form content will be dynamically loaded here -->
+        </form>
+
+        <div style="text-align: center; margin-top: 20px">
+          <button class="back-to-selection" onclick="backToSelection()">
+            ← Choose Different Test
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let selectedForm = null;
+      let currentFormData = {};
+
+      // Form templates for each category
+      const formTemplates = {
+        weekly: {
+          title: 'Weekly Board Play Testing',
+          description:
+            'Test weekly NFL squares games, wallet setup, and signature creation',
+          questions: [
+            // Section 1: Tester Information
+            { section: 'Tester Information', icon: '📋' },
+            {
+              type: 'text',
+              name: 'tester_name',
+              label: '1. Your Name',
+              required: true,
+            },
+            {
+              type: 'email',
+              name: 'email',
+              label: '2. Email Address',
+              required: true,
+            },
+            {
+              type: 'text',
+              name: 'device_browser',
+              label: '3. Device/Browser',
+              placeholder: 'Example: Windows Chrome or iPhone Safari',
+            },
+            { type: 'time', name: 'start_time', label: '4. Test Start Time' },
+
+            // Section 2: Navigation & Understanding
+            { section: 'Navigation & Understanding', icon: '🧭' },
+            {
+              type: 'radio',
+              name: 'homepage_clarity',
+              label:
+                '5. Homepage Clarity - Can you immediately tell this is about NFL squares?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'textarea',
+              name: 'homepage_notes',
+              label: '6. Please add any notes about the homepage clarity',
+            },
+            {
+              type: 'select',
+              name: 'clicks_to_games',
+              label:
+                '7. How many clicks did it take to reach weekly game selection?',
+              required: true,
+              options: [
+                '1 click',
+                '2 clicks',
+                '3 clicks',
+                '4+ clicks',
+                'Could not find it',
+              ],
+            },
+            {
+              type: 'text',
+              name: 'navigation_path',
+              label: '8. What path did you take to find weekly games?',
+              placeholder: 'Example: Homepage → Play → Weekly',
+            },
+            {
+              type: 'scale',
+              name: 'navigation_confidence',
+              label:
+                '9. How confident did you feel navigating to weekly games?',
+              required: true,
+              scaleLabels: ['Not confident', 'Very confident'],
+            },
+            {
+              type: 'checkbox',
+              name: 'board_understanding',
+              label:
+                '10. Game Board Understanding - Which of these did you successfully find?',
+              required: true,
+              options: [
+                'Sample game board',
+                'How to select squares',
+                'Game rules/how-to-play',
+                'None of the above',
+              ],
+            },
+            {
+              type: 'textarea',
+              name: 'board_understanding_notes',
+              label: '11. Notes about game board understanding',
+            },
+
+            // Section 3: Wallet & Signature Flow
+            { section: 'Wallet & Signature Flow', icon: '💰' },
+            {
+              type: 'radio',
+              name: 'wallet_button_found',
+              label: '12. Did you find the "Connect Wallet" button easily?',
+              required: true,
+              options: [
+                'Yes, found it immediately',
+                'Yes, but took some looking',
+                "No, couldn't find it",
+                "Found it but it didn't work",
+              ],
+            },
+            {
+              type: 'scale',
+              name: 'wallet_experience',
+              label: '13. Rate the wallet connection experience',
+              required: true,
+              scaleLabels: ['Very difficult', 'Very easy'],
+            },
+            {
+              type: 'textarea',
+              name: 'wallet_issues',
+              label: '14. Describe any issues with wallet connection',
+            },
+            {
+              type: 'radio',
+              name: 'signature_modal',
+              label:
+                '15. Did the signature creation modal appear after wallet connection?',
+              required: true,
+              options: ['Yes', 'No', 'Not sure'],
+            },
+            {
+              type: 'number',
+              name: 'signature_count',
+              label:
+                '16. How many different signature styles were shown to you?',
+              required: true,
+            },
+            {
+              type: 'checkbox',
+              name: 'signature_variations',
+              label: '17. Which signature variations did you notice?',
+              required: true,
+              options: [
+                'Different fonts (handwriting styles)',
+                'Different angles/slants',
+                'Different sizes',
+                'Different colors',
+                'All signatures looked the same',
+                "Didn't see any signatures",
+              ],
+            },
+            {
+              type: 'scale',
+              name: 'signature_variety',
+              label: '18. Rate the variety of signature styles',
+              required: true,
+              scaleLabels: ['No variety', 'Excellent variety'],
+            },
+            {
+              type: 'textarea',
+              name: 'signature_comments',
+              label:
+                '19. Comments about signature styles - Which fonts did you notice? Any favorites?',
+            },
+            {
+              type: 'radio',
+              name: 'entry_process',
+              label: '20. Were you able to understand the game entry process?',
+              required: true,
+              options: [
+                'Yes, very clear',
+                'Mostly clear',
+                'Somewhat confusing',
+                'Very confusing',
+                "Didn't get that far",
+              ],
+            },
+            {
+              type: 'radio',
+              name: 'pricing_found',
+              label: '21. Did you find pricing information for squares?',
+              required: true,
+              options: [
+                'Yes, clearly displayed',
+                'Yes, but had to search',
+                "No, couldn't find it",
+                'Not applicable',
+              ],
+            },
+            {
+              type: 'scale',
+              name: 'entry_clarity',
+              label: '22. Rate the clarity of the game entry process',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+
+            // Section 4: Information Architecture
+            { section: 'Information Architecture', icon: '📚' },
+            {
+              type: 'checkbox',
+              name: 'help_resources',
+              label: '23. Which help resources were you able to find?',
+              required: true,
+              options: [
+                'FAQ section',
+                'Wallet setup guide',
+                'How-to-play instructions',
+                'Contact/support information',
+                'None of the above',
+              ],
+            },
+            {
+              type: 'scale',
+              name: 'help_accessibility',
+              label: '24. Rate the accessibility of help & support',
+              required: true,
+              scaleLabels: ['Very hard to find', 'Very easy to find'],
+            },
+            {
+              type: 'checkbox',
+              name: 'game_details',
+              label: '25. Which game details did you understand?',
+              required: true,
+              options: [
+                'Scoring system',
+                'Payout structure',
+                'Game timeline/schedule',
+                'Number selection process',
+                'None of the above',
+              ],
+            },
+            {
+              type: 'scale',
+              name: 'info_completeness',
+              label: '26. Rate the completeness of game information',
+              required: true,
+              scaleLabels: ['Missing crucial info', 'Everything explained'],
+            },
+            {
+              type: 'scale',
+              name: 'mobile_experience',
+              label: '27. If testing on mobile, rate the mobile experience',
+              scaleLabels: ['Unusable', 'Perfect'],
+            },
+            {
+              type: 'textarea',
+              name: 'mobile_issues',
+              label: '28. Describe any mobile-specific issues encountered',
+            },
+
+            // Section 5: Final Assessment
+            { section: 'Final Assessment', icon: '🎯' },
+            {
+              type: 'radio',
+              name: 'confidence_joining',
+              label:
+                '29. Would you feel confident joining a weekly game after this experience?',
+              required: true,
+              options: [
+                'Yes, definitely',
+                'Yes, probably',
+                'Maybe',
+                'Probably not',
+                'Definitely not',
+              ],
+            },
+            {
+              type: 'textarea',
+              name: 'most_confusing',
+              label:
+                '30. What was the MOST confusing aspect of the experience?',
+              required: true,
+            },
+            {
+              type: 'textarea',
+              name: 'best_feature',
+              label: '31. What was the BEST feature or aspect?',
+              required: true,
+            },
+            {
+              type: 'scale',
+              name: 'overall_rating',
+              label: '32. Overall User Experience Rating',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'textarea',
+              name: 'bugs_issues',
+              label:
+                '33. Any bugs or technical issues encountered? Please describe in detail.',
+            },
+            {
+              type: 'file',
+              name: 'screenshots',
+              label: '34. Upload screenshots of any issues or notable features',
+              accept: 'image/*',
+              multiple: true,
+            },
+            {
+              type: 'textarea',
+              name: 'final_comments',
+              label: '35. Final suggestions or comments',
+            },
+          ],
+        },
+
+        season: {
+          title: 'Season-Long Play Testing',
+          description:
+            'Test Season Pass features, leaderboards, and long-term engagement systems',
+          questions: [
+            { section: 'Tester Information', icon: '📋' },
+            {
+              type: 'text',
+              name: 'tester_name',
+              label: '1. Your Name',
+              required: true,
+            },
+            {
+              type: 'email',
+              name: 'email',
+              label: '2. Email Address',
+              required: true,
+            },
+            {
+              type: 'text',
+              name: 'device_browser',
+              label: '3. Device/Browser',
+            },
+            { type: 'time', name: 'start_time', label: '4. Test Start Time' },
+
+            { section: 'Season Pass Discovery', icon: '🔍' },
+            {
+              type: 'scale',
+              name: 'season_pass_discovery',
+              label: '5. How easy was it to find the Season Pass?',
+              required: true,
+              scaleLabels: ['Very difficult', 'Very easy'],
+            },
+            {
+              type: 'radio',
+              name: 'season_concept_understanding',
+              label: '6. Did you understand the season-long concept?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'textarea',
+              name: 'season_pass_notes',
+              label: '7. Notes on Season Pass discovery',
+            },
+            {
+              type: 'scale',
+              name: 'benefits_clarity',
+              label: '8. Rate the clarity of Season Pass benefits',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'checkbox',
+              name: 'benefits_identified',
+              label: '9. Which benefits did you identify?',
+              required: true,
+              options: [
+                'Weekly game entries',
+                'Leaderboard access',
+                'Exclusive rewards',
+                'Points multiplier',
+                'Special badges',
+                'None were clear',
+              ],
+            },
+            {
+              type: 'radio',
+              name: 'pricing_clear',
+              label: '10. Was pricing information clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'textarea',
+              name: 'pricing_notes',
+              label: '11. Notes on pricing and value',
+            },
+
+            { section: 'Leaderboards & Rewards', icon: '🏆' },
+            {
+              type: 'scale',
+              name: 'leaderboard_clarity',
+              label: '12. Rate leaderboard clarity',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'radio',
+              name: 'ranking_system_understood',
+              label: '13. Could you understand the ranking system?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'rewards_comprehension',
+              label: '14. Rate rewards comprehension',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'radio',
+              name: 'reward_tiers_found',
+              label: '15. Did you find reward tiers?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'timeline_clarity',
+              label: '16. Rate season timeline clarity',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'radio',
+              name: 'scoring_clear',
+              label: '17. Was weekly vs season scoring clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'community_features',
+              label: '18. Rate community features',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+
+            { section: 'Final Assessment', icon: '🎯' },
+            {
+              type: 'scale',
+              name: 'achievement_clarity',
+              label: '19. Rate achievement system clarity',
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'scale',
+              name: 'support_quality',
+              label: '20. Rate support quality',
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'radio',
+              name: 'would_purchase',
+              label: '21. Would you purchase a season pass?',
+              required: true,
+              options: [
+                'Definitely yes',
+                'Probably yes',
+                'Maybe',
+                'Probably not',
+                'Definitely not',
+              ],
+            },
+            {
+              type: 'radio',
+              name: 'long_term_value_clear',
+              label: '22. Is long-term value clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'engagement_potential',
+              label: '23. Season engagement potential',
+              required: true,
+              scaleLabels: ['Very low', 'Very high'],
+            },
+            {
+              type: 'textarea',
+              name: 'additional_comments',
+              label: '24. Additional comments',
+            },
+          ],
+        },
+
+        cbl: {
+          title: 'Community Board Leader Testing',
+          description: 'Test CBL host features for hosting your own games',
+          questions: [
+            { section: 'Tester Information', icon: '📋' },
+            {
+              type: 'text',
+              name: 'tester_name',
+              label: '1. Your Name',
+              required: true,
+            },
+            {
+              type: 'email',
+              name: 'email',
+              label: '2. Email Address',
+              required: true,
+            },
+            {
+              type: 'text',
+              name: 'device_browser',
+              label: '3. Device/Browser',
+            },
+            { type: 'time', name: 'start_time', label: '4. Test Start Time' },
+
+            { section: 'Host Discovery & Setup', icon: '🔍' },
+            {
+              type: 'scale',
+              name: 'host_board_discovery',
+              label: '5. How easy was it to find "Host a Board"?',
+              required: true,
+              scaleLabels: ['Very difficult', 'Very easy'],
+            },
+            {
+              type: 'radio',
+              name: 'hosting_concept_understood',
+              label: '6. Did you understand the hosting concept?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'cbl_requirements_clarity',
+              label: '7. Rate clarity of CBL requirements',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'radio',
+              name: 'setup_steps_clear',
+              label: '8. Were setup steps clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'fee_structure_found',
+              label: '9. Did you find fee structure?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'customization_options',
+              label: '10. Rate board customization options',
+              required: true,
+              scaleLabels: ['Very limited', 'Extensive'],
+            },
+            {
+              type: 'radio',
+              name: 'branding_clear',
+              label: '11. Were branding possibilities clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+
+            { section: 'Management & Admin Tools', icon: '⚙️' },
+            {
+              type: 'scale',
+              name: 'admin_tools_clarity',
+              label: '12. Rate admin tools clarity',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'radio',
+              name: 'player_management_understood',
+              label: '13. Did you understand player management?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'payout_controls_clear',
+              label: '14. Were payout controls clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'financial_transparency',
+              label: '15. Rate financial transparency',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'radio',
+              name: 'commission_structure_clear',
+              label: '16. Was commission structure clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'performance_metrics_found',
+              label: '17. Did you find performance metrics?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'community_building_tools',
+              label: '18. Rate community building tools',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+
+            { section: 'Support & Resources', icon: '📞' },
+            {
+              type: 'scale',
+              name: 'cbl_support_accessibility',
+              label: '19. Rate CBL support accessibility',
+              scaleLabels: ['Very hard to find', 'Very easy to find'],
+            },
+            {
+              type: 'scale',
+              name: 'legal_clarity',
+              label: '20. Rate legal clarity',
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'scale',
+              name: 'resource_quality',
+              label: '21. Rate resource quality',
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+
+            { section: 'Final Assessment', icon: '🎯' },
+            {
+              type: 'radio',
+              name: 'would_consider_hosting',
+              label: '22. Would you consider hosting a board?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'cbl_process_manageable',
+              label: '23. Does CBL process seem manageable?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'host_readiness',
+              label: '24. Host readiness',
+              required: true,
+              scaleLabels: ['Not ready', 'Completely ready'],
+            },
+            {
+              type: 'textarea',
+              name: 'concerns_suggestions',
+              label: '25. Concerns or suggestions',
+            },
+          ],
+        },
+
+        art: {
+          title: 'Signature & NFT Art Testing',
+          description: 'Test signature creation system and NFT art generation',
+          questions: [
+            { section: 'Tester Information', icon: '📋' },
+            {
+              type: 'text',
+              name: 'tester_name',
+              label: '1. Your Name',
+              required: true,
+            },
+            {
+              type: 'email',
+              name: 'email',
+              label: '2. Email Address',
+              required: true,
+            },
+            {
+              type: 'text',
+              name: 'device_browser',
+              label: '3. Device/Browser',
+            },
+            { type: 'time', name: 'start_time', label: '4. Test Start Time' },
+
+            { section: 'Concept Understanding', icon: '💡' },
+            {
+              type: 'scale',
+              name: 'signature_nft_concept_clarity',
+              label: '5. Rate concept clarity of signature NFTs',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'radio',
+              name: 'nft_info_found',
+              label: '6. Did you find NFT information?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'purpose_understood',
+              label: '7. Was the purpose understood?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+
+            { section: 'Signature Variety & Quality', icon: '✍️' },
+            {
+              type: 'number',
+              name: 'signature_styles_count',
+              label: '8. How many signature styles were shown?',
+              required: true,
+            },
+            {
+              type: 'radio',
+              name: 'font_variety_noticed',
+              label: '9. Did you notice font variety?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'angle_differences_observed',
+              label: '10. Did you observe angle differences?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'size_variations_visible',
+              label: '11. Were size variations visible?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'color_differences_apparent',
+              label: '12. Were color differences apparent?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'visual_variety',
+              label: '13. Rate visual variety',
+              required: true,
+              scaleLabels: ['No variety', 'Excellent variety'],
+            },
+            {
+              type: 'textarea',
+              name: 'fonts_noticed',
+              label: '14. Which fonts did you notice?',
+            },
+
+            { section: 'NFT Understanding', icon: '🖼️' },
+            {
+              type: 'scale',
+              name: 'nft_concept_clarity',
+              label: '15. Rate NFT concept clarity',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'radio',
+              name: 'blockchain_info_found',
+              label: '16. Was blockchain info found?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'ownership_explained',
+              label: '17. Was ownership explained?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+
+            { section: 'Quality Assessment', icon: '⭐' },
+            {
+              type: 'scale',
+              name: 'font_quality',
+              label: '18. Rate font quality',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'radio',
+              name: 'fonts_look_professional',
+              label: '19. Do fonts look professional?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'handwriting_authentic',
+              label: '20. Is handwriting authentic?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'scripts_elegant',
+              label: '21. Are scripts elegant?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'sufficient_uniqueness',
+              label: '22. Sufficient uniqueness?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'visual_appeal',
+              label: '23. Rate visual appeal',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'scale',
+              name: 'technical_quality',
+              label: '24. Rate technical quality',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+
+            { section: 'User Experience', icon: '👤' },
+            {
+              type: 'scale',
+              name: 'selection_ux',
+              label: '25. Rate selection UX',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'scale',
+              name: 'education_quality',
+              label: '26. Rate education quality',
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+
+            { section: 'Final Assessment', icon: '🎯' },
+            {
+              type: 'radio',
+              name: 'satisfied_with_variety',
+              label: '27. Satisfied with signature variety?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'would_mint_nft',
+              label: '28. Would you mint a signature NFT?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'art_generation_rating',
+              label: '29. Art generation system rating',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'textarea',
+              name: 'artistic_suggestions',
+              label: '30. Artistic suggestions',
+            },
+          ],
+        },
+
+        ai: {
+          title: 'AI Assistant Testing',
+          description: "Test the AI assistant's knowledge and helpfulness",
+          questions: [
+            { section: 'Tester Information', icon: '📋' },
+            {
+              type: 'text',
+              name: 'tester_name',
+              label: '1. Your Name',
+              required: true,
+            },
+            {
+              type: 'email',
+              name: 'email',
+              label: '2. Email Address',
+              required: true,
+            },
+            {
+              type: 'text',
+              name: 'device_browser',
+              label: '3. Device/Browser',
+            },
+            { type: 'time', name: 'start_time', label: '4. Test Start Time' },
+
+            { section: 'Bot Discovery & First Impressions', icon: '🤖' },
+            {
+              type: 'scale',
+              name: 'bot_visibility',
+              label: '5. Rate bot visibility',
+              required: true,
+              scaleLabels: ['Very hard to find', 'Very easy to find'],
+            },
+            {
+              type: 'scale',
+              name: 'first_impression',
+              label: '6. Rate first impression',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'scale',
+              name: 'help_quality',
+              label: '7. Rate help quality',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+
+            { section: 'Rules Knowledge Testing', icon: '📖' },
+            {
+              type: 'checkbox',
+              name: 'rule_questions_tested',
+              label: '8. Which rule questions did you test?',
+              required: true,
+              options: [
+                'How do NFL squares work?',
+                'When are numbers drawn?',
+                'How do quarterly payouts work?',
+                'What happens in overtime?',
+                'None of these',
+              ],
+            },
+            {
+              type: 'scale',
+              name: 'rules_knowledge',
+              label: '9. Rate rules knowledge',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'textarea',
+              name: 'response_quality_notes',
+              label: '10. Response quality notes',
+            },
+
+            { section: 'Platform Knowledge Testing', icon: '💻' },
+            {
+              type: 'checkbox',
+              name: 'platform_questions_tested',
+              label: '11. Which platform questions did you test?',
+              required: true,
+              options: [
+                'Weekly vs season play difference?',
+                'How to become CBL?',
+                'What are signature NFTs?',
+                'How do rewards work?',
+                'None of these',
+              ],
+            },
+            {
+              type: 'scale',
+              name: 'platform_knowledge',
+              label: '12. Rate platform knowledge',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'scale',
+              name: 'technical_support',
+              label: '13. Rate technical support',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+
+            { section: 'Response Quality', icon: '💬' },
+            {
+              type: 'scale',
+              name: 'expert_responses',
+              label: '14. Rate expert level responses',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'scale',
+              name: 'answer_quality',
+              label: '15. Rate answer quality',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+            {
+              type: 'scale',
+              name: 'bot_ux',
+              label: '16. Rate bot UX',
+              required: true,
+              scaleLabels: ['Poor', 'Excellent'],
+            },
+
+            { section: 'Final Assessment', icon: '🎯' },
+            {
+              type: 'radio',
+              name: 'would_rely_on_bot',
+              label: '17. Would you rely on bot for help?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'bot_knowledge_adequate',
+              label: '18. Is bot knowledge adequate?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'ai_helpfulness',
+              label: '19. AI helpfulness rating',
+              required: true,
+              scaleLabels: ['Not helpful', 'Very helpful'],
+            },
+            {
+              type: 'textarea',
+              name: 'bot_improvements',
+              label: '20. Bot improvement suggestions',
+            },
+          ],
+        },
+
+        points: {
+          title: 'Points & Rewards Testing',
+          description: 'Test points system and rewards mechanics',
+          questions: [
+            { section: 'Tester Information', icon: '📋' },
+            {
+              type: 'text',
+              name: 'tester_name',
+              label: '1. Your Name',
+              required: true,
+            },
+            {
+              type: 'email',
+              name: 'email',
+              label: '2. Email Address',
+              required: true,
+            },
+            {
+              type: 'text',
+              name: 'device_browser',
+              label: '3. Device/Browser',
+            },
+            { type: 'time', name: 'start_time', label: '4. Test Start Time' },
+
+            { section: 'Points System Discovery', icon: '🔍' },
+            {
+              type: 'scale',
+              name: 'points_discovery',
+              label: '5. Rate discovery ease of points info',
+              required: true,
+              scaleLabels: ['Very difficult', 'Very easy'],
+            },
+            {
+              type: 'scale',
+              name: 'basic_comprehension',
+              label: '6. Rate basic comprehension',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'scale',
+              name: 'earning_clarity',
+              label: '7. Rate point earning clarity',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'checkbox',
+              name: 'point_sources_identified',
+              label: '8. Which point sources did you identify?',
+              required: true,
+              options: [
+                'Weekly game participation',
+                'Season long bonuses',
+                'Community board hosting',
+                'Referral/social points',
+                'None were clear',
+              ],
+            },
+            {
+              type: 'scale',
+              name: 'earning_structure_clarity',
+              label: '9. Rate earning structure clarity',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+
+            { section: 'Redemption & Rewards', icon: '🎁' },
+            {
+              type: 'radio',
+              name: 'redemption_options_found',
+              label: '10. Did you find redemption options?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'point_values_clear',
+              label: '11. Were point values clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'reward_tiers_understood',
+              label: '12. Were reward tiers understood?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'redemption_clarity',
+              label: '13. Rate redemption clarity',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+
+            { section: 'System Understanding', icon: '⚙️' },
+            {
+              type: 'radio',
+              name: 'leaderboard_connection_clear',
+              label: '14. Was leaderboard connection clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'seasonal_vs_lifetime_clear',
+              label: '15. Were seasonal vs lifetime points clear?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'competition_understanding',
+              label: '16. Rate competition understanding',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'scale',
+              name: 'calculation_ability',
+              label: '17. Rate practical calculation ability',
+              required: true,
+              scaleLabels: ['Very difficult', 'Very easy'],
+            },
+            {
+              type: 'scale',
+              name: 'value_assessment',
+              label: '18. Rate value assessment',
+              required: true,
+              scaleLabels: ['Poor value', 'Excellent value'],
+            },
+
+            { section: 'Final Assessment', icon: '🎯' },
+            {
+              type: 'radio',
+              name: 'encourages_participation',
+              label: '19. Does points system encourage participation?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'radio',
+              name: 'reward_structure_fair',
+              label: '20. Is reward structure fair?',
+              required: true,
+              options: ['Yes', 'No'],
+            },
+            {
+              type: 'scale',
+              name: 'points_motivation',
+              label: '21. Points motivation rating',
+              required: true,
+              scaleLabels: ['Not motivating', 'Very motivating'],
+            },
+            {
+              type: 'scale',
+              name: 'overall_points_clarity',
+              label: '22. Overall points clarity',
+              required: true,
+              scaleLabels: ['Very unclear', 'Crystal clear'],
+            },
+            {
+              type: 'textarea',
+              name: 'system_improvements',
+              label: '23. System improvements',
+            },
+          ],
+        },
+      };
+
+      function selectForm(element, formType) {
+        // Remove selection from all cards
+        document.querySelectorAll('.form-card').forEach((card) => {
+          card.classList.remove('selected');
+        });
+
+        // Select this card
+        element.classList.add('selected');
+        selectedForm = formType;
+
+        // Show start button
+        const startBtn = document.getElementById('startTestBtn');
+        startBtn.style.display = 'inline-block';
+        startBtn.disabled = false;
+
+        const formNames = {
+          weekly: 'Weekly Board Play',
+          season: 'Season-Long Play',
+          cbl: 'Community Board Leader',
+          art: 'Signature & NFT Art',
+          ai: 'AI Assistant',
+          points: 'Points & Rewards',
+        };
+
+        startBtn.textContent = `Start ${formNames[formType]} Test`;
+      }
+
+      function startTest() {
+        if (!selectedForm) {
+          alert('Please select a testing category first');
+          return;
+        }
+
+        // Hide selection page and show form
+        document.getElementById('selectionPage').style.display = 'none';
+        document.getElementById('testingForm').classList.add('active');
+
+        // Load the selected form
+        loadForm(selectedForm);
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      }
+
+      function loadForm(formType) {
+        const template = formTemplates[formType];
+        document.getElementById('formTitle').textContent = template.title;
+        document.getElementById('formDescription').textContent =
+          template.description;
+
+        const form = document.getElementById('actualForm');
+        form.innerHTML = '';
+
+        let currentSection = null;
+        let sectionContainer = null;
+        let questionCount = 0;
+
+        template.questions.forEach((question, index) => {
+          if (question.section) {
+            // Create new section
+            const section = document.createElement('div');
+            section.className = 'section';
+            section.id = `section-${index}`;
+
+            const sectionHeader = document.createElement('div');
+            sectionHeader.className = 'section-header';
+            sectionHeader.onclick = () => toggleSection(`section-${index}`);
+            sectionHeader.innerHTML = `
+                        <h3>${question.icon} ${question.section}</h3>
+                        <span class="section-toggle">▼</span>
+                    `;
+
+            sectionContainer = document.createElement('div');
+            sectionContainer.className = 'section-content';
+
+            section.appendChild(sectionHeader);
+            section.appendChild(sectionContainer);
+            form.appendChild(section);
+
+            currentSection = question.section;
+          } else {
+            // Create question
+            const questionDiv = createQuestion(question, questionCount++);
+            sectionContainer.appendChild(questionDiv);
+          }
+        });
+
+        // Add submit section
+        const submitSection = document.createElement('div');
+        submitSection.className = 'submit-section';
+        submitSection.innerHTML = `
+                <button type="submit" class="submit-btn">Submit ${template.title} Feedback</button>
+                <p style="margin-top: 15px; color: #666;">Thank you for helping improve our platform!</p>
+            `;
+        form.appendChild(submitSection);
+
+        // Add form submission handler
+        form.addEventListener('submit', handleFormSubmission);
+      }
+
+      function createQuestion(question, index) {
+        const div = document.createElement('div');
+        div.className = 'question';
+
+        const label = document.createElement('div');
+        label.className = 'question-label';
+        label.innerHTML = `${question.label}${question.required ? ' <span class="required">*</span>' : ''}`;
+
+        div.appendChild(label);
+
+        let input;
+
+        switch (question.type) {
+          case 'text':
+          case 'email':
+          case 'time':
+            input = document.createElement('input');
+            input.type = question.type;
+            input.name = question.name;
+            input.required = question.required || false;
+            if (question.placeholder) input.placeholder = question.placeholder;
+            break;
+
+          case 'number':
+            input = document.createElement('input');
+            input.type = 'number';
+            input.name = question.name;
+            input.required = question.required || false;
+            input.min = 0;
+            break;
+
+          case 'textarea':
+            input = document.createElement('textarea');
+            input.name = question.name;
+            input.required = question.required || false;
+            if (question.placeholder) input.placeholder = question.placeholder;
+            break;
+
+          case 'select':
+            input = document.createElement('select');
+            input.name = question.name;
+            input.required = question.required || false;
+
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Select an option';
+            input.appendChild(defaultOption);
+
+            question.options.forEach((option) => {
+              const optionElement = document.createElement('option');
+              optionElement.value = option;
+              optionElement.textContent = option;
+              input.appendChild(optionElement);
+            });
+            break;
+
+          case 'radio':
+            input = document.createElement('div');
+            input.className = 'radio-group';
+
+            question.options.forEach((option) => {
+              const radioOption = document.createElement('div');
+              radioOption.className = 'radio-option';
+              radioOption.onclick = () =>
+                selectRadio(radioOption, question.name);
+
+              const radioInput = document.createElement('input');
+              radioInput.type = 'radio';
+              radioInput.name = question.name;
+              radioInput.value = option;
+              radioInput.required = question.required || false;
+
+              const span = document.createElement('span');
+              span.textContent = option;
+
+              radioOption.appendChild(radioInput);
+              radioOption.appendChild(span);
+              input.appendChild(radioOption);
+            });
+            break;
+
+          case 'checkbox':
+            input = document.createElement('div');
+            input.className = 'checkbox-group';
+
+            question.options.forEach((option) => {
+              const checkboxOption = document.createElement('div');
+              checkboxOption.className = 'checkbox-option';
+              checkboxOption.onclick = () =>
+                toggleCheckbox(checkboxOption, question.name);
+
+              const checkboxInput = document.createElement('input');
+              checkboxInput.type = 'checkbox';
+              checkboxInput.name = question.name;
+              checkboxInput.value = option;
+
+              const span = document.createElement('span');
+              span.textContent = option;
+
+              checkboxOption.appendChild(checkboxInput);
+              checkboxOption.appendChild(span);
+              input.appendChild(checkboxOption);
+            });
+            break;
+
+          case 'scale':
+            input = document.createElement('div');
+            input.className = 'scale-container';
+
+            if (question.scaleLabels) {
+              const labels = document.createElement('div');
+              labels.className = 'scale-labels';
+              labels.innerHTML = `
+                            <span>${question.scaleLabels[0]}</span>
+                            <span>${question.scaleLabels[1]}</span>
+                        `;
+              input.appendChild(labels);
+            }
+
+            const scaleOptions = document.createElement('div');
+            scaleOptions.className = 'scale-options';
+
+            for (let i = 1; i <= 10; i++) {
+              const scaleOption = document.createElement('div');
+              scaleOption.className = 'scale-option';
+              scaleOption.textContent = i;
+              scaleOption.onclick = () =>
+                selectScale(scaleOption, question.name, i);
+              scaleOptions.appendChild(scaleOption);
+            }
+
+            input.appendChild(scaleOptions);
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = question.name;
+            hiddenInput.required = question.required || false;
+            input.appendChild(hiddenInput);
+            break;
+
+          case 'file':
+            input = document.createElement('div');
+            input.className = 'file-upload';
+            input.onclick = () => {
+              const fileInput = input.querySelector('input[type="file"]');
+              fileInput.click();
+            };
+
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.name = question.name;
+            fileInput.accept = question.accept || '';
+            fileInput.multiple = question.multiple || false;
+
+            input.innerHTML = `
+                        <p>📷 Click to upload files</p>
+                        <small>${question.accept ? 'Images only - PNG, JPG, GIF' : 'Any file type'}</small>
+                    `;
+            input.appendChild(fileInput);
+
+            fileInput.addEventListener('change', function (e) {
+              const fileCount = e.target.files.length;
+              const p = input.querySelector('p');
+              if (fileCount > 0) {
+                p.textContent = `📷 ${fileCount} file(s) selected`;
+              } else {
+                p.textContent = '📷 Click to upload files';
+              }
+            });
+            break;
+        }
+
+        div.appendChild(input);
+        return div;
+      }
+
+      function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        section.classList.toggle('collapsed');
+      }
+
+      function selectRadio(element, name) {
+        const radioGroup = document.querySelectorAll(`input[name="${name}"]`);
+        radioGroup.forEach((radio) => {
+          radio.closest('.radio-option').classList.remove('selected');
+        });
+
+        element.classList.add('selected');
+        element.querySelector('input').checked = true;
+        updateProgress();
+      }
+
+      function toggleCheckbox(element, name) {
+        const checkbox = element.querySelector('input');
+        checkbox.checked = !checkbox.checked;
+
+        if (checkbox.checked) {
+          element.classList.add('selected');
+        } else {
+          element.classList.remove('selected');
+        }
+
+        // Handle "None" option
+        if (checkbox.value.toLowerCase().includes('none') && checkbox.checked) {
+          const otherCheckboxes = document.querySelectorAll(
+            `input[name="${name}"]:not([value*="none"])`,
+          );
+          otherCheckboxes.forEach((cb) => {
+            cb.checked = false;
+            cb.closest('.checkbox-option').classList.remove('selected');
+          });
+        } else if (
+          !checkbox.value.toLowerCase().includes('none') &&
+          checkbox.checked
+        ) {
+          const noneCheckbox = document.querySelector(
+            `input[name="${name}"][value*="none"]`,
+          );
+          if (noneCheckbox) {
+            noneCheckbox.checked = false;
+            noneCheckbox
+              .closest('.checkbox-option')
+              .classList.remove('selected');
+          }
+        }
+
+        updateProgress();
+      }
+
+      function selectScale(element, name, value) {
+        const scaleOptions =
+          element.parentElement.querySelectorAll('.scale-option');
+        scaleOptions.forEach((option) => option.classList.remove('selected'));
+
+        element.classList.add('selected');
+        const hiddenInput = element
+          .closest('.scale-container')
+          .querySelector(`input[name="${name}"]`);
+        hiddenInput.value = value;
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const totalQuestions = document.querySelectorAll(
+          'input[required], textarea[required], select[required]',
+        ).length;
+        const answeredQuestions = document.querySelectorAll(
+          'input[required]:valid, textarea[required]:valid, select[required]:valid',
+        ).length;
+        const progress =
+          totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0;
+        document.getElementById('progressFill').style.width = progress + '%';
+      }
+
+      function handleFormSubmission(e) {
+        e.preventDefault();
+
+        // Validate required fields
+        const requiredFields = document.querySelectorAll(
+          'input[required], textarea[required], select[required]',
+        );
+        let isValid = true;
+        let missingFields = [];
+
+        requiredFields.forEach((field) => {
+          if (
+            !field.value ||
+            (field.type === 'radio' &&
+              !document.querySelector(`input[name="${field.name}"]:checked`))
+          ) {
+            isValid = false;
+            missingFields.push(field.name);
+          }
+        });
+
+        if (!isValid) {
+          alert(
+            `Please complete all required fields. Missing: ${missingFields.join(', ')}`,
+          );
+          return;
+        }
+
+        // Collect form data
+        const formData = new FormData(e.target);
+        const data = {};
+
+        // Handle regular form fields
+        for (let [key, value] of formData.entries()) {
+          if (data[key]) {
+            if (Array.isArray(data[key])) {
+              data[key].push(value);
+            } else {
+              data[key] = [data[key], value];
+            }
+          } else {
+            data[key] = value;
+          }
+        }
+
+        // Handle hidden scale inputs
+        const scaleInputs = document.querySelectorAll('input[type="hidden"]');
+        scaleInputs.forEach((input) => {
+          if (input.name && input.value) {
+            data[input.name] = input.value;
+          }
+        });
+
+        // Handle checkboxes (collect all checked values)
+        const checkboxGroups = {};
+        document
+          .querySelectorAll('input[type="checkbox"]:checked')
+          .forEach((checkbox) => {
+            if (!checkboxGroups[checkbox.name]) {
+              checkboxGroups[checkbox.name] = [];
+            }
+            checkboxGroups[checkbox.name].push(checkbox.value);
+          });
+
+        // Merge checkbox data
+        Object.keys(checkboxGroups).forEach((key) => {
+          data[key] = checkboxGroups[key];
+        });
+
+        // Add metadata
+        data.test_type = selectedForm;
+        data.submission_date = new Date().toISOString();
+        data.user_agent = navigator.userAgent;
+        data.screen_resolution = `${screen.width}x${screen.height}`;
+
+        // Format email content
+        const emailSubject = `Testing Feedback - ${formTemplates[selectedForm].title} - ${data.tester_name}`;
+        let emailBody = `FOOTBALL SQUARES TESTING FEEDBACK\n`;
+        emailBody += `=====================================\n\n`;
+        emailBody += `Test Type: ${formTemplates[selectedForm].title}\n`;
+        emailBody += `Tester: ${data.tester_name}\n`;
+        emailBody += `Email: ${data.email}\n`;
+        emailBody += `Submission Date: ${new Date().toLocaleString()}\n`;
+        emailBody += `Device/Browser: ${data.device_browser || 'Not specified'}\n\n`;
+
+        // Add all responses
+        emailBody += `DETAILED RESPONSES:\n`;
+        emailBody += `==================\n\n`;
+
+        Object.keys(data).forEach((key) => {
+          if (
+            ![
+              'test_type',
+              'submission_date',
+              'user_agent',
+              'screen_resolution',
+            ].includes(key)
+          ) {
+            const value = Array.isArray(data[key])
+              ? data[key].join(', ')
+              : data[key];
+            emailBody += `${key.replace(/_/g, ' ').toUpperCase()}: ${value}\n\n`;
+          }
+        });
+
+        // Handle file uploads note
+        const fileInputs = document.querySelectorAll('input[type="file"]');
+        let hasFiles = false;
+        fileInputs.forEach((input) => {
+          if (input.files.length > 0) {
+            hasFiles = true;
+            emailBody += `FILES UPLOADED: ${input.files.length} file(s) selected (${input.name})\n`;
+            for (let i = 0; i < input.files.length; i++) {
+              emailBody += `- ${input.files[i].name} (${input.files[i].size} bytes)\n`;
+            }
+            emailBody += `\n`;
+          }
+        });
+
+        if (hasFiles) {
+          emailBody += `NOTE: Files were selected but cannot be attached via mailto. Please follow up to collect uploaded files.\n\n`;
+        }
+
+        emailBody += `End of feedback report.\n`;
+        emailBody += `Thank you for testing our platform!`;
+
+        // Create mailto link
+        const encodedSubject = encodeURIComponent(emailSubject);
+        const encodedBody = encodeURIComponent(emailBody);
+        const maxUrlLength = 2000; // Conservative limit for mailto URLs
+
+        let finalBody = encodedBody;
+        if (finalBody.length > maxUrlLength) {
+          // Truncate if too long
+          finalBody =
+            encodedBody.substring(0, maxUrlLength - 100) +
+            encodeURIComponent(
+              '\n\n[Response truncated due to length - full details in follow-up]',
+            );
+        }
+
+        const mailtoUrl = `mailto:btcinfo@protonmail.com?subject=${encodedSubject}&body=${finalBody}`;
+
+        // Show success message and redirect
+        const submitBtn = e.target.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Opening Email Client...';
+        submitBtn.disabled = true;
+
+        // Store data locally as backup
+        localStorage.setItem(
+          `footballSquaresTest_${selectedForm}_${Date.now()}`,
+          JSON.stringify(data),
+        );
+
+        setTimeout(() => {
+          window.location.href = mailtoUrl;
+
+          // Show completion message
+          setTimeout(() => {
+            alert(
+              "Thank you for your feedback! Your email client should open with the feedback ready to send. If it doesn't open automatically, please email your feedback to btcinfo@protonmail.com",
+            );
+
+            // Reset form and go back to selection
+            setTimeout(() => {
+              backToSelection();
+              submitBtn.textContent = originalText;
+              submitBtn.disabled = false;
+            }, 2000);
+          }, 1000);
+        }, 500);
+      }
+
+      function backToSelection() {
+        document.getElementById('selectionPage').style.display = 'block';
+        document.getElementById('testingForm').classList.remove('active');
+
+        // Reset selection
+        document.querySelectorAll('.form-card').forEach((card) => {
+          card.classList.remove('selected');
+        });
+
+        const startBtn = document.getElementById('startTestBtn');
+        startBtn.style.display = 'none';
+        startBtn.textContent = 'Start Testing';
+
+        selectedForm = null;
+
+        // Reset progress
+        document.getElementById('progressFill').style.width = '0%';
+
+        window.scrollTo(0, 0);
+      }
+
+      // Event listeners
+      document.addEventListener('DOMContentLoaded', function () {
+        // Auto-save functionality (optional)
+        function autoSave() {
+          if (selectedForm) {
+            const formData = new FormData(
+              document.getElementById('actualForm'),
+            );
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+              data[key] = value;
+            }
+            localStorage.setItem(
+              `footballSquaresTest_${selectedForm}_autosave`,
+              JSON.stringify(data),
+            );
+          }
+        }
+
+        // Auto-save every 30 seconds
+        setInterval(autoSave, 30000);
+
+        // Auto-save on input changes
+        document.addEventListener('input', function (e) {
+          updateProgress();
+          autoSave();
+        });
+
+        document.addEventListener('change', function (e) {
+          updateProgress();
+          autoSave();
+        });
+      });
+
+      // Load saved data function (optional)
+      function loadSavedData(formType) {
+        const savedData = localStorage.getItem(
+          `footballSquaresTest_${formType}_autosave`,
+        );
+        if (savedData) {
+          const data = JSON.parse(savedData);
+          Object.keys(data).forEach((key) => {
+            const field = document.querySelector(`[name="${key}"]`);
+            if (field) {
+              field.value = data[key];
+              if (field.type === 'radio' && field.value === data[key]) {
+                field.checked = true;
+                field.closest('.radio-option').classList.add('selected');
+              }
+              if (
+                field.type === 'checkbox' &&
+                data[key].includes(field.value)
+              ) {
+                field.checked = true;
+                field.closest('.checkbox-option').classList.add('selected');
+              }
+            }
+          });
+          updateProgress();
+        }
+      }
+
+      // Utility function to format question labels for email
+      function formatQuestionLabel(name) {
+        return name
+          .split('_')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+      }
+
+      // Initialize the page
+      window.addEventListener('load', function () {
+        // Set initial state
+        selectedForm = null;
+        updateProgress();
+
+        // Check for any saved progress
+        const savedForms = Object.keys(localStorage).filter(
+          (key) =>
+            key.startsWith('footballSquaresTest_') && key.endsWith('_autosave'),
+        );
+
+        if (savedForms.length > 0) {
+          console.log(
+            'Found saved progress for:',
+            savedForms.map((f) => f.split('_')[1]),
+          );
+          // Could offer to restore progress here
+        }
+      });
+    </script>
+  </body>
+</html>
