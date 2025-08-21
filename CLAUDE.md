@@ -239,4 +239,46 @@ pnpm lint && tsc --noEmit           # ESLint + TS type-check
 - Use environment variables for API keys and endpoints
 - Implement rate limiting on public API routes
 
+---
+
+## 💻 VM Performance Optimization
+
+### Problem: VirtualBox VM consuming 70%+ CPU and freezing
+
+### Quick Fixes
+
+```bash
+# Run when VM is sluggish
+./scripts/optimize-vm.sh
+
+# Start dev server with low memory
+./scripts/dev-low-resource.sh
+
+# Deep cleanup (weekly)
+./scripts/vm-maintenance.sh
+```
+
+### Key Settings
+
+- **VS Code**: Memory limited to 2GB (see `.vscode/settings.json`)
+- **Node.js**: Max 2GB heap (`NODE_OPTIONS="--max-old-space-size=2048"`)
+- **Next.js**: Reduced workers, disabled telemetry
+
+### Emergency Recovery
+
+1. Switch to TTY: `Ctrl+Alt+F3`
+2. Kill VS Code: `pkill -f code`
+3. Run: `./scripts/optimize-vm.sh`
+4. Return to GUI: `Ctrl+Alt+F1`
+
+### Best Practices
+
+- Close unused VS Code windows
+- Use single terminal instance
+- Run optimization script daily
+- Monitor with `htop` or `free -h`
+- Restart VS Code if using >3GB RAM
+
+See `VM_OPTIMIZATION_GUIDE.md` for full details.
+
 - add to memory
