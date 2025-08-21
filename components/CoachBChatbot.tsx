@@ -1,37 +1,59 @@
 'use client';
 
+import { useState, useCallback } from 'react';
 import ChatCore, { ChatbotConfig, KnowledgeResponse } from './ChatCore';
+import { 
+  EnhancedBot, 
+  BotPersonality, 
+  EnhancedBotConfig 
+} from '@/lib/enhanced-conversation-engine';
 
-// Knowledge base for Coach B responses
-const getCoachBResponse = (userMessage: string): KnowledgeResponse => {
+// Enhanced Knowledge Base for Coach B
+const coachBKnowledgeBase = (userMessage: string) => {
   const message = userMessage.toLowerCase();
 
-  // Cryptocurrency related questions
+  // Cryptocurrency and Solana expertise
   if (
     message.includes('crypto') ||
     message.includes('cryptocurrency') ||
     message.includes('bitcoin') ||
     message.includes('solana') ||
-    message.includes('sol')
+    message.includes('sol') ||
+    message.includes('defi') ||
+    message.includes('nft')
   ) {
+    // Advanced crypto responses based on specific queries
+    if (message.includes('buy') && message.includes('sol')) {
+      return {
+        response: "Ready to get some SOL? 💪 Here's the winning play:\n\n**Best Options:**\n• **Coinbase/Binance**: Easy for beginners, higher fees\n• **Jupiter Exchange**: DEX with best rates, need existing SOL\n• **Phantom Wallet**: Built-in buy feature, decent rates\n\n**Pro Tips:**\n• Start with $10-20 to test everything\n• Always keep 0.1 SOL for transaction fees\n• DCA (dollar-cost averaging) beats timing the market\n\nWhich route feels right for your situation?",
+        topics: ['crypto', 'solana', 'buying']
+      };
+    }
+
+    if (message.includes('wallet') && (message.includes('setup') || message.includes('create'))) {
+      return {
+        response: "Wallet setup is your foundation - let's build it right! 🛠️\n\n**The Coach B Method:**\n1. **Download Phantom** - Most user-friendly for Solana\n2. **Create wallet** - Write down that seed phrase by HAND\n3. **Secure it** - Multiple copies, never digital photos\n4. **Test with small amount** - Send yourself $5 first\n\n**Security Mindset:** Your seed phrase = your keys to the kingdom. Treat it like cash - because it IS cash.\n\nWant me to walk through any specific step?",
+        topics: ['wallet', 'security', 'phantom']
+      };
+    }
+
     return {
-      response:
-        'Great question about cryptocurrency! 🪙 Our platform runs on Solana, which offers fast transactions and low fees. Crypto allows for transparent, automated payouts and verifiable fairness in our games. Need help with wallet setup or buying SOL?',
-      relatedTopics: ['wallet setup', 'buying SOL', 'transaction fees'],
+      response: "Crypto questions are my specialty! 🚀 Solana's ecosystem is incredible - fast, cheap, and growing every day. Whether it's understanding DeFi, managing your wallet, or optimizing transaction strategies, I've got insights that'll give you an edge.\n\nWhat specific aspect interests you most?",
+      topics: ['crypto', 'solana', 'defi']
     };
   }
 
-  // Wallet setup questions
+  // Game strategy and advanced squares tactics
   if (
-    message.includes('wallet') ||
-    message.includes('phantom') ||
-    message.includes('setup') ||
-    message.includes('connect wallet')
+    message.includes('strategy') ||
+    message.includes('win') ||
+    message.includes('pick') ||
+    message.includes('choose') ||
+    message.includes('best numbers')
   ) {
     return {
-      response:
-        "Setting up a wallet is easy! 💳 I recommend Phantom Wallet for Solana. Here's what you need to do:\n\n1. Download Phantom from phantom.app\n2. Create a new wallet and save your seed phrase safely\n3. Add some SOL to your wallet\n4. Connect it to our site using the 'Connect Wallet' button\n\nNeed our detailed wallet guide? Check out the 'Need a Wallet?' link in the header!",
-      relatedTopics: ['buying SOL', 'security tips', 'connecting wallet'],
+      response: "Now we're talking strategy! 🎯 Here's some insider knowledge:\n\n**The Math Behind Winning:**\n• Numbers 0, 3, 7 appear ~24% more in final scores\n• Avoid 5s and 8s - they're statistically rare\n• Corner squares (0,0) (0,9) get hot in blowouts\n• Middle squares catch close games\n\n**Advanced Tactics:**\n• Buy squares in batches - diversify your exposure\n• Target boards with 70-85 squares filled (optimal odds)\n• Quarter timing matters - 1st quarter is pure chaos\n\n**Psychology Game:** Everyone wants 0,7 combos. Sometimes the \"bad\" numbers surprise you!\n\nWhat's your current strategy? Let's optimize it!",
+      topics: ['strategy', 'statistics', 'squares']
     };
   }
 
@@ -129,17 +151,87 @@ const getCoachBResponse = (userMessage: string): KnowledgeResponse => {
     };
   }
 
-  // Default response
+  // Troubleshooting and technical issues
+  if (
+    message.includes('problem') ||
+    message.includes('error') ||
+    message.includes('not working') ||
+    message.includes('stuck') ||
+    message.includes('help')
+  ) {
+    return {
+      response: "Technical issues happen - let's get you back in the game! 🔧\n\n**Quick Diagnostic:**\n• What exactly isn't working?\n• Any error messages?\n• When did it start?\n\n**Common Fixes:**\n✅ **Wallet Issues**: Disconnect & reconnect, check network\n✅ **Slow Loading**: Clear cache, try incognito mode\n✅ **Transaction Problems**: Check SOL balance for fees\n✅ **Connection Issues**: Verify RPC settings\n\nI can walk you through step-by-step fixes. What symptoms are you seeing?",
+      topics: ['troubleshooting', 'technical', 'support']
+    };
+  }
+
+  // Default intelligent response
   return {
-    response:
-      "That's a great question! 🤔 I specialize in helping with:\n\n• Cryptocurrency and Solana\n• Wallet setup and connections\n• How our Football Squares game works\n• Basic fantasy football strategy\n\nFor detailed fantasy analysis and current NFL news, I'd recommend visiting ESPN Fantasy, Yahoo Fantasy, or other dedicated fantasy sites. What specific topic can I help you with?",
-    relatedTopics: [
-      'crypto basics',
-      'wallet help',
-      'game rules',
-      'fantasy basics',
-    ],
+    response: "Hey there! I'm Coach B - your crypto-savvy squares strategist! 🏈⚡\n\nI bring deep knowledge in:\n• **Crypto & Solana ecosystem** - from wallets to DeFi\n• **Squares strategy** - statistical analysis and winning tactics\n• **Technical troubleshooting** - getting you unstuck fast\n• **Fantasy football insights** - leveraging data for better picks\n\nI'm here to give you an edge, whether you're new to crypto or optimizing your game strategy. What's your biggest challenge right now?",
+    topics: ['introduction', 'crypto', 'strategy', 'support']
   };
+};
+
+// Coach B Personality Definition
+const coachBPersonality: BotPersonality = {
+  name: 'Coach B',
+  traits: {
+    formality: 'friendly',
+    humor: 'witty',
+    supportStyle: 'coaching',
+    expertise: ['cryptocurrency', 'solana', 'football squares', 'strategy', 'troubleshooting']
+  },
+  responsePatterns: {
+    greeting: [
+      "What's the play today?",
+      "Ready to level up your game?", 
+      "Let's tackle this together!",
+      "Time to make some winning moves!"
+    ],
+    encouragement: [
+      "You're on the right track!",
+      "That's exactly the kind of thinking that wins games!",
+      "Great question - shows you're thinking strategically!",
+      "Now you're playing with power!"
+    ],
+    confusion: [
+      "Let me break that down differently...",
+      "No worries, this stuff can be complex...", 
+      "Think of it this way...",
+      "Here's the simple version..."
+    ],
+    success: [
+      "Touchdown! 🏈",
+      "That's how winners think!",
+      "Perfect execution!",
+      "You're getting the hang of this!"
+    ]
+  }
+};
+
+// Enhanced Bot Configuration
+const enhancedCoachBConfig: EnhancedBotConfig = {
+  name: 'Coach B',
+  personality: coachBPersonality,
+  knowledgeBase: coachBKnowledgeBase
+};
+
+// Legacy wrapper function for ChatCore compatibility
+const getCoachBResponse = (userMessage: string): KnowledgeResponse => {
+  const [enhancedBot] = useState(() => new EnhancedBot(enhancedCoachBConfig));
+  const sessionId = 'coach-b-session'; // Simple session for now
+  
+  try {
+    const enhancedResponse = enhancedBot.processMessage(userMessage, sessionId);
+    return {
+      response: enhancedResponse.response,
+      relatedTopics: enhancedResponse.relatedTopics || []
+    };
+  } catch (error) {
+    console.error('Enhanced conversation error:', error);
+    // Fallback to basic response
+    return coachBKnowledgeBase(userMessage);
+  }
 };
 
 const coachBConfig: ChatbotConfig = {

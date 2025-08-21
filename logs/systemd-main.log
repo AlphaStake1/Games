@@ -1,0 +1,327 @@
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 12:22:56 AM CDT 2025] Starting services...
+[Thu Aug 21 12:22:56 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 12:22:56 AM CDT 2025] Next.js server started with PID: 94056
+[Thu Aug 21 12:22:56 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 12:23:07 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 12:23:07 AM CDT 2025] Bore tunnel started with PID: 94368
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 12:29:32 AM CDT 2025] Next.js server not running
+[Thu Aug 21 12:29:32 AM CDT 2025] Stopping bore tunnel (PID: 94368)...
+[Thu Aug 21 12:29:32 AM CDT 2025] Bore tunnel stopped
+[Thu Aug 21 12:29:32 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 12:29:32 AM CDT 2025] Starting services...
+[Thu Aug 21 12:29:32 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 12:29:32 AM CDT 2025] Next.js server started with PID: 99317
+[Thu Aug 21 12:29:32 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 12:29:42 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 12:29:42 AM CDT 2025] Bore tunnel started with PID: 99534
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 12:32:47 AM CDT 2025] Next.js server not running
+[Thu Aug 21 12:32:47 AM CDT 2025] Stopping bore tunnel (PID: 99534)...
+[Thu Aug 21 12:32:47 AM CDT 2025] Bore tunnel stopped
+[Thu Aug 21 12:32:47 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 12:32:48 AM CDT 2025] Starting services...
+[Thu Aug 21 12:32:48 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 12:32:48 AM CDT 2025] Next.js server started with PID: 102023
+[Thu Aug 21 12:32:48 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 12:32:58 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 12:32:58 AM CDT 2025] Bore tunnel started with PID: 102223
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 12:35:17 AM CDT 2025] Next.js server not running
+[Thu Aug 21 12:35:17 AM CDT 2025] Stopping bore tunnel (PID: 102223)...
+[Thu Aug 21 12:35:17 AM CDT 2025] Bore tunnel stopped
+[Thu Aug 21 12:35:17 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 12:35:17 AM CDT 2025] Starting services...
+[Thu Aug 21 12:35:17 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 12:35:17 AM CDT 2025] Next.js server started with PID: 103700
+[Thu Aug 21 12:35:18 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 12:35:28 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 12:35:28 AM CDT 2025] Bore tunnel started with PID: 103828
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 12:52:16 AM CDT 2025] Stopping Next.js server (PID: 103700)...
+[Thu Aug 21 12:52:16 AM CDT 2025] Next.js server stopped
+[Thu Aug 21 12:52:16 AM CDT 2025] Stopping bore tunnel (PID: 103828)...
+[Thu Aug 21 12:52:16 AM CDT 2025] Bore tunnel stopped
+[Thu Aug 21 12:52:16 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 08:36:37 AM CDT 2025] Starting services...
+[Thu Aug 21 08:36:37 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 08:36:37 AM CDT 2025] Next.js server started with PID: 1644
+[Thu Aug 21 08:36:37 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 08:36:47 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 08:36:47 AM CDT 2025] Bore tunnel started with PID: 1880
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 09:40:25 AM CDT 2025] Next.js server not running
+[Thu Aug 21 09:40:26 AM CDT 2025] Stopping bore tunnel (PID: 2709)...
+[Thu Aug 21 09:40:26 AM CDT 2025] Bore tunnel stopped
+[Thu Aug 21 09:40:26 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 09:40:36 AM CDT 2025] Starting services...
+[Thu Aug 21 09:40:36 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 09:40:36 AM CDT 2025] Next.js server started with PID: 17872
+[Thu Aug 21 09:40:36 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 09:40:46 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 09:40:46 AM CDT 2025] Bore tunnel started with PID: 17967
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 09:44:55 AM CDT 2025] Next.js server not running
+[Thu Aug 21 09:44:55 AM CDT 2025] Stopping bore tunnel (PID: 18097)...
+[Thu Aug 21 09:44:56 AM CDT 2025] Bore tunnel stopped
+[Thu Aug 21 09:44:56 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 09:45:06 AM CDT 2025] Starting services...
+[Thu Aug 21 09:45:06 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 09:45:06 AM CDT 2025] Next.js server started with PID: 19279
+[Thu Aug 21 09:45:06 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 09:45:16 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 09:45:16 AM CDT 2025] Bore tunnel started with PID: 19336
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:49:43 AM CDT 2025] Next.js server not running
+[Thu Aug 21 10:49:43 AM CDT 2025] Stopping bore tunnel (PID: 19404)...
+[Thu Aug 21 10:49:43 AM CDT 2025] Bore tunnel stopped
+[Thu Aug 21 10:49:43 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:49:54 AM CDT 2025] Starting services...
+[Thu Aug 21 10:49:54 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 10:49:54 AM CDT 2025] Next.js server started with PID: 26212
+[Thu Aug 21 10:49:54 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 10:50:04 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 10:50:04 AM CDT 2025] Bore tunnel started with PID: 26366
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:50:05 AM CDT 2025] No Next.js PID file found
+[Thu Aug 21 10:50:05 AM CDT 2025] No bore PID file found
+[Thu Aug 21 10:50:05 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:50:15 AM CDT 2025] Starting services...
+[Thu Aug 21 10:50:16 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 10:50:16 AM CDT 2025] Next.js server started with PID: 26619
+[Thu Aug 21 10:50:16 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 10:50:26 AM CDT 2025] Bore tunnel already running with PID: 26752
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:50:27 AM CDT 2025] Next.js server not running
+[Thu Aug 21 10:50:27 AM CDT 2025] Stopping bore tunnel (PID: 26752)...
+[Thu Aug 21 10:50:27 AM CDT 2025] Bore tunnel stopped
+[Thu Aug 21 10:50:27 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:50:38 AM CDT 2025] Starting services...
+[Thu Aug 21 10:50:38 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 10:50:38 AM CDT 2025] Next.js server started with PID: 26952
+[Thu Aug 21 10:50:38 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 10:50:48 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 10:50:48 AM CDT 2025] Bore tunnel started with PID: 27011
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:50:49 AM CDT 2025] No Next.js PID file found
+[Thu Aug 21 10:50:49 AM CDT 2025] No bore PID file found
+[Thu Aug 21 10:50:49 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:50:59 AM CDT 2025] Starting services...
+[Thu Aug 21 10:50:59 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 10:50:59 AM CDT 2025] Next.js server started with PID: 27106
+[Thu Aug 21 10:50:59 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 10:51:10 AM CDT 2025] Bore tunnel already running with PID: 27246
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:51:10 AM CDT 2025] Next.js server not running
+[Thu Aug 21 10:51:10 AM CDT 2025] Stopping bore tunnel (PID: 27246)...
+[Thu Aug 21 10:51:10 AM CDT 2025] Bore tunnel stopped
+[Thu Aug 21 10:51:10 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:51:21 AM CDT 2025] Starting services...
+[Thu Aug 21 10:51:21 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 10:51:21 AM CDT 2025] Next.js server started with PID: 27293
+[Thu Aug 21 10:51:21 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 10:51:31 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 10:51:31 AM CDT 2025] Bore tunnel started with PID: 27351
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh
+=========================================
+Stopping Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:51:32 AM CDT 2025] No Next.js PID file found
+[Thu Aug 21 10:51:32 AM CDT 2025] No bore PID file found
+[Thu Aug 21 10:51:32 AM CDT 2025] All services stopped
+=========================================
+Starting Football Squares Testing Server
+=========================================
+[Thu Aug 21 10:51:42 AM CDT 2025] Starting services...
+[Thu Aug 21 10:51:42 AM CDT 2025] Starting Next.js server on port 3001...
+[Thu Aug 21 10:51:42 AM CDT 2025] Next.js server started with PID: 27489
+[Thu Aug 21 10:51:42 AM CDT 2025] Waiting for Next.js to be ready...
+[Thu Aug 21 10:51:52 AM CDT 2025] Starting bore tunnel to expose port 3001...
+[Thu Aug 21 10:51:52 AM CDT 2025] Bore tunnel started with PID: 27638
+
+Services started successfully!
+Access the application at: http://bore.pub:3002/
+Main branch Football Squares site
+
+Logs are available at:
+  - Next.js: /home/new-msi/workspace/fsq/logs/nextjs.log
+  - Bore: /home/new-msi/workspace/fsq/logs/bore.log
+
+To stop services, run: ./scripts/stop-server.sh

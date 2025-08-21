@@ -1,0 +1,182 @@
+
+> football-squares@0.1.0 dev /home/new-msi/workspace/fsq
+> next dev -p 3001
+
+   ▲ Next.js 15.4.5
+   - Local:        http://localhost:3001
+   - Network:      http://10.0.2.15:3001
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     ✓ optimizeCss
+     · optimizePackageImports
+
+ ✓ Starting...
+ ✓ Ready in 13.9s
+ ○ Compiling / ...
+ ✓ Compiled / in 101s (10484 modules)
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 108521ms
+ ○ Compiling /testing ...
+ ✓ Compiled /testing in 9s (10479 modules)
+Unknown network: undefined, defaulting to testnet
+ GET /testing/ 200 in 10111ms
+ ⚠ Cross origin request detected from bore.pub to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ ○ Compiling / ...
+ ✓ Compiled / in 2.5s (5416 modules)
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 4674ms
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 233ms
+ ⚠ Cross origin request detected from a6b7498d6b9d.ngrok-free.app to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 205ms
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 154ms
+ ○ Compiling /boards ...
+ ✓ Compiled /boards in 5.8s (10621 modules)
+ GET /boards/?mode=weekly 200 in 1929ms
+ GET /boards/ 200 in 6068ms
+ GET /boards/?mode=weekly 200 in 113ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1975ms (10626 modules)
+Unknown network: undefined, defaulting to testnet
+ GET /robots.txt 404 in 2367ms
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 144ms
+ ○ Compiling /cbl/overview ...
+ ✓ Compiled /cbl/overview in 3.7s (10645 modules)
+ GET /cbl/overview/ 200 in 3990ms
+ GET / 200 in 45ms
+ GET /boards/ 200 in 55ms
+ GET /cbl/overview/ 200 in 86ms
+ GET / 200 in 33ms
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 450ms
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 167ms
+ GET /boards/ 200 in 50ms
+ GET / 200 in 36ms
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 170ms
+ GET / 200 in 30ms
+ GET /boards/ 200 in 37ms
+ ○ Compiling /season-pass ...
+ ✓ Compiled /fantasy in 7.8s (10671 modules)
+ GET /boards/ 200 in 5510ms
+ GET /fantasy/ 200 in 4198ms
+ GET /season-pass/ 200 in 8023ms
+ GET /season-pass/ 200 in 24ms
+ GET /fantasy/ 200 in 65ms
+ GET /fantasy/ 200 in 27ms
+ ○ Compiling /how-to-play ...
+ ✓ Compiled /how-to-play in 5.5s (10687 modules)
+ GET /how-to-play/ 200 in 5811ms
+ GET /how-to-play/ 200 in 25ms
+ GET / 200 in 69ms
+ GET / 200 in 26ms
+ GET /how-to-play/ 200 in 29ms
+ GET /boards/ 200 in 46ms
+ GET / 200 in 39ms
+ ○ Compiling /season-pass ...
+ ✓ Compiled /season-pass in 2.1s (5522 modules)
+ GET /season-pass/ 200 in 2235ms
+ ○ Compiling /season-pass/conferences ...
+ ✓ Compiled /season-pass/conferences in 6.3s (10653 modules)
+ ⚠ Server is approaching the used memory threshold, restarting...
+   ▲ Next.js 15.4.5
+   - Local:        http://localhost:3001
+   - Network:      http://10.0.2.15:3001
+   - Environments: .env.local, .env
+   - Experiments (use with caution):
+     ✓ optimizeCss
+     · optimizePackageImports
+
+ ✓ Starting...
+ ✓ Ready in 3.3s
+ ○ Compiling /season-pass ...
+ ✓ Compiled / in 21.6s (10527 modules)
+Unknown network: undefined, defaulting to testnet
+Unknown network: undefined, defaulting to testnet
+ GET /season-pass/ 200 in 22358ms
+ GET / 200 in 11829ms
+ ⚠ Cross origin request detected from a6b7498d6b9d.ngrok-free.app to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ ⚠ Cross origin request detected from bore.pub to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ GET / 200 in 31ms
+Unknown network: undefined, defaulting to testnet
+ GET / 200 in 1848ms
+ ✓ Compiled in 12.7s (10527 modules)
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/new-msi/workspace/fsq/out/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/new-msi/workspace/fsq/out/routes-manifest.json',
+  page: '/'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 34.2s (10947 modules)
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/new-msi/workspace/fsq/out/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/new-msi/workspace/fsq/out/routes-manifest.json'
+}
+ ⨯ [Error: Cannot find module 'critters'
+Require stack:
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/post-process.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/render.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/route-modules/pages/module.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/route-modules/pages/builtin/_error.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/load-default-error-components.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/dev/next-dev-server.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/next.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/lib/start-server.js] {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[Error: ENOENT: no such file or directory, open '/home/new-msi/workspace/fsq/out/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/new-msi/workspace/fsq/out/routes-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/new-msi/workspace/fsq/out/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/new-msi/workspace/fsq/out/routes-manifest.json'
+}
+ ⨯ [Error: Cannot find module 'critters'
+Require stack:
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/post-process.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/render.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/route-modules/pages/module.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/route-modules/pages/builtin/_error.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/load-default-error-components.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/dev/next-dev-server.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/next.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/lib/start-server.js] {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[Error: Cannot find module 'critters'
+Require stack:
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/post-process.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/render.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/route-modules/pages/module.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/route-modules/pages/builtin/_error.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/load-default-error-components.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/dev/next-dev-server.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/next.js
+- /home/new-msi/workspace/fsq/node_modules/.pnpm/next@15.4.5_@babel+core@7.28.0_@opentelemetry+api@1.9.0_@playwright+test@1.54.1_react-d_334afea1fd8d625ef5954042a274cf7d/node_modules/next/dist/server/lib/start-server.js] {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ GET / 500 in 60803ms
+ GET / 500 in 1034ms
+ ELIFECYCLE  Command failed.
+[?25h

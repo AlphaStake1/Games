@@ -1,0 +1,17 @@
+[Unit]
+Description=Football Squares Testing Server
+After=network.target
+
+[Service]
+Type=forking
+User=new-msi
+WorkingDirectory=/home/new-msi/workspace/fsq
+ExecStart=/home/new-msi/workspace/fsq/scripts/start-server-persistent.sh
+ExecStop=/home/new-msi/workspace/fsq/scripts/stop-server.sh
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/new-msi/workspace/fsq/logs/systemd.log
+StandardError=append:/home/new-msi/workspace/fsq/logs/systemd.log
+
+[Install]
+WantedBy=multi-user.target

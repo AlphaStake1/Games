@@ -1,0 +1,24 @@
+B-Site Deployment URLs
+=====================
+
+🌐 Public URL: https://9ef1f38af560.ngrok-free.app
+📱 Public URL (Info): https://9ef1f38af560.ngrok-free.app/b-site-info.html
+🏠 Local URL: http://localhost:3002
+📊 Build Info: https://9ef1f38af560.ngrok-free.app/site-info.json
+
+Deployment Details:
+- Branch: feature/ux-improvements-parallel
+- Build Date: 2025-08-20T13:52:00Z
+- Server PID: 88413
+- Ngrok PID: (see ngrok.pid)
+- Deployment Type: Simplified Enhanced UX Demo
+
+Enhanced UX Features Implemented:
+✅ Progressive Navigation (3 sections vs 22+ items)
+✅ Mobile Optimization (44px touch targets)
+✅ Accessibility Enhancements (WCAG 2.1 AA)
+✅ Feature Flag System (A/B testing ready)
+✅ Version Switcher (Original ↔ Enhanced)
+
+To stop deployment:
+kill 88413 $(cat ngrok.pid)

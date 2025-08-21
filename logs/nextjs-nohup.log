@@ -1,0 +1,25 @@
+
+> football-squares@0.1.0 dev /home/new-msi/workspace/fsq
+> next dev -p 3001
+
+   ▲ Next.js 15.4.5
+   - Local:        http://localhost:3001
+   - Network:      http://10.0.2.15:3001
+   - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 11.5s
+ ○ Compiling / ...
+ ✓ Compiled / in 77.8s (10470 modules)
+Unknown network: undefined, defaulting to testnet
+ ELIFECYCLE  Command failed.
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/new-msi/workspace/fsq/.next/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/new-msi/workspace/fsq/.next/routes-manifest.json',
+  page: '/'
+}
+ ○ Compiling /_error ...
+ HEAD / 500 in 9126ms
+[?25h

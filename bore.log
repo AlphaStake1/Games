@@ -1,0 +1,39 @@
+nohup: ignoring input
+Starting persistent bore tunnel for FSQ testing...
+Public URL: http://bore.pub:1145
+Testing page: http://bore.pub:1145/testing
+
+Press Ctrl+C to stop the tunnel
+----------------------------------------
+[2025-08-20 16:39:22] Starting bore tunnel...
+[2m2025-08-20T21:39:22.906485Z[0m [32m INFO[0m [2mbore_cli::client[0m[2m:[0m connected to server [3mremote_port[0m[2m=[0m1145
+[2m2025-08-20T21:39:22.916177Z[0m [32m INFO[0m [2mbore_cli::client[0m[2m:[0m listening at bore.pub:1145
+[2m2025-08-20T21:42:34.337671Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m07ba929c-b4a9-4d83-870d-a367456cb374[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:42:46.159856Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m1fcb80e8-e877-42d2-80a0-398406a34269[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:42:46.165048Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0mb86a8d3f-1bcd-4221-afc3-501006c78b74[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:42:46.169007Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m72e7e5b0-cb15-4747-92b7-8308afcef323[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:42:46.170012Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m49b5a1b3-d860-4c07-b632-751c8daba85f[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:42:46.175987Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0mbceb5c99-0bc6-4db6-ad04-ecde1281a0b7[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:42:53.560322Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m1fcb80e8-e877-42d2-80a0-398406a34269[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:42:53.560422Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m07ba929c-b4a9-4d83-870d-a367456cb374[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:42:56.181770Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m7990fde4-48d0-401a-a9b1-f4e42e64bd1d[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:42:56.246698Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m702cdbac-ec06-4b8f-b77a-6782085cfcdf[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:43:01.094027Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0mbceb5c99-0bc6-4db6-ad04-ecde1281a0b7[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:43:05.181738Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m702cdbac-ec06-4b8f-b77a-6782085cfcdf[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:43:05.540282Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m49b5a1b3-d860-4c07-b632-751c8daba85f[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:43:05.895429Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m7651d87d-bf2e-4d24-9210-93d72ccb3c24[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:43:29.390255Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m7651d87d-bf2e-4d24-9210-93d72ccb3c24[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:43:45.017532Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m7990fde4-48d0-401a-a9b1-f4e42e64bd1d[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:44:25.795105Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0mb86a8d3f-1bcd-4221-afc3-501006c78b74[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:44:37.776730Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m72e7e5b0-cb15-4747-92b7-8308afcef323[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:44:42.120013Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m3dd2144d-5d38-455f-bbd7-6e848b86b8fe[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:44:42.789020Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m3dd2144d-5d38-455f-bbd7-6e848b86b8fe[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:44:45.419461Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0md42fc255-4ce7-4f99-98d6-d42ae4817c06[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:44:46.130595Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m4ca5b417-4dc5-4380-9a70-34dc3be46979[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T21:44:46.877417Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m4ca5b417-4dc5-4380-9a70-34dc3be46979[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T21:44:47.364200Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0md42fc255-4ce7-4f99-98d6-d42ae4817c06[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+[2m2025-08-20T22:03:49.962041Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m1a5e51fc-5b17-4cb7-90ff-b545537da701[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m new connection
+[2m2025-08-20T22:03:50.232061Z[0m [32m INFO[0m [1mproxy[0m[1m{[0m[3mid[0m[2m=[0m1a5e51fc-5b17-4cb7-90ff-b545537da701[1m}[0m[2m:[0m [2mbore_cli::client[0m[2m:[0m connection exited
+Terminated
+
+Stopping bore tunnel...
