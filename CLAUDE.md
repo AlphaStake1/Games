@@ -160,6 +160,70 @@ import {
 
 ---
 
+## 🤖 AI Agent Ecosystem
+
+### **Character Agents** (ElizaOS Integration)
+
+| Agent                  | Role                 | Function                                        | Persona                                            | Development Track                                 |
+| ---------------------- | -------------------- | ----------------------------------------------- | -------------------------------------------------- | ------------------------------------------------- |
+| **Coach B**            | Head Coach           | Player support, onboarding, conflict resolution | Friendly, encouraging, patient                     | Enhanced emotional intelligence, crypto expertise |
+| **Dean**               | Security Chief       | Threat monitoring, incident response            | Terse, timestamped, forensic                       | Advanced threat detection, automated protocols    |
+| **GM Jerry Not-Jones** | General Manager      | Financial optimization, agent coordination      | Professional, data-driven, executive               | Continuous learning, performance monitoring       |
+| **OC-Phil**            | CBL Coach            | Community leader training, retention            | Supportive, strategic, diplomatic                  | Advanced analytics, leadership development        |
+| **Trainer Reviva**     | Support Specialist   | Troubleshooting, workflow optimization          | Problem-solving, efficiency-focused                | Automation, productivity enhancement              |
+| **Morgan Reese**       | BD Coordinator       | Partnership management, economic analysis       | Professional, analytical                           | Revenue optimization, market analysis             |
+| **Patel Neil**         | Growth Hacker        | Marketing campaigns, KPI tracking               | Data-driven, growth-focused                        | Authentic marketing, engagement analytics         |
+| **Coach Right**        | Community Moderator  | Culture management, conflict resolution         | Diplomatic, community-focused                      | Engagement protocols, cultural sensitivity        |
+| **Jordan Banks**       | Treasury CPA         | Financial controls, audit compliance            | Precise, compliance-focused                        | Advanced controls, audit optimization             |
+| **Max Buzz**           | Gamification Agent   | Badge systems, VRF raffles, hype campaigns      | High-energy, competitive - "Buzz unleashed! ⚡️🔥" | Advanced gamification, retention analytics        |
+| **Axe Ray**            | Security Analyst     | Static analysis, vulnerability detection        | Methodical, zero-tolerance                         | Automated pipelines, threat prevention            |
+| **Coach 101**          | Education Specialist | Training programs, competency development       | Patient, adaptive, comprehensive                   | Personalized learning, skill progression          |
+| **Dali Palette**       | Creative Designer    | UI/UX design, visual branding                   | Creative, aesthetically focused                    | Seasonal adaptation, accessibility                |
+
+### **Technical Infrastructure Agents**
+
+| Agent                     | Type           | Purpose                          | Location                           |
+| ------------------------- | -------------- | -------------------------------- | ---------------------------------- |
+| **BoardAgent**            | Game Ops       | Board creation, state management | `/agents/BoardAgent/index.ts`      |
+| **RandomizerAgent**       | Game Ops       | VRF randomization                | `/agents/RandomizerAgent/`         |
+| **OracleAgent**           | Game Ops       | Score fetching, status polling   | `/agents/OracleAgent/`             |
+| **WinnerAgent**           | Game Ops       | Settlement, payout calculation   | `/agents/WinnerAgent/`             |
+| **EmailAgent**            | Communications | Notifications, updates           | `/agents/EmailAgent/`              |
+| **TreasuryAgent**         | Financial      | Treasury management              | `/agents/TreasuryAgent/`           |
+| **GamificationAgent**     | Engagement     | Rewards, badge systems           | `/agents/GamificationAgent/`       |
+| **SecurityAnalysisAgent** | Security       | Vulnerability scanning           | `/agents/SecurityAnalysisAgent/`   |
+| **TempoChronosAgent**     | Operations     | Board timing, fill monitoring    | `/agents/TempoChronosAgent/`       |
+| **SubagentFactory**       | Orchestration  | Agent lifecycle management       | `/agents/SubagentFactory/index.ts` |
+
+### **Agent Enhancement Framework**
+
+#### **Core Intelligence Features**
+
+- **Emotional Intelligence**: Context-aware, empathetic responses
+- **Cross-Agent Collaboration**: Intelligent handoffs and knowledge sharing
+- **Continuous Learning**: Real-time adaptation from user interactions
+- **Quality Metrics**: Response relevance (85%+), satisfaction (4.5/5), completion (90%+)
+
+#### **Development Priorities**
+
+1. **Phase 1**: Enhanced personality frameworks, emotional intelligence
+2. **Phase 2**: Specialized domain expertise, advanced collaboration
+3. **Phase 3**: Continuous learning systems, performance optimization
+
+#### **Character Configuration**: `/characters/`
+
+- ElizaOS JSON configs with bio, style, topics, plugins
+- Memory scoping: `sys_internal`, `public_game`, `user_chat`, `board_state`
+- Platform integration: Discord, Telegram, Direct chat
+
+#### **Key Enhancement Plans**
+
+- **Bot Intelligence Enhancement**: Transform generic → contextual responses
+- **Continuous Learning Framework**: User-centric adaptation, cross-agent sharing
+- **Agent-Specific Tracks**: Specialized enhancement per agent role
+
+---
+
 ## 🛠️ Local Dev Commands (Quick-ref)
 
 ```bash
